@@ -8,13 +8,16 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<java-version>1.8</java-version>
+		<org.springframework-version>4.3.2.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<spring.security.version>4.1.3.RELEASE</spring.security.version>
+		<org.apache.tiles-version>3.0.8</org.apache.tiles-version>
 	</properties>
 	<dependencies>
-	<!-- Tiles -->
+		
+		<!-- Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-core</artifactId>
@@ -35,8 +38,16 @@
 			<artifactId>tiles-extras</artifactId>
 			<version>${org.apache.tiles-version}</version>
 		</dependency>
-		<!-- JDK11 추가 --> 
-		<dependency> 
+		
+		<!-- StringUtils -->
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+		</dependency>
+	
+		<!-- JDK11 추가 -->
+		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
@@ -51,62 +62,22 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
+		<!-- javax.mail이 포함된 디펜던시 -->
 		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<version>1.0</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.12</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>javax.persistence-api</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<!-- hibernate -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.transaction/javax.transaction-api -->
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>javax.transaction-api</artifactId>
-			<version>1.2</version>
-		</dependency>
-		
-		 <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-annotations</artifactId>
-        <version>3.5.6-Final</version>
-    </dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.8.1.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>2.7.6</version>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -118,22 +89,38 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- chatting -->
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.0</version>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.9.0.GA</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- stomp -->
+		<dependency>
+			<groupId>org.springframework.integration</groupId>
+			<artifactId>spring-integration-stomp</artifactId>
+			<version>5.3.2.RELEASE</version>
+		</dependency>
+		<!-- validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.3.Final</version>
 		</dependency>
 		<!-- oracle -->
 		<dependency>
@@ -147,13 +134,30 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>c3p0</groupId> <artifactId>c3p0</artifactId> 
-			<version>0.9.1.2</version> </dependency> -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>2.7.4</version>
 		</dependency>
+		<!-- json -->
+		<dependency>
+			<groupId>com.fasterxml</groupId>
+			<artifactId>classmate</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -165,17 +169,23 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.5.2</version>
+			<!-- <version>3.2.3</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.1</version>
+			<!-- <version>1.2.1</version> -->
 		</dependency>
-		<!-- ibatis -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-ibatis</artifactId>
-			<version>2.0.8</version>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		<!-- cglib ibatis -->
 		<dependency>
@@ -212,6 +222,9 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- AspectJ -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-aspects</artifactId> 
+			<version>3.1.0.RELEASE</version> </dependency> -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -301,36 +314,35 @@
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>1.2</version>
+			<version>1.3.1</version>
 		</dependency>
 
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
@@ -348,7 +360,6 @@
 			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -359,13 +370,8 @@
 					<target>${java-version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<warName>abc</warName>
-				</configuration>
-			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId> 
+				<configuration> <warName>ch08</warName> </configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
