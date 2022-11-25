@@ -9,9 +9,22 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias alias="buyer" type="com.so.erp.model.Buyer" />
+		<typeAlias alias="country" type="com.so.erp.model.Country" />
+		<typeAlias alias="employee" type="com.so.erp.model.Employee" />
+		<typeAlias alias="orderHead" type="com.so.erp.model.OrderHead" />
+		<typeAlias alias="orderItem" type="com.so.erp.model.OrderItem" />
+		<typeAlias alias="pricing" type="com.so.erp.model.Pricing" />
+		<typeAlias alias="product" type="com.so.erp.model.Product" />
 	</typeAliases>
 	<mappers>
-<!-- 		<mapper resource="member.xml" /> -->
+		<mapper resource="xml/buyer.xml" />
+		<mapper resource="xml/country.xml" />
+		<mapper resource="xml/employee.xml" />
+		<mapper resource="xml/orderHead.xml" />
+		<mapper resource="xml/orderItem.xml" />
+		<mapper resource="xml/pricing.xml" />
+		<mapper resource="xml/product.xml" />
 	</mappers>
 	
 </configuration>
