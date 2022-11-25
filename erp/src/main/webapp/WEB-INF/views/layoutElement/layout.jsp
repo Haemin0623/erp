@@ -9,8 +9,20 @@
 <title>타일즈 테스트</title>
 
 <style type="text/css">
+
+body {
+	margin: 0;
+}
+
 .menu {
- float: left;
+	float: left;
+	width: 280px;
+	height: 100%;
+	background-color: silver;
+}
+
+.body {
+	height: 100%;
 }
 
 </style>
@@ -24,9 +36,9 @@
 		<div class="body">
 			<tiles:insertAttribute name="body"></tiles:insertAttribute>
 		</div>
-		<div class="footer">
-			<tiles:insertAttribute name="footer"></tiles:insertAttribute>
-		</div>
+<!-- 		<div class="footer"> -->
+<%-- 			<tiles:insertAttribute name="footer"></tiles:insertAttribute> --%>
+<!-- 		</div> -->
 	</div>
 </body>
 </html>

@@ -10,7 +10,7 @@ public class ErpController {
 	@RequestMapping("hello")
 	public String hello() {
 		
-		return "/page/hello";
+		return "page/hello";
 	}
 
 	

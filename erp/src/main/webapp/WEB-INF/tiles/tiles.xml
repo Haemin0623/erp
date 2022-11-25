@@ -6,7 +6,7 @@
 	<definition name="tilesbase" template="/WEB-INF/views/layoutElement/layout.jsp">
 		<put-attribute name="menu" value="/WEB-INF/views/layoutElement/menu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/layoutElement/footer.jsp" />
+<!-- 		<put-attribute name="footer" value="/WEB-INF/views/layoutElement/footer.jsp" /> -->
 	</definition>
 	
 	<!-- 레이아웃 미적용 -->
