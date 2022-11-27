@@ -57,7 +57,7 @@
 				<li>마스터</li>
 				<li>상품</li>
 				<li>고객</li>
-				<li>판매가</li>
+				<li><a href="pricing.do">판매가</a></li>
 				<li>승인</li>
 			</ul>
 			

@@ -11,6 +11,10 @@ public class PricingController {
 
 	@Autowired
 	private PricingService pricing;
-
 	
+	@RequestMapping("pricing")
+	public String pricing() {
+		
+		return "page/pricing";
+	}
 }
