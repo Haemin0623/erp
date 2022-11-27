@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +18,25 @@
 		font-size: 40px;
 	}
 </style>
+
+<script type="text/javascript">
+	function changeContent(data) {
+		var addr = data;
+	
+		var ajaxOption = {
+			url : addr,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
+</script>
 
 </head>
 <body>
@@ -45,7 +63,7 @@
 			
 			<ul>
 				<li>주문</li>
-				<li><a href="order.do">주문관리</a></li>
+				<li><button onclick="changeContent('order.do')">주문관리</button></li>
 				<li>주문승인</li>
 			</ul>
 			

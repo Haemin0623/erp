@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<tiles:insertAttribute name="body"></tiles:insertAttribute>
+	<div id="content">
+	<tiles:insertAttribute name="content"></tiles:insertAttribute>
+	</div>
 </body>
 </html>

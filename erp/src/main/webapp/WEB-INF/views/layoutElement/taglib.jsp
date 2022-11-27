@@ -8,5 +8,4 @@
 <!-- 반응형 웹 : 장비에 맞게 폭 설정 -->
 <meta name="viewport" content="width=device-width, initialscale=1">
 <c:set var="path" value="${pageContext.request.contextPath }"></c:set>
-
-<script type="text/javascript" src="${path}/resources/js/jquery.js"></script>
+<script type="text/javascript" src="${path }/resources/javaScript/jquery.js"></script>

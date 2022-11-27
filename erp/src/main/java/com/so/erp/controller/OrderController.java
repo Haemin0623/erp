@@ -32,7 +32,7 @@ public class OrderController {
 		
 		model.addAttribute("headList", headList);
 		
-		return "page/order";
+		return "nolay/order";
 	}
 
 	

@@ -156,43 +156,23 @@
 			<div class="popup">
 				<button id="close">팝업닫기</button>
 				
-				<form action="">
-					주문번호<input type="text" readonly="readonly">
-					발주일<input type="date" name="orderdate">
-					고객코드<input type="text" name="buyerCd">
-					상품코드<input type="text" name="productCd">
-					고객명<input type="text" name="buyerName">
-					상품명<input type="text" name="productName">
-					수량<input type="number" name="requestqty">
-					판매가<input type="number" name="price">
-					납품요청일<input type="date" name="requestdate">
+				<form action="" name="frm">
+					주문번호<input type="text" readonly="readonly"><br>
+					발주일<input type="date" name="orderdate"><br>
+					고객코드<input type="text" name="buyerCd"><br>
+					상품코드<input type="text" name="productCd"><br>
+					고객명<input type="text" name="buyerName"><br>
+					상품명<input type="text" name="productName"><br>
+					수량<input type="number" name="requestqty"><br>
+					판매가<input type="number" name="price"><br>
+					납품요청일<input type="date" name="requestdate"><br>
 					비고<textarea rows="5" cols="40" name="remark"></textarea>
 				</form>
 				<button id="addItem">추가</button>
-				
-				<table><caption>주문번호 : </caption>
-					<tr>
-						<th>선택</th>
-						<th>상품코드</th>
-						<th>수량</th>
-						<th>판매가</th>
-						<th>총액</th>
-						<th>납품요청일</th>
-						<th>비고</th>
-						<th>삭제</th>
-					</tr>
-						<tr>
-							<td><input type="checkbox" value> </td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-				</table>
+				<div id="addItemTable">
+					 
+
+`				</div>
 				
 			</div>
 		</div>
@@ -212,8 +192,28 @@
 	
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
-	  
-	document.querySelector("#show").addEventListener("click", show);
+	
+	function changeTable() {
+		
+		
+		// Cell에 텍스트 추가
+		newCell1.innerText = frm.productCd.value;
+		newCell2.innerText = frm.requestqty.value;
+		newCell3.innerText = frm.price.value;
+		newCell4.innerText = frm.requestqty.value * frm.price.value;
+		newCell5.innerText = frm.requestdate.value;
+		newCell6.innerText = frm.remark.value;
+		newCell7.appendChild(button);
+		
+		frm.productCd.value = '';
+		frm.requestqty.value = '';
+		frm.price.value = '';
+		frm.requestdate.value = '';
+		frm.remark.value = '';
+	}
+	
+	// 등록 후 테이블에 추가하기
+	document.querySelector("#addItem").addEventListener("click", changeTable);
 </script>
 
 </html>

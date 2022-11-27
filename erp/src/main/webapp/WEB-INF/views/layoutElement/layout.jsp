@@ -2,11 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ include file="taglib.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ERP</title>
+
+
+<script type="text/javascript" src="/erp/resources/javaScript/jquery.js"></script>
 
 <style type="text/css">
 
