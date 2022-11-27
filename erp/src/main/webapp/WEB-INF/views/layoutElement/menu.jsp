@@ -45,7 +45,7 @@
 			
 			<ul>
 				<li>주문</li>
-				<li>주문관리</li>
+				<li><a href="order.do">주문관리</a></li>
 				<li>주문승인</li>
 			</ul>
 			

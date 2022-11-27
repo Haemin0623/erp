@@ -74,7 +74,7 @@ create table order_head(
     buyer_cd    varchar2(40) not null,
     orderdate   date DEFAULT sysdate not null,
     employee_cd varchar2(40) not null,
-    reason      varchar2(300) not null,
+    reason      varchar2(300),
     status      varchar2(30) DEFAULT 'standby'   not null,
     statusdate	date,
     del         varchar2(1) DEFAULT 'N' not null,

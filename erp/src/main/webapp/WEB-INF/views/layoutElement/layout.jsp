@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>타일즈 테스트</title>
+<title>ERP</title>
 
 <style type="text/css">
 
@@ -14,14 +14,17 @@ body {
 	margin: 0;
 }
 
-.menu {
+#menu {
 	float: left;
-	width: 280px;
+	width: 15%;
 	height: 100%;
 	background-color: silver;
 }
 
-.body {
+#content {
+	position: relative;
+	left: 15%;
+	width: 85%;
 	height: 100%;
 }
 
@@ -30,11 +33,11 @@ body {
 </head>
 <body style="overflow-y: scroll; overflow-x: hidden; align-content: center;">
 	<div>
-		<div class="menu">
+		<div id="menu">
 			<tiles:insertAttribute name="menu"></tiles:insertAttribute>
 		</div>
-		<div class="body">
-			<tiles:insertAttribute name="body"></tiles:insertAttribute>
+		<div id="content">
+			<tiles:insertAttribute name="content"></tiles:insertAttribute>
 		</div>
 <!-- 		<div class="footer"> -->
 <%-- 			<tiles:insertAttribute name="footer"></tiles:insertAttribute> --%>

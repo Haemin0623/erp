@@ -5,7 +5,7 @@
 	<!-- 레이아웃 적용 -->
 	<definition name="tilesbase" template="/WEB-INF/views/layoutElement/layout.jsp">
 		<put-attribute name="menu" value="/WEB-INF/views/layoutElement/menu.jsp" />
-		<put-attribute name="body" value="" />
+		<put-attribute name="content" value="" />
 <!-- 		<put-attribute name="footer" value="/WEB-INF/views/layoutElement/footer.jsp" /> -->
 	</definition>
 	
@@ -22,6 +22,6 @@
 	</definition>
 	<!-- (1) {1}폴더 안에 {2}에 jsp이름 -->
 	<definition name="page/*" extends="tilesbase">
-		<put-attribute name="body" 	value="/WEB-INF/views/page/{1}.jsp" />
+		<put-attribute name="content" 	value="/WEB-INF/views/page/{1}.jsp" />
 	</definition>
 </tiles-definitions>
