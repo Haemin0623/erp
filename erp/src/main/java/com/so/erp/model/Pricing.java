@@ -17,4 +17,7 @@ public class Pricing {
     private String del;
     private Date deldate;
 
+    
+//    검색용
+    private Date validDate;
 }

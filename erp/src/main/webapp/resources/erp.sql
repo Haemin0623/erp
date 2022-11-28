@@ -1,11 +1,17 @@
 drop table m_country cascade constraints;
+drop table m_buyer cascade constraints;
+drop table m_product cascade constraints;
+drop table m_pricing cascade constraints;
+drop table m_employee cascade constraints;
+drop table order_head cascade constraints;
+drop table order_item cascade constraints;
+
 create table m_country(
     country_cd  varchar2(3) not null PRIMARY KEY,
     name        varchar2(50) not null,
     calling_cd  number(3) not null
 );
 
-drop table m_buyer cascade constraints;
 create table m_buyer(
     buyer_cd    varchar2(40) not null PRIMARY KEY,
     country_cd  varchar2(3) not null,
@@ -21,7 +27,6 @@ create table m_buyer(
     constraint fk_buyer_country_cd foreign key (country_cd) references m_country(country_cd)
 );
 
-drop table m_product cascade constraints;
 create table m_product(
     product_cd  varchar2(40) not null PRIMARY KEY,
     name        varchar2(100) not null,
@@ -35,7 +40,6 @@ create table m_product(
      constraint check_del2 check(del in ('N', 'Y'))
 );
 
-drop table m_pricing cascade constraints;
 create table m_pricing(
     buyer_cd    varchar2(40) not null,
     product_cd  varchar2(40) not null,
@@ -53,7 +57,6 @@ create table m_pricing(
     constraint fk_pricing_product_cd foreign key (product_cd) references m_product(product_cd)
     );
     
-drop table m_employee cascade constraints;
 create table m_employee(
     employee_cd varchar2(40) not null PRIMARY KEY,
     name        varchar2(100) not null,
@@ -68,7 +71,6 @@ create table m_employee(
      constraint check_authority check(authority in ('N', 'Y'))
 );
 
-drop table order_head cascade constraints;
 create table order_head(
     order_no    varchar2(40) not null PRIMARY key,
     buyer_cd    varchar2(40) not null,
@@ -86,7 +88,6 @@ create table order_head(
     constraint fk_order_head_employee_cd foreign key (employee_cd) references m_employee(employee_cd)
 );
 
-drop table order_item cascade constraints;
 create table order_item(
     order_no    varchar2(40) not null,
     product_cd  varchar2(40) not null,
