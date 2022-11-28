@@ -80,7 +80,7 @@ create table order_head(
     orderdate   date DEFAULT sysdate not null,
     employee_cd varchar2(40) not null,
     reason      varchar2(300),
-    status      varchar2(30) DEFAULT 'standby'   not null,
+    status      varchar2(30) DEFAULT '승인대기'   not null,
     statusdate	date,
     signemp_cd	varchar2(40),
     del         varchar2(1) DEFAULT 'N' not null,
@@ -100,7 +100,6 @@ create table order_item(
     amount      number(20) not null,
     remark      varchar2(300)
     
-    constraint check_del6 check(del in ('N', 'Y')),
     CONSTRAINT pk_order_item PRIMARY KEY(order_no, product_cd),
     constraint fk_order_item_order_no foreign key (order_no) references order_head(order_no),
     constraint fk_order_item_product_cd foreign key (product_cd) references m_product(product_cd)
