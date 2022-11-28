@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: ￪ﾹﾀ￬ﾰﾽ￫ﾥﾠ
-=======
 Built-By: eh640
->>>>>>> 7365a8e (고객데이터 추가, 고객마스터 페이지)
 Build-Jdk: 11.0.16.1
 Created-By: Maven Integration for Eclipse
 
