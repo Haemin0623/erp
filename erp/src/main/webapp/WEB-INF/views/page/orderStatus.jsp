@@ -89,12 +89,37 @@
 				<th>고객코드</th>
 				<th>고객명</th>
 				<th>고객담당자</th>
-				<th>연락처</th>
+				<th>고객연락처</th>
+				<th>고객이메일</th>
+				<th>비고</th>
 				
 				
 			</tr>
 			<tr>
-				<td>
+			<c:forEach var="item" items="${orderStatusList}">
+				<td>${item.orderdate }</td>
+				<td>${item.orderNo }</td>
+				<td>${item.productCd }</td>
+				<td>${item.pname }</td>
+				<td>${item.requestqty }</td>
+				<td>${item.price }</td>
+				<td>${item.amount }</td>
+				<td>${item.ename }</td>
+				<td>${item.status }</td>
+				<td>${item.statusdate }</td>
+					<c:forEach var="emp" items="${empList}">
+						<c:if test="${item.signempCd }==${emp.employeeCd}">
+							<td>${emp.ename }</td>
+						</c:if>
+					</c:forEach>
+				<td>${item.requestdate }</td>
+				<td>${item.buyerCd }</td>
+				<td>${item.bname }</td>
+				<td>${item.manager }</td>
+				<td>${item.tel }</td>
+				<td>${item.email }</td>
+				<td>${item.remark }</td>
+			</c:forEach>
 			</tr>
 		</table>
 	</div>

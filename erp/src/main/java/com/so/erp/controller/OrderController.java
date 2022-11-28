@@ -88,7 +88,7 @@ public class OrderController {
 		
 		
 		
-		List<OrderItem> itemList = item.itemList(orderHead.getOrderNo());
+		List<OrderItem> itemList = is.itemList(orderHead.getOrderNo());
 		
 		model.addAttribute("itemList", itemList);
 		
@@ -108,6 +108,7 @@ public class OrderController {
 		model.addAttribute("buyerList", buyerList);
 		model.addAttribute("countryList", countryList);
 		model.addAttribute("empList", empList);
+		model.addAttribute("orderStatusList", orderStatusList);
 		return "page/orderStatus";
 	}
 	
