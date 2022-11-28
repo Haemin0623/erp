@@ -16,6 +16,7 @@
 		<typeAlias alias="orderItem" type="com.so.erp.model.OrderItem" />
 		<typeAlias alias="pricing" type="com.so.erp.model.Pricing" />
 		<typeAlias alias="product" type="com.so.erp.model.Product" />
+		<typeAlias alias="pagingBean" type="com.so.erp.model.PagingBean" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="xml/buyer.xml" />

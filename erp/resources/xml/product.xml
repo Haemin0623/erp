@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="productns">
-	
-</mapper>
+	<mapper namespace="productns">
+		<select id="productList" resultType="Product">
+			select 	* 
+			from 	(select a.*, rowNum rn from 
+						(select * from m_product
+<!-- 						<where> -->
+<!-- 							<if test="keyword!=null and keyword!=''"> -->
+<!-- 									${keyword} like '%' || #{search} || '%' -->
+<!-- 							</if> -->
+<!-- 						</where> -->
+						order by product_cd)
+					a) 
+			where 	rn between #{startRow} and #{endRow}
+		</select>
+		<select id="getTotal" parameterType="pagingBean" resultType="integer">
+			select 	count(*) 
+			from	m_product
+<!-- 						<where> -->
+<!-- 							<if test="keyword!=null and keyword!=''"> -->
+<!-- 									${keyword} like '%' || #{search} || '%' -->
+<!-- 							</if> -->
+<!-- 						</where> -->
+		</select>
+	</mapper>
