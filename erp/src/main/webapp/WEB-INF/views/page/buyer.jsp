@@ -82,13 +82,14 @@
 	<h1> 고객 관리</h1>
 	<div id="searchBox">
 		<form action = "">
+		
 		고객코드 <input type="text" name="buyerCd">
 		고객명 <input type="text" name="name">
 		담당자 <input type="text" name="manager">
 		국가코드
 			<select>
 				<c:forEach var="countryCd" items="${countryCdList}">
-					<option>${countryCd.name}(${countryCd.countryCd})</option>
+					<option selected="selected">${countryCd.name}(${countryCd.countryCd})</option>
 				</c:forEach>
 			</select><br>
 		전화번호<input type="text" name="tel">
@@ -102,7 +103,7 @@
 	<button id="show">삭제</button>
 
 	<div id="table">
-	<table>
+	<table >
 		<tr>
 			<th>선택</th>
 			<th>고객코드</th>
@@ -124,7 +125,7 @@
 				<td>${buyer.email}</td>
 				<td>${buyer.address}</td>
 				<td>${buyer.countryCd}</td>
-				<td><a href="">수정</a></td>
+				<td><button id="update">수정</button></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -185,8 +186,8 @@
 								<option>${countryCd.name}(${countryCd.countryCd})</option>
 							</c:forEach>
 						</select><br>
-					<button id="updateBuyer">수정</button>	
 					</c:forEach>
+					<button id="updateBuyer">수정</button>	
 				</form>
 				
 			</div>
@@ -205,8 +206,13 @@
 		document.querySelector(".background").className = "background";
 	}
 	
+// 	function update() {
+// 		document.querySelector(".background").className = "background update";
+// 	}
+	
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
+// 	document.querySelector("#update").addEventListener("click", update);
 	  
 </script>
 

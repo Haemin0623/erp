@@ -12,11 +12,11 @@ import com.so.erp.model.Buyer;
 public class BuyerServiceImpl implements BuyerService {
 	
 	@Autowired
-	private BuyerDao buyer;
+	private BuyerDao bd;
 
 	@Override
 	public List<Buyer> list() {
-		return buyer.list();
+		return bd.list();
 	}
 
 }

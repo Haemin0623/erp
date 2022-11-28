@@ -39,6 +39,7 @@ insert into M_BUYER values ('FOD013', 'CH', '네슬레', 'Granit Xhaka','서울�
 insert into M_BUYER values ('FOD014', 'GB', '영국연합식품', 'James Brown',	'서울특별시 강남구 테헤란로 13', '02-1234-5678', 'jamesbrown@google.com','N', null);
 insert into M_BUYER values ('FOD015', 'SG', '월마인터네셔널', 'Baihakki Khaizan',	'서울특별시 강남구 테헤란로 133', '02-1234-5678', 'baihakkikhaizan@google.com','N', null);
 
+
 --직원
 insert into M_EMPLOYEE values ('SAL001', '이해민', '1234', '영업', '사원', 'N', 'N', null );
 insert into M_EMPLOYEE values ('SAL002', '김창률', '1234', '영업', '대리', 'N', 'N', null );

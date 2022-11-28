@@ -16,15 +16,15 @@ import com.so.erp.service.CountryService;
 public class BuyerController {
 
 	@Autowired
-	private BuyerService buyer;
+	private BuyerService bs;
 	@Autowired
-	private CountryService country;
+	private CountryService cs;
 
 	
 	@RequestMapping("buyer")
 	public String buyer(Model model) {
-		List<Buyer> buyerList = buyer.list();
-		List<Country> countryCdList = country.list();
+		List<Buyer> buyerList = bs.list();
+		List<Country> countryCdList = cs.list();
 		model.addAttribute("buyerList", buyerList);
 		model.addAttribute("countryCdList", countryCdList);
 		
