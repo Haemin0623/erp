@@ -210,7 +210,22 @@
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
 	
+	function callView(request) {
+		var addr = request;
 	
+		var ajaxOption = {
+			url : request,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
 	
 	function changeTable() {
 		const productCd = frm.productCd.value;
@@ -258,6 +273,7 @@
 		const table = document.querySelector('#addItemTable');
 		const rows = table.getElementsByTagName("tr");
 		const tableLength = table.rows.length-1;
+		console.log(rows);
 		
 		const head = {
 			orderNo: frm.orderNo.value,
@@ -265,12 +281,12 @@
 			orderdate: frm.orderdate.value
 		};
 		
-		const items = new Array(table.rows.length-1);
+		const items = new Array(tableLength);
 		
 		
 		
-		for (let i = 1; i < tableLength; i++) {
-			let cells = rows[i].getElementsByTagName("td");
+		for (let i = 0; i < tableLength; i++) {
+			let cells = rows[i+1].getElementsByTagName("td");
 			
 			items[i] = { 
 				orderNo: frm.orderNo.value,
@@ -281,7 +297,7 @@
 				requestdate: cells[4].firstChild.data,
 				remark: cells[5].firstChild.data
 			};
-			
+			console.log('야호');
 			console.log(items[i]);
 		};
 		
@@ -298,7 +314,7 @@
 		     dataType: 'json',
 		     success: function (result) {
 		        if (result) {
-					pageView('order.do');
+					callView('order.do');
 		        } else {
 		        	alert("실패");
 		        }

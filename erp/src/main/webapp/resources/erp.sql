@@ -98,7 +98,7 @@ create table order_item(
     requestdate date not null,
     price       number(10) not null,
     amount      number(20) not null,
-    remark      varchar2(300)
+    remark      varchar2(300),
     
     CONSTRAINT pk_order_item PRIMARY KEY(order_no, product_cd),
     constraint fk_order_item_order_no foreign key (order_no) references order_head(order_no),

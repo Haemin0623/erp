@@ -26,8 +26,8 @@ import com.so.erp.service.OrderItemService;
 import com.so.erp.service.ProductService;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -58,7 +58,6 @@ public class OrderController {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping("orderInsert")
 	@ResponseBody
 	public boolean orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String items) throws ParseException {		
@@ -68,15 +67,16 @@ public class OrderController {
 		try {
 			
 			JSONParser p = new JSONParser();
-			JSONObject obj = (JSONObject) p.parse(head);
+			Object obj =  p.parse(head);
+			JSONObject headObj = JSONObject.fromObject(obj);
 			
-			System.out.println(obj.toString());
+			System.out.println(headObj.toString());
 			OrderHead orderHead = new OrderHead();
-			String orderNo = "221128CVS002001";
+			String orderNo = "221128CVS001015";
 			System.out.println("1");
-			String buyerCd = (String) obj.get("buyerCd");
+			String buyerCd = (String) headObj.get("buyerCd");
 			System.out.println("2");
-			String date = (String) obj.get("orderdate");
+			String date = (String) headObj.get("orderdate");
 			Date orderdate = Date.valueOf(date);
 			System.out.println(orderdate);
 			orderHead.setOrderNo(orderNo);
@@ -87,22 +87,34 @@ public class OrderController {
 			System.out.println("헤드 삽입");
 			hs.insert(orderHead);
 			System.out.println("헤드 삽입완");
+
+			obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
 			
-			List<Map<String,Object>> orderItems = new ArrayList<>();
-			orderItems = JSONArray.fromObject(items);
+			System.out.println("맵핑");
 			
 			OrderItem item = new OrderItem(); 
 			
-			for (Map<String,Object> orderItem : orderItems) {
+			for (int i = 0; i < arr.size(); i++) {
 				
-				System.out.println(orderItem.toString());
+				JSONObject itemObj = (JSONObject) arr.get(i);
+
 				
-				String productCd = (String) orderItem.get("productCd");
-				int requestqty = (int) orderItem.get("requestqty");
-				int price = (int) orderItem.get("price");
-				int amount = (int) orderItem.get("amount");
-				Date requestdate = (Date) orderItem.get("requestdate");
-				String remark = (String) orderItem.get("remark");
+				String productCd = (String) itemObj.get("productCd");
+				System.out.println(productCd);
+				int requestqty = Integer.parseInt((String) itemObj.get("requestqty"));
+				System.out.println(requestqty);
+				int price = Integer.parseInt((String) itemObj.get("price"));
+				System.out.println(price);
+				int amount = Integer.parseInt((String) itemObj.get("amount"));
+				System.out.println(amount);
+				String rdate = (String) itemObj.get("requestdate");
+				Date requestdate = Date.valueOf(rdate);
+				System.out.println(requestdate);
+				String remark = (String) itemObj.get("remark");
+				System.out.println(remark);
+				
+				
 				
 				item.setOrderNo(orderNo);
 				item.setProductCd(productCd);
@@ -112,11 +124,14 @@ public class OrderController {
 				item.setAmount(amount);
 				item.setRemark(remark);
 				
+				System.out.println("전");
+				
 				is.insert(item);
+				System.out.println("후");
 			}
 		
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 			result = false;
 		}
 		

@@ -14,8 +14,6 @@ public class OrderItem {
     private int price;
     private int amount;
     private String remark;
-    private String del;
-    private Date deldate;
     
     
 // orderStatusList 조인용
