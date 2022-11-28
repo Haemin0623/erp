@@ -102,3 +102,9 @@ create table order_item(
     constraint fk_order_item_order_no foreign key (order_no) references order_head(order_no),
     constraint fk_order_item_product_cd foreign key (product_cd) references m_product(product_cd)
 );
+
+
+select * from ORDER_ITEM;
+select * from ORDER_HEAD;
+select * from BUYER;
+select * from M_BUYER;

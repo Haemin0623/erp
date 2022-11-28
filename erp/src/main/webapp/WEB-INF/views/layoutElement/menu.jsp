@@ -55,9 +55,18 @@
 		
 			<ul>
 				<li>마스터</li>
+<<<<<<< HEAD
 				<li><a href="productList.do">상품</a></li>
+=======
+				<li>상품</li>
+<<<<<<< HEAD
+>>>>>>> 7365a8e (고객데이터 추가, 고객마스터 페이지)
 				<li>고객</li>
 				<li><a href="pricing.do">판매가</a></li>
+=======
+				<li><a href="buyer.do">고객</a></li>
+				<li>판매가</li>
+>>>>>>> b4b4833 (고객마스터 등록/수정)
 				<li>승인</li>
 			</ul>
 			
