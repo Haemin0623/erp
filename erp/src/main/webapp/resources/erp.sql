@@ -77,6 +77,7 @@ create table order_head(
     reason      varchar2(300),
     status      varchar2(30) DEFAULT 'standby'   not null,
     statusdate	date,
+    signemp_cd	varchar2(40),
     del         varchar2(1) DEFAULT 'N' not null,
     
     constraint check_del5 check(del in ('N', 'Y')),
@@ -93,7 +94,7 @@ create table order_item(
     requestdate date not null,
     price       number(10) not null,
     amount      number(20) not null,
-    remark      varchar2(300) not null,
+    remark      varchar2(300),
     del         varchar2(1) DEFAULT 'N' not null,
     deldate		date,
     
