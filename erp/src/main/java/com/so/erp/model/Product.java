@@ -16,4 +16,6 @@ public class Product {
     private String del;
     private Date deldate;
 	
+//    search용 등록일
+    private Date adddate2;
 }

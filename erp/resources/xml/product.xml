@@ -2,26 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="productns">
-		<select id="productList" resultType="Product">
+		<select id="productList" parameterType="map" resultType="Product">
 			select 	* 
 			from 	(select a.*, rowNum rn from 
 						(select * from m_product
-<!-- 						<where> -->
-<!-- 							<if test="keyword!=null and keyword!=''"> -->
-<!-- 									${keyword} like '%' || #{search} || '%' -->
-<!-- 							</if> -->
-<!-- 						</where> -->
-						order by product_cd)
+						<where>
+							<if test="product.productCd!=null and product.productCd!=''">
+									product_cd like '%' || #{product.productCd} || '%'
+							</if>
+							<if test="product.name!=null and product.name!=''">
+									and name like '%' || #{product.name} || '%'
+							</if>
+							<if test="product.volume!=null and product.volume!=''">
+									and volume like '%' || #{product.volume} || '%'
+							</if>
+							<if test="product.unit!=null and product.unit!=''">
+									and unit like '%' || #{product.unit} || '%'
+							</if>
+							<if test="product.category!=null and product.category!=''">
+									and category like '%' || #{product.category} || '%'
+							</if>
+							<if test="product.adddate!=null and product.adddate!=''and product.adddate2!=null and product.adddate2!=''" >
+									and adddate between #{product.adddate} and #{product.adddate2} 
+							</if>
+						</where>
+						order by adddate desc)
 					a) 
-			where 	rn between #{startRow} and #{endRow}
+			where 	rn between #{pagingBean.startRow} and #{pagingBean.endRow}
 		</select>
 		<select id="getTotal" parameterType="pagingBean" resultType="integer">
 			select 	count(*) 
 			from	m_product
-<!-- 						<where> -->
-<!-- 							<if test="keyword!=null and keyword!=''"> -->
-<!-- 									${keyword} like '%' || #{search} || '%' -->
-<!-- 							</if> -->
-<!-- 						</where> -->
+				<where>
+					<if test="product.productCd!=null and product.productCd!=''">
+							product_cd like '%' || #{product.productCd} || '%'
+					</if>
+					<if test="product.name!=null and product.name!=''">
+							and name like '%' || #{product.name} || '%'
+					</if>
+					<if test="product.volume!=null and product.volume!=''">
+							and volume like '%' || #{product.volume} || '%'
+					</if>
+					<if test="product.unit!=null and product.unit!=''">
+							and unit like '%' || #{product.unit} || '%'
+					</if>
+					<if test="product.category!=null and product.category!=''">
+							and category like '%' || #{product.category} || '%'
+					</if>
+					<if test="product.adddate!=null and product.adddate!=''and product.adddate2!=null and product.adddate2!=''" >
+							and adddate between #{product.adddate} and #{product.adddate2} 
+					</if>
+				</where>
 		</select>
 	</mapper>

@@ -13,15 +13,15 @@ import com.so.erp.model.Product;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductDao product;
+	private ProductDao pds;
 
 	@Override
-	public List<Product> productList(PagingBean pagingBean) {
-		return product.productList(pagingBean);
+	public List<Product> productList(PagingBean pagingBean, Product product) {
+		return pds.productList(pagingBean, product);
 	}
 
 	@Override
-	public int getTotal(PagingBean pagingBean) {
-		return product.getTotal(pagingBean);
+	public int getTotal(PagingBean pagingBean,Product product) {
+		return pds.getTotal(pagingBean,product);
 	}
 }

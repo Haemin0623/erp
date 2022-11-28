@@ -7,8 +7,8 @@ import com.so.erp.model.Product;
 
 public interface ProductService {
 
-	List<Product> productList(PagingBean pagingBean);
+	List<Product> productList(PagingBean pagingBean, Product product);
 
-	int getTotal(PagingBean pagingBean);
+	int getTotal(PagingBean pagingBean,Product product);
 
 }

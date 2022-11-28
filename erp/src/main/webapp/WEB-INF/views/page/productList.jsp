@@ -37,21 +37,21 @@
 <body>
 	<h2>상품관리</h2>
 	<div id="searchBox">
-		<form action="">
+		<form action="productList.do">
 				<span>
-					상품코드 <input type="text" name="productCodeSearch">
+					상품코드 <input type="text" name="productCd">
 				</span>
 				<span>
-					상품명 <input type="text" name="productNameSearch">
+					상품명 <input type="text" name="name">
 				</span>
 				<span>
-					용량 <input type="text" name="productVolumeSearch">
+					용량 <input type="text" name="volume">
 				</span>
 				<span>
-					상품카테고리 <input type="text" name="productCategorySearch">
+					상품카테고리 <input type="text" name="category">
 				</span>
 				<span>
-					등록일 <input type="text" name="productAdddDateSearch1"> ~ <input type="text" name="productAdddDateSearch2">
+					등록일 <input type="text" name="adddDate"> ~ <input type="text" name="adddDate2">
 				</span>
 				<span>
 					상태 <select>
@@ -82,7 +82,7 @@
 		<table>
 			<tr>
 				<th>선택</th>
-				<th>판매부번코드</th>
+				<th>상품코드</th>
 				<th>상품명</th>
 				<th>용량</th>
 				<th>단위</th>
@@ -104,6 +104,33 @@
 			</c:forEach> 
 		</table>
 	</form>
+<!-- 	----------- -->
+	<div align="center">
+		
+			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
+			<c:if test="${pb.startPage > pb.pagePerBlock}">
+				<a href="productList.do?pageNum=1">
+					<span class="glyphicon glyphicon-fast-backward"></span></a>
+				<a href="productList.do?pageNum=${pb.startPage-1 }">
+					<span class="glyphicon glyphicon-triangle-left"></span></a>
+			</c:if>
+			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
+				<c:if test="${pb.currentPage == i }">
+					<li class="active"><a href="productList.do?pageNum=${i }">${i }</a>
+				</c:if>
+				<c:if test="${pb.currentPage != i }">
+					<a href="productList.do?pageNum=${i }">${i }</a>
+				</c:if>		
+			</c:forEach>
+			<!-- endPage보다 totalPage가 크면 보여줄 것이 뒤에 남아 있다 -->
+			<c:if test="${pb.endPage < pb.totalPage}">
+				<a href="productList.do?pageNum=${pb.endPage+1 }">
+					<span class="glyphicon glyphicon-triangle-right"></span></a>
+				<a href="productList.do?pageNum=${pb.totalPage }">
+					<span class="glyphicon glyphicon-fast-forward"></span></a>
+			</c:if>		
+	</div>
+<!-- ------------ -->
 </div>
 </body>
 </html>
