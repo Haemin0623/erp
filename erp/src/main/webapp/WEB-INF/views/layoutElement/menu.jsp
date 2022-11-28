@@ -69,7 +69,7 @@
 			
 			<ul>
 				<li>REPORT</li>
-				<li>주문 현황</li>
+				<li><a href="orderStatus.do">주문 현황</a></li>
 			</ul>
 	</div>
 

@@ -48,5 +48,11 @@ public class OrderController {
 		return "nolay/orderInsert";
 	}
 
+
+	@RequestMapping("orderStatus")
+	public String orderStatus(Model model) {
+		
+		return "page/orderStatus";
+	}
 	
 }
