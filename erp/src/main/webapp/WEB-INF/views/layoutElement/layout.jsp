@@ -10,7 +10,7 @@
 <title>ERP</title>
 
 
-<script type="text/javascript" src="/erp/resources/javaScript/jquery.js"></script>
+
 
 <style type="text/css">
 

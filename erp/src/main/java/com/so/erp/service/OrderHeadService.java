@@ -8,4 +8,6 @@ public interface OrderHeadService {
 
 	List<OrderHead> list();
 
+	void insert(OrderHead orderHead);
+
 }

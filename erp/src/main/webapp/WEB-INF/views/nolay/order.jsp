@@ -154,6 +154,7 @@
 	<div class="background">
 		<div class="window">
 			<div class="popup">
+			
 				<button id="close">팝업닫기</button>
 				
 				<form action="" name="frm">
@@ -169,7 +170,19 @@
 					비고<textarea rows="5" cols="40" name="remark"></textarea>
 				</form>
 				<button id="addItem">추가</button>
-				<div id="addItemTable">
+				<div id="addItemDiv">
+				
+					<table id="addItemTable">
+						<tr>
+							<th>상품코드</th>
+							<th>수량</th>
+							<th>판매가</th>
+							<th>총액</th>
+							<th>납품요청일</th>
+							<th>비고</th>
+							<th>삭제</th>
+						</tr>
+					</table>
 					 
 
 `				</div>
@@ -193,27 +206,75 @@
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
 	
+	
+	
 	function changeTable() {
+		const productCd = frm.productCd.value;
+		const requestqty = frm.requestqty.value;
+		const price = frm.price.value;
+		const amount = requestqty * price;
+		const requestdate = frm.requestdate.value;
+		const remark = frm.remark.value;
 		
+		const addItemTable = document.querySelector('#addItemTable');
 		
-		// Cell에 텍스트 추가
-		newCell1.innerText = frm.productCd.value;
-		newCell2.innerText = frm.requestqty.value;
-		newCell3.innerText = frm.price.value;
-		newCell4.innerText = frm.requestqty.value * frm.price.value;
-		newCell5.innerText = frm.requestdate.value;
-		newCell6.innerText = frm.remark.value;
-		newCell7.appendChild(button);
+		if (productCd == '' || requestqty == '' || price == '' || 
+				amount == '' || requestdate == '' || remark == ''){
+			alert('값을 채워넣어주세요');
+		} else {
+			
+			addItemTable.append(
+					"<tr>" +
+						"<td>" + productCd + "</td>" +
+						"<td>" + requestqty + "</td>" +
+						"<td>" + price + "</td>" +
+						"<td>" + amount + "</td>" +
+						"<td>" + requestdate + "</td>" +
+						"<td>" + remark + "</td>" +
+						"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
+					"</tr>"
+			);
+			frm.productCd.value = '';
+			frm.requestqty.value = '';
+			frm.price.value = '';
+			frm.requestdate.value = '';
+			frm.remark.value = '';
+			
+		}
 		
-		frm.productCd.value = '';
-		frm.requestqty.value = '';
-		frm.price.value = '';
-		frm.requestdate.value = '';
-		frm.remark.value = '';
+	}
+	
+	document.querySelector("#addItem").addEventListener("click", changeTable);
+	
+	
+	function insertOrder() {
+		var formData = new FormData();
+		formData.append('orderdate', frm.orderdate.value);
+		formData.append('buyerCd', frm.buyerCd.value);
+		formData.append('productCd', frm.productCd.value);
+		formData.append('buyerName', frm.buyerName.value);
+		formData.append('productName', frm.productName.value);
+		formData.append('requestqty', frm.requestqty.value);
+		formData.append('price', frm.productCd.value);
+		formData.append('requestdate', frm.productCd.value);
+		formData.append('remark', frm.productCd.value);
+		
+		var ajaxOption = {
+			url : "orderInsert.do",
+			async : true,
+			data : formData,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+		
+		$.ajax(ajaxOption).done(function(data) {
+			$('#addItemTable').children().remove();
+			$('#addItemTable').html(data);
+		});
 	}
 	
 	// 등록 후 테이블에 추가하기
-	document.querySelector("#addItem").addEventListener("click", changeTable);
 </script>
 
 </html>

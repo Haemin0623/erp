@@ -18,4 +18,10 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public List<OrderHead> list() {
 		return head.list();
 	}
+
+	@Override
+	public void insert(OrderHead orderHead) {
+		head.insert(orderHead);
+		
+	}
 }

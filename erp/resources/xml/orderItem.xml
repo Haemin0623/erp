@@ -2,5 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="itemns">
+
+	<insert id="insert" parameterType="orderItem">
+		insert into order_item values (#{orderNo}, #{productCd}, #{requestQty}, #{requsetDate}, #{price}, #{amount}, #{remark}, 'N', null)
+	</insert>
 	
+	<select id="itemList" parameterType="integer" resultType="orderItem">
+		select * from order_item where order_no = #{orderNo}
+	</select>
 </mapper>

@@ -8,4 +8,6 @@ public interface OrderHeadDao {
 
 	List<OrderHead> list();
 
+	void insert(OrderHead orderHead);
+
 }

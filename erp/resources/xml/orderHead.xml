@@ -7,4 +7,8 @@
 		select * from order_head
 	</select>
 	
+	<insert id="insert" parameterType="orderHead">
+		insert into order_head values (#{orderNo}, #{buyerCd}, #{orderDate}, 'PSI0000', null, '승인대기', null, 'N')
+	</insert>
+	
 </mapper>
