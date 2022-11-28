@@ -8,7 +8,7 @@ import lombok.Data;
 public class Employee {
 
 	private String employeeCd;
-    private String name;
+    private String ename;
     private String password;
     private String department;
     private String job;

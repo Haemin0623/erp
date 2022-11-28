@@ -8,7 +8,7 @@ import lombok.Data;
 public class Product {
 	
 	private String productCd;
-    private String name;
+    private String pname;
     private String volume;
     private String unit;
     private String category;

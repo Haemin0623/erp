@@ -28,7 +28,7 @@ public class OrderItem {
     private Date statusdate;
     private String signempCd;
     // product
-    private String name;
+    private String pname;
     private String volume;
     private String unit;
     private String category;

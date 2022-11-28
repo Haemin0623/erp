@@ -9,7 +9,7 @@ public class Buyer {
 	
 	private String buyerCd;
     private String countryCd; 
-    private String name;       
+    private String bname;       
     private String manager;    
     private String address;   
     private String tel;        
