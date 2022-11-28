@@ -24,4 +24,9 @@ public class ProductServiceImpl implements ProductService {
 	public int getTotal(PagingBean pagingBean,Product product) {
 		return pds.getTotal(pagingBean,product);
 	}
+
+	@Override
+	public List<Product> list() {
+		return pds.list();
+	}
 }

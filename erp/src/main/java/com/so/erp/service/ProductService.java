@@ -11,4 +11,6 @@ public interface ProductService {
 
 	int getTotal(PagingBean pagingBean,Product product);
 
+	List<Product> list();
+
 }

@@ -32,4 +32,9 @@ public class ProductDaoImpl implements ProductDao {
 		map.put("pagingBean", pagingBean);
 		return sst.selectOne("productns.getTotal",map);
 	}
+
+	@Override
+	public List<Product> list() {
+		return sst.selectList("productns.list");
+	}
 }
