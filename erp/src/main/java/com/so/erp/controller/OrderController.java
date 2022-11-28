@@ -7,8 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.so.erp.model.Country;
+import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
+import com.so.erp.service.CountryService;
+import com.so.erp.service.EmployeeService;
 import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
 
@@ -20,6 +24,10 @@ public class OrderController {
 	@Autowired
 	private OrderItemService is;
 	@Autowired
+	private CountryService cs;
+	@Autowired
+	private EmployeeService es;
+	
 	
 	@RequestMapping("order")
 	public String order(Model model) {
@@ -52,7 +60,11 @@ public class OrderController {
 
 	@RequestMapping("orderStatus")
 	public String orderStatus(Model model) {
+		List<Country> countryList = cs.list();
+		List<Employee> empList = es.list();
 		
+		model.addAttribute("countryList", countryList);
+		model.addAttribute("empList", empList);
 		return "page/orderStatus";
 	}
 	

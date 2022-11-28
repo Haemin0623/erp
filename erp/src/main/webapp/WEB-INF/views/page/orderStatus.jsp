@@ -28,14 +28,24 @@
 				고객코드(명) <input type="text" name="buyerSearch" placeholder="고객코드/고객명">
 				국가코드
 					<select>
-						<c:forEach var="countryCd" items="${countryCdList}">
-							<option>${countryCd.name}(${countryCd.countryCd})</option>
+						<c:forEach var="country" items="${countryList}">
+							<option>${country.name}(${country.countryCd})</option>
 						</c:forEach>
 					</select><br>
 				영업담당자
 					<select>
 						<c:forEach var="emp" items="${empList}">
-							<option>${emp.name} ${emp.job}(${emp.department})</option>
+							<c:if test="${emp.department}=='영업'">
+								<option>${emp.name} ${emp.job}(${emp.department})</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				승인자
+					<select>
+						<c:forEach var="emp" items="${empList}">
+							<c:if test="${emp.department}=='관리'">
+								<option>${emp.name} ${emp.job}(${emp.department})</option>
+							</c:if>
 						</c:forEach>
 					</select>
 				신청일 <input type="date" name="addDateSearch1"> - <input type="date" name="addDateSearch2">
