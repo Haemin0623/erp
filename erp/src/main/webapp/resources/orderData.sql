@@ -42,47 +42,47 @@ insert into M_BUYER values ('FOD015', 'SG', '월마인터네셔널', 'Baihakki K
 
 
 --직원
-insert into M_EMPLOYEE values ('SAL001', '이해민', '1234', '영업', '사원', 'N', 'N', null );
-insert into M_EMPLOYEE values ('SAL002', '김창률', '1234', '영업', '대리', 'N', 'N', null );
-insert into M_EMPLOYEE values ('SAL003', '최선희', '1234', '영업', '과장', 'Y', 'N', null );
-insert into M_EMPLOYEE values ('SAL004', '박현서', '1234', '영업', '차장', 'Y', 'N', null );
-insert into M_EMPLOYEE values ('SAL005', '박수인', '1234', '영업', '부장', 'Y', 'N', null );
-insert into M_EMPLOYEE values ('MNG001', '민해이', '1234', '관리', '사원', 'N', 'N', null );
-insert into M_EMPLOYEE values ('MNG002', '률창김', '1234', '관리', '대리', 'N', 'N', null );
-insert into M_EMPLOYEE values ('MNG003', '희선최', '1234', '관리', '과장', 'N', 'N', null );
-insert into M_EMPLOYEE values ('MNG004', '서현박', '1234', '관리', '차장', 'N', 'N', null );
-insert into M_EMPLOYEE values ('MNG005', '인수박', '1234', '관리', '부장', 'Y', 'N', null );
+insert into M_EMPLOYEE values ('SAL001', '이해민', '1234', '영업', '사원', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('SAL002', '김창률', '1234', '영업', '대리', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('SAL003', '최선희', '1234', '영업', '과장', 'Y', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('SAL004', '박현서', '1234', '영업', '차장', 'Y', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('SAL005', '박수인', '1234', '영업', '부장', 'Y', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('MNG001', '민해이', '1234', '관리', '사원', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('MNG002', '률창김', '1234', '관리', '대리', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('MNG003', '희선최', '1234', '관리', '과장', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('MNG004', '서현박', '1234', '관리', '차장', 'N', sysdate, 'N', null );
+insert into M_EMPLOYEE values ('MNG005', '인수박', '1234', '관리', '부장', 'Y', sysdate, 'N', null );
 
 --주문 해민
 insert into ORDER_HEAD values ('220304CVS001001', 'CVS001', '2022-03-04', 'SAL001', null, '승인', null, 'SAL004','N');
-insert into ORDER_ITEM values ('220304CVS001001', 'SN0001', 1000, '2022-03-26', 300, 1000*300, null, 'N', null);
-insert into ORDER_ITEM values ('220304CVS001001', 'SN0004', 1500, '2022-03-26', 350, 1500*350, null, 'N', null);
-insert into ORDER_ITEM values ('220304CVS001001', 'SN0006', 500, '2022-04-01', 400, 500*400, '확실히', 'N', null);
-insert into ORDER_ITEM values ('220304CVS001001', 'RA0002', 1000, '2022-03-26', 600, 1000*600, '검수 확실히', 'N', null);
+insert into ORDER_ITEM values ('220304CVS001001', 'SN0001', 1000, '2022-03-26', 300, 1000*300, null);
+insert into ORDER_ITEM values ('220304CVS001001', 'SN0004', 1500, '2022-03-26', 350, 1500*350, null);
+insert into ORDER_ITEM values ('220304CVS001001', 'SN0006', 500, '2022-04-01', 400, 500*400, '확실히');
+insert into ORDER_ITEM values ('220304CVS001001', 'RA0002', 1000, '2022-03-26', 600, 1000*600, '검수 확실히');
 
 insert into ORDER_HEAD values ('220304CVS001002', 'CVS001', '2022-03-04', 'SAL002', null, '반려', null, 'SAL005', 'N');
-insert into ORDER_ITEM values ('220304CVS001002', 'SN0004', 1000, '2022-04-04', 300, 1000*300, null, 'N', null);
-insert into ORDER_ITEM values ('220304CVS001002', 'SN0002', 1500, '2022-04-04', 350, 1500*350, null, 'N', null);
-insert into ORDER_ITEM values ('220304CVS001002', 'RA0002', 500, '2022-04-04', 400, 500*400, null, 'N', null);
-insert into ORDER_ITEM values ('220304CVS001002', 'DR0001', 1000, '2022-03-20', 600, 1000*600, '검수 확실히', 'N', null);
+insert into ORDER_ITEM values ('220304CVS001002', 'SN0004', 1000, '2022-04-04', 300, 1000*300, null);
+insert into ORDER_ITEM values ('220304CVS001002', 'SN0002', 1500, '2022-04-04', 350, 1500*350, null);
+insert into ORDER_ITEM values ('220304CVS001002', 'RA0002', 500, '2022-04-04', 400, 500*400, null);
+insert into ORDER_ITEM values ('220304CVS001002', 'DR0001', 1000, '2022-03-20', 600, 1000*600, '검수 확실히');
 
 insert into ORDER_HEAD values ('220623MAT002001', 'MAT002', '2022-06-23', 'SAL001', null, '승인', null, 'SAL005', 'N');
-insert into ORDER_ITEM values ('220623MAT002001', 'SN0005', 1000, '2022-07-26', 300, 1000*300, null, 'N', null);
-insert into ORDER_ITEM values ('220623MAT002001', 'SN0006', 1500, '2022-07-26', 350, 1500*350, null, 'N', null);
-insert into ORDER_ITEM values ('220623MAT002001', 'RA0001', 500, '2022-07-26', 400, 500*400, null, 'N', null);
-insert into ORDER_ITEM values ('220623MAT002001', 'DR0002', 1000, '2022-07-26', 600, 1000*600, '검수 확실히', 'N', null);
+insert into ORDER_ITEM values ('220623MAT002001', 'SN0005', 1000, '2022-07-26', 300, 1000*300, null);
+insert into ORDER_ITEM values ('220623MAT002001', 'SN0006', 1500, '2022-07-26', 350, 1500*350, null);
+insert into ORDER_ITEM values ('220623MAT002001', 'RA0001', 500, '2022-07-26', 400, 500*400, null);
+insert into ORDER_ITEM values ('220623MAT002001', 'DR0002', 1000, '2022-07-26', 600, 1000*600, '검수 확실히');
 
 insert into ORDER_HEAD values ('220919FOD006001', 'FOD006', '2022-09-19', 'SAL002', null, '승인요청', null, null, 'N');
-insert into ORDER_ITEM values ('220919FOD006001', 'SN0001', 1000, '2022-09-24', 300, 1000*300, '품질문제 없이', 'N', null);
-insert into ORDER_ITEM values ('220919FOD006001', 'SN0005', 1500, '2022-09-24', 350, 1500*350, null, 'N', null);
-insert into ORDER_ITEM values ('220919FOD006001', 'RA0002', 500, '2022-09-24', 400, 500*400, null, 'N', null);
-insert into ORDER_ITEM values ('220919FOD006001', 'DR0002', 1000, '2022-09-24', 600, 1000*600, '급하게 요구', 'N', null);
+insert into ORDER_ITEM values ('220919FOD006001', 'SN0001', 1000, '2022-09-24', 300, 1000*300, '품질문제 없이');
+insert into ORDER_ITEM values ('220919FOD006001', 'SN0005', 1500, '2022-09-24', 350, 1500*350, null);
+insert into ORDER_ITEM values ('220919FOD006001', 'RA0002', 500, '2022-09-24', 400, 500*400, null);
+insert into ORDER_ITEM values ('220919FOD006001', 'DR0002', 1000, '2022-09-24', 600, 1000*600, '급하게 요구');
 
 insert into ORDER_HEAD values ('221127FOD014001', 'FOD014', '2022-11-27', 'SAL001', null, '승인대기', null, null, 'N');
-insert into ORDER_ITEM values ('221127FOD014001', 'SN0003', 1000, '2022-12-26', 300, 1000*300, null, 'N', null);
-insert into ORDER_ITEM values ('221127FOD014001', 'SN0004', 1500, '2022-12-26', 350, 1500*350, null, 'N', null);
-insert into ORDER_ITEM values ('221127FOD014001', 'SN0005', 500, '2022-12-26', 400, 500*400, null, 'N', null);
-insert into ORDER_ITEM values ('221127FOD014001', 'RA0002', 1000, '2022-12-26', 600, 1000*600, '검수 확실히', 'N', null);
+insert into ORDER_ITEM values ('221127FOD014001', 'SN0003', 1000, '2022-12-26', 300, 1000*300, null);
+insert into ORDER_ITEM values ('221127FOD014001', 'SN0004', 1500, '2022-12-26', 350, 1500*350, null);
+insert into ORDER_ITEM values ('221127FOD014001', 'SN0005', 500, '2022-12-26', 400, 500*400, null);
+insert into ORDER_ITEM values ('221127FOD014001', 'RA0002', 1000, '2022-12-26', 600, 1000*600, '검수 확실히');
 
 
 --주문 선희

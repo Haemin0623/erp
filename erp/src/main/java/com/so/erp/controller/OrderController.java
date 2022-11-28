@@ -74,8 +74,10 @@ public class OrderController {
 		orderHead.setBuyerCd(buyerCd);
 		orderHead.setOrderdate(orderdate);
 		
-		List<Map<String,Object>> orderItem = new ArrayList<>();
-		orderItem = JSONArray.fromObject(item);
+		List<Map<String,Object>> orderItems = new ArrayList<>();
+		orderItems = JSONArray.fromObject(item);
+		
+		for (Map<String,Object> orderItem : orderItems )
 		
 //		orderHead.setOrderNo("3");
 //		orderItem.setOrderNo("3");

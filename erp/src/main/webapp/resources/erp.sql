@@ -8,7 +8,7 @@ drop table order_item cascade constraints;
 
 create table m_country(
     country_cd  varchar2(3) not null PRIMARY KEY,
-    name        varchar2(50) not null,
+    cname        varchar2(50) not null,
     calling_cd  number(3) not null
 );
 
