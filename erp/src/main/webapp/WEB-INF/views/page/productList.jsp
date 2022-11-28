@@ -24,12 +24,63 @@
 	
 	
 	#searchBox{
-		width:70%; 
-		border: 1px solid green;
-		margin-left: 20%;
+		margin: 0 auto;
+		width: 90%;
+		height: 100px;
+		background-color: gray;
+		color: white;
 	}
+	
 	#productList{
 		width: 70%;
+	}
+	
+	
+	.background {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100vh;
+	  background-color: rgba(0, 0, 0, 0.3);
+	  z-index: 1000;
+	  
+	  /* 숨기기 */
+	  z-index: -1;
+	  opacity: 0;
+	}
+	
+	.window {
+	  position: relative;
+	  width: 100%;
+	  height: 100%;
+	}
+	
+	.popup {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  background-color: #ffffff;
+	  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+	  
+	  /* 임시 지정 */
+	  width: 500px;
+	  height: 500px;
+	  
+	  /* 초기에 약간 아래에 배치 */
+	  transform: translate(-50%, -40%);
+	}
+	
+	.show {
+	  opacity: 1;
+	  z-index: 1000;
+	  transition: all .5s;
+	}
+	
+	.show .popup {
+	  transform: translate(-50%, -50%);
+	  transition: all .5s;
 	}
 </style>
 
@@ -66,8 +117,9 @@
 	
 <div id="productList">
 	<span>
-		<button>등록</button>
+		<button id="show">상품등록 </button>
 		<button>삭제</button>
+		<button>엑셀로 대량등록</button>
 	</span>	
 	<span>
 		<select>
@@ -99,14 +151,12 @@
 					<td>${productList.unit}</td>
 					<td>${productList.category}</td>
 					<td>${productList.adddate}</td>
-					<td>수정버튼</td>
+					<td><button>수정</button></td>
 			</tr>
 			</c:forEach> 
 		</table>
 	</form>
-<!-- 	----------- -->
 	<div align="center">
-		
 			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
 			<c:if test="${pb.startPage > pb.pagePerBlock}">
 				<a href="productList.do?pageNum=1">
@@ -116,7 +166,7 @@
 			</c:if>
 			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
 				<c:if test="${pb.currentPage == i }">
-					<li class="active"><a href="productList.do?pageNum=${i }">${i }</a>
+					<a href="productList.do?pageNum=${i }">${i }</a>
 				</c:if>
 				<c:if test="${pb.currentPage != i }">
 					<a href="productList.do?pageNum=${i }">${i }</a>
@@ -130,7 +180,41 @@
 					<span class="glyphicon glyphicon-fast-forward"></span></a>
 			</c:if>		
 	</div>
-<!-- ------------ -->
 </div>
+<div class="background">
+		<div class="window">
+			<div class="popup">
+				
+				
+				<form action="" name="frm">
+					상품코드<input type="text" name="productCd" readonly="readonly"><br>
+					상품명<input type="text" name="orderdate"><br>
+					용량<input type="text" name="buyerCd"><br>
+					단위<input type="text" name="productCd"><br>
+					카테고리<input type="text" name="buyerName"><br>
+				</form>
+				<button id="addItem">추가</button>
+				<button id="close">팝업닫기</button>
+				<div id="addItemTable">
+					 
+
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	// 등록 팝업 열기 닫기
+	function show() {
+		document.querySelector(".background").className = "background show";
+	}
+	
+	function close() {
+		document.querySelector(".background").className = "background";
+	}
+	
+	document.querySelector("#show").addEventListener("click", show);
+	document.querySelector("#close").addEventListener("click", close);
+</script>
 </body>
 </html>
