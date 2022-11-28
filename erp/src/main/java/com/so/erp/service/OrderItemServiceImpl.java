@@ -24,4 +24,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 	public List<OrderItem> itemList(String orderNo) {
 		return item.itemList(orderNo);
 	}
+
+	@Override
+	public List<OrderItem> orderStatusList() {
+		return item.orderStatusList();
+	}
 }

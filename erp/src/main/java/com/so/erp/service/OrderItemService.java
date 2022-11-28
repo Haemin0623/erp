@@ -10,4 +10,6 @@ public interface OrderItemService {
 
 	List<OrderItem> itemList(String orderNo);
 
+	List<OrderItem> orderStatusList();
+
 }

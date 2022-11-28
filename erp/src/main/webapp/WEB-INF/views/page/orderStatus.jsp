@@ -24,12 +24,7 @@
 		<form action="">		
 			<div>
 				주문번호 <input type="text" name="orderSearch">
-				상품코드(명)
-					<select>
-						<c:forEach var="product" items="${productList}">
-							<option>${product.productCd}(${product.name})</option>
-						</c:forEach>
-					</select>
+				상품코드(명) <input type="text" name="productSearch" placeholder="상품코드/상품명">
 				고객코드(명)
 					<select>
 						<c:forEach var="buyer" items="${buyerList}">

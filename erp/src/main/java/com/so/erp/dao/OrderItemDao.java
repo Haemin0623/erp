@@ -10,4 +10,6 @@ public interface OrderItemDao {
 
 	List<OrderItem> itemList(String orderNo);
 
+	List<OrderItem> orderStatusList();
+
 }

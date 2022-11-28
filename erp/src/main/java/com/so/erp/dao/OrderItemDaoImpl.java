@@ -24,4 +24,9 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public List<OrderItem> itemList(String orderNo) {
 		return sst.selectList("itemns.itemList", orderNo);
 	}
+
+	@Override
+	public List<OrderItem> orderStatusList() {
+		return sst.selectList("itemns.orderStatusList");
+	}
 }

@@ -10,4 +10,8 @@
 	<select id="itemList" parameterType="integer" resultType="orderItem">
 		select * from order_item where order_no = #{orderNo}
 	</select>
+	
+	<select id="orderStatusList" resultType="orderItem">
+		
+	</select>
 </mapper>

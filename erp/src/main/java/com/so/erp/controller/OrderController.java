@@ -100,7 +100,7 @@ public class OrderController {
 		List<Buyer> buyerList = bs.list();
 		List<Country> countryList = cs.list();
 		List<Employee> empList = es.list();
-//		List<OrderHead> orderStatus = head.
+		List<OrderItem> orderStatusList = is.orderStatusList();
 		
 		model.addAttribute("productList", productList);
 		model.addAttribute("buyerList", buyerList);
