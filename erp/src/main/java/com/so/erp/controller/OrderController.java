@@ -20,6 +20,9 @@ import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
 import com.so.erp.service.ProductService;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 @Controller
 public class OrderController {
 
@@ -47,19 +50,34 @@ public class OrderController {
 	}
 	
 	@RequestMapping("orderInsert")
-	public String orderInsert(Model model, OrderHead orderHead, OrderItem orderItem) {		
-		orderHead.setOrderNo("3");
-		orderItem.setOrderNo("3");
-		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
+	@ResponseBody
+	public String orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String item) {		
 		
-		hs.insert(orderHead);
-		is.insert(orderItem);
+
+		JSONParser p = new JSONParser();
+		JSONObject obj = (JSONObject) p.parse(head);
+		
+		System.out.println(obj.toString());
+		OrderHead orderHead = new OrderHead();
+		String orderNo = (String) obj.get("orderNo");
+		String buyerCd = (String) obj.get("buyerCd");
+		Date orderdate = (Date) obj.get("orderdate");
+		orderHead.setOrderNo(orderNo);
+		orderHead.setBuyerCd(buyerCd);
+		orderHead.setOrderdate(orderdate);
+		
+//		orderHead.setOrderNo("3");
+//		orderItem.setOrderNo("3");
+//		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
+//		
+//		head.insert(orderHead);
+//		item.insert(orderItem);
 		
 		
 		
-		List<OrderItem> itmeList = is.itemList(orderHead.getOrderNo());
+		List<OrderItem> itemList = item.itemList(orderHead.getOrderNo());
 		
-		model.addAttribute("itmeList", itmeList);
+		model.addAttribute("itemList", itemList);
 		
 		return "nolay/orderInsert";
 	}

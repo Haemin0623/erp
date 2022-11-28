@@ -20,8 +20,9 @@ create table m_buyer(
     address     varchar2(300) not null,
     tel         varchar2(20) not null,
     email       varchar2(50) not null,
+    adddate		date not null,
     del         varchar2(1) DEFAULT 'N' not null,
-    deldate		date,
+    statusdate	date,
     
     constraint check_del check(del in ('N', 'Y')),
     constraint fk_buyer_country_cd foreign key (country_cd) references m_country(country_cd)
@@ -48,8 +49,9 @@ create table m_pricing(
     price       number(10) not null,
     currency    varchar2(10) not null,
     discountrate number(10) not null,
+    adddate		date not null,
     del         varchar2(1) DEFAULT 'N' not null,
-    deldate		date,
+    statusdate	date,
     
     constraint check_del3 check(del in ('N', 'Y')),
     constraint pk_pricing PRIMARY KEY(buyer_cd, product_cd, startdate ,enddate),
@@ -64,8 +66,9 @@ create table m_employee(
     department  varchar2(30) not null,
     job         varchar2(30) not null,
     authority   varchar2(1) default 'N' not null,
+    adddate		date not null,
     del         varchar2(1) DEFAULT 'N' not null,
-    deldate		date,
+    statusdate	date,
     
      constraint check_del4 check(del in ('N', 'Y')),
      constraint check_authority check(authority in ('N', 'Y'))
