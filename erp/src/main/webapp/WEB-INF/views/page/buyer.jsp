@@ -84,7 +84,7 @@
 		<form action = "">
 		
 		고객코드 <input type="text" name="buyerCd">
-		고객명 <input type="text" name="name">
+		고객명 <input type="text" name="bname">
 		담당자 <input type="text" name="manager">
 		국가코드
 			<select>
@@ -119,7 +119,7 @@
 			<tr>
 				<td><input type="checkbox" value="${buyer.del}"></td>
 				<td>${buyer.buyerCd }</td>
-				<td>${buyer.name }</td>
+				<td>${buyer.bname }</td>
 				<td>${buyer.manager}</td>
 				<td>${buyer.tel}</td>
 				<td>${buyer.email}</td>
@@ -140,7 +140,7 @@
 				
 				<form action="">
 					고객코드<input type="text" name="buyerCd"><br>
-					고객명<input type="text" name="name"><br>
+					고객명<input type="text" name="bname"><br>
 					담당자<input type="text" name="manager"><br>
 					국가코드
 						<select>
@@ -175,9 +175,9 @@
 <!-- 							<option>비활성</option> -->
 <!-- 						</select> -->
 					고객코드<input type="text" value="${buyer.buyerCd}" name="buyerCd"><br>
-					고객명<input type="text" value="${buyer.name}" name="name"><br>
+					고객명<input type="text" value="${buyer.bname}" name="bname"><br>
 					담당자<input type="text" value="${buyer.manager}" name="manager"><br>
-					전화번호<input type="text" value="${buyer.name}" name="tel"><br>
+					전화번호<input type="text" value="${buyer.tel}" name="tel"><br>
 					이메일<input type="text" value="${buyer.email}" name="email"><br>
 					주소<input type="text" value="${buyer.address}" name="address"><br>
 					국가코드

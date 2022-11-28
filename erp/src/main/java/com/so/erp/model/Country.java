@@ -6,7 +6,7 @@ import lombok.Data;
 public class Country {
 	
 	private String countryCd; 
-    private String name; 
+    private String cname; 
     private int callingCd;
 
 }
