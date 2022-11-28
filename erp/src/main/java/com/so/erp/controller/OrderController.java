@@ -16,14 +16,15 @@ import com.so.erp.service.OrderItemService;
 public class OrderController {
 
 	@Autowired
-	private OrderHeadService head;
+	private OrderHeadService hs;
 	@Autowired
-	private OrderItemService item;
+	private OrderItemService is;
+	@Autowired
 	
 	@RequestMapping("order")
 	public String order(Model model) {
 		
-		List<OrderHead> headList = head.list();
+		List<OrderHead> headList = hs.list();
 		
 		model.addAttribute("headList", headList);
 		
@@ -36,12 +37,12 @@ public class OrderController {
 		orderItem.setOrderNo("3");
 		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
 		
-		head.insert(orderHead);
-		item.insert(orderItem);
+		hs.insert(orderHead);
+		is.insert(orderItem);
 		
 		
 		
-		List<OrderItem> itmeList = item.itemList(orderHead.getOrderNo());
+		List<OrderItem> itmeList = is.itemList(orderHead.getOrderNo());
 		
 		model.addAttribute("itmeList", itmeList);
 		

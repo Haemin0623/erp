@@ -14,5 +14,6 @@ public class OrderHead {
     private String reason;
     private String status;
     private Date statusdate;
+    private String signempCd;
     private String del;
 }
