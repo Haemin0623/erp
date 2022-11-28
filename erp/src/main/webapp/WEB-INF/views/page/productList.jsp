@@ -101,7 +101,7 @@
 					<td>${productList.adddate}</td>
 					<td>수정버튼</td>
 			</tr>
-			</c:forEach>
+			</c:forEach> 
 		</table>
 	</form>
 </div>
