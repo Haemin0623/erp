@@ -15,7 +15,7 @@ create table m_country(
 create table m_buyer(
     buyer_cd    varchar2(40) not null PRIMARY KEY,
     country_cd  varchar2(3) not null,
-    name        varchar2(100) not null,
+    bname        varchar2(100) not null,
     manager     varchar2(100) not null,
     address     varchar2(300) not null,
     tel         varchar2(20) not null,
@@ -30,7 +30,7 @@ create table m_buyer(
 
 create table m_product(
     product_cd  varchar2(40) not null PRIMARY KEY,
-    name        varchar2(100) not null,
+    pname        varchar2(100) not null,
     volume      varchar2(10) not null,
     unit        varchar2(10) not null,
     category    varchar2(40) not null,
@@ -61,7 +61,7 @@ create table m_pricing(
     
 create table m_employee(
     employee_cd varchar2(40) not null PRIMARY KEY,
-    name        varchar2(100) not null,
+    ename        varchar2(100) not null,
     password    varchar2(30) not null,
     department  varchar2(30) not null,
     job         varchar2(30) not null,
