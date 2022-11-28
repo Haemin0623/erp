@@ -14,8 +14,23 @@
 		width: 
 	}
 	
+	.scrollwrap {position: relative; display: block; width: 1000px; overflow-x: auto;}
+	.scrollcontent {width: 2200px;}
+	
 </style>
 
+<script type="text/javascript">
+
+	function allCheck(allCheck)  {
+		  const checkboxes 
+		       = document.getElementsByName('check');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = allCheck.checked;
+		  })
+		}
+</script>
+	
 </head>
 <body>
 	<h1>주문 현황</h1>
@@ -23,32 +38,32 @@
 	<div id="searchBox">
 		<form action="">		
 			<div>
-				주문번호 <input type="text" name="orderSearch">
+				주문번호 <input type="text" name="orderSearch" value="">
 				상품코드(명) <input type="text" name="productSearch" placeholder="상품코드/상품명">
 				고객코드(명)
-					<select>
+					<select name="buyerSearch">
 						<c:forEach var="buyer" items="${buyerList}">
-							<option>${buyer.buyerCd}(${buyer.name})</option>
+							<option>${buyer.buyerCd}(${buyer.bname})</option>
 						</c:forEach>
 					</select>
 				영업담당자
-					<select>
+					<select name="salesSearch">
 						<c:forEach var="emp" items="${empList}">
 							<c:if test="${emp.department=='영업'}">
-								<option>${emp.name} ${emp.job}(${emp.department})</option>
+								<option>${emp.ename} ${emp.job}(${emp.department})</option>
 							</c:if>
 						</c:forEach>
 					</select>
 				승인자
-					<select>
+					<select name="approverSearch">
 						<c:forEach var="emp" items="${empList}">
 							<c:if test="${emp.department=='관리'}">
-								<option>${emp.name} ${emp.job}(${emp.department})</option>
+								<option>${emp.ename} ${emp.job}(${emp.department})</option>
 							</c:if>
 						</c:forEach>
 					</select>
-				신청일 <input type="date" name="addDateSearch1"> - <input type="date" name="addDateSearch2">
-				납품요청일 <input type="date" name="reqDateSearch1"> - <input type="date" name="reqDateSearch2">
+				신청일 <input type="date" name="addDateSearch"> - <input type="date" name="addDateSearch">
+				납품요청일 <input type="date" name="reqDateSearch"> - <input type="date" name="reqDateSearch">
 				상태 
 					<select>
 						<option value="" selected="selected">전체 보기
@@ -61,7 +76,7 @@
 				국가코드
 					<select>
 						<c:forEach var="country" items="${countryList}">
-							<option>${country.name}(${country.countryCd})</option>
+							<option>${country.cname}(${country.countryCd})</option>
 						</c:forEach>
 					</select>
 				단어 검색 <input type="text" name="wordSearch">
@@ -70,10 +85,11 @@
 		</form>
 	</div>	<!-- searchBox -->
 	
-	<div id="table">
-		<table style="border: 1px;">
+	<div id="table" class="wrap">
+	<div class="scrollwrap">
+		<table class="scrollcontent">
 			<tr>
-				<th><input type="checkbox"></th>
+				<th><input type="checkbox" name="check" value="allcheck" onclick="allCheck(this)"></th>
 				<th>주문일</th>
 				<th>주문번호</th>
 				<th>상품코드</th>
@@ -95,8 +111,9 @@
 				
 				
 			</tr>
+		<c:forEach var="item" items="${orderStatusList}">
 			<tr>
-			<c:forEach var="item" items="${orderStatusList}">
+				<td><input type="checkbox" name="check"></td>
 				<td>${item.orderdate }</td>
 				<td>${item.orderNo }</td>
 				<td>${item.productCd }</td>
@@ -107,8 +124,12 @@
 				<td>${item.ename }</td>
 				<td>${item.status }</td>
 				<td>${item.statusdate }</td>
-					<c:forEach var="emp" items="${empList}">
-						<c:if test="${item.signempCd }==${emp.employeeCd}">
+			<%-- 	<td>${item.signempCd }</td> --%>
+				 		<c:if test="${item.signempCd==null }">
+				 			<td>예정</td>
+				 		</c:if>
+				 	<c:forEach var="emp" items="${empList}">
+						<c:if test="${item.signempCd ==emp.employeeCd}">
 							<td>${emp.ename }</td>
 						</c:if>
 					</c:forEach>
@@ -119,9 +140,11 @@
 				<td>${item.tel }</td>
 				<td>${item.email }</td>
 				<td>${item.remark }</td>
-			</c:forEach>
 			</tr>
+		</c:forEach>
 		</table>
+	</div>
+	<p class="scroll">스크롤 위치</p>
 	</div>
 
 

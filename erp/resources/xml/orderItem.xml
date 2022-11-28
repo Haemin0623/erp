@@ -12,15 +12,16 @@
 	</select>
 	
 	<select id="orderStatusList" resultType="orderItem">
-		select	*
+		select	distinct *
 		from	order_head h, 
 				order_item i, 
 				m_product p, 
 				m_employee e, 
 				m_buyer b
-   		where i.product_cd=p.product_cd 
+   		where h.order_no=i.order_no
+   			and i.product_cd=p.product_cd 
       		and h.employee_cd=e.employee_cd
         	and h.buyer_cd=b.buyer_cd
-    	order by h.orderdate desc
+    	order by h.orderdate desc , h.order_no asc
 	</select>
 </mapper>
