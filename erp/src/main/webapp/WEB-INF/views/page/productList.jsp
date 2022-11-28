@@ -105,11 +105,11 @@
 					등록일 <input type="text" name="adddDate"> ~ <input type="text" name="adddDate2">
 				</span>
 				<span>
-					상태 <select>
-							<option value="" selected="selected">모두보기
-							<option value="N">등록중
-							<option value="Y">삭제완료
-						</select>
+				상태 <select>
+						<option value="" selected="selected">모두보기
+						<option value="N">등록중
+						<option value="Y">삭제완료
+					</select>
 				</span>
 				<input type="submit" value="검색" style="float: right;">
 		</form>
@@ -187,6 +187,7 @@
 				
 				
 				<form action="" name="frm">
+				<p>상품등록</p>
 					상품코드<input type="text" name="productCd" readonly="readonly"><br>
 					상품명<input type="text" name="orderdate"><br>
 					용량<input type="text" name="buyerCd"><br>

@@ -14,7 +14,7 @@ public class Product {
     private String category;
     private Date adddate;
     private String del;
-    private Date deldate;
+    private Date statusdate;
 	
 //    search용 등록일
     private Date adddate2;
