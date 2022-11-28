@@ -292,13 +292,15 @@
 		     url: 'orderInsert.do',
 		     traditional: true,
 		     data: {
-		    	 head: JSON.sringify(head),
+		    	 head: JSON.stringify(head),
 		    	 items: JSON.stringify(items)
 		     },
 		     dataType: 'json',
-		     success: function (res) {
-		        if (res.result) {
+		     success: function (result) {
+		        if (result) {
 					pageView('order.do');
+		        } else {
+		        	alert("실패");
 		        }
 			}
 	   });

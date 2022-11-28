@@ -4,7 +4,7 @@
 <mapper namespace="itemns">
 
 	<insert id="insert" parameterType="orderItem">
-		insert into order_item values (#{orderNo}, #{productCd}, #{requestQty}, #{requsetDate}, #{price}, #{amount}, #{remark}, 'N', null)
+		insert into order_item values (#{orderNo}, #{productCd}, #{requestqty}, #{requsetdate}, #{price}, #{amount}, #{remark})
 	</insert>
 	
 	<select id="itemList" parameterType="integer" resultType="orderItem">

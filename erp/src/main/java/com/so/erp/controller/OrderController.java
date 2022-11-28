@@ -29,6 +29,7 @@ import net.sf.json.JSONArray;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 @Controller
 public class OrderController {
@@ -56,44 +57,71 @@ public class OrderController {
 		return "nolay/order";
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	@RequestMapping("orderInsert")
-//	@ResponseBody
-//	public String orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String item) {		
-//		
-//
-//		JSONParser p = new JSONParser();
-//		JSONObject obj = (JSONObject) p.parse(head);
-//		
-//		System.out.println(obj.toString());
-//		OrderHead orderHead = new OrderHead();
-//		String orderNo = (String) obj.get("orderNo");
-//		String buyerCd = (String) obj.get("buyerCd");
-//		Date orderdate = (Date) obj.get("orderdate");
-//		orderHead.setOrderNo(orderNo);
-//		orderHead.setBuyerCd(buyerCd);
-//		orderHead.setOrderdate(orderdate);
-//		
-//		List<Map<String,Object>> orderItems = new ArrayList<>();
-//		orderItems = JSONArray.fromObject(item);
-//		
-//		for (Map<String,Object> orderItem : orderItems )
-//		
-////		orderHead.setOrderNo("3");
-////		orderItem.setOrderNo("3");
-////		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
-////		
-////		head.insert(orderHead);
-////		item.insert(orderItem);
-//		
-//		
-//		
-//		List<OrderItem> itemList = is.itemList(orderHead.getOrderNo());
-//		
-//		model.addAttribute("itemList", itemList);
-//		
-//		return "nolay/orderInsert";
-//	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("orderInsert")
+	@ResponseBody
+	public boolean orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String items) throws ParseException {		
+		
+		boolean result = true;
+		
+		try {
+			
+			JSONParser p = new JSONParser();
+			JSONObject obj = (JSONObject) p.parse(head);
+			
+			System.out.println(obj.toString());
+			OrderHead orderHead = new OrderHead();
+			String orderNo = "221128CVS002001";
+			System.out.println("1");
+			String buyerCd = (String) obj.get("buyerCd");
+			System.out.println("2");
+			String date = (String) obj.get("orderdate");
+			Date orderdate = Date.valueOf(date);
+			System.out.println(orderdate);
+			orderHead.setOrderNo(orderNo);
+			orderHead.setBuyerCd(buyerCd);
+			orderHead.setOrderdate(orderdate);
+			orderHead.setEmployeeCd("SAL005");
+			
+			System.out.println("헤드 삽입");
+			hs.insert(orderHead);
+			System.out.println("헤드 삽입완");
+			
+			List<Map<String,Object>> orderItems = new ArrayList<>();
+			orderItems = JSONArray.fromObject(items);
+			
+			OrderItem item = new OrderItem(); 
+			
+			for (Map<String,Object> orderItem : orderItems) {
+				
+				System.out.println(orderItem.toString());
+				
+				String productCd = (String) orderItem.get("productCd");
+				int requestqty = (int) orderItem.get("requestqty");
+				int price = (int) orderItem.get("price");
+				int amount = (int) orderItem.get("amount");
+				Date requestdate = (Date) orderItem.get("requestdate");
+				String remark = (String) orderItem.get("remark");
+				
+				item.setOrderNo(orderNo);
+				item.setProductCd(productCd);
+				item.setRequestqty(requestqty);
+				item.setRequestdate(requestdate);
+				item.setPrice(price);
+				item.setAmount(amount);
+				item.setRemark(remark);
+				
+				is.insert(item);
+			}
+		
+		} catch (Exception e) {
+			e.getMessage();
+			result = false;
+		}
+		
+		return result;
+	}
 
 
 	@RequestMapping("orderStatus")
