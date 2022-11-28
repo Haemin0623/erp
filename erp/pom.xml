@@ -16,7 +16,12 @@
 		<org.apache.tiles-version>3.0.8</org.apache.tiles-version>
 	</properties>
 	<dependencies>
-		
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>
+		</dependency>
 		<!-- Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>

@@ -98,9 +98,7 @@ create table order_item(
     requestdate date not null,
     price       number(10) not null,
     amount      number(20) not null,
-    remark      varchar2(300),
-    del         varchar2(1) DEFAULT 'N' not null,
-    deldate		date,
+    remark      varchar2(300)
     
     constraint check_del6 check(del in ('N', 'Y')),
     CONSTRAINT pk_order_item PRIMARY KEY(order_no, product_cd),

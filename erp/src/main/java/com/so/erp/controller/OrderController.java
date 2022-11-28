@@ -1,11 +1,16 @@
 package com.so.erp.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
@@ -19,6 +24,8 @@ import com.so.erp.service.EmployeeService;
 import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
 import com.so.erp.service.ProductService;
+
+import net.sf.json.JSONArray;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -49,6 +56,7 @@ public class OrderController {
 		return "nolay/order";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("orderInsert")
 	@ResponseBody
 	public String orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String item) {		
@@ -65,6 +73,9 @@ public class OrderController {
 		orderHead.setOrderNo(orderNo);
 		orderHead.setBuyerCd(buyerCd);
 		orderHead.setOrderdate(orderdate);
+		
+		List<Map<String,Object>> orderItem = new ArrayList<>();
+		orderItem = JSONArray.fromObject(item);
 		
 //		orderHead.setOrderNo("3");
 //		orderItem.setOrderNo("3");

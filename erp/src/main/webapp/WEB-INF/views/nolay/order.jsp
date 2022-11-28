@@ -158,7 +158,7 @@
 				<button id="close">팝업닫기</button>
 				
 				<form action="" name="frm">
-					주문번호<input type="text" readonly="readonly"><br>
+					주문번호<input type="text" name="orderNo" readonly="readonly"><br>
 					발주일<input type="date" name="orderdate"><br>
 					고객코드<input type="text" name="buyerCd"><br>
 					상품코드<input type="text" name="productCd"><br>
@@ -183,6 +183,10 @@
 							<th>삭제</th>
 						</tr>
 					</table>
+				
+					
+					<button id="insertOrder">등록</button>
+					
 					 
 
 `				</div>
@@ -216,14 +220,12 @@
 		const requestdate = frm.requestdate.value;
 		const remark = frm.remark.value;
 		
-		const addItemTable = document.querySelector('#addItemTable');
-		
 		if (productCd == '' || requestqty == '' || price == '' || 
 				amount == '' || requestdate == '' || remark == ''){
 			alert('값을 채워넣어주세요');
 		} else {
 			
-			addItemTable.append(
+			$('#addItemTable').append(
 					"<tr>" +
 						"<td>" + productCd + "</td>" +
 						"<td>" + requestqty + "</td>" +
@@ -246,33 +248,64 @@
 	
 	document.querySelector("#addItem").addEventListener("click", changeTable);
 	
+	function deleteItem(e) {
+		e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+		
+	}
+	
 	
 	function insertOrder() {
-		var formData = new FormData();
-		formData.append('orderdate', frm.orderdate.value);
-		formData.append('buyerCd', frm.buyerCd.value);
-		formData.append('productCd', frm.productCd.value);
-		formData.append('buyerName', frm.buyerName.value);
-		formData.append('productName', frm.productName.value);
-		formData.append('requestqty', frm.requestqty.value);
-		formData.append('price', frm.productCd.value);
-		formData.append('requestdate', frm.productCd.value);
-		formData.append('remark', frm.productCd.value);
+		const table = document.querySelector('#addItemTable');
+		const rows = table.getElementsByTagName("tr");
+		const tableLength = table.rows.length-1;
 		
-		var ajaxOption = {
-			url : "orderInsert.do",
-			async : true,
-			data : formData,
-			type : "POST",
-			dataType : "html",
-			cache : false
+		const head = {
+			orderNo: frm.orderNo.value,
+			buyerCd: frm.buyerCd.value,
+			orderdate: frm.orderdate.value
 		};
 		
-		$.ajax(ajaxOption).done(function(data) {
-			$('#addItemTable').children().remove();
-			$('#addItemTable').html(data);
-		});
+		const items = new Array(table.rows.length-1);
+		
+		
+		
+		for (let i = 1; i < tableLength; i++) {
+			let cells = rows[i].getElementsByTagName("td");
+			
+			items[i] = { 
+				orderNo: frm.orderNo.value,
+				productCd: cells[0].firstChild.data,
+				requestqty: cells[1].firstChild.data,
+				price: cells[2].firstChild.data,
+				amount: cells[3].firstChild.data,
+				requestdate: cells[4].firstChild.data,
+				remark: cells[5].firstChild.data
+			};
+			
+			console.log(items[i]);
+		};
+		
+		console.log(items);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'orderInsert.do',
+		     traditional: true,
+		     data: {
+		    	 head: JSON.sringify(head),
+		    	 items: JSON.stringify(items)
+		     },
+		     dataType: 'json',
+		     success: function (res) {
+		        if (res.result) {
+					pageView('order.do');
+		        }
+			}
+	   });
 	}
+	
+	document.querySelector("#insertOrder").addEventListener("click", insertOrder);
+	
 	
 	// 등록 후 테이블에 추가하기
 </script>
