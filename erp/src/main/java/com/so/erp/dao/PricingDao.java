@@ -6,8 +6,7 @@ import com.so.erp.model.Pricing;
 
 public interface PricingDao {
 
-	List<Pricing> pricingList();
+	List<Pricing> pricingList(Pricing pricing);
 
-	List<Pricing> searchList(Pricing pricing);
 
 }

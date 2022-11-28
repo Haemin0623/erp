@@ -3,38 +3,36 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pricingns">
 
-	<select id="pricingList" resultType="pricing">
-		select * from m_pricing
-	</select>
-	
-	<select id="searchList" parameterType="pricing" resultType="pricing" >
+	<select id="pricingList" parameterType="pricing" resultType="pricing">
 		select * from m_pricing
 		<where >
-			<if test="buyerCd != null or buyerCd != ''" >
-				buyerCd = #{buyerCd}
+			<if test="buyerCd != null and buyerCd != ''" >
+				buyer_cd like '%'||#{buyerCd}||'%'
 			</if>
 			<trim prefixOverrides="and"></trim>
-			<if test="productCd != null or productCd != ''">
-				productCd = #{productCd}
+			<if test="productCd != null and productCd != ''">
+				product_cd like '%'||#{productCd}||'%'
 			</if>
 			<trim prefixOverrides="and"></trim>
-			<if test="price != null or price != ''">
+			<if test="price != 0">
 				price = #{price}
 			</if>
 			<trim prefixOverrides="and"></trim>
-			<if test="validDate != null or validDate != ''">
+			<if test="validDate != null and validDate != ''">
 				startdate <![CDATA[<=]]> #{validDate} and enddate <![CDATA[>=]]> #{validDate}
 			</if>
 			<trim prefixOverrides="and"></trim>
-			<if test="discountrate != null or discountrate != ''">
-				discountRate = #{discountRate}
+			<if test="discountrate != 0">
+				discountrate = #{discountrate}
 			</if>
 			<trim prefixOverrides="and"></trim>
-			<if test="currency != null or currency != ''">
+			<if test="currency != null and currency != ''">
 				currency = #{currency}
 			</if>
-			
 		</where>
+		order by startdate desc
 	</select>
+	
+	
 	
 </mapper>

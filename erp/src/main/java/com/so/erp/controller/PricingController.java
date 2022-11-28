@@ -17,17 +17,8 @@ public class PricingController {
 	private PricingService prs;
 	
 	@RequestMapping("pricing")
-	public String pricing(Model model) {
-		List<Pricing> pricingList = prs.pricingList();
-		
-		model.addAttribute("pricingList", pricingList);
-		return "page/pricing";
-	}
-	
-	@RequestMapping("searchList")
-	public String searchList(Model model, Pricing pricing) {
-		List<Pricing> pricingList = prs.searchList(pricing);
-
+	public String pricing(Model model, Pricing pricing) {
+		List<Pricing> pricingList = prs.pricingList(pricing);
 		model.addAttribute("pricingList", pricingList);
 		return "page/pricing";
 	}

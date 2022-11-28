@@ -56,44 +56,44 @@ public class OrderController {
 		return "nolay/order";
 	}
 	
-	@SuppressWarnings("unchecked")
-	@RequestMapping("orderInsert")
-	@ResponseBody
-	public String orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String item) {		
-		
-
-		JSONParser p = new JSONParser();
-		JSONObject obj = (JSONObject) p.parse(head);
-		
-		System.out.println(obj.toString());
-		OrderHead orderHead = new OrderHead();
-		String orderNo = (String) obj.get("orderNo");
-		String buyerCd = (String) obj.get("buyerCd");
-		Date orderdate = (Date) obj.get("orderdate");
-		orderHead.setOrderNo(orderNo);
-		orderHead.setBuyerCd(buyerCd);
-		orderHead.setOrderdate(orderdate);
-		
-		List<Map<String,Object>> orderItems = new ArrayList<>();
-		orderItems = JSONArray.fromObject(item);
-		
-		for (Map<String,Object> orderItem : orderItems )
-		
-//		orderHead.setOrderNo("3");
-//		orderItem.setOrderNo("3");
-//		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
+//	@SuppressWarnings("unchecked")
+//	@RequestMapping("orderInsert")
+//	@ResponseBody
+//	public String orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String item) {		
 //		
-//		head.insert(orderHead);
-//		item.insert(orderItem);
-		
-		
-		
-		List<OrderItem> itemList = is.itemList(orderHead.getOrderNo());
-		
-		model.addAttribute("itemList", itemList);
-		
-		return "nolay/orderInsert";
-	}
+//
+//		JSONParser p = new JSONParser();
+//		JSONObject obj = (JSONObject) p.parse(head);
+//		
+//		System.out.println(obj.toString());
+//		OrderHead orderHead = new OrderHead();
+//		String orderNo = (String) obj.get("orderNo");
+//		String buyerCd = (String) obj.get("buyerCd");
+//		Date orderdate = (Date) obj.get("orderdate");
+//		orderHead.setOrderNo(orderNo);
+//		orderHead.setBuyerCd(buyerCd);
+//		orderHead.setOrderdate(orderdate);
+//		
+//		List<Map<String,Object>> orderItems = new ArrayList<>();
+//		orderItems = JSONArray.fromObject(item);
+//		
+//		for (Map<String,Object> orderItem : orderItems )
+//		
+////		orderHead.setOrderNo("3");
+////		orderItem.setOrderNo("3");
+////		orderItem.setAmount(orderItem.getPrice() * orderItem.getRequestqty());
+////		
+////		head.insert(orderHead);
+////		item.insert(orderItem);
+//		
+//		
+//		
+//		List<OrderItem> itemList = is.itemList(orderHead.getOrderNo());
+//		
+//		model.addAttribute("itemList", itemList);
+//		
+//		return "nolay/orderInsert";
+//	}
 
 
 	@RequestMapping("orderStatus")

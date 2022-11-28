@@ -15,12 +15,8 @@ public class PricingDaoImpl implements PricingDao {
 	private SqlSessionTemplate sst;
 
 	@Override
-	public List<Pricing> pricingList() {
-		return sst.selectList("pricingns.pricingList");
+	public List<Pricing> pricingList(Pricing pricing) {
+		return sst.selectList("pricingns.pricingList", pricing);
 	}
 
-	@Override
-	public List<Pricing> searchList(Pricing pricing) {
-		return sst.selectList("pricingns.searchList", pricing);
-	}
 }

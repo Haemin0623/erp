@@ -15,12 +15,8 @@ public class PricingServiceImpl implements PricingService {
 	private PricingDao prd;
 
 	@Override
-	public List<Pricing> pricingList() {
-		return prd.pricingList();
+	public List<Pricing> pricingList(Pricing pricing) {
+		return prd.pricingList(pricing);
 	}
 
-	@Override
-	public List<Pricing> searchList(Pricing pricing) {
-		return prd.searchList(pricing);
-	}
 }

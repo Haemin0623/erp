@@ -128,13 +128,13 @@ insert into M_product values ('SAEUOOGGANG', '새우깡', '100g', '개', '과자
 
 --판매가 현서
 select * from m_pricing;
-insert into m_pricing values('CVS001', 'SN0001', '2021-05-17', '2022-12-01', 1200, '원(₩)', 0, 'N', NULL);
-insert into m_pricing values('CVS002', 'SN0002', '2022-03-12', '2023-02-27', 1500, '원(₩)', 0, 'N', NULL);
-insert into m_pricing values('CVS003', 'SN0003', '2022-07-28', '2022-12-28', 1700, '원(₩)', 2, 'N', NULL);
-insert into m_pricing values('CVS004', 'SN0004', '2021-11-04', '2023-05-26', 3500, '원(₩)', 4, 'N', NULL);
-insert into m_pricing values('CVS005', 'SN0005', '2022-01-08', '2023-07-12', 2400, '원(₩)', 0, 'N', NULL);
-insert into m_pricing values('MAT001', 'SN0006', '2022-04-22', '2022-10-04', 2000, '원(₩)', 0, 'N', NULL);
-insert into m_pricing values('MAT002', 'RA0001', '2022-03-14', '2023-04-08', 1400, '원(₩)', 1, 'N', NULL);
-insert into m_pricing values('FOD001', 'RA0002', '2021-07-30', '2023-10-31', 1300, '원(₩)', 0, 'N', NULL);
-insert into m_pricing values('FOD002', 'DR0001', '2022-09-02', '2022-11-07', 1000, '원(₩)', 3, 'N', NULL);
-insert into m_pricing values('FOD003', 'DR0002', '2022-06-16', '2023-05-27', 1100, '원(₩)', 0, 'N', NULL);
+insert into m_pricing values('CVS001', 'SN0001', '2021-05-17', '2022-12-01', 1200, '원(₩)', 0, sysdate, 'N', NULL);
+insert into m_pricing values('CVS002', 'SN0002', '2022-03-12', '2023-02-27', 1500, '원(₩)', 0, sysdate, 'N', NULL);
+insert into m_pricing values('CVS003', 'SN0003', '2022-07-28', '2022-12-28', 1700, '원(₩)', 2, sysdate, 'N', NULL);
+insert into m_pricing values('CVS004', 'SN0004', '2021-11-04', '2023-05-26', 3500, '원(₩)', 4, sysdate, 'N', NULL);
+insert into m_pricing values('CVS005', 'SN0005', '2022-01-08', '2023-07-12', 2400, '원(₩)', 0, sysdate, 'N', NULL);
+insert into m_pricing values('MAT001', 'SN0006', '2022-04-22', '2022-10-04', 2000, '원(₩)', 0, sysdate, 'N', NULL);
+insert into m_pricing values('MAT002', 'RA0001', '2022-03-14', '2023-04-08', 1400, '원(₩)', 1, sysdate, 'N', NULL);
+insert into m_pricing values('FOD001', 'RA0002', '2021-07-30', '2023-10-31', 1300, '원(₩)', 0, sysdate, 'N', NULL);
+insert into m_pricing values('FOD002', 'DR0001', '2022-09-02', '2022-11-07', 1000, '원(₩)', 3, sysdate, 'N', NULL);
+insert into m_pricing values('FOD003', 'DR0002', '2022-06-16', '2023-05-27', 1100, '원(₩)', 0, sysdate, 'N', NULL);

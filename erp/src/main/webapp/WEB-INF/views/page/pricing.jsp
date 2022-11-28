@@ -153,12 +153,12 @@
 	
 	<!-- 검색 박스 -->
 	<div class="searchBox">
-		<form action="searchList.do" id="searchList">
+		<form action="pricing.do" id="searchList">
 			<p>고객코드<input type="text" name="buyerCd" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			상품코드<input type="text" name="productCd" class="keyword"></p><p>
+				상품코드<input type="text" name="productCd" class="keyword"></p><p>
 			<p>판매가<input type="number" name="price" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			유효기간<input type="date" name="validDate" class="keyword"></p><p>
-			할인율<input type="number" name="discountrate" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				유효기간<input type="date" name="validDate" class="keyword"></p><p>
+				할인율<input type="number" name="discountrate" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="currency" class="keyword">
 					<option>통화단위 선택</option>
 					<option value="won">원(₩)</option>

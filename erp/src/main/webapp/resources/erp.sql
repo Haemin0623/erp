@@ -45,7 +45,7 @@ create table m_pricing(
     buyer_cd    varchar2(40) not null,
     product_cd  varchar2(40) not null,
     startdate   date not null,
-    enddate   date not null,    
+    enddate   	date not null,    
     price       number(10) not null,
     currency    varchar2(10) not null,
     discountrate number(10) not null,
