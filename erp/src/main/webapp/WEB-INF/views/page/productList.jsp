@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    
+   
 
 
 <style type="text/css">
@@ -84,6 +84,7 @@
 	}
 </style>
 
+
 </head>
 <body>
 	<h2>상품관리</h2>
@@ -106,23 +107,23 @@
 				</span>
 				<span>
 				상태 <select>
-						<option value="" selected="selected">모두보기
-						<option value="N">등록중
+						<option value="null">모두보기
+						<option value="N" selected="selected">등록중
 						<option value="Y">삭제완료
 					</select>
 				</span>
-				<input type="submit" value="검색" style="float: right;">
+				<input type="submit" value="검색" >
 		</form>
 	</div>
 	
 <div id="productList">
 	<span>
 		<button id="show">상품등록 </button>
-		<button>삭제</button>
+		<button type="button" onclick="deleteAction()">삭제</button>
 		<button>엑셀로 대량등록</button>
 	</span>	
 	<span>
-		<select>
+		<select >
 			<option>10개씩보기</option>
 			<option>50개씩보기</option>
 			<option>100개씩보기</option>
@@ -133,77 +134,74 @@
 	<form action="">
 		<table>
 			<tr>
-				<th>선택</th>
+				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
 				<th>상품코드</th>
 				<th>상품명</th>
 				<th>용량</th>
 				<th>단위</th>
 				<th>상품 카테고리</th>
 				<th>등록일</th>
+				<th>최종수정일</th>
+				<th>삭제여부</th>
 				<th>상품 수정</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr>
-					<td><input type="checkbox"></td>
-					<td>${productList.productCd }</td>
-					<td>${productList.name}</td>
-					<td>${productList.volume}</td>
-					<td>${productList.unit}</td>
-					<td>${productList.category}</td>
-					<td>${productList.adddate}</td>
-					<td><button>수정</button></td>
+				<td><input type="checkbox" name="checkRow" value="${productList.productCd }"></td>
+				<td>${productList.productCd }</td>
+				<td>${productList.name}</td>
+				<td>${productList.volume}</td>
+				<td>${productList.unit}</td>
+				<td>${productList.category}</td>
+				<td>${productList.adddate}</td>
+				<td>${productList.statusdate}</td>
+				<td>${productList.del}</td>
+				<td><button>수정</button></td>
 			</tr>
 			</c:forEach> 
 		</table>
 	</form>
 	<div align="center">
 			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
-			<c:if test="${pb.startPage > pb.pagePerBlock}">
-				<a href="productList.do?pageNum=1">
-					<span class="glyphicon glyphicon-fast-backward"></span></a>
-				<a href="productList.do?pageNum=${pb.startPage-1 }">
-					<span class="glyphicon glyphicon-triangle-left"></span></a>
+		<c:if test="${pb.startPage > pb.pagePerBlock}">
+			<a href="productList.do?pageNum=1">
+				<span class="glyphicon glyphicon-fast-backward"></span></a>
+			<a href="productList.do?pageNum=${pb.startPage-1 }">
+				<span class="glyphicon glyphicon-triangle-left"></span></a>
+		</c:if>
+		<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
+			<c:if test="${pb.currentPage == i }">
+				<a href="productList.do?pageNum=${i }">${i }</a>
 			</c:if>
-			<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
-				<c:if test="${pb.currentPage == i }">
-					<a href="productList.do?pageNum=${i }">${i }</a>
-				</c:if>
-				<c:if test="${pb.currentPage != i }">
-					<a href="productList.do?pageNum=${i }">${i }</a>
-				</c:if>		
-			</c:forEach>
-			<!-- endPage보다 totalPage가 크면 보여줄 것이 뒤에 남아 있다 -->
-			<c:if test="${pb.endPage < pb.totalPage}">
-				<a href="productList.do?pageNum=${pb.endPage+1 }">
-					<span class="glyphicon glyphicon-triangle-right"></span></a>
-				<a href="productList.do?pageNum=${pb.totalPage }">
-					<span class="glyphicon glyphicon-fast-forward"></span></a>
+			<c:if test="${pb.currentPage != i }">
+				<a href="productList.do?pageNum=${i }">${i }</a>
 			</c:if>		
+		</c:forEach>
+		<!-- endPage보다 totalPage가 크면 보여줄 것이 뒤에 남아 있다 -->
+		<c:if test="${pb.endPage < pb.totalPage}">
+			<a href="productList.do?pageNum=${pb.endPage+1 }">
+				<span class="glyphicon glyphicon-triangle-right"></span></a>
+			<a href="productList.do?pageNum=${pb.totalPage }">
+				<span class="glyphicon glyphicon-fast-forward"></span></a>
+		</c:if>		
 	</div>
 </div>
 <div class="background">
-		<div class="window">
-			<div class="popup">
-				
-				
-				<form action="" name="frm">
-				<p>상품등록</p>
-					상품코드<input type="text" name="productCd" readonly="readonly"><br>
-					상품명<input type="text" name="orderdate"><br>
-					용량<input type="text" name="buyerCd"><br>
-					단위<input type="text" name="productCd"><br>
-					카테고리<input type="text" name="buyerName"><br>
-				</form>
-				<button id="addItem">추가</button>
-				<button id="close">팝업닫기</button>
-				<div id="addItemTable">
-					 
-
-				</div>
-				
-			</div>
+	<div class="window">
+		<div class="popup">
+			<form action="" name="frm">
+			<p>상품등록</p>
+				상품코드<input type="text" name="productCd" value="RA0003"readonly="readonly"><br>
+				상품명<input type="text" name="pname"><br>
+				용량<input type="text" name="volume"><br>
+				단위<input type="text" name="unit"><br>
+				카테고리<input type="text" name="category"><br>
+			</form>
+			<button id="addItem">추가</button>
+			<button id="close">닫기</button>
 		</div>
 	</div>
+</div>
 <script type="text/javascript">
 	// 등록 팝업 열기 닫기
 	function show() {
@@ -216,6 +214,43 @@
 	
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
+	
+	
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
+	}
+	
+	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+
+	function deleteAction(){
+		  var checkRow = new Array();
+		  $( "input[name='checkRow']:checked" ).each (function (){
+		    checkRow.push($(this).val()) ;
+		  });
+		  if(checkRow == ''){
+		    alert("삭제할 대상을 선택하세요.");
+		    return false;
+		  }
+		  $.ajax({
+			    url : "productDelete.do",
+			    type : "post",
+			    dataType:'json'
+			    data : { checkRows : checkRow },
+			    
+			    success : function(result){
+			    	if(result ==1){
+			    		alert("삭제완료");
+			    		window.opener.location.reload();
+			    	}else
+			    		alert("삭제실패");
+			    	 return false;
+			    }
+		  });
+	};
 </script>
 </body>
 </html>

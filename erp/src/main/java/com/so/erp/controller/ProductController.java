@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
@@ -37,4 +39,14 @@ public class ProductController {
 		
 		return "page/productList";
 	}
+	
+	@RequestMapping("productDelete")
+	@ResponseBody
+	public int productDelete(@RequestParam(value="checkRows[]")List<Product> checkRows){
+		int result = 0;
+		System.out.println(checkRows);
+		
+		return result;
+	}
+	
 }

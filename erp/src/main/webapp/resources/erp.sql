@@ -36,7 +36,7 @@ create table m_product(
     category    varchar2(40) not null,
     adddate     date       default sysdate not null,
     del         varchar2(1) not null,
-    statusdate		date,
+    statusdate	date,
     
      constraint check_del2 check(del in ('N', 'Y'))
 );

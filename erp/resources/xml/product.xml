@@ -55,7 +55,4 @@
 				</where>
 		</select>
 		
-	<select id="list" resultType="product">
-		select * from m_product
-	</select>
 	</mapper>
