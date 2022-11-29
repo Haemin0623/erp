@@ -8,4 +8,8 @@ public interface BuyerService {
 
 	List<Buyer> list();
 
+	int insert(Buyer buyer);
+
+	int delete(String buyerCd);
+
 }

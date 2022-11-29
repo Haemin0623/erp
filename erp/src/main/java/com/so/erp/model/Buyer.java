@@ -13,8 +13,10 @@ public class Buyer {
     private String manager;    
     private String address;   
     private String tel;        
-    private String email;      
+    private String email;
+    private Date adddate;
     private String del;        
-    private Date delDate;
+    private Date statusdate;
+
 
 }

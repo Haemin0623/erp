@@ -6,9 +6,8 @@
 	<select id="list" resultType="orderHead">
 		select * from order_head
 	</select>
-	
 	<insert id="insert" parameterType="orderHead">
-		insert into order_head values (#{orderNo}, #{buyerCd}, #{orderdate}, #{employeeCd}, null, '승인대기', null, null, 'N')
+		insert into order_head values (#{orderNo}, #{buyerCd}, #{orderdate}, #{employeeCd}, null, '승인대기', null, null, null)
 	</insert>
 	
 </mapper>

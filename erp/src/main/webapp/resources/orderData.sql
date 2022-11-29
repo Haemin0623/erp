@@ -28,7 +28,7 @@ insert into M_BUYER values ('FOD001', 'KR', 'CJ제일제당', '최선희','서�
 insert into M_BUYER values ('FOD002', 'KR', '롯데푸드', '김창률',	'서울특별시 강남구 테헤란로 123', '02-1234-5678', 'chang@naver.com',sysdate,'N', null);
 insert into M_BUYER values ('FOD003', 'KR', '오뚜기', '박수인',	'서울특별시 강남구 테헤란로 32', '02-1234-5678', 'sooin818@naver.com',sysdate,'N', null);
 insert into M_BUYER values ('FOD004', 'KR', '농심', '박현서',	'서울특별시 강남구 테헤란로 14', '02-1234-5678', 'phs@naver.com',sysdate,'N', null);
-insert into M_BUYER values ('FOD005', 'CN', '롯데푸드', 'Wang fei',	'서울특별시 강남구 테헤란로 123', '02-1234-5678', 'wangfei@google.com',sysdate, 'N', null);
+insert into M_BUYER values ('FOD005', 'CN', '롯데푸드', 'Wang fei', '서울특별시 강남구 테헤란로 123', '02-1234-5678', 'wangfei@google.com',sysdate, 'N', null);
 insert into M_BUYER values ('FOD006', 'CN', '칭따오', 'Zhao wei','서울특별시 강남구 테헤란로 12', '02-1234-5678', 'zhaowei@google.com',sysdate, 'N', null);
 insert into M_BUYER values ('FOD007', 'US', '크래프트푸드', 'Ashley Park','서울특별시 강남구 테헤란로 4', '02-1234-5678', 'ashleypark@google.com',sysdate, 'N', null);
 insert into M_BUYER values ('FOD008', 'US', '켈로그', 'John Brown','서울특별시 강남구 테헤란로 5', '02-1234-5678', 'johnbrown@google.com',sysdate, 'N', null);
@@ -37,8 +37,8 @@ insert into M_BUYER values ('FOD010', 'JP', '아지노모토', 'Toriyama Akira',
 insert into M_BUYER values ('FOD011', 'IN', '네슬레인디아', 'Kabir Bedi','서울특별시 강남구 테헤란로 44', '02-1234-5678', 'kabirbedi@google.com',sysdate,'N', null);
 insert into M_BUYER values ('FOD012', 'DE', '하리보', 'Michael Hofmann','서울특별시 강남구 테헤란로 12', '02-1234-5678', 'michaelhofmann@google.com',sysdate, 'N', null);
 insert into M_BUYER values ('FOD013', 'CH', '네슬레', 'Granit Xhaka','서울특별시 강남구 테헤란로 12', '02-1234-5678', 'granitxhaka@google.com',sysdate, 'N', null);
-insert into M_BUYER values ('FOD014', 'GB', '영국연합식품', 'James Brown',	'서울특별시 강남구 테헤란로 13', '02-1234-5678', 'jamesbrown@google.com',sysdate, 'N', null);
-insert into M_BUYER values ('FOD015', 'SG', '월마인터네셔널', 'Baihakki Khaizan',	'서울특별시 강남구 테헤란로 133', '02-1234-5678', 'baihakkikhaizan@google.com',sysdate, 'N', null);
+insert into M_BUYER values ('FOD014', 'GB', '영국연합식품', 'James Brown', '서울특별시 강남구 테헤란로 13', '02-1234-5678', 'jamesbrown@google.com',sysdate, 'N', null);
+insert into M_BUYER values ('FOD015', 'SG', '월마인터네셔널', 'Baihakki Khaizan', '서울특별시 강남구 테헤란로 133', '02-1234-5678', 'baihakkikhaizan@google.com',sysdate, 'N', null);
 
 
 --직원

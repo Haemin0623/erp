@@ -18,4 +18,14 @@ public class BuyerDaoImpl implements BuyerDao {
 	public List<Buyer> list() {
 		return sst.selectList("buyerns.list");
 	}
+
+	@Override
+	public int insert(Buyer buyer) {
+		return sst.insert("buyerns.insert", buyer); // buyer객체를 전달
+	}
+
+	@Override
+	public int delete(String buyerCd) {
+		return sst.delete("buyerns.delete",buyerCd);
+	}
 }

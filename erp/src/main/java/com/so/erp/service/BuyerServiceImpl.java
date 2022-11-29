@@ -19,4 +19,14 @@ public class BuyerServiceImpl implements BuyerService {
 		return bd.list();
 	}
 
+	@Override
+	public int insert(Buyer buyer) {
+		return bd.insert(buyer);
+	}
+
+	@Override
+	public int delete(String buyerCd) {
+		return bd.delete(buyerCd);
+	}
+
 }
