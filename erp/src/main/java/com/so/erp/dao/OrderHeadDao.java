@@ -12,4 +12,6 @@ public interface OrderHeadDao {
 
 	List<OrderHead> headItemList();
 
+	List<OrderHead> search(OrderHead orderHead);
+
 }

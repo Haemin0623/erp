@@ -83,14 +83,26 @@
 	<h1>주문 관리</h1>
 	
 	<div id="searchBox">
-		<form action="">		
-			주문번호<input type="number" name="orderNo">
-			고객코드<input type="text" name="buyerCd">
-			신청일<input type="date" name="orderDate">
-			상품코드<input type="text" name="productCD">
-			납품요청일<input type="date" name="requestDate">
-			<input type="submit" value="검색">
+		<form name="searchBoxx">		
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
+			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
+			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
+			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
+			
+			<select name="status">
+				<option value="null">모두</option>			
+				<option value="승인대기">승인대기</option>
+				<option value="승인요청">승인요청</option>
+				<option value="승인">승인</option>
+				<option value="반려">반려</option>
+			</select>
+			
+			상품코드<input type="text" name="productCd">
+			납품요청일<input type="date" name="requestdate">
+			
 		</form>
+			<button id="searchBtn">검색</button>
 	</div>
 	
 	<button id="show">추가 </button>
@@ -324,8 +336,47 @@
 	
 	document.querySelector("#insertOrder").addEventListener("click", insertOrder);
 	
+	function search() {
+		const orderNo = searchBoxx.orderNo.value;	
+		const buyerCd = searchBoxx.buyerCd.value;	
+		const orderFromDate = searchBoxx.orderFromDate.value;	
+		const orderToDate = searchBoxx.orderToDate.value;	
+		const employeeCd = searchBoxx.employeeCd.value;	
+		const status = searchBoxx.status.value;	
+		const productCd = searchBoxx.productCd.value;	
+		const requestdate = searchBoxx.requestdate.value;
+		console.log(orderNo);
+		console.log(buyerCd);
+		console.log(orderFromDate);
+		console.log(orderToDate);
+		console.log(employeeCd);
+		console.log(status);
+		console.log(productCd);
+		console.log(requestdate);
+		$.ajax({
+		     method: 'post',
+		     url: 'order.do',
+		     traditional: true,
+		     data: {
+		    	 orderNo: orderNo,
+		    	 buyerCd: buyerCd,
+		    	 orderFromDate: orderFromDate,
+		    	 orderToDate: orderToDate,
+		    	 employeeCd: employeeCd,
+		    	 status: status,
+		    	 productCd: productCd,
+		    	 requestdate: requestdate
+		     },
+		     success: function (result) {
+		    	 $('#content').children().remove();
+				 $('#content').html(result);
+			 }
+		     
+		     
+	   });
+	}
 	
-	// 등록 후 테이블에 추가하기
+	document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
 
 </html>

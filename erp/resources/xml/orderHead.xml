@@ -10,4 +10,24 @@
 		insert into order_head values (#{orderNo}, #{buyerCd}, #{orderdate}, #{employeeCd}, null, '승인대기', null, null, null)
 	</insert>
 	
+	<select id="search" parameterType="orderHead" resultType="orderHead">
+		select	*
+		from	order_head
+		<where>
+			<if test="orderNo != null and orderNo != ''">
+				order_no like '%' || #{orderNo} || '%'
+			</if>
+			<if test="buyerCd != null and buyerCd != ''">
+				and buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="orderFromDate != null and orderToDate != null">
+				and orderdate between #{orderFromDate} and #{orderToDate}
+			</if>
+			<if test="status != null and status != 'null'">
+				and status like '%' || #{status} || '%'
+			</if>
+		</where>
+			
+	</select> 
+	
 </mapper>

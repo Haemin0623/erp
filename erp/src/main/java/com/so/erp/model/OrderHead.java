@@ -16,4 +16,7 @@ public class OrderHead {
     private Date statusdate;
     private String signempCd;
     private String del;
+    
+    private Date orderFromDate;
+    private Date orderToDate;
 }

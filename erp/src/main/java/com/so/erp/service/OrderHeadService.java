@@ -12,4 +12,6 @@ public interface OrderHeadService {
 
 	List<OrderHead> headItemList();
 
+	List<OrderHead> search(OrderHead head);
+
 }

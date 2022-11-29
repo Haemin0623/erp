@@ -29,4 +29,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public List<OrderHead> headItemList() {
 		return head.headItemList();
 	}
+
+	@Override
+	public List<OrderHead> search(OrderHead orderHead) {
+		return head.search(orderHead);
+	}
 }

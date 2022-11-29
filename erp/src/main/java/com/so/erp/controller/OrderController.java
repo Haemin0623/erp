@@ -48,9 +48,11 @@ public class OrderController {
 	private BuyerService bs;
 	
 	@RequestMapping("order")
-	public String order(Model model) {
+	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
-		List<OrderHead> headList = hs.list();
+		System.out.println(orderHead.getOrderNo());
+		// List<OrderHead> headList = hs.list();
+		List<OrderHead> headList = hs.search(orderHead);
 		
 		model.addAttribute("headList", headList);
 		
