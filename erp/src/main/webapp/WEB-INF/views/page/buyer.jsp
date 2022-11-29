@@ -116,7 +116,6 @@
 			<th>국가코드</th>
 			<th>등록일</th>
 			<th>최종수정일</th>
-			<th>수정</th>
 		</tr>
 		<c:forEach var="buyer" items="${buyerList }">
 			<tr>
@@ -137,7 +136,6 @@
 				<td>${buyer.countryCd}</td>
 				<td>${buyer.adddate}</td>
 				<td>${buyer.statusdate}</td>
-				<td><button id="update">수정</button></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -260,6 +258,7 @@
 			     success: function (result) { //성공했을떄 호출할 콜백을 지정
 			    	 console.log(result);
 			        if (result) {
+			        	document.location.reload();
 						alert("입력성공");
 			        } else {
 			        	alert("실패");
