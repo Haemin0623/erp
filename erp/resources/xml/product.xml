@@ -11,7 +11,7 @@
 									product_cd like '%' || #{product.productCd} || '%'
 							</if>
 							<if test="product.pname!=null and product.pname!=''">
-									and name like '%' || #{product.pname} || '%'
+									and pname like '%' || #{product.pname} || '%'
 							</if>
 							<if test="product.volume!=null and product.volume!=''">
 									and volume like '%' || #{product.volume} || '%'
