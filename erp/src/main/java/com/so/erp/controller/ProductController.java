@@ -3,6 +3,8 @@ package com.so.erp.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 import com.so.erp.service.ProductService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 public class ProductController {
@@ -52,4 +57,50 @@ public class ProductController {
 		return result;
 	}
 	
+	@RequestMapping("productInsert")
+	@ResponseBody
+	public int productInsert(@RequestParam(name="items")String item) throws ParseException{
+		int result = 0;
+		JSONParser p = new JSONParser();
+		Object obj =  p.parse(item);
+		JSONObject productObj = JSONObject.fromObject(obj);
+		
+		Product product = new Product();
+		String category = (String) productObj.get("category");
+		String productCd = (String) productObj.get("productCd");
+		String pname = (String) productObj.get("pname");
+		String volume = (String) productObj.get("volume");
+		String unit = (String) productObj.get("unit");
+		
+		product.setProductCd(productCd);
+		product.setCategory(category);
+		product.setPname(pname);
+		product.setVolume(volume);
+		product.setUnit(unit);
+		
+		
+		
+		result = pds.insert(product);
+		return result;
+	}
+	
+	@RequestMapping("codeMix")
+	@ResponseBody
+	public String codeMix(@RequestParam(name="category")String codeMix) throws ParseException{
+		String code1= "";
+		String code2= "";
+		if(codeMix.equals("스낵")) {
+			code1 = "SN";
+			code2 = pds.selectCode(codeMix);
+			
+		}else if(codeMix.equals("라면")){
+			code1 = "RA";
+			code2 = pds.selectCode(codeMix);
+		}else {
+			code1 = "DR";
+			code2 = pds.selectCode(codeMix);
+		}
+		
+		return code1+code2;
+	}
 }

@@ -35,5 +35,15 @@ public class ProductServiceImpl implements ProductService {
 		return pds.checkRowDelete(productCd);
 	}
 
+	@Override
+	public int insert(Product product) {
+		return pds.insert(product);
+	}
+
+	@Override
+	public String selectCode(String category) {
+		return pds.selectCode(category);
+	}
+
 
 }

@@ -55,7 +55,16 @@
 					</if>
 				</where>
 		</select>
+		
 		<update id="checkRowDelete" parameterType="string">
 			update m_product set del='Y', statusdate = sysdate where product_cd=#{productCd}
 		</update>
+		
+		<insert id="insert" parameterType="product">
+			insert into m_product values(#{productCd}, #{pname}, #{volume}, #{unit},#{category}, sysdate, 'N', null)
+		</insert>
+		
+		<select id="selectCode" parameterType="String" resultType="String">
+			select LPAD(count(*)+1,4,0) from m_product where category = #{category}
+		</select>
 	</mapper>

@@ -198,8 +198,12 @@
 		<div class="popup">
 			<form action="" name="frm">
 			<p>상품등록</p>
-				카테고리<input type="text" name="category"><br>
-				상품코드<input type="text" name="productCd" value=""readonly="readonly"><br>
+				카테고리<select name="category" id="codeMix">
+					<option value="라면">라면</option>
+					<option value="스낵">스낵</option>
+					<option value="음료">음료</option>
+				</select><br>
+				상품코드<input type="text" name="productCd" readonly="readonly"><br>
 				상품명<input type="text" name="pname"><br>
 				용량<input type="text" name="volume"><br>
 				단위<input type="text" name="unit"><br>
@@ -262,7 +266,58 @@
 					console.log(result);
 			    }
 		  });
+		  
+		  
 	};
+	document.querySelector("#codeMix").addEventListener("click", codeMix);
+	
+	function codeMix() {
+		const categorys= frm.category.value;
+		
+		console.log(categorys);
+	
+		$.ajax({
+		    url : "codeMix.do",
+		    type : "post",
+		    traditional : true,
+		    data : { category: categorys  },
+		    success : function(data){
+		    	console.log(data);
+		    	frm.productCd.value=data;
+		    }
+	  	});
+	};
+	
+	
+	document.querySelector("#addItem").addEventListener("change", insert);
+	  
+	function insert() {
+		const item={
+			category: frm.category.value,
+			productCd: frm.productCd.value,
+			pname: frm.pname.value,
+			volume: frm.volume.value,
+			unit: frm.unit.value
+			};
+		
+		$.ajax({
+		    url : "productInsert.do",
+		    type : "post",
+		    traditional : true,
+		    data : { items: JSON.stringify(item)
+		    },
+		     dataType: 'json',
+		    success : function(result){
+		    	if(result ==1){
+		    		document.location.reload();
+		    		alert("등록완료");
+		    		
+		    	}else
+		    		alert("등록실패");
+				console.log(result);
+		    }
+	  	});
+	}
 </script>
 </body>
 </html>

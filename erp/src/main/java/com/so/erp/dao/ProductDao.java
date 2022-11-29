@@ -15,5 +15,9 @@ public interface ProductDao {
 
 	int checkRowDelete(String productCd);
 
+	int insert(Product product);
+
+	String selectCode(String category);
+
 
 }
