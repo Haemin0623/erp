@@ -1,5 +1,6 @@
 package com.so.erp.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,12 @@ public class ProductController {
 	
 	@RequestMapping("productDelete")
 	@ResponseBody
-	public int productDelete(@RequestParam(value="checkRows[]")List<Product> checkRows){
+	public int productDelete(@RequestParam(name="checkRows")List<String> checkRows){
 		int result = 0;
-		System.out.println(checkRows);
-		
+			for (int i= 0; i < checkRows.size(); i++) {
+				String productCd = checkRows.get(i);
+				result = pds.checkRowDelete(productCd);			
+				}
 		return result;
 	}
 	

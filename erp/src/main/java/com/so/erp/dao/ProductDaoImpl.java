@@ -37,4 +37,11 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> list() {
 		return sst.selectList("productns.list");
 	}
+
+	@Override
+	public int checkRowDelete(String productCd) {
+		return sst.update("productns.checkRowDelete",productCd);
+	}
+
+
 }

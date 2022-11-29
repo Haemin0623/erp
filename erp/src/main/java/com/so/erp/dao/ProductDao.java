@@ -13,4 +13,7 @@ public interface ProductDao {
 
 	List<Product> list();
 
+	int checkRowDelete(String productCd);
+
+
 }

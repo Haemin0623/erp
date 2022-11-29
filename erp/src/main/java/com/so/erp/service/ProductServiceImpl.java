@@ -29,4 +29,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> list() {
 		return pds.list();
 	}
+
+	@Override
+	public int checkRowDelete(String productCd) {
+		return pds.checkRowDelete(productCd);
+	}
+
+
 }

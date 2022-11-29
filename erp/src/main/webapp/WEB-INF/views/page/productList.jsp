@@ -106,7 +106,7 @@
 					등록일 <input type="text" name="adddDate"> ~ <input type="text" name="adddDate2">
 				</span>
 				<span>
-				상태 <select>
+				상태 <select name="del">
 						<option value="null">모두보기
 						<option value="N" selected="selected">등록중
 						<option value="Y">삭제완료
@@ -147,7 +147,14 @@
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr>
-				<td><input type="checkbox" name="checkRow" value="${productList.productCd }"></td>
+				<td>
+				<c:if test="${productList.del=='Y'}">
+					<input type="checkbox" name="checkRow" value="${productList.productCd }" disabled="disabled" >
+				</c:if>
+				<c:if test="${productList.del!='Y'}">
+					<input type="checkbox" name="checkRow" value="${productList.productCd }" >
+				</c:if>
+				</td>
 				<td>${productList.productCd }</td>
 				<td>${productList.pname}</td>
 				<td>${productList.volume}</td>
@@ -191,11 +198,12 @@
 		<div class="popup">
 			<form action="" name="frm">
 			<p>상품등록</p>
-				상품코드<input type="text" name="productCd" value="RA0003"readonly="readonly"><br>
+				카테고리<input type="text" name="category"><br>
+				상품코드<input type="text" name="productCd" value=""readonly="readonly"><br>
 				상품명<input type="text" name="pname"><br>
 				용량<input type="text" name="volume"><br>
 				단위<input type="text" name="unit"><br>
-				카테고리<input type="text" name="category"><br>
+				
 			</form>
 			<button id="addItem">추가</button>
 			<button id="close">닫기</button>
@@ -231,6 +239,9 @@
 		  $( "input[name='checkRow']:checked" ).each (function (){
 		    checkRow.push($(this).val()) ;
 		  });
+		  
+		  console.log(checkRow);
+		  
 		  if(checkRow == ''){
 		    alert("삭제할 대상을 선택하세요.");
 		    return false;
@@ -238,16 +249,17 @@
 		  $.ajax({
 			    url : "productDelete.do",
 			    type : "post",
-			    dataType:'json'
+			    traditional : true,
 			    data : { checkRows : checkRow },
 			    
 			    success : function(result){
 			    	if(result ==1){
+			    		document.location.reload();
 			    		alert("삭제완료");
-			    		window.opener.location.reload();
+			    		
 			    	}else
 			    		alert("삭제실패");
-			    	 return false;
+					console.log(result);
 			    }
 		  });
 	};

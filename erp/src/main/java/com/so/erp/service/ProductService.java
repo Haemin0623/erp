@@ -13,4 +13,7 @@ public interface ProductService {
 
 	List<Product> list();
 
+	int checkRowDelete(String productCd);
+
+
 }

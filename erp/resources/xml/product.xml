@@ -29,6 +29,7 @@
 						order by adddate desc)
 					a) 
 			where 	rn between #{pagingBean.startRow} and #{pagingBean.endRow}
+			
 		</select>
 		<select id="getTotal" parameterType="map" resultType="integer">
 			select 	count(*) 
@@ -54,5 +55,7 @@
 					</if>
 				</where>
 		</select>
-		
+		<update id="checkRowDelete" parameterType="string">
+			update m_product set del='Y', statusdate = sysdate where product_cd=#{productCd}
+		</update>
 	</mapper>
