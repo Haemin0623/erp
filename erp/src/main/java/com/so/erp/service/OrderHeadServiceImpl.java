@@ -24,4 +24,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 		head.insert(orderHead);
 		
 	}
+
+	@Override
+	public List<OrderHead> headItemList() {
+		return head.headItemList();
+	}
 }

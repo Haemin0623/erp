@@ -63,8 +63,8 @@
 			
 			<ul>
 				<li>주문</li>
-				<li><button onclick="changeContent('order.do')">주문관리</button></li>
-				<li>주문승인</li>
+				<li><button onclick="changeContent('order.do')">주문 관리</button></li>
+				<li><button onclick="changeContent('orderApproval.do')">주문 승인</button></li>
 			</ul>
 			
 			<ul>

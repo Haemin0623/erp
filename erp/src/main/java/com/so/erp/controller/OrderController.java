@@ -155,4 +155,16 @@ public class OrderController {
 		return "page/orderStatus";
 	}
 	
+	@RequestMapping("orderApproval")
+	public String orderApproval(Model model) {
+		List<OrderHead> headList = hs.list();
+		List<OrderItem> itemList = new ArrayList<OrderItem>();
+		for (OrderHead head:headList) {
+			//itemList = is.list(head.getOrderNo());
+		}
+		
+		model.addAttribute("headList", headList);
+		return "n/orderApproval";
+	}
+	
 }

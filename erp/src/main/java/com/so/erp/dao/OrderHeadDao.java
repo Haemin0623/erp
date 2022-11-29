@@ -10,4 +10,6 @@ public interface OrderHeadDao {
 
 	void insert(OrderHead orderHead);
 
+	List<OrderHead> headItemList();
+
 }

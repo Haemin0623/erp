@@ -23,4 +23,9 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	public void insert(OrderHead orderHead) {
 		sst.insert("headns.insert", orderHead);
 	}
+
+	@Override
+	public List<OrderHead> headItemList() {
+		return sst.selectList("headns.headItemList");
+	}
 }
