@@ -94,7 +94,7 @@
 					상품코드 <input type="text" name="productCd">
 				</span>
 				<span>
-					상품명 <input type="text" name="name">
+					상품명 <input type="text" name="pname">
 				</span>
 				<span>
 					용량 <input type="text" name="volume">
@@ -149,7 +149,7 @@
 			<tr>
 				<td><input type="checkbox" name="checkRow" value="${productList.productCd }"></td>
 				<td>${productList.productCd }</td>
-				<td>${productList.name}</td>
+				<td>${productList.pname}</td>
 				<td>${productList.volume}</td>
 				<td>${productList.unit}</td>
 				<td>${productList.category}</td>

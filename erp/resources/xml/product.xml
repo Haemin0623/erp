@@ -10,8 +10,8 @@
 							<if test="product.productCd!=null and product.productCd!=''">
 									product_cd like '%' || #{product.productCd} || '%'
 							</if>
-							<if test="product.name!=null and product.name!=''">
-									and name like '%' || #{product.name} || '%'
+							<if test="product.pname!=null and product.pname!=''">
+									and name like '%' || #{product.pname} || '%'
 							</if>
 							<if test="product.volume!=null and product.volume!=''">
 									and volume like '%' || #{product.volume} || '%'
@@ -30,15 +30,15 @@
 					a) 
 			where 	rn between #{pagingBean.startRow} and #{pagingBean.endRow}
 		</select>
-		<select id="getTotal" parameterType="pagingBean" resultType="integer">
+		<select id="getTotal" parameterType="map" resultType="integer">
 			select 	count(*) 
 			from	m_product
 				<where>
 					<if test="product.productCd!=null and product.productCd!=''">
 							product_cd like '%' || #{product.productCd} || '%'
 					</if>
-					<if test="product.name!=null and product.name!=''">
-							and name like '%' || #{product.name} || '%'
+					<if test="product.pname!=null and product.pname!=''">
+							and pname like '%' || #{product.pname} || '%'
 					</if>
 					<if test="product.volume!=null and product.volume!=''">
 							and volume like '%' || #{product.volume} || '%'
