@@ -59,6 +59,7 @@ tr:active{
 				<th>작성자</th>
 				<th>상태</th>
 				<th>상태변경일</th>
+				<th>사유</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow">
@@ -69,6 +70,12 @@ tr:active{
 					<td>${head.ename } ${head.job } (${head.department })</td>
 					<td><input type="hidden" value="${head.status }">${head.status }</td>
 					<td>${head.statusdate }</td>
+					<c:if test="${head.reason == null}">
+						<td style="text-align: center;"><input type="hidden" value="${head.reason }">-</td>
+					</c:if>
+					<c:if test="${head.reason != null}">
+						<td style="text-align: center;"><input type="hidden" value="${head.reason }">${head.reason }</td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</table>
@@ -129,12 +136,15 @@ tr:active{
 	$('.itemRow').on('dblclick', function() {
 		
 		$('#statusTable').empty();
+		$('#area').empty();
 		$('#updateBtn').empty();
 		
 		let thisRow = $(this).closest('tr');
 		let orderNo = thisRow.find('td:eq(0)').find('input').val();
 		let status = thisRow.find('td:eq(5)').find('input').val();
+		let reason = thisRow.find('td:eq(7)').find('input').val();
 		
+		console.log(reason);
 		/* console.log(status); */
 		/* alert(orderNo); */
 		
@@ -169,33 +179,65 @@ tr:active{
 						"</tr>"
 					);
 				
+					
+				
+				}
 					if (status == "승인요청") {
 						
 						$('#area').append(
 							"<tr>" +
-							"<td colspan='8'><textarea rows='5' cols='50' name='reason' id='reason'></textarea></td>"+
+							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason'></textarea></td>"+
 							"</tr>"
 						);
 	
-					} else if (status == "승인" or status == "반려") {
-						
-						$('#area').append(
+					} else if (status == "승인" || status == "반려" ) {
+						if (reason != "") {
+								
+							$('#area').append(
+								"<tr>" +
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' readonly style='background-color:silver;'></textarea></td>"+
+								"</tr>"
+							);
+							$('#reason').val(reason);
+						}
+					} 
+				if (status == "승인요청")
+					$('#updateBtn').append(
 							"<tr>" +
-							"<td colspan='8'><textarea rows='5' cols='50' name='reason' value="+data[i].reason+"></textarea></td>"+
+								"<td colspan='3'></td>"+
+								"<td><button onclick='orderApproval("+ data[i].orderNo+ "," + $('#reason').val() + ")'>승인</button></td>"+
+								"<td><button onclick='orderReturn("+ data[i].orderNo +")'>반려</button></td>"+
+							"<td colspan='3'></td>"+
 							"</tr>"
-						);
-					}
-					
-	$('#updateBtn').append(
-			"<tr>" +
-				"<td colspan='3'></td>"+
-				"<td><button id='orderApprovall' >승인</button></td>"+
-				"<td><button onclick='orderReturn("+ data[i].orderNo +")'>반려</button></td>"+
-			"<td colspan='3'></td>"+
-			"</tr>"
-	);
+					);
+			
 				
-				}
+
+				
+				$('#orderApprovall').on("click", function(orderNo) {
+					
+					
+					
+					console.log(orderNo);
+					console.log(reason);
+					alert(reason);
+					$.ajax({
+						method: 'post',
+						url: 'orderApproval.do',
+						data: {
+							orderNo:orderNo,
+							reason:reason 
+							},
+						success: function(data) {
+							console.log(data)
+						}
+					});
+				
+				});
+				
+				
+				
+				
 			}, error : function(error) {
 					alert("error"+error);
 					console.log("에러");
@@ -205,25 +247,6 @@ tr:active{
 	
 	
 	
-	
-	$('#orderApprovall').on("click", function(orderNo) {
-		
-		console.log(orderNo);
-		console.log(reason);
-		alert(reason);
-		$.ajax({
-			method: 'post',
-			url: 'orderApproval.do',
-			data: {
-				orderNo:orderNo,
-				reason:reason 
-				},
-			success: function(data) {
-				console.log(data)
-			}
-		});
-	
-	});
 	
 </script>
 
