@@ -39,4 +39,10 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public List<OrderHead> search(OrderHead orderHead) {
 		return head.search(orderHead);
 	}
+
+	@Override
+	public void approvalRequest(String orderNo) {
+		head.approvalRequest(orderNo);
+		
+	}
 }

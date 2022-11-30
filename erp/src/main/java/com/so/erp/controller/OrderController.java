@@ -235,7 +235,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping("orderApproval")
-	@ResponseBody 
+	@ResponseBody
 	public boolean orderApproval(Model model, @RequestParam(name="orderNo")String orderNo, 
 			@RequestParam(name="reason")String reason, @RequestParam(name="btnValue")String btnValue) {
 		System.out.println("orderApproval controller");
@@ -264,6 +264,17 @@ public class OrderController {
 		
 		
 		return result;
+	}
+	
+	@RequestMapping("approvalRequest")
+	@ResponseBody
+	public String approvalRequest(String orderNo) {
+		
+		System.out.println(orderNo);
+		
+		hs.approvalRequest(orderNo);
+		
+		return orderNo;
 	}
 	
 	

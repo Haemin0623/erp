@@ -38,4 +38,9 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	public List<OrderHead> search(OrderHead orderHead) {
 		return sst.selectList("headns.search", orderHead);
 	}
+
+	@Override
+	public void approvalRequest(String orderNo) {
+		sst.update("headns.approvalRequest", orderNo);
+	}
 }

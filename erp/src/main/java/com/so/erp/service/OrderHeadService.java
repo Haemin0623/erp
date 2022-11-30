@@ -16,4 +16,6 @@ public interface OrderHeadService {
 
 	List<OrderHead> search(OrderHead head);
 
+	void approvalRequest(String orderNo);
+
 }

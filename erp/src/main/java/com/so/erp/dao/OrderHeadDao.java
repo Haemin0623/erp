@@ -16,4 +16,6 @@ public interface OrderHeadDao {
 
 	List<OrderHead> search(OrderHead orderHead);
 
+	void approvalRequest(String orderNo);
+
 }

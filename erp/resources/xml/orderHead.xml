@@ -47,4 +47,12 @@
 				reason=#{reason}
 		where	order_no=#{orderNo}
 	</update>
+	
+	
+	<update id="approvalRequest" parameterType="String">
+		update	order_head
+		set		status = '승인요청',
+				statusdate = sysdate
+		where	order_no=#{orderNo}
+	</update>
 </mapper>

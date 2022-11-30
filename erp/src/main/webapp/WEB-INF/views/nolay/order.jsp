@@ -21,6 +21,24 @@
 		border: 1px solid;
 	}
 	
+		/* 마우스 오버(마우스 올렸을때) */
+	tr{
+	color: black;
+	}
+	tr:hover{
+	    background-color: #f4f4f4;
+	    cursor: pointer;
+	}
+	/* 마우스 클릭하고있을때 */
+	tr:active{
+	    background-color: #B9E2FA;
+	}
+	
+	.clickColor {
+		background-color: #B9E2FA;
+		
+	}
+	
 
 	
 	.background {
@@ -120,47 +138,58 @@
 				<th>버튼</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
-				<tr>
+				<tr class="itemRow">
 					<td class="editable"><input type="checkbox" value="${head.orderNo }"></td>
 					<td class="editable">${head.orderNo }</td>
 					<td class="editable">${head.buyerCd }</td>
 					<td class="editable">${head.orderdate }</td>
 					<td class="editable">${head.employeeCd }</td>
-					<td class="editable">${head.status }</td>
-					<td class="editable">${head.statusdate }</td>
-					<td><button>예시</button></td>
+					<td class="editable"><input type="hidden" value="${head.status }">${head.status }</td>
+					<td class="editable"><input type="hidden" value="${head.reason }">${head.statusdate }</td>
+					<td>
+						<c:if test="${head.status == '승인대기'}">
+							<button onclick="approvalRequest('${head.orderNo }')">요청</button>
+						</c:if>
+						<c:if test="${head.status == '승인요청'}">
+							<button onclick="approvalCancel(${head.orderNo })">취소</button>
+						</c:if>
+						<c:if test="${head.status == '승인'}">
+						</c:if>
+						<c:if test="${head.status == '반려'}">
+							<button onclick="approvalReject(${head.orderNo })">재요청</button>
+						</c:if>
+					
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
-	<%-- <div id="item">
-		<table><caption>주문번호 : </caption>
-			<tr>
-				<th>선택</th>
-				<th>상품코드</th>
-				<th>수량</th>
-				<th>판매가</th>
-				<th>총액</th>
-				<th>비고</th>
-				<th>수정</th>
-				<th></th>
-			</tr>
-			<c:foreach>
+	<div class="statusWindow">
+			<table>
 				<tr>
-					<td><input type="checkbox" value> </td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<th>No.</th>
+					<th>상품코드</th>
+					<th>상품명</th>
+					<th>주문수량</th>
+					<th>납품요청일</th>
+					<th>가격</th>
+					<th>합계</th>
+					<th>비고</th>
 				</tr>
-			</c:foreach>
-		</table>
-	</div> --%>
+				<tbody id="statusTable"/>
+				<tbody id="area"/>
+				<tbody id="updateBtn"/>
+				
+			<!-- 	<tr>
+					<td colspan="6"><textarea rows="5" cols="40" name="reason"></td>
+					<th><button onclick="updateStatus"></button></th>
+					<th><button></button></th>
+				</tr> -->
+			</table>
+		</div>
+	
+
 
 	<!-- 등록 창 팝업 -->
 	<div class="background">
@@ -396,6 +425,100 @@
             }
         });
    });
+</script>
+
+<script type="text/javascript">
+	$("#table tr").on( "click", function() {
+		$(".itemRow").removeClass('clickColor');
+	    $(this).addClass('clickColor');
+	});
+	
+	
+	$('.itemRow').on('click', function() {
+		
+		$('#statusTable').empty();
+		$('#area').empty();
+		$('#updateBtn').empty();
+		
+		let thisRow = $(this).closest('tr');
+		let orderNo = thisRow.find('td:eq(0)').find('input').val();
+		let status = thisRow.find('td:eq(5)').find('input').val();
+		let reason = thisRow.find('td:eq(6)').find('input').val();
+		
+		$.ajax({
+			method: 'post',
+			url: 'orderItemList.do',
+			data: {"orderNo":orderNo},
+			
+			success: function(data) {
+				for(var i=0 in data) {
+					var x = parseInt(i)+1;
+					
+					let dateFormat = new Date(data[i].requestdate);
+					let year = dateFormat.getFullYear();
+					let month = dateFormat.getMonth() + 1;  /* 월은 0부터 시작, +1 */
+					let date = dateFormat.getDate(); 
+					
+					/* let reqDate = year+"-"+month+"-"+date; */
+					let reqDate = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+date.toString()).slice(-2));
+					console.log(reqDate);
+					
+					$('#statusTable').append(
+						"<tr>" +
+							"<td>" + x + "</td>" +
+							"<td>" + data[i].productCd + "</td>" +
+							"<td>" + data[i].pname + "</td>" +
+							"<td>" + data[i].requestqty + "</td>" +
+							"<td>" + reqDate + "</td>" +
+							"<td>" + data[i].price + "</td>" +
+							"<td>" + data[i].amount + "</td>" +
+							"<td>" + data[i].remark + "</td>" +
+						"</tr>"
+					);
+				
+					
+				
+				}
+				if (status == "승인" || status == "반려" ) {
+					if (reason != "") {
+							
+						$('#area').append(
+							"<tr>" +
+							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' readonly style='background-color:silver;'></textarea></td>"+
+							"</tr>"
+						);
+						$('#reason').val(reason);
+					}
+				} 
+	
+				
+				
+				
+			}, error : function(error) {
+					alert("error"+error);
+					console.log("에러");
+			}
+		})
+	});
+</script>
+
+<script type="text/javascript">
+	function approvalRequest(orderNo) {
+				
+		$.ajax({
+		     method: 'post',
+		     url: 'approvalRequest.do',
+		     traditional: true,
+		     data: {
+		    	 orderNo: orderNo
+		     },
+		     success: function (result) {
+		    	 search();
+		    	 
+			 }		     
+	   });
+	}
+
 </script>
 
 </html>
