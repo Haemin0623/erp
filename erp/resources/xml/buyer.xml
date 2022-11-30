@@ -35,9 +35,36 @@
 				email = #{email},
 				address = #{address},
 				country_cd = #{countryCd},
-				adddate = sysdate,
 				del ='N', 
-				statusdate = null
+				statusdate = sysdate
 		where  buyer_cd=#{buyerCd}
 	</update>
+	<select id="search" parameterType="buyer" resultType="buyer">
+		select 	* 
+		from 	m_buyer
+		<where>
+			<if test="buyerCd != null and buyerCd != ''">
+				buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="bname != null and bname != ''">
+				and bname like '%' || #{bname} || '%'
+			</if>
+			<if test="manager != null and manager != 'null'">
+				and manager like '%' || #{manager} || '%'
+			</if>
+			<if test="countryCd != null and countryCd != 'null'">
+				and country_Cd like '%' || #{countryCd} || '%'
+			</if>
+			<if test="tel != null and tel != 'null'">
+				and tel like '%' || #{tel} || '%'
+			</if>
+			<if test="email != null and email != 'null'">
+				and email like '%' || #{email} || '%'
+			</if>
+			<if test="address != null and address != 'null'">
+				and address like '%' || #{address} || '%'
+			</if>
+		</where>
+		
+	</select>
 </mapper>

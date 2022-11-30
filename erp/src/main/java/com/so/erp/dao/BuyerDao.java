@@ -14,4 +14,6 @@ public interface BuyerDao {
 
 	int update(Buyer buyer);
 
+	List<Buyer> search(Buyer buyer);
+
 }

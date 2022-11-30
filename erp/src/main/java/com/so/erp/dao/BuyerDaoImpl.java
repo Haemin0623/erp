@@ -33,4 +33,9 @@ public class BuyerDaoImpl implements BuyerDao {
 	public int update(Buyer buyer) {
 		return sst.update("buyerns.update",buyer);
 	}
+
+	@Override
+	public List<Buyer> search(Buyer buyer) {
+		return sst.selectList("buyerns.search", buyer); //select 문을 사용할건데(여러개니까 list), 이름을 search로 하겠다
+	}
 }

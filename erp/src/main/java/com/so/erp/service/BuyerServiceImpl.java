@@ -29,10 +29,14 @@ public class BuyerServiceImpl implements BuyerService {
 		return bd.delete(buyerCd);
 	}
 
-
 	@Override
 	public int update(Buyer buyer) {
 		return bd.update(buyer);
+	}
+
+	@Override
+	public List<Buyer> search(Buyer buyer) {
+		return bd.search(buyer);
 	}
 
 }

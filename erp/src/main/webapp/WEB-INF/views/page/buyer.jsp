@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style type="text/css">
 
 	#searchBox{
@@ -21,7 +22,23 @@
 		border: 1px solid;
 	}
 	
-
+		/* 마우스 오버(마우스 올렸을때) */
+	tr{
+	color: black;
+	}
+	tr:hover{
+	    background-color: #f4f4f4;
+	    cursor: pointer;
+	}
+	/* 마우스 클릭하고있을때 */
+	tr:active{
+	    background-color: #B9E2FA;
+	}
+	
+	.clickColor {
+		background-color: #B9E2FA;
+		
+	}
 	
 	.background {
 	  position: fixed;
@@ -82,22 +99,22 @@
 	<!-- 검색박스 -->
 	<h1> 고객 관리</h1>
 	<div id="searchBox">
-		<form action = "">
-		
-		고객코드 <input type="text" name="buyerCd">
-		고객명 <input type="text" name="bname">
-		담당자 <input type="text" name="manager">
+		<form name ="searchBoxx">
+		고객코드 <input type="text" name="buyerCd" value="${buyer.buyerCd}">
+		고객명 <input type="text" name="bname" value="${buyer.bname}">
+		담당자 <input type="text" name="manager" value="${buyer.manager}">
 		국가코드
-			<select>
+			<select name="countryCd" value="none">
 				<c:forEach var="countryCd" items="${countryCdList}">
-					<option selected="selected">${countryCd.cname}(${countryCd.countryCd})</option>
+					<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 				</c:forEach>
 			</select><br>
-		전화번호<input type="text" name="tel">
-		이메일 <input type="text" name="email">
-		주소 <input type="text" name="address">
-		<input type="submit" value="검색">
+		전화번호<input type="text" name="tel" value="${buyer.tel}">
+		이메일 <input type="text" name="email" value="${buyer.email}">
+		주소 <input type="text" name="address" value="${buyer.address}">
+		
 		</form>	
+			<button id="searchBtn">검색</button>
 	</div>
 	
 	<button id="show">신규등록</button>
@@ -135,7 +152,7 @@
 				<td class="editable">${buyer.tel}</td>
 				<td class="editable">${buyer.email}</td>
 				<td class="editable">${buyer.address}</td>
-				<td class="editable">${buyer.countryCd}</td>
+				<td>${buyer.countryCd}</td>
 				<td>${buyer.adddate}</td>
 				<td>${buyer.statusdate}</td>
 			</tr>
@@ -144,7 +161,7 @@
 	</form>
 	</div>
 	
-<!-- 	등록 창 팝업 -->
+	<!-- 	등록 창 팝업 -->
 	<div class="background">
 		<div class="window">
 			<div class="popup">
@@ -194,80 +211,83 @@
 		</div>
 	</div>
 	
-	<!-- 	수정 창 팝업 -->
-<!-- 	<div class="background"> -->
-<!-- 		<div class="window"> -->
-<!-- 			<div class="popup"> -->
-<!-- 				<button id="close">취소</button>	 -->
-<!-- 				<h1> 고객수정 </h1> -->
-				
-<!-- 				<form action=""> -->
-<%-- 					<c:forEach var="buyer" items="${buyerList }"> --%>
-<!-- 					활성여부 -->
-<!-- <!-- 						<select> -->
-<%-- <%-- 							<c:if test="${buyer.del =='N'}"> --%>
-<%-- <%-- 								<option c:if test="${buyer.del =='N'}">활성</option> --%>
-<%-- <%-- 							</c:if> --%>
-<!-- <!-- 							<option>비활성</option> -->
-<!-- <!-- 						</select> -->
-<%-- 					고객코드<input type="text" value="${buyer.buyerCd}" name="buyerCd"><br> --%>
-<%-- 					고객명<input type="text" value="${buyer.bname}" name="bname"><br> --%>
-<%-- 					담당자<input type="text" value="${buyer.manager}" name="manager"><br> --%>
-<%-- 					전화번호<input type="text" value="${buyer.tel}" name="tel"><br> --%>
-<%-- 					이메일<input type="text" value="${buyer.email}" name="email"><br> --%>
-<%-- 					주소<input type="text" value="${buyer.address}" name="address"><br> --%>
-<!-- 					국가코드 -->
-<!-- 						<select> -->
-<%-- 							<c:forEach var="countryCd" items="${countryCdList}"> --%>
-<%-- 								<option>${countryCd.cname}(${countryCd.countryCd})</option> --%>
-<%-- 							</c:forEach> --%>
-<!-- 						</select><br> -->
-<%-- 					</c:forEach> --%>
-<!-- 					<button id="updateBuyer">수정</button>	 -->
-<!-- 				</form> -->
-				
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	
 	
 </body>
 
 
 <script type="text/javascript">
+	//검색 기능
+	function search() {
+		
+		const keyword = {
+			buyerCd : searchBoxx.buyerCd.value,	
+			bname : searchBoxx.bname.value,	
+			manager : searchBoxx.manager.value,	
+			countryCd : searchBoxx.countryCd.value,	
+			tel : searchBoxx.tel.value,	
+			email : searchBoxx.email.value,	
+			address : searchBoxx.address.value,	
+		}
+		console.log(keyword);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'buyerSearch.do',
+		     traditional: true,
+		     data: { // JSON 방식으로 키워드의 값을 넘겨준다
+		    	keyword: JSON.stringify(keyword)
+		     },
+		     success: function (result) { // 성공시 id 가 content인 곳에 자식내용들을 지우고, 결과값을 html로 보여줘
+		    	 $('#content').children().remove();
+				 $('#content').html(result);
+			 }
+	   });
+	}
+	
+	document.querySelector("#searchBtn").addEventListener("click", search);
+
 	// 등록 팝업 열기 닫기
 	function show() {
 		document.querySelector(".background").className = "background show";
 	}
+	//아이디 show를 클릭하면 show함수를 호출 
+	document.querySelector("#show").addEventListener("click", show);
+	
+	
 	function close() {
 		document.querySelector(".background").className = "background";
 	}
+	document.querySelector("#close").addEventListener("click", close);
+	
+	
 	// 신규등록 팝업 열기
 	function addBuyer() {
-			$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-			     method: 'post', 
-			     url: 'buyerInsert.do', 
-			     traditional: true,
-			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-			    	buyerCd: frm.buyerCd.value,
-					bname: frm.bname.value,
-					manager: frm.manager.value,
-					tel: frm.tel.value,
-					email: frm.email.value,
-					address: frm.address.value,
-					countryCd: frm.countryCd.value
-			     },
-			     success: function (result) { //성공했을떄 호출할 콜백을 지정
-			    	 console.log(result);
-			        if (result) {
-			        	document.location.reload();
-						alert("입력성공");
-			        } else {
-			        	alert("실패");
-			        }
-				}
-		   });
-		}
+		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		     method: 'post', 
+		     url: 'buyerInsert.do', 
+		     traditional: true,
+		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    	buyerCd: frm.buyerCd.value,
+				bname: frm.bname.value,
+				manager: frm.manager.value,
+				tel: frm.tel.value,
+				email: frm.email.value,
+				address: frm.address.value,
+				countryCd: frm.countryCd.value
+		     },
+		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    	console.log(result);
+		        if (result) {
+		        	document.location.reload();
+					alert("입력성공");
+		        } else {
+		        	alert("실패");
+		        }
+			}
+	   });
+	}
+	
+	document.querySelector("#addBuyer").addEventListener("click", addBuyer); 
 	
 	function delBuyer() {
 		var cdArr = new Array(); //del 체크가 여러개일수도 있기에 배열로 받음
@@ -280,6 +300,7 @@
 			alert("삭제할 고객을 선택하세요");
 			return false;
 		}
+		
 		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		     method: 'post', 
 		     url: 'buyerDelete.do', 
@@ -296,25 +317,29 @@
 		        	console.log(result);
 		        }
 			},
-			 error: function(a, b, c) {
+			 error: function(a) {
 				 console.log(a);
-				 console.log(b);
-				 console.log(c);
+	
 			 }
 	   });
 	};
 	
-	// 	테이블 수정가능하게 editable
+	document.querySelector("#delBuyer").addEventListener("click", delBuyer);
+	
+	let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
+	
+	// 	 테이블 수정가능하게 editable
 	$(document).ready(function() {
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
-            var value=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-            var input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focus'>";
+        	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
+            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
             $(this).removeClass("editable")
             $(this).html(input);
             $('#focus').focus();
             
             $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
                 var key=e.which;
+            
                 if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
                     var value=$(this).val();
                     var td=$(this).parent("td");
@@ -349,13 +374,8 @@
     		             email = tdd.eq(5).text();
     		             address = tdd.eq(6).text();
     		             countryCd = tdd.eq(7).text();
+    		             
     		             console.log(buyerCd);
-    		             console.log(bname);
-    		             console.log(manager);
-    		             console.log(tel);
-    		             console.log(email);
-    		             console.log(address);
-    		             console.log(countryCd);
     	             
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
@@ -386,23 +406,15 @@
         });
 
         $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
-            var value=$(this).val();
-            var td=$(this).parent("td");
+            
+            var td=$(this).parent("td"); // 해당 td를 td에 저장
             $(this).remove();
-            td.html(value);
+            td.html(initValue);
             td.addClass("editable")
             });
-        
-       
    });
-
-	document.querySelector("#addBuyer").addEventListener("click", addBuyer); 
-	//아이디 addBuyer를 클릭하면 addBuyer함수를 호출 
 	
-	document.querySelector("#show").addEventListener("click", show);
-	document.querySelector("#close").addEventListener("click", close);
-// 	document.querySelector("#update").addEventListener("click", update);
-	document.querySelector("#delBuyer").addEventListener("click", delBuyer);
+	
 	  
 </script>
 
