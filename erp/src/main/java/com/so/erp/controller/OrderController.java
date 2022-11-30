@@ -322,14 +322,14 @@ public class OrderController {
 		return result;
 	}
 	@RequestMapping("orderStatusSearch")
-	public String orderStatusSearch(Model model, @RequestParam(name="keyword") String keyword) {
+	public String orderStatusSearch(Model model, @RequestParam(name="keywordd") String keywordd) {
 		
 		System.out.println("1");
 		
 		try {
 			
 			JSONParser p = new JSONParser();
-			Object obj = p.parse(keyword);
+			Object obj = p.parse(keywordd);
 			JSONObject keywordObj = JSONObject.fromObject(obj);
 			
 			OrderItem orderItem = new OrderItem();

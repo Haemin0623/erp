@@ -190,7 +190,7 @@
 		     url: 'orderStatusSearch.do',
 		     traditional: true,
 		     data: {
-		    	keyword: JSON.stringify(keyword)
+		    	keywordd: JSON.stringify(keyword)
 		     },
 		     success: function (result) {
 		    	 $('#content').children().remove();

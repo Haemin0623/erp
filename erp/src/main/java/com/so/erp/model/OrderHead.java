@@ -34,4 +34,5 @@ public class OrderHead {
     // console에 오류
     private String pname;
     private int requestqty;
+    private int price;
 }
