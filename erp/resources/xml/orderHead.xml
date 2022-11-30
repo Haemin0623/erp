@@ -43,7 +43,7 @@
 	
 	<update id="orderApproval" parameterType="orderHead">
 		update	order_head 
-		set		status='승인'
+		set		status=#{status},
 				reason=#{reason}
 		where	order_no=#{orderNo}
 	</update>

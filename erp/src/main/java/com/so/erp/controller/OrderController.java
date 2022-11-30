@@ -237,12 +237,21 @@ public class OrderController {
 	@RequestMapping("orderApproval")
 	@ResponseBody 
 	public boolean orderApproval(Model model, @RequestParam(name="orderNo")String orderNo, 
-			@RequestParam(name="reason")String reason) {
+			@RequestParam(name="reason")String reason, @RequestParam(name="btnValue")String btnValue) {
+		System.out.println("orderApproval controller");
 		
 		boolean result = true;
+		
 		OrderHead orderHead = new OrderHead();
+		orderHead.setOrderNo(orderNo);
 		orderHead.setReason(reason);
-		System.out.println("raseon완료"+orderHead.getReason());
+		orderHead.setStatus(btnValue);
+		
+		System.out.println("orderNo"+orderHead.getOrderNo());
+		System.out.println("raseon"+orderHead.getReason());
+		System.out.println("btnValue"+orderHead.getStatus());
+		
+		
 		try {
 			hs.orderApproval(orderHead);
 			System.out.println("되나요");

@@ -121,9 +121,9 @@ tr:active{
 					<th><button></button></th>
 				</tr> -->
 			</table>
-			<div id="btn">
-				<button id='orderApproval'>승인</button>
-				<button onclick='orderReturn'>반려</button>
+			<div>
+				<button id='orderApproval' name='btn' value='승인'>승인</button>
+				<button id='orderApproval' name='btn' value='반려'>반려</button>
 			</div>
 		</div>
 		
@@ -133,13 +133,13 @@ tr:active{
 		
 <script type="text/javascript">
 
-	$("#table tr").on( "dblclick", function() {
+	$("#table tr").on( "click", function() {
 		$(".itemRow").removeClass('clickColor');
 	    $(this).addClass('clickColor');
 	});
 
 	
-	$('.itemRow').on('dblclick', function() {
+	$('.itemRow').on('click', function() {
 		
 		$('#statusTable').empty();
 		$('#area').empty();
@@ -150,7 +150,7 @@ tr:active{
 		let status = thisRow.find('td:eq(5)').find('input').val();
 		let reason = thisRow.find('td:eq(7)').find('input').val();
 		
-		console.log(reason);
+		/* console.log(reason); */
 		/* console.log(status); */
 		/* alert(orderNo); */
 		
@@ -242,32 +242,46 @@ tr:active{
 		})
 	});
 	
-	let textarea = document.getElementById('#textarea'); 
-	console.log(textarea);
-	
-	/* 
-	"," + textarea + 
-	$('#orderApproval').on("click", function(orderNo) {
-		 */
+
+	$('#orderApproval').on("click", function() {
 		
-	function orderApproval(orderNo) {
+		let thisRow = $('.clickColor').closest('tr');
+		let orderNo = thisRow.find('td:eq(0)').find('input').val();
 		
 		console.log(orderNo);
+		console.log("1");
+		
+		let writeReason = $('#reason').val();
+		console.log(writeReason);
+		console.log("2");
 		console.log(reason);
-		alert(reason);
+		console.log("3");
+		
+		let btnValue = $('button[name=btn]').val();
+		console.log(btnValue);
+		console.log("4");
+		
 		$.ajax({
 			method: 'post',
 			url: 'orderApproval.do',
 			data: {
-				orderNo:orderNo,
-				reason:reason 
+				"orderNo":orderNo,
+				"reason":writeReason,
+				"btnValue":btnValue
 				},
+			/* cache : false, */
+			/* async: false, */
+			/* processData: false, */
+				
 			success: function(data) {
-				console.log(data)
+				console.log("된듯");
+				
+			}, error: function (xhr, status, error) {
+				console.log("error");
 			}
 		});
 	
-	};
+	});
 </script>
 
 
