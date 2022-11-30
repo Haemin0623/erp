@@ -337,35 +337,25 @@
 	document.querySelector("#insertOrder").addEventListener("click", insertOrder);
 	
 	function search() {
-		const orderNo = searchBoxx.orderNo.value;	
-		const buyerCd = searchBoxx.buyerCd.value;	
-		const orderFromDate = searchBoxx.orderFromDate.value;	
-		const orderToDate = searchBoxx.orderToDate.value;	
-		const employeeCd = searchBoxx.employeeCd.value;	
-		const status = searchBoxx.status.value;	
-		const productCd = searchBoxx.productCd.value;	
-		const requestdate = searchBoxx.requestdate.value;
-		console.log(orderNo);
-		console.log(buyerCd);
-		console.log(orderFromDate);
-		console.log(orderToDate);
-		console.log(employeeCd);
-		console.log(status);
-		console.log(productCd);
-		console.log(requestdate);
+				
+		const keyword = {
+			orderNo : searchBoxx.orderNo.value,	
+			buyerCd : searchBoxx.buyerCd.value,	
+			orderFromDate : searchBoxx.orderFromDate.value,	
+			orderToDate : searchBoxx.orderToDate.value,	
+			employeeCd : searchBoxx.employeeCd.value,	
+			status : searchBoxx.status.value,	
+			productCd : searchBoxx.productCd.value,	
+			requestdate : searchBoxx.requestdate.value
+		}
+		console.log(keyword);
+		
 		$.ajax({
 		     method: 'post',
-		     url: 'order.do',
+		     url: 'orderSearch.do',
 		     traditional: true,
 		     data: {
-		    	 orderNo: orderNo,
-		    	 buyerCd: buyerCd,
-		    	 orderFromDate: orderFromDate,
-		    	 orderToDate: orderToDate,
-		    	 employeeCd: employeeCd,
-		    	 status: status,
-		    	 productCd: productCd,
-		    	 requestdate: requestdate
+		    	keyword: JSON.stringify(keyword)
 		     },
 		     success: function (result) {
 		    	 $('#content').children().remove();

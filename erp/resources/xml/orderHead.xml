@@ -23,6 +23,9 @@
 			<if test="orderFromDate != null and orderToDate != null">
 				and orderdate between #{orderFromDate} and #{orderToDate}
 			</if>
+			<if test="employeeCd != null and employeeCd != 'null'">
+				and employee_cd like '%' || #{employeeCd} || '%'
+			</if>
 			<if test="status != null and status != 'null'">
 				and status like '%' || #{status} || '%'
 			</if>

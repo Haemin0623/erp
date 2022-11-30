@@ -60,6 +60,60 @@ public class OrderController {
 		return "nolay/order";
 	}
 	
+	@RequestMapping("orderSearch")
+	public String orderSearch(Model model, @RequestParam(name="keyword") String keyword) {
+		
+		System.out.println("1");
+		
+		try {
+			
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(keyword);
+			JSONObject keywordObj = JSONObject.fromObject(obj);
+			
+			OrderHead orderHead = new OrderHead();
+			String orderNo = (String) keywordObj.get("orderNo");
+			orderHead.setOrderNo(orderNo);
+			String buyerCd = (String) keywordObj.get("buyerCd");
+			orderHead.setBuyerCd(buyerCd);
+			
+			System.out.println("2");
+			
+			String orderFromDate = (String) keywordObj.get("orderFromDate");
+			if (orderFromDate != null && !orderFromDate.equals("") ) {
+				Date date = Date.valueOf(orderFromDate);
+				orderHead.setOrderFromDate(date);
+			}
+
+			System.out.println("3");
+			
+			String orderToDate = (String) keywordObj.get("orderToDate");
+			if (orderToDate != null && !orderToDate.equals("") ) {
+				Date date = Date.valueOf(orderToDate);
+				orderHead.setOrderToDate(date);
+			}
+			
+			System.out.println("4");
+			
+			String employeeCd = (String) keywordObj.get("employeeCd");
+			orderHead.setEmployeeCd(employeeCd);
+			String status = (String) keywordObj.get("status");
+			orderHead.setStatus(status);
+			
+			String productCd = (String) keywordObj.get("productCd");
+			String requestdate = (String) keywordObj.get("requestdate");
+			
+			List<OrderHead> headList = hs.search(orderHead);
+			model.addAttribute("headList", headList);
+			model.addAttribute("orderHead", orderHead);
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "nolay/order";
+	}
+	
 	
 	@RequestMapping("orderInsert")
 	@ResponseBody
