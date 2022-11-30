@@ -1,6 +1,5 @@
 package com.so.erp.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.json.simple.parser.JSONParser;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 import com.so.erp.service.ProductService;

@@ -123,12 +123,12 @@
 		<button>엑셀로 대량등록</button>
 	</span>	
 	<span>
-		<select id="listview" name="listNum">
-			<option value="10">10개씩보기</option>
-			<option value="50">50개씩보기</option>
-			<option value="100">100개씩보기</option>
-			<option value="300">300개씩보기</option>
-			<option value="500">500개씩보기</option>
+		<select name="listNum">
+			<option id="listview" value="10">10개씩보기</option>
+			<option id="listview" value="50">50개씩보기</option>
+			<option id="listview" value="100">100개씩보기</option>
+			<option id="listview" value="300">300개씩보기</option>
+			<option id="listview" value="500">500개씩보기</option>
 		</select>
 	</span>
 	<form action="">
@@ -264,8 +264,6 @@
 					console.log(result);
 			    }
 		  });
-		  
-		  
 	};
 	document.querySelector("#codeMix").addEventListener("change", codeMix);
 	
@@ -289,7 +287,7 @@
 	document.querySelector("#listview").addEventListener("change", listview);
 	
 	function listview() {
-		const listNums = listview.listNum.value;
+		const listNums = listNum.value;
 		console.log(listNums);
 	}
 	
@@ -327,65 +325,55 @@
 	}
 	
 	
-	const productCd = "";
-	const pname = "";
-    const volume = "";
-    const unit = "";
 	
 	$(document).ready(function() {
-        $(document).on("dblclick", "#editable", function() {
-        	const value=$(this).text();
-        	const input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focuss' >";
+		 // 테이블의 Row 클릭시 값 가져오기
+         let first = ""; 
+         let last ="";
+		$(document).on("dblclick", "#editable", function() {
+        	let value=$(this).text();
+   //     	alert(value);
+        	let input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focuss' >";
+        	$(this).html(input);
             $(this).removeClass("editable")
-            $(this).html(input);
             $('#focuss').focus();
-            
-         // 테이블의 Row 클릭시 값 가져오기
-            $("#list tr").click(function(){    
+            first = value;
+            console.log(first);
+        });
+		$("#list tr").click(function(){    
 
             const str = ""
-            const tdArr = new Array(); // 배열 선언
-             
-             // 현재 클릭된 Row(<tr>)
+            let tdArr = new Array(); // 배열 선언
+            
+            // 현재 클릭된 Row(<tr>)
             const tr = $(this);
             const td = tr.children();
-             
-             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
-             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
-             
-             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
-             td.each(function(i){
-              tdArr.push(td.eq(i).text());
-             });
-             
-             console.log("배열에 담긴 값 : "+tdArr);
-             
-             // td.eq(index)를 통해 값을 가져올 수도 있다.
-             productCd = td.eq(1).text();
-             pname = td. eq(2).text();
-             volume = td.eq(3).text();
-             unit = td.eq(4).text();
-             
-            });
-        });
+            
+            
+            // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+            td.each(function(i){
+             tdArr.push(td.eq(i).text());
+          });
+		  
         $(document).on("blur", ".input-data", function() {
         	const value=$(this).val();
         	const td=$(this).parent("td");
-            $(this).remove();
             td.html(value);
             td.addClass("editable")
             });
+        
         $(document).on("keypress", ".input-data", function(e) {
         	const key=e.which;
             if(key==13) {
             	const value=$(this).val();
             	const td=$(this).parent("td");
-                $(this).remove();
+            	$(this).remove();
                 td.html(value);
                 td.addClass("editable");
+                last = value;
             }
         });
-     
+        });
    });
 </script>
 </body>
