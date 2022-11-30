@@ -78,7 +78,8 @@
 
 </head>
 <body>
-	
+
+	<!-- 검색박스 -->
 	<h1> 고객 관리</h1>
 	<div id="searchBox">
 		<form action = "">
@@ -101,10 +102,11 @@
 	
 	<button id="show">신규등록</button>
 	<button id="delBuyer">삭제</button>
-
+	
+	<!-- 고객리스트 & 수정가능한 테이블 -->
 	<div id="table">
 	<form action="" name="bt">
-	<table >
+	<table id="list" >
 		<tr>
 			<th>선택</th>
 			<th>고객코드</th>
@@ -128,12 +130,12 @@
 					</c:if>
 				</td>
 				<td>${buyer.buyerCd }</td>
-				<td>${buyer.bname }</td>
-				<td>${buyer.manager}</td>
-				<td>${buyer.tel}</td>
-				<td>${buyer.email}</td>
-				<td>${buyer.address}</td>
-				<td>${buyer.countryCd}</td>
+				<td class="editable">${buyer.bname }</td>
+				<td class="editable">${buyer.manager}</td>
+				<td class="editable">${buyer.tel}</td>
+				<td class="editable">${buyer.email}</td>
+				<td class="editable">${buyer.address}</td>
+				<td class="editable">${buyer.countryCd}</td>
 				<td>${buyer.adddate}</td>
 				<td>${buyer.statusdate}</td>
 			</tr>
@@ -301,6 +303,94 @@
 			 }
 	   });
 	};
+	
+	// 	테이블 수정가능하게 editable
+	$(document).ready(function() {
+        $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
+            var value=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
+            var input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focus'>";
+            $(this).removeClass("editable")
+            $(this).html(input);
+            $('#focus').focus();
+            
+
+        });
+
+        $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
+            var value=$(this).val();
+            var td=$(this).parent("td");
+            $(this).remove();
+            td.html(value);
+            td.addClass("editable")
+            });
+        
+        $(document).on("keypress", ".input-data", function(e) {
+            var key=e.which;
+            if(key==13) { //13은 enter키를 의미. 테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
+                var value=$(this).val();
+                var td=$(this).parent("td");
+//                 $(this).remove();
+                td.html(value);
+                td.addClass("editable");
+            
+                // 테이블의 Row 클릭시 값 가져오기
+// 	            $("#list tr").dblclick(function(){    
+	
+		            const str = ""
+		            const tdArr = new Array(); // 배열 선언
+		             
+		             // 현재 클릭된 Row(<tr>)
+		            const tr = $("#list tr");
+		            const tdd = tr.children();
+		             
+		             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+		             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+		             
+		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+		             tdd.each(function(i){
+		              tdArr.push(tdd.eq(i).text());
+		             });
+		             
+		             console.log("배열에 담긴 값 : "+tdArr);
+		             
+		             // td.eq(index)를 통해 값을 가져올 수도 있다.
+		             bname = tdd.eq(1).text();
+		             manager = tdd.eq(2).text();
+		             tel = tdd.eq(3).text();
+		             email = tdd.eq(4).text();
+		             address = tdd.eq(5).text();
+		             countryCd = tdd.eq(6).text();
+		             console.log(bname);
+	             
+// 	            });
+           }
+            
+            
+//             $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+// 			     method: 'post', 
+// 			     url: 'buyerUpdate.do', 
+// 			     traditional: true,
+// 			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+// 			    	buyerCd: bt.buyer.buyerCd.value,
+// 					bname: frm.bname.value,
+// 					manager: frm.manager.value,
+// 					tel: frm.tel.value,
+// 					email: frm.email.value,
+// 					address: frm.address.value,
+// 					countryCd: frm.countryCd.value
+// 			     },
+// 			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+// 			    	 console.log(result);
+// 			        if (result) {
+// 			        	document.location.reload();
+// 						alert("입력성공");
+// 			        } else {
+// 			        	alert("실패");
+// 			        }
+// 				}
+// 		   });
+        });
+   });
 
 	document.querySelector("#addBuyer").addEventListener("click", addBuyer); 
 	//아이디 addBuyer를 클릭하면 addBuyer함수를 호출 
