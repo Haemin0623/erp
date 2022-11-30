@@ -7,13 +7,13 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-	ul {
+	.menuList {
 		list-style: none;
 		text-align: center;
 		
 	}
 	
-	li {
+	.subMenu {
 		font-weight: bold;
 		font-size: 40px;
 	}
@@ -53,23 +53,24 @@
 
 	<div>
 		
-			<ul>
-				<li>마스터</li>
-				<li><a href="productList.do">상품</a></li>
-				<li><a href="buyer.do">고객</a></li>
-				<li><a href="pricing.do">판매가</a></li>
-				<li>승인</li>
+			<ul class="menuList">
+				<li class="subMenu">마스터</li>
+				<li class="subMenu"><a href="productList.do">상품</a></li>
+				<li class="subMenu"><a href="buyer.do">고객</a></li>
+				<li class="subMenu"><a href="pricing.do">판매가</a></li>
+				<li class="subMenu">승인</li>
 			</ul>
 			
-			<ul>
-				<li>주문</li>
-				<li><button onclick="changeContent('order.do')">주문 관리</button></li>
-				<li><button onclick="changeContent('orderApprovalWindow.do')">주문 승인</button></li>
+			<ul class="menuList">
+				<li class="subMenu">주문</li>
+				<li class="subMenu"><button onclick="changeContent('order.do')">주문 관리</button></li>
+				<li class="subMenu"><button onclick="changeContent('orderApprovalWindow.do')">주문 승인</button></li>
+				<li class="subMenu">주문승인</li>
 			</ul>
 			
-			<ul>
-				<li>REPORT</li>
-				<li><button onclick="changeContent('orderStatus.do')">주문 현황</button></li>
+			<ul class="menuList">
+				<li class="subMenu">REPORT</li>
+				<li class="subMenu"><button onclick="changeContent('orderStatus.do')">주문 현황</button></li>
 				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
 			</ul>
 	</div>

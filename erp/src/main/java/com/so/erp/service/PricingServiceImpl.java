@@ -19,4 +19,14 @@ public class PricingServiceImpl implements PricingService {
 		return prd.pricingList(pricing);
 	}
 
+	@Override
+	public int insert(Pricing pricing) {
+		return prd.insert(pricing);
+	}
+
+	@Override
+	public int getTotal() {
+		return prd.getTotal();
+	}
+
 }

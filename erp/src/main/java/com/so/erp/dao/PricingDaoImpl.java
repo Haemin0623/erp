@@ -19,4 +19,14 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.selectList("pricingns.pricingList", pricing);
 	}
 
+	@Override
+	public int insert(Pricing pricing) {
+		return sst.insert("pricingns.insert", pricing);
+	}
+
+	@Override
+	public int getTotal() {
+		return sst.selectOne("pricingns.getTotal");
+	}
+
 }

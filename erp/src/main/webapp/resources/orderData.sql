@@ -11,9 +11,31 @@ insert into M_COUNTRY values ('SG', '싱가포르', 65);
 insert into M_COUNTRY values ('GB', '영국', 44);
 insert into M_COUNTRY values ('CH', '스위스', 41);
 
+
+--상품
+INSERT INTO m_product
+VALUES ('SN0001', '새우깡', '290g','개', '스낵', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('SN0002', '누네띠네', '170g', '개', '스낵', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('SN0003', '치토스', '180g', '개', '스낵', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('SN0004', '참크래커', '220g', '개', '스낵', sysdate, 'Y', '2022-11-25');
+INSERT INTO m_product
+VALUES ('SN0005', '다이제', '370g', '개', '스낵', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('SN0006', '포카칩', '240g', '개', '스낵', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('RA0001', '육개장', '120g', '개', '라면', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('RA0002', '신라면', '130g', '개', '라면', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('DR0001', '파워에이드', '250ml', '병', '음료', sysdate, 'N', null);
+INSERT INTO m_product
+VALUES ('DR0002', '포카리스웨트', '200ml', '병', '음료', sysdate, 'N', null);
+
+
 -- update M_BUYER set country_cd = 'KR' where name = '이마트';
-
-
 --고객코드--
 select * from M_BUYER;
 
@@ -119,14 +141,6 @@ insert into order_item values('221124CVS001001', 'SN0003', 120, '230102', 900, 1
 
 
 
-
-
-
-
-insert into ORDER_HEAD values (1, 'EMART', sysdate, 'PSI0000', '승인해줘', '승인대기', null, 'N');
-
-insert into M_product values ('SAEUOOGGANG', '새우깡', '100g', '개', '과자', sysdate, 'N', NULL);
-
 --판매가 현서
 select * from m_pricing;
 insert into m_pricing values('CVS001', 'SN0001', '2021-05-17', '2022-12-01', 1200, '원(₩)', 0, sysdate, 'N', NULL);
@@ -139,3 +153,8 @@ insert into m_pricing values('MAT002', 'RA0001', '2022-03-14', '2023-04-08', 140
 insert into m_pricing values('FOD001', 'RA0002', '2021-07-30', '2023-10-31', 1300, '원(₩)', 0, sysdate, 'N', NULL);
 insert into m_pricing values('FOD002', 'DR0001', '2022-09-02', '2022-11-07', 1000, '원(₩)', 3, sysdate, 'N', NULL);
 insert into m_pricing values('FOD003', 'DR0002', '2022-06-16', '2023-05-27', 1100, '원(₩)', 0, sysdate, 'N', NULL);
+
+
+
+
+

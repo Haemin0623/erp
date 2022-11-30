@@ -8,5 +8,9 @@ public interface PricingService {
 
 	List<Pricing> pricingList(Pricing pricing);
 
+	int insert(Pricing pricing);
+
+	int getTotal();
+
 
 }

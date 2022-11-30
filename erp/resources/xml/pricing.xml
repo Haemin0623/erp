@@ -3,9 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pricingns">
 
+
 	<select id="pricingList" parameterType="pricing" resultType="pricing">
-		select * from m_pricing
-		<where >
+		select * from (select a.*, rowNum rn from (select * from m_pricing where
+		
 			<if test="buyerCd != null and buyerCd != ''" >
 				buyer_cd like '%'||#{buyerCd}||'%'
 			</if>
@@ -15,7 +16,7 @@
 			</if>
 			<trim prefixOverrides="and"></trim>
 			<if test="price != 0">
-				price = #{price}
+				price between #{startPrice} and #{endPrice}
 			</if>
 			<trim prefixOverrides="and"></trim>
 			<if test="validDate != null and validDate != ''">
@@ -29,10 +30,19 @@
 			<if test="currency != null and currency != ''">
 				currency = #{currency}
 			</if>
-		</where>
-		order by startdate desc
+			<trim prefixOverrides="and"></trim>
+		
+		del='N' order by adddate desc
+		)a) where rn between #{startRow} and #{endRow} 
 	</select>
 	
+	<insert id="insert" parameterType="pricing">
+		insert into m_pricing values (#{buyerCd}, #{productCd}, #{startdate}, #{enddate}, 
+			#{price}, #{currency}, #{discountrate}, sysdate, 'N', null)
+	</insert>
 	
+	<select id="getTotal" resultType="Integer">
+		select count(*) from m_pricing where del='N'
+	</select>
 	
 </mapper>
