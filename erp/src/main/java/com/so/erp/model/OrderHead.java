@@ -17,6 +17,15 @@ public class OrderHead {
     private String signempCd;
     private String del;
     
+<<<<<<< HEAD
     private Date orderFromDate;
     private Date orderToDate;
+=======
+ // headEmpList 조인용
+    private String ename;
+    private String password;
+    private String department;
+    private String job;
+    private String authority;
+>>>>>>> 1af72d2 (승인 작업 중)
 }

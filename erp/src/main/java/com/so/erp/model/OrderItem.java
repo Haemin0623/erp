@@ -2,6 +2,7 @@ package com.so.erp.model;
 
 import java.sql.Date;
 
+
 import lombok.Data;
 
 @Data

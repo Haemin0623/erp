@@ -10,7 +10,9 @@ public interface OrderHeadService {
 
 	void insert(OrderHead orderHead);
 
-	List<OrderHead> headItemList();
+	List<OrderHead> headEmpList();
+
+	void orderApproval(OrderHead head);
 
 	List<OrderHead> search(OrderHead head);
 

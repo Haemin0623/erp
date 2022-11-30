@@ -2,6 +2,7 @@ package com.so.erp.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -158,16 +159,51 @@ public class OrderController {
 		return "page/orderStatus";
 	}
 	
-	@RequestMapping("orderApproval")
-	public String orderApproval(Model model) {
-		List<OrderHead> headList = hs.list();
-		List<OrderItem> itemList = new ArrayList<OrderItem>();
-		for (OrderHead head:headList) {
-			//itemList = is.list(head.getOrderNo());
-		}
+	@RequestMapping("orderApprovalWindow")
+	public String orderApprovalWindow(Model model) {
+		
+		List<OrderHead> headList = hs.headEmpList();	// head, employee
 		
 		model.addAttribute("headList", headList);
-		return "n/orderApproval";
+		
+		return "nolay/orderApprovalWindow";
 	}
+	
+	@RequestMapping("orderItemList")
+	public @ResponseBody List<OrderItem> orderItemList(Model model, @RequestParam(name="orderNo")String orderNo) {
+		System.out.println(orderNo);
+		System.out.println("넘어오나~");
+		
+		List<OrderItem> itemList = is.itemList(orderNo);
+		
+		return itemList;
+	}
+	
+	@RequestMapping("orderApproval")
+	@ResponseBody 
+	public boolean orderApproval(Model model, @RequestParam(name="orderNo")String orderNo, 
+			@RequestParam(name="reason")String reason) {
+		
+		boolean result = true;
+		OrderHead orderHead = new OrderHead();
+		orderHead.setReason(reason);
+		System.out.println("raseon완료"+orderHead.getReason());
+		try {
+			hs.orderApproval(orderHead);
+			System.out.println("되나요");
+			result = true;
+		} catch (Exception e) {
+			System.out.println("에러"+e.getMessage());
+			result = false;
+		}
+		
+		
+		
+		return result;
+	}
+	
+	
+	
+	
 	
 }

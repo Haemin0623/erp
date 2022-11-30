@@ -7,8 +7,16 @@
 		insert into order_item values (#{orderNo}, #{productCd}, #{requestqty}, #{requestdate}, #{price}, #{amount}, #{remark})
 	</insert>
 	
-	<select id="itemList" parameterType="integer" resultType="orderItem">
-		select * from order_item where order_no = #{orderNo}
+	<select id="itemList" parameterType="string" resultType="orderItem">
+		select	* 
+		from	order_item i, 
+				m_product p, 
+				m_employee e, 
+				order_head h
+		where	i.product_cd=p.product_cd
+			and h.order_no=i.order_no
+        	and h.employee_cd=e.employee_cd
+			and i.order_no = #{orderNo}
 	</select>
 	
 	<select id="orderStatusList" resultType="orderItem">

@@ -25,8 +25,13 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	}
 
 	@Override
-	public List<OrderHead> headItemList() {
-		return sst.selectList("headns.headItemList");
+	public List<OrderHead> headEmpList() {
+		return sst.selectList("headns.headEmpList");
+	}
+
+	@Override
+	public void orderApproval(OrderHead orderHead) {
+		sst.update("headns.orderApproval", orderHead);
 	}
 
 	@Override

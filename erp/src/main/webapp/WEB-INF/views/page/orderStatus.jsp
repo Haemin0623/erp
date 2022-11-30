@@ -85,7 +85,6 @@
 		</form>
 	</div>	<!-- searchBox -->
 	
-	<div id="table" class="wrap">
 	<div class="scrollwrap">
 		<table class="scrollcontent">
 			<tr>
@@ -144,8 +143,7 @@
 		</c:forEach>
 		</table>
 	</div>
-	<p class="scroll">스크롤 위치</p>
-	</div>
+	<p class="scroll"></p>
 
 
 

@@ -10,7 +10,9 @@ public interface OrderHeadDao {
 
 	void insert(OrderHead orderHead);
 
-	List<OrderHead> headItemList();
+	List<OrderHead> headEmpList();
+
+	void orderApproval(OrderHead orderHead);
 
 	List<OrderHead> search(OrderHead orderHead);
 

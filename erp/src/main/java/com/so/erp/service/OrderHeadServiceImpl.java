@@ -26,8 +26,13 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	}
 
 	@Override
-	public List<OrderHead> headItemList() {
-		return head.headItemList();
+	public List<OrderHead> headEmpList() {
+		return head.headEmpList();
+	}
+
+	@Override
+	public void orderApproval(OrderHead orderHead) {
+		head.orderApproval(orderHead);
 	}
 
 	@Override

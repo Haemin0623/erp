@@ -30,4 +30,18 @@
 			
 	</select> 
 	
+	<select id="headEmpList" resultType="orderHead">
+		select	distinct * 
+		from	order_head h, 
+				m_employee e
+   		where	h.employee_cd=e.employee_cd
+   	order by	h.orderdate desc, h.order_no asc
+	</select>
+	
+	<update id="orderApproval" parameterType="orderHead">
+		update	order_head 
+		set		status='승인'
+				reason=#{reason}
+		where	order_no=#{orderNo}
+	</update>
 </mapper>
