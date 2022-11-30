@@ -13,6 +13,7 @@ public class Employee {
     private String department;
     private String job;
     private String authority;
+    private Date adddate;
     private String del;
-    private Date deldate;
+    private Date statusdate;
 }

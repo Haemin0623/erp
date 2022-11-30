@@ -53,12 +53,13 @@
 
 	<div>
 		
-			<ul class="menuList">
-				<li class="subMenu">마스터</li>
-				<li class="subMenu"><a href="productList.do">상품</a></li>
-				<li class="subMenu"><a href="buyer.do">고객</a></li>
-				<li class="subMenu"><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
-				<li class="subMenu">승인</li>
+
+			<ul>
+				<li>마스터</li>
+				<li><a href="productList.do">상품</a></li>
+				<li><a href="buyer.do">고객</a></li>
+				<li><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
+				<li><button onclick="changeContent('emp.do')">승인</button></li>
 			</ul>
 			
 			<ul class="menuList">
