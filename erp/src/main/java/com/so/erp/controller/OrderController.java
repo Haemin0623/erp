@@ -142,8 +142,10 @@ public class OrderController {
 		
 		if (window.equals("주문관리")) {
 			return "nolay/order";
+			
 		} else if (window.equals("주문승인")) {
 			return "nolay/orderApprovalWindow";
+			
 		} else {
 			return window;
 		}
@@ -234,19 +236,20 @@ public class OrderController {
 
 	@RequestMapping("orderStatus")
 	public String orderStatus(Model model) {
-		List<Product> productList = ps.list();
-		List<Buyer> buyerList = bs.list();
-		List<Country> countryList = cs.list();
-		List<Employee> empList = es.list();
+		
+//		List<Product> productList = ps.list();
+//		List<Buyer> buyerList = bs.list();
+//		List<Country> countryList = cs.list();
+//		List<Employee> empList = es.list();
 		List<OrderItem> orderStatusList = is.orderStatusList();
 		
-		model.addAttribute("productList", productList);
-		model.addAttribute("buyerList", buyerList);
-		model.addAttribute("countryList", countryList);
-		model.addAttribute("empList", empList);
+//		model.addAttribute("productList", productList);
+//		model.addAttribute("buyerList", buyerList);
+//		model.addAttribute("countryList", countryList);
+//		model.addAttribute("empList", empList);
 		model.addAttribute("orderStatusList", orderStatusList);
 		
-		return "page/orderStatus";
+		return "nolay/orderStatus";
 	}
 	
 	@RequestMapping("orderApprovalWindow")
@@ -318,4 +321,69 @@ public class OrderController {
 		
 		return result;
 	}
+	@RequestMapping("orderStatusSearch")
+	public String orderStatusSearch(Model model, @RequestParam(name="keyword") String keyword) {
+		
+		System.out.println("1");
+		
+		try {
+			
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(keyword);
+			JSONObject keywordObj = JSONObject.fromObject(obj);
+			
+			OrderItem orderItem = new OrderItem();
+			
+			String orderNo = (String) keywordObj.get("orderNo");
+			orderItem.setOrderNo(orderNo);
+			System.out.println(orderItem.getOrderNo());
+			
+			String buyerCd = (String) keywordObj.get("buyerCd");
+			orderItem.setBuyerCd(buyerCd);
+			
+			System.out.println("2");
+			
+			String orderFromDate = (String) keywordObj.get("orderFromDate");
+			if (orderFromDate != null && !orderFromDate.equals("") ) {
+				Date date = Date.valueOf(orderFromDate);
+				orderItem.setOrderFromDate(date);
+			}
+
+			System.out.println("3");
+			
+			String orderToDate = (String) keywordObj.get("orderToDate");
+			if (orderToDate != null && !orderToDate.equals("") ) {
+				Date date = Date.valueOf(orderToDate);
+				orderItem.setOrderToDate(date);
+			}
+			
+			System.out.println("4");
+			
+			String employeeCd = (String) keywordObj.get("employeeCd");
+			orderItem.setEmployeeCd(employeeCd);
+			String status = (String) keywordObj.get("status");
+			orderItem.setStatus(status);
+			
+			String productCd = (String) keywordObj.get("productCd");
+			orderItem.setProductCd(productCd);
+			
+			String requestdate = (String) keywordObj.get("requestdate");
+			if (requestdate != null && !requestdate.equals("") ) {
+				Date date = Date.valueOf(requestdate);
+				orderItem.setRequestdate(date);
+			}
+			
+			List<OrderItem> orderStatusList = is.search(orderItem);
+			model.addAttribute("orderStatusList", orderStatusList);
+			model.addAttribute("orderHead", orderItem);
+			System.out.println("5");
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return "nolay/orderStatus";
+		
+
+		
+	}
+	
 }

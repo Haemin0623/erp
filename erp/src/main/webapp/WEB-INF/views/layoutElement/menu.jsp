@@ -65,12 +65,12 @@
 				<li>주문</li>
 				<li><button onclick="changeContent('order.do')">주문 관리</button></li>
 				<li><button onclick="changeContent('orderApprovalWindow.do')">주문 승인</button></li>
-				<!-- <li><a href="orderApprovalWindow.do">주문 승인</a></li> -->
 			</ul>
 			
 			<ul>
 				<li>REPORT</li>
-				<li><a href="orderStatus.do">주문 현황</a></li>
+				<li><button onclick="changeContent('orderStatus.do')">주문 현황</button></li>
+				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
 			</ul>
 	</div>
 

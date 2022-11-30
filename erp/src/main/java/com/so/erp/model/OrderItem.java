@@ -46,7 +46,13 @@ public class OrderItem {
     private String manager;    
     private String address;   
     private String tel;        
-    private String email;      
+    private String email; 
+    
+    // 검색용
+    //될지안될지모르겠따,.,
+    private String signempName;
+    private Date orderFromDate;
+    private Date orderToDate;
 
     
 }

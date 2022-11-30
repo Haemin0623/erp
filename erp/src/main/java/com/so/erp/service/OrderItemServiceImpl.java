@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.so.erp.dao.OrderItemDao;
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
 
 @Service
@@ -28,5 +29,10 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public List<OrderItem> orderStatusList() {
 		return item.orderStatusList();
+	}
+
+	@Override
+	public List<OrderItem> search(OrderItem orderItem) {
+		return item.search(orderItem);
 	}
 }

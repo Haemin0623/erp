@@ -32,4 +32,37 @@
         	and h.buyer_cd=b.buyer_cd
     	order by h.orderdate desc , h.order_no asc
 	</select>
+	
+	<select id="search" parameterType="orderItem" resultType="orderItem">
+		select	distinct *
+		from	order_head h, 
+				order_item i, 
+				m_product p, 
+				m_employee e, 
+				m_buyer b
+		<where>
+			h.order_no=i.order_no
+   				and i.product_cd=p.product_cd 
+      			and h.employee_cd=e.employee_cd
+        		and h.buyer_cd=b.buyer_cd
+			<if test="orderNo != null and orderNo != ''">
+				and h.order_no like '%' || #{orderNo} || '%'
+			</if>
+			<if test="buyerCd != null and buyerCd != ''">
+				and b.buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="orderFromDate != null and orderToDate != null">
+				and h.orderdate between #{orderFromDate} and #{orderToDate}
+			</if>
+			<if test="employeeCd != null and employeeCd != 'null'">
+				and e.employee_cd like '%' || #{employeeCd} || '%'
+			</if>
+			<if test="status != null and status != 'null'">
+				and h.status like '%' || #{status} || '%'
+			</if>
+		</where>
+		
+		order by h.orderdate desc , h.order_no asc
+			
+	</select> 
 </mapper>

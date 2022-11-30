@@ -39,8 +39,8 @@ tr:active{
 	
 	<div id="searchBox">
 		<form name="searchBoxx">		
-			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }" style="text-transform: uppercase;">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }" style="text-transform: uppercase;">
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
 			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
 			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
 			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
@@ -53,7 +53,7 @@ tr:active{
 				<option value="반려">반려</option>
 			</select>
 			
-			상품코드<input type="text" name="productCd" style="text-transform: uppercase;">
+			상품코드<input type="text" name="productCd">
 			납품요청일<input type="date" name="requestdate">
 			
 		</form>

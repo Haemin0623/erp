@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
 
 @Repository
@@ -28,5 +29,10 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	@Override
 	public List<OrderItem> orderStatusList() {
 		return sst.selectList("itemns.orderStatusList");
+	}
+
+	@Override
+	public List<OrderItem> search(OrderItem orderItem) {
+		return sst.selectList("headns.search", orderItem);
 	}
 }
