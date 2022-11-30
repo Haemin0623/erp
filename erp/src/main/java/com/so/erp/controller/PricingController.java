@@ -1,16 +1,26 @@
 package com.so.erp.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Pricing;
 import com.so.erp.service.PricingService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 public class PricingController {
@@ -35,21 +45,91 @@ public class PricingController {
 		List<Pricing> pricingList = new ArrayList<Pricing>();
 		pricingList = prs.pricingList(pricing);
 		
+		for (Pricing pricing1 : pricingList) {
+			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
+		}
+		
 		model.addAttribute("pricingList", pricingList);
 		model.addAttribute("pb", pb);
 		model.addAttribute("num", num);
-		return "page/pricing";
+		return "nolay/pricing";
 	}
 	
 	
-	@RequestMapping("insert")
-	public String insert(Model model, Pricing pricing) {
+	@RequestMapping("pricingDelete")
+	@ResponseBody
+	public int pricingDelete(@RequestParam(name="checkRows")String[] arr, Pricing pricing) throws java.text.ParseException{
+		
 		int result = 0;
-		result = prs.insert(pricing);
-		System.out.println(pricing);
-		model.addAttribute("result", result);
-		return "page/pricing";
+			for (String i : arr) {
+				String[] a = i.split("&");
+				String buyerCd = a[0];
+				String productCd = a[1];
+				
+				Date startdate = Date.valueOf(a[2]);
+				Date enddate = Date.valueOf(a[3]);
+				System.out.println(enddate);
+				
+				pricing.setBuyerCd(buyerCd);
+				pricing.setProductCd(productCd);
+				pricing.setStartdate(startdate);
+				pricing.setEnddate(enddate);
+				
+				prs.pricingDelete(pricing);
+			}
+		result = 1;
+		return result;
 	}
+	
+	
+	@RequestMapping("pricingInsert")
+	@ResponseBody
+	public boolean pricingInsert(Model model, @RequestParam(name="items")String items) throws ParseException {		
+		
+		boolean result = true;
+		
+		try {
+			
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			Pricing pricing = new Pricing(); 
+			
+			for (int i = 0; i < arr.size(); i++) {
+				
+				JSONObject itemObj = (JSONObject) arr.get(i);
+
+				String buyerCd = (String) itemObj.get("buyerCd");
+				String productCd = (String) itemObj.get("productCd");
+				String rdate = (String) itemObj.get("startdate");
+				Date startdate = Date.valueOf(rdate);
+				rdate = (String) itemObj.get("enddate");
+				Date enddate = Date.valueOf(rdate);
+				int price = Integer.parseInt((String) itemObj.get("price"));
+				String currency = (String) itemObj.get("currency");
+				int discountrate = Integer.parseInt((String) itemObj.get("discountrate"));
+				
+				pricing.setBuyerCd(buyerCd);
+				pricing.setProductCd(productCd);
+				pricing.setStartdate(startdate);
+				pricing.setEnddate(enddate);
+				pricing.setPrice(price);
+				pricing.setCurrency(currency);
+				pricing.setDiscountrate(discountrate);
+				
+				prs.pricingInsert(pricing);
+			}
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			result = false;
+		}
+		
+		return result;
+
+	}
+	
 }
 
 

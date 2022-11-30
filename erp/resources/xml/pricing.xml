@@ -45,4 +45,9 @@
 		select count(*) from m_pricing where del='N'
 	</select>
 	
+	<update id="delete" parameterType="pricing">
+		update m_pricing set del='Y', statusdate = sysdate 
+		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
+	</update>
+	
 </mapper>

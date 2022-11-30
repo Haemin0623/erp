@@ -14,9 +14,9 @@
 
 	.searchBox {
 		width: 90%;
-		height: 150px;
+/* 		height: 150px; */
 		background: gray;
-		margin-left: 50px;
+/* 		margin-left: 50px; */
 		margin-top: 50px;
 		color: white;
 	}
@@ -25,7 +25,7 @@
 		width: 90%;
 		height: 280;
 		margin-top: 50px;
-		margin-left: 50px;
+/* 		margin-left: 50px; */
 	}
 	
 	.keyword {
@@ -126,7 +126,7 @@
 	/* 페이징 부분 가운데 정렬 */
 	.pagination-ul{
 		justify-content: right;
-    	margin-right: 50px;
+    	margin-right: 100px;
 		display: flex;
 	}
 	.pagination-ul>li{
@@ -201,31 +201,22 @@
 
 <script type="text/javascript">
 
-/* function searchList(){
-	$.ajax({
-		type: 'GET',
-		url : "/searchList",
-		data : $("form[name=search-form]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-} */
+function changeContent(data) {
+	var addr = data;
 
-	
+	var ajaxOption = {
+		url : addr,
+		async : true,
+		type : "POST",
+		dataType : "html",
+		cache : false
+	};
+
+	$.ajax(ajaxOption).done(function(data) {
+		$('#content').children().remove();
+		$('#content').html(data);
+	});
+}
 
 </script>
 
@@ -238,7 +229,7 @@
 	
 	<!-- 검색 박스 -->
 	<div class="searchBox">
-		<form action="pricing.do" id="searchList">
+		<form action="pricing.do?buyerCd=${buyerCd }&productCd=${productCd}&startPrice=${startPrice}&endPrice=${endPrice}&validDate=${validDate}&discountrate=${discountrate}" id="searchList">
 			<p>고객코드<input type="text" name="buyerCd" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				상품코드<input type="text" name="productCd" class="keyword"></p><p>
 			<p>판매가<input type="number" name="startPrice" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;~
@@ -246,7 +237,7 @@
 				유효기간<input type="date" name="validDate" class="keyword"></p><p>
 				할인율<input type="number" name="discountrate" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="currency" class="keyword">
-					<option>통화단위 선택</option>
+<!-- 					<option>통화단위 선택</option> -->
 					<option value="won">원(₩)</option>
 					<option value="dollar">달러($)</option>
 					<option value="yen">앤(¥)</option>
@@ -259,13 +250,14 @@
 	</div>
 	<br>
 	<button id="show">추가 </button>
+	<button type="button" onclick="deleteAction()">삭제</button>
 	
 	<!-- 리스트 박스 -->
 	<div class="listBox">
 		<table class="tableList">
 			<tr class="header">
-				<td>선택<input type="checkbox"></td><td>번호</td><td>고객코드</td><td>상품코드</td><td>판매가</td>
-				<td>계약시작일</td><td>계약종료일</td><td>할인율(%)</td><td>최종판매가</td><td>통화단위</td>
+				<td><input type="checkbox" name="checkAll" id="th_checkAll"></td><td>번호</td><td>고객코드</td><td>상품코드</td><td>판매가</td>
+				<td>계약시작일</td><td>계약종료일</td><td>할인율(%)</td><td>최종판매가</td><td>통화단위</td><td>등록일</td><td>상태변경일</td>
 			</tr>
 			<c:if test="${empty pricingList}">
 				검색 결과가 없습니다
@@ -273,10 +265,10 @@
 			<c:if test="${not empty pricingList}">
 				<c:forEach var="pricing" items="${pricingList}" varStatus="status">
 					<tr class="list">
-						<td><input type="checkbox"></td><td>${status.count }</td><td>${pricing.buyerCd }</td>
+						<td><input type="checkbox" name="checkRow" value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }"></td><td>${status.count }</td><td>${pricing.buyerCd }</td>
 						<td>${pricing.productCd }</td><td>${pricing.price }</td><td>${pricing.startdate }</td>
-						<td>${pricing.enddate }</td><td>${pricing.discountrate }</td><td>${pricing.price }</td>
-						<td>${pricing.currency }</td>
+						<td>${pricing.enddate }</td><td>${pricing.discountrate }</td><td>${pricing.finalPrice }</td>
+						<td>${pricing.currency }</td><td>${pricing.adddate }</td><td>${pricing.statusdate }</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -291,14 +283,14 @@
 				<button id="close">X</button>
 				<div class="writeForm">
 				
-				<form action="insert.do" name="pricing">
+				<form action="" name="pricing">
 					<p>고객명<input type="text" name="buyerName">&nbsp;&nbsp;&nbsp;&nbsp;
-					고객코드<input type="text" name="buyerCd"></p><p>
+						고객코드<input type="text" name="buyerCd"></p><p>
 					<p>상품명<input type="text" name="productName">&nbsp;&nbsp;&nbsp;&nbsp;
-					상품코드<input type="text" name="productCd"></p><p>
-					판매가<input type="number" name="price"><br>
+						상품코드<input type="text" name="productCd"></p><p>
+						판매가<input type="number" name="price"><br>
 					<p>계약시작일<input type="date" name="startdate">&nbsp;&nbsp;&nbsp;&nbsp;
-					계약종료일<input type="date" name="enddate"></p><p>
+						계약종료일<input type="date" name="enddate"></p><p>
 					<p>할인율<input type="number" name="discountrate">&nbsp;&nbsp;&nbsp;&nbsp;
 					<select name="currency">
 						<option>통화단위 선택</option>
@@ -307,11 +299,25 @@
 						<option value="앤(¥)">앤(¥)</option>
 						<option value="위안(元)">위안(元)</option>
 					</select><p>
-					비고<textarea rows="5" cols="40" name="remark"></textarea>
-					<input type="submit" value="등록">
 				</form>
-				<div id="addItemTable">
-					 
+				<button id="addItem">추가</button>
+				<div id="addItemDiv">
+				
+					<table id="addItemTable">
+						<tr>
+							<th>고객코드</th>
+							<th>상품코드</th>
+							<th>판매가</th>
+							<th>계약시작일</th>
+							<th>계약종료일</th>
+							<th>할인율</th>
+							<th>통화단위</th>
+							<th>삭제</th>
+						</tr>
+					</table>
+					<br><br><br><br><br><br><br>
+					<button id=pricingInsert>등록</button>
+					
 				</div>
 				
 				</div>
@@ -328,12 +334,12 @@
 					<ul class="pagination-ul">
 						<c:if test="${pb.startPage > pb.pagePerBlock }">
 							<li class="pre-btn">
-								<a href="pricing.do?pageNum=1">
+								<a href="#" onclick="changeContent('pricing.do?pageNum=1')">
 <!-- 									<span class="glyphicon glyphicon-chevron-left"></span> -->
 								</a>
 							</li>
 							<li class="pre-btn">
-								<a href="pricing.do?pageNum=${pb.startPage-1 }">
+								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.startPage-1 }')">
 <!-- 									<span class="glyphicon glyphicon-chevron-left"></span> -->
 								</a>
 							</li>							
@@ -341,23 +347,23 @@
 						<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
 							<c:if test="${pb.currentPage == i }">
 								<li class="active-btn">
-									<a href="pricing.do?pageNum=${i }">${i }</a>
+									<a href="#" onclick="changeContent('pricing.do?pageNum=${i }')">${i }</a>
 								</li>
 							</c:if>
 							<c:if test="${pb.currentPage != i }">
 								<li class="non-active-btn">
-									<a href="pricing.do?pageNum=${i }">${i }</a>
+									<a href="#" onclick="changeContent('pricing.do?pageNum=${i }')">${i }</a>
 								</li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${pb.endPage < pb.totalPage }">
 							<li class="next-btn">
-								<a href="pricing.do?pageNum=${pb.endPage }">
+								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.endPage }')">
 <!-- 									<span class="glyphicon glyphicon-chevron-right"></span> -->
 								</a>
 							</li>
 							<li class="next-btn">
-								<a href="pricing.do?pageNum=${pb.totalPage+1 }">
+								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.totalPage+1 }')">
 <!-- 									<span class="glyphicon glyphicon-chevron-right"></span> -->
 								</a>
 							</li>
@@ -383,6 +389,166 @@
 	
 	document.querySelector("#show").addEventListener("click", show);
 	document.querySelector("#close").addEventListener("click", close);
+	
+	
+	//콜뷰
+	function callView(request) {
+		var addr = request;
+	
+		var ajaxOption = {
+			url : request,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
+	
+	
+	
+	// 체크박스 모두선택
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
+	}
+	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	
+	
+	
+	// 등록창에 판매가리스트 추가
+	function changeTable() {
+		const buyerCd = pricing.buyerCd.value;
+		const productCd = pricing.productCd.value;
+		const price = pricing.price.value;
+		const startdate = pricing.startdate.value;
+		const enddate = pricing.enddate.value;
+		const discountrate = pricing.discountrate.value;
+		const currency = pricing.currency.value;
+		
+		if (buyerCd == '' || productCd == '' || price == '' || 
+				startdate == '' || enddate == '' || discountrate == '' 
+				|| currency == ''){
+			alert('값을 채워넣어주세요');
+		} else {
+			
+			$('#addItemTable').append(
+					"<tr>" +
+						"<td>" + buyerCd + "</td>" +
+						"<td>" + productCd + "</td>" +
+						"<td>" + price + "</td>" +
+						"<td>" + startdate + "</td>" +
+						"<td>" + enddate + "</td>" +
+						"<td>" + discountrate + "</td>" +
+						"<td>" + currency + "</td>" +
+						"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
+					"</tr>"
+			);
+			pricing.buyerCd.value = '';
+			pricing.productCd.value = '';
+			pricing.price.value = '';
+			pricing.startdate.value = '';
+			pricing.enddate.value = '';
+			pricing.discountrate.value = '';
+			pricing.currency.value = '';
+			
+		}
+		
+	}
+	
+	document.querySelector("#addItem").addEventListener("click", changeTable);
+	
+	//등록창 리스트에서 삭제
+	function deleteItem(e) {
+		e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+	}
+	
+	// 체크박스 선택시 삭제
+	function deleteAction(){
+		  var checkRow = new Array();
+		  $( "input[name='checkRow']:checked" ).each (function (){
+		    checkRow.push($(this).val());
+		  });
+		  
+		  console.log(checkRow);
+		  
+		  if(checkRow == ''){
+		    alert("삭제할 대상을 선택하세요.");
+		    return false;
+		  }
+		  $.ajax({
+			    url : "pricingDelete.do",
+			    type : "post",
+			    traditional : true,
+			    data : { checkRows : checkRow },
+			    
+			    success : function(result){
+			    	if(result ==1){
+			    		callView('pricing.do');
+			    		alert("삭제완료");
+			    		
+			    	}else
+			    		alert("삭제실패");
+					console.log(result);
+			    }
+		  });
+	};
+	
+	
+	//등록창 리스트 전체 등록
+	function pricingInsert() {
+		const table = document.querySelector('#addItemTable');
+		const rows = table.getElementsByTagName("tr");
+		const tableLength = table.rows.length-1;
+		console.log(rows);
+		
+		const items = new Array(tableLength);
+		
+		for (let i = 0; i < tableLength; i++) {
+			let cells = rows[i+1].getElementsByTagName("td");
+			
+			items[i] = { 
+				buyerCd: cells[0].firstChild.data,
+				productCd: cells[1].firstChild.data,
+				price: cells[2].firstChild.data,
+				startdate: cells[3].firstChild.data,
+				enddate: cells[4].firstChild.data,
+				discountrate: cells[5].firstChild.data,
+				currency: cells[6].firstChild.data
+			};
+			console.log('성공');
+			console.log(items[i]);
+		};
+		
+		console.log(items);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'pricingInsert.do',
+		     traditional: true,
+		     data: {
+		    	 items: JSON.stringify(items)
+		     },
+		     dataType: 'json',
+		     success: function (result) {
+		        if (result) {
+					callView('pricing.do');
+		        } else {
+		        	alert("실패");
+		        }
+			}
+	   });
+	}
+	
+	document.querySelector("#pricingInsert").addEventListener("click", pricingInsert);
+	
 </script>
 
 </html>

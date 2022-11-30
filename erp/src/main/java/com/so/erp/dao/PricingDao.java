@@ -8,9 +8,11 @@ public interface PricingDao {
 
 	List<Pricing> pricingList(Pricing pricing);
 
-	int insert(Pricing pricing);
-
 	int getTotal();
+
+	void pricingInsert(Pricing pricing);
+
+	int pricingDelete(Pricing pricing);
 
 
 }

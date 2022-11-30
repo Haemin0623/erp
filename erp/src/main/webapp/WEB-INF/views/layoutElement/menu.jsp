@@ -57,7 +57,7 @@
 				<li class="subMenu">마스터</li>
 				<li class="subMenu"><a href="productList.do">상품</a></li>
 				<li class="subMenu"><a href="buyer.do">고객</a></li>
-				<li class="subMenu"><a href="pricing.do">판매가</a></li>
+				<li class="subMenu"><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
 				<li class="subMenu">승인</li>
 			</ul>
 			

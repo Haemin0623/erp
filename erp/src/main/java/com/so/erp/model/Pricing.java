@@ -17,7 +17,9 @@ public class Pricing {
     private Date adddate;
     private String del;
     private Date statusdate;
-
+    
+//  최종 판매가
+    private double finalPrice;
 //  리스트 순번
     private int number;
 //	페이징용
