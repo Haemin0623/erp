@@ -367,16 +367,24 @@ public class OrderController {
 			String productCd = (String) keywordObj.get("productCd");
 			orderItem.setProductCd(productCd);
 			
-			String requestdate = (String) keywordObj.get("requestdate");
-			if (requestdate != null && !requestdate.equals("") ) {
-				Date date = Date.valueOf(requestdate);
-				orderItem.setRequestdate(date);
+			String requestFromDate = (String) keywordObj.get("requestFromDate");
+			if (requestFromDate != null && !requestFromDate.equals("") ) {
+				Date date = Date.valueOf(requestFromDate);
+				orderItem.setRequestFromDate(date);
 			}
-			
+			System.out.println(orderItem.getRequestFromDate());
+			String requestToDate = (String) keywordObj.get("requestToDate");
+			if (requestToDate != null && !requestToDate.equals("") ) {
+				Date date = Date.valueOf(requestToDate);
+				orderItem.setRequestToDate(date);
+			}
+			System.out.println(orderItem.getRequestToDate());
 			List<OrderItem> orderStatusList = is.search(orderItem);
 			model.addAttribute("orderStatusList", orderStatusList);
-			model.addAttribute("orderHead", orderItem);
+			model.addAttribute("orderItem", orderItem);
+			
 			System.out.println("5");
+			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}

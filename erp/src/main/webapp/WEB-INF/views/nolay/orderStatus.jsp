@@ -77,7 +77,9 @@
 					</select>
 				신청일<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
 					-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
-				납품요청일<input type="date" name="requestdate" value=${orderItem.requestdate }>
+				납품요청일<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
+					-<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
+				
 				상태 
 					<select name="status">
 						<option value="${orderItem.status }"></option>
@@ -163,7 +165,6 @@
 <script type="text/javascript">
 	
 	function search() {
-		
 		const keyword = {
 			orderNo : searchBoxx.orderNo.value,	
 			buyerCd : searchBoxx.buyerCd.value,	
@@ -176,7 +177,8 @@
 			signempName : searchBoxx.signempName.value,
 			orderFromDate : searchBoxx.orderFromDate.value,	
 			orderToDate : searchBoxx.orderToDate.value,	
-			requestdate : searchBoxx.requestdate.value,
+			requestFromDate : searchBoxx.requestFromDate.value,
+			requestToDate : searchBoxx.requestToDate.value,
 			status : searchBoxx.status.value,
 			countryCd : searchBoxx.countryCd.value
 			

@@ -53,6 +53,8 @@ public class OrderItem {
     private String signempName;
     private Date orderFromDate;
     private Date orderToDate;
+    private Date requestFromDate;
+    private Date requestToDate;
 
     
 }

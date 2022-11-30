@@ -30,4 +30,8 @@ public class OrderHead {
     private String department;
     private String job;
     private String authority;
+    
+    // console에 오류
+    private String pname;
+    private int requestqty;
 }
