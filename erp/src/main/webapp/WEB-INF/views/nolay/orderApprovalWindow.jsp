@@ -127,6 +127,24 @@ tr:active{
 
 		
 <script type="text/javascript">
+
+	function callView(request) {
+		var addr = request;
+	
+		var ajaxOption = {
+			url : request,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
+	
 	/* search */
 	function search() {
 				
@@ -241,7 +259,7 @@ tr:active{
 								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver;'></textarea></td>"+
 								"</tr>"
 							);
-							$('#textarea').val("승인 대기");
+							$('#textarea').val("승인 대기 중");
 						}
 					
 					}
@@ -279,12 +297,10 @@ tr:active{
 				"reason":writeReason,
 				"btnValue":btnValue
 				},
-			/* cache : false, */
-			/* async: false, */
-			/* processData: false, */
 				
 			success: function(data) {
 				console.log("된듯");
+				callView('orderApprovalWindow.do');
 				
 			}, error: function (xhr, status, error) {
 				console.log("error");
