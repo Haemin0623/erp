@@ -168,26 +168,33 @@ tr:active{
 							"<td>" + data[i].remark + "</td>" +
 						"</tr>"
 					);
-				}
-				if (status == "승인요청") {
-					
-					$('#area').append(
+				
+					if (status == "승인요청") {
+						
+						$('#area').append(
 							"<tr>" +
 							"<td colspan='8'><textarea rows='5' cols='50' name='reason' id='reason'></textarea></td>"+
 							"</tr>"
 						);
-					
-				
-					
-					$('#updateBtn').append(
+	
+					} else if (status == "승인" or status == "반려") {
+						
+						$('#area').append(
 							"<tr>" +
-								"<td colspan='3'></td>"+
-								"<td><button id='orderApprovall' >승인</button></td>"+
-								"<td><button onclick='orderReturn("+ data[i].orderNo +")'>반려</button></td>"+
-							"<td colspan='3'></td>"+
+							"<td colspan='8'><textarea rows='5' cols='50' name='reason' value="+data[i].reason+"></textarea></td>"+
 							"</tr>"
 						);
+					}
 					
+	$('#updateBtn').append(
+			"<tr>" +
+				"<td colspan='3'></td>"+
+				"<td><button id='orderApprovall' >승인</button></td>"+
+				"<td><button onclick='orderReturn("+ data[i].orderNo +")'>반려</button></td>"+
+			"<td colspan='3'></td>"+
+			"</tr>"
+	);
+				
 				}
 			}, error : function(error) {
 					alert("error"+error);
@@ -196,8 +203,26 @@ tr:active{
 		})
 	});
 	
+	
+	
+	
 	$('#orderApprovall').on("click", function(orderNo) {
-		alert('!');
+		
+		console.log(orderNo);
+		console.log(reason);
+		alert(reason);
+		$.ajax({
+			method: 'post',
+			url: 'orderApproval.do',
+			data: {
+				orderNo:orderNo,
+				reason:reason 
+				},
+			success: function(data) {
+				console.log(data)
+			}
+		});
+	
 	});
 	
 </script>
