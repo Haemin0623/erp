@@ -67,4 +67,8 @@
 		<select id="selectCode" parameterType="String" resultType="String">
 			select LPAD(count(*)+1,4,0) from m_product where category = #{category}
 		</select>
+		
+	    <select id="list" resultType="product">
+	            select * from m_product
+    	</select>
 	</mapper>

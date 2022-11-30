@@ -123,16 +123,16 @@
 		<button>엑셀로 대량등록</button>
 	</span>	
 	<span>
-		<select >
-			<option>10개씩보기</option>
-			<option>50개씩보기</option>
-			<option>100개씩보기</option>
-			<option>300개씩보기</option>
-			<option>500개씩보기</option>
+		<select id="listview" name="listNum">
+			<option value="10">10개씩보기</option>
+			<option value="50">50개씩보기</option>
+			<option value="100">100개씩보기</option>
+			<option value="300">300개씩보기</option>
+			<option value="500">500개씩보기</option>
 		</select>
 	</span>
 	<form action="">
-		<table>
+		<table id="list">
 			<tr>
 				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
 				<th>상품코드</th>
@@ -143,7 +143,6 @@
 				<th>등록일</th>
 				<th>최종수정일</th>
 				<th>삭제여부</th>
-				<th>상품 수정</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr>
@@ -156,14 +155,13 @@
 				</c:if>
 				</td>
 				<td>${productList.productCd }</td>
-				<td>${productList.pname}</td>
-				<td>${productList.volume}</td>
-				<td>${productList.unit}</td>
-				<td>${productList.category}</td>
+				<td id="editable">${productList.pname}</td>
+				<td id="editable">${productList.volume}</td>
+				<td id="editable">${productList.unit}</td>
+				<td id="editable">${productList.category}</td>
 				<td>${productList.adddate}</td>
 				<td>${productList.statusdate}</td>
 				<td>${productList.del}</td>
-				<td><button>수정</button></td>
 			</tr>
 			</c:forEach> 
 		</table>
@@ -198,15 +196,15 @@
 		<div class="popup">
 			<form action="" name="frm">
 			<p>상품등록</p>
-				카테고리<select name="category" id="codeMix">
+				카테고리<select name="category" id="codeMix" autofocus="autofocus">
 					<option value="라면">라면</option>
 					<option value="스낵">스낵</option>
 					<option value="음료">음료</option>
 				</select><br>
 				상품코드<input type="text" name="productCd" readonly="readonly"><br>
-				상품명<input type="text" name="pname"><br>
-				용량<input type="text" name="volume"><br>
-				단위<input type="text" name="unit"><br>
+				상품명<input type="text" name="pname" required="required"><br>
+				용량<input type="text" name="volume" required="required"><br>
+				단위<input type="text" name="unit" required="required"><br>
 				
 			</form>
 			<button id="addItem">추가</button>
@@ -269,7 +267,7 @@
 		  
 		  
 	};
-	document.querySelector("#codeMix").addEventListener("click", codeMix);
+	document.querySelector("#codeMix").addEventListener("change", codeMix);
 	
 	function codeMix() {
 		const categorys= frm.category.value;
@@ -284,12 +282,21 @@
 		    success : function(data){
 		    	console.log(data);
 		    	frm.productCd.value=data;
+		    	frm.th_volume.value=data;
 		    }
 	  	});
 	};
+	document.querySelector("#listview").addEventListener("change", listview);
+	
+	function listview() {
+		const listNums = listview.listNum.value;
+		console.log(listNums);
+	}
 	
 	
-	document.querySelector("#addItem").addEventListener("change", insert);
+	
+	
+	document.querySelector("#addItem").addEventListener("click", insert);
 	  
 	function insert() {
 		const item={
@@ -318,6 +325,68 @@
 		    }
 	  	});
 	}
+	
+	
+	const productCd = "";
+	const pname = "";
+    const volume = "";
+    const unit = "";
+	
+	$(document).ready(function() {
+        $(document).on("dblclick", "#editable", function() {
+        	const value=$(this).text();
+        	const input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focuss' >";
+            $(this).removeClass("editable")
+            $(this).html(input);
+            $('#focuss').focus();
+            
+         // 테이블의 Row 클릭시 값 가져오기
+            $("#list tr").click(function(){    
+
+            const str = ""
+            const tdArr = new Array(); // 배열 선언
+             
+             // 현재 클릭된 Row(<tr>)
+            const tr = $(this);
+            const td = tr.children();
+             
+             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+             
+             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+             td.each(function(i){
+              tdArr.push(td.eq(i).text());
+             });
+             
+             console.log("배열에 담긴 값 : "+tdArr);
+             
+             // td.eq(index)를 통해 값을 가져올 수도 있다.
+             productCd = td.eq(1).text();
+             pname = td. eq(2).text();
+             volume = td.eq(3).text();
+             unit = td.eq(4).text();
+             
+            });
+        });
+        $(document).on("blur", ".input-data", function() {
+        	const value=$(this).val();
+        	const td=$(this).parent("td");
+            $(this).remove();
+            td.html(value);
+            td.addClass("editable")
+            });
+        $(document).on("keypress", ".input-data", function(e) {
+        	const key=e.which;
+            if(key==13) {
+            	const value=$(this).val();
+            	const td=$(this).parent("td");
+                $(this).remove();
+                td.html(value);
+                td.addClass("editable");
+            }
+        });
+     
+   });
 </script>
 </body>
 </html>
