@@ -102,8 +102,8 @@
 	
 	<div id="searchBox">
 		<form name="searchBoxx">		
-			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }" style="text-transform: uppercase;">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }" style="text-transform: uppercase;">
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }"">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }"">
 			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
 			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
 			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
@@ -117,7 +117,7 @@
 			</select>
 			
 
-			상품코드<input type="text" name="productCd" value="${orderHead.productCd }" style="text-transform: uppercase;">
+			상품코드<input type="text" name="productCd" value="${orderHead.productCd }"">
 			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 
@@ -364,9 +364,6 @@
 
 <!-- 검색용 -->
 <script type="text/javascript">
-function search() {
-	
-
 	function search() {
 				
 		const keyword = {
@@ -377,7 +374,8 @@ function search() {
 			employeeCd : searchBoxx.employeeCd.value,	
 			status : searchBoxx.status.value,	
 			productCd : searchBoxx.productCd.value,	
-			requestdate : searchBoxx.requestdate.value,
+			requestFromDate : searchBoxx.requestFromDate.value,
+			requestToDate : searchBoxx.requestToDate.value,
 			window : '주문관리'
 		}
 		console.log(keyword);
@@ -395,24 +393,7 @@ function search() {
 			 }
 	   });
 
-	}
-	console.log(keyword);
-	
-	$.ajax({
-	     method: 'post',
-	     url: 'orderSearch.do',
-	     traditional: true,
-	     data: {
-	    	keyword: JSON.stringify(keyword)
-	     },
-	     success: function (result) {
-	    	 $('#content').children().remove();
-			 $('#content').html(result);
-		 }
-	     
-	     
-   });
-}
+	};
 
 document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
