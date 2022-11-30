@@ -1,11 +1,10 @@
 package com.so.erp.controller;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.Buyer;
-import com.so.erp.model.Country;
-import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
-import com.so.erp.model.Product;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
 import com.so.erp.service.EmployeeService;
@@ -28,9 +23,6 @@ import com.so.erp.service.ProductService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 @Controller
 public class OrderController {

@@ -1,6 +1,5 @@
 package com.so.erp.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.json.simple.parser.JSONParser;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
-import com.so.erp.model.OrderHead;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
 
@@ -36,7 +34,7 @@ public class BuyerController {
 		model.addAttribute("buyerList", buyerList);
 		model.addAttribute("countryCdList", countryCdList);
 		
-		return "page/buyer";
+		return "nolay/buyer"; // head가 중복으로 나오는 것 방지
 		
 	}
 	@RequestMapping("buyerInsert")
@@ -78,9 +76,9 @@ public class BuyerController {
 	}
 	
 	@RequestMapping("buyerSearch")
-	@ResponseBody
 	public String buyerSearch(Model model, @RequestParam(name="keyword") String keyword) {
 		System.out.println("값이왔다!");
+		System.out.println(keyword);
 		try {
 			
 			JSONParser p = new JSONParser();
@@ -109,14 +107,21 @@ public class BuyerController {
 			String address = (String) keywordObj.get("address"); //주소
 			buyer.setAddress(address);
 			
-			List<Buyer> bsearchList = bs.search(buyer);
+			System.out.println("전화번호, 이메일, 주소 왔다");
+
+			// buyer객체를 넣어서 search 결과를 bsearchList 에 담음
+			// buyer 페이지로 가므로 buyer.do의 buyerList 를 갖고 페이지로 넘어가게됨.
+			// 따라서 아래 bsearchList 값의  key를 buyerList로 바꿔서 페이지로 넘어가야 값을 갖고갈수있음
+			List<Buyer> bsearchList = bs.search(buyer); 
 			
-			model.addAttribute("bsearchList", bsearchList);
+			System.out.println("조회성공");
+			
+			model.addAttribute("buyerList", bsearchList); // bsearchList를 buyerList 이름으로 보내줘
 			model.addAttribute("buyer", buyer);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
-		return "page/buyer";
+		return "nolay/buyer";
 	}
 }

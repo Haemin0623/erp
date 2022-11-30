@@ -104,7 +104,8 @@
 		고객명 <input type="text" name="bname" value="${buyer.bname}">
 		담당자 <input type="text" name="manager" value="${buyer.manager}">
 		국가코드
-			<select name="countryCd" value="none">
+			<select name="countryCd">
+				<option value=""></option>
 				<c:forEach var="countryCd" items="${countryCdList}">
 					<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 				</c:forEach>
@@ -216,6 +217,24 @@
 
 
 <script type="text/javascript">
+
+function callView(request) {
+	var addr = request;
+
+	var ajaxOption = {
+		url : request,
+		async : true,
+		type : "POST",
+		dataType : "html",
+		cache : false
+	};
+
+	$.ajax(ajaxOption).done(function(data) {
+		$('#content').children().remove();
+		$('#content').html(data);
+	});
+}
+
 	//검색 기능
 	function search() {
 		
@@ -326,10 +345,12 @@
 	
 	document.querySelector("#delBuyer").addEventListener("click", delBuyer);
 	
-	let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
 	
 	// 	 테이블 수정가능하게 editable
 	$(document).ready(function() {
+		
+	let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게). 새로불러오면서 다시 설정하므로 변수 설정위치도 중요
+	
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
         	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
             var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
@@ -341,8 +362,8 @@
                 var key=e.which;
             
                 if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
-                    var value=$(this).val();
-                    var td=$(this).parent("td");
+                    var value=$(this).val(); // 새로 입력한 값을 value에 
+                    var td=$(this).parent("td"); 
                     td.html(value);
                     td.addClass("editable");
                 
@@ -393,8 +414,8 @@
 		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
 		    			    	 console.log(result);
 		    			        if (result) {
-		    			        	document.location.reload();
 		    						alert("수정성공");
+		    						search(); // 수정후에도 검색된 페이지 유지하게
 		    			        } else {
 		    			        	alert("수정실패");
 		    			        }

@@ -57,7 +57,7 @@
 			<ul>
 				<li>마스터</li>
 				<li><a href="productList.do">상품</a></li>
-				<li><a href="buyer.do">고객</a></li>
+				<li><a href="javascript:void(0);" onclick="changeContent('buyer.do')">고객</a><li> <!-- head는 유지하면서 content부분만 바뀌게 -->
 				<li><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
 				<li><button onclick="changeContent('emp.do')">승인</button></li>
 			</ul>
