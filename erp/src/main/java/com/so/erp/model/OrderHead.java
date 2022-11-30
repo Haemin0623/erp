@@ -19,6 +19,10 @@ public class OrderHead {
     
     private Date orderFromDate;
     private Date orderToDate;
+    private String productCd;
+    private Date requestFromDate;
+    private Date requestToDate;
+    
     
  // headEmpList 조인용
     private String ename;

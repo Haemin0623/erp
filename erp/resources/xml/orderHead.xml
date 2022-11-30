@@ -11,25 +11,35 @@
 	</insert>
 	
 	<select id="search" parameterType="orderHead" resultType="orderHead">
-		select	*
-		from	order_head
+		select	distinct h.*
+		from	order_head h left outer join
+				order_item i
+		on		h.order_no = i.order_no
 		<where>
 			<if test="orderNo != null and orderNo != ''">
-				order_no like '%' || #{orderNo} || '%'
+				and h.order_no like '%' || #{orderNo} || '%'
 			</if>
 			<if test="buyerCd != null and buyerCd != ''">
-				and buyer_cd like '%' || #{buyerCd} || '%'
+				and h.buyer_cd like '%' || #{buyerCd} || '%'
 			</if>
 			<if test="orderFromDate != null and orderToDate != null">
-				and orderdate between #{orderFromDate} and #{orderToDate}
+				and h.orderdate between #{orderFromDate} and #{orderToDate}
 			</if>
 			<if test="employeeCd != null and employeeCd != 'null'">
-				and employee_cd like '%' || #{employeeCd} || '%'
+				and h.employee_cd like '%' || #{employeeCd} || '%'
 			</if>
 			<if test="status != null and status != 'null'">
-				and status like '%' || #{status} || '%'
+				and h.status like '%' || #{status} || '%'
 			</if>
+			<if test="productCd != null and productCd != 'null'">
+				and i.product_cd like '%' || #{productCd} || '%'
+			</if>
+			<if test="requestFromDate != null and requestToDate != null">
+				and i.requestdate between #{requestFromDate} and #{requestToDate}
+			</if>			
 		</where>
+		order by h.orderdate desc
+	
 			
 	</select> 
 	
@@ -52,6 +62,13 @@
 	<update id="approvalRequest" parameterType="String">
 		update	order_head
 		set		status = '승인요청',
+				statusdate = sysdate
+		where	order_no=#{orderNo}
+	</update>
+	
+	<update id="approvalCancel" parameterType="String">
+		update	order_head
+		set		status = '승인대기',
 				statusdate = sysdate
 		where	order_no=#{orderNo}
 	</update>

@@ -41,8 +41,13 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	}
 
 	@Override
-	public void approvalRequest(String orderNo) {
-		head.approvalRequest(orderNo);
+	public int approvalRequest(String orderNo) {
+		return head.approvalRequest(orderNo);
 		
+	}
+
+	@Override
+	public int approvalCancel(String orderNo) {
+		return head.approvalCancel(orderNo);
 	}
 }

@@ -51,7 +51,8 @@ public class OrderController {
 	@RequestMapping("order")
 	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
-		System.out.println(orderHead.getOrderNo());
+		System.out.println(orderHead.getStatus());
+		orderHead.setStatus("null");
 		// List<OrderHead> headList = hs.list();
 		List<OrderHead> headList = hs.search(orderHead);
 		
@@ -104,10 +105,32 @@ public class OrderController {
 			String status = (String) keywordObj.get("status");
 			orderHead.setStatus(status);
 			
+			// item 검색
 			String productCd = (String) keywordObj.get("productCd");
-			String requestdate = (String) keywordObj.get("requestdate");
+			
+			System.out.println(productCd);
+			
+			orderHead.setProductCd(productCd);
+			String requestFromDate = (String) keywordObj.get("requestFromDate");
+			if (requestFromDate != null && !requestFromDate.equals("") ) {
+				Date date = Date.valueOf(requestFromDate);
+				orderHead.setRequestFromDate(date);
+			}
+			System.out.println(orderHead.getRequestFromDate());
+			String requestToDate = (String) keywordObj.get("requestToDate");
+			if (requestToDate != null && !requestToDate.equals("") ) {
+				Date date = Date.valueOf(requestToDate);
+				orderHead.setRequestToDate(date);
+			}
+			System.out.println(orderHead.getRequestToDate());
 			
 			List<OrderHead> headList = hs.search(orderHead);
+			System.out.println(headList.size());
+			
+			for (OrderHead oh : headList) {
+				System.out.println(oh.toString());
+			}
+			
 			model.addAttribute("headList", headList);
 			model.addAttribute("orderHead", orderHead);
 			
@@ -276,15 +299,23 @@ public class OrderController {
 	
 	@RequestMapping("approvalRequest")
 	@ResponseBody
-	public String approvalRequest(String orderNo) {
+	public int approvalRequest(String orderNo) {
 		
 		System.out.println(orderNo);
-		hs.approvalRequest(orderNo);
 		
-		return orderNo;
+		int result = hs.approvalRequest(orderNo);
+		
+		return result;
 	}
 	
-	
-	
-	
+	@RequestMapping("approvalCancel")
+	@ResponseBody
+	public int approvalCancel(String orderNo) {
+		
+		System.out.println(orderNo);
+		
+		int result = hs.approvalCancel(orderNo);
+		
+		return result;
+	}
 }

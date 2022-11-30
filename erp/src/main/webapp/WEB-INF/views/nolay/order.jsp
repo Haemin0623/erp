@@ -116,8 +116,11 @@
 				<option value="반려">반려</option>
 			</select>
 			
-			상품코드<input type="text" name="productCd" style="text-transform: uppercase;">
-			납품요청일<input type="date" name="requestdate">
+
+			상품코드<input type="text" name="productCd" value="${orderHead.productCd }" style="text-transform: uppercase;">
+			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
+			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
+
 			
 		</form>
 			<button id="searchBtn">검색</button>
@@ -151,12 +154,12 @@
 							<button onclick="approvalRequest('${head.orderNo }')">요청</button>
 						</c:if>
 						<c:if test="${head.status == '승인요청'}">
-							<button onclick="approvalCancel(${head.orderNo })">취소</button>
+							<button onclick="approvalCancel('${head.orderNo }')">취소</button>
 						</c:if>
 						<c:if test="${head.status == '승인'}">
 						</c:if>
 						<c:if test="${head.status == '반려'}">
-							<button onclick="approvalReject(${head.orderNo })">재요청</button>
+							<button onclick="approvalReject('${head.orderNo }')">재요청</button>
 						</c:if>
 					
 					</td>
@@ -357,7 +360,13 @@
 	}
 	
 	document.querySelector("#insertOrder").addEventListener("click", insertOrder);
+</script>
+
+<!-- 검색용 -->
+<script type="text/javascript">
+function search() {
 	
+
 	function search() {
 				
 		const keyword = {
@@ -385,9 +394,27 @@
 				 $('#content').html(result);
 			 }
 	   });
+
 	}
+	console.log(keyword);
 	
-	document.querySelector("#searchBtn").addEventListener("click", search);
+	$.ajax({
+	     method: 'post',
+	     url: 'orderSearch.do',
+	     traditional: true,
+	     data: {
+	    	keyword: JSON.stringify(keyword)
+	     },
+	     success: function (result) {
+	    	 $('#content').children().remove();
+			 $('#content').html(result);
+		 }
+	     
+	     
+   });
+}
+
+document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
 
 <!-- 테이블 요소 더블클릭 하면 수정 가능 input으로 변경 -->
@@ -419,6 +446,7 @@
    });
 </script>
 
+<!-- 헤드의 아이템들 불러오기 -->
 <script type="text/javascript">
 	$("#table tr").on( "click", function() {
 		$(".itemRow").removeClass('clickColor');
@@ -493,9 +521,9 @@
 	});
 </script>
 
+<!-- 승인대기 -> 승인요청  -->
 <script type="text/javascript">
-	function approvalRequest(orderNo) {
-				
+	function approvalRequest(orderNo) {				
 		$.ajax({
 		     method: 'post',
 		     url: 'approvalRequest.do',
@@ -504,12 +532,36 @@
 		    	 orderNo: orderNo
 		     },
 		     success: function (result) {
-		    	 search();
+		    	 if(result){
+			    	 search();
+		    	 } else {
+		    		 alert('실패');
+		    	 }
+			 }		     
+	   });
+	}
+</script>
+
+<script type="text/javascript">
+	function approvalCancel(orderNo) {
+		$.ajax({
+		     method: 'post',
+		     url: 'approvalCancel.do',
+		     traditional: true,
+		     data: {
+		    	 orderNo: orderNo
+		     },
+		     success: function (result) {
+		    	 if(result){
+			    	 search();
+		    	 } else {
+		    		 alert('실패');
+		    	 }
+
 		    	 
 			 }		     
 	   });
 	}
-
 </script>
 
 </html>

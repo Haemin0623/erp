@@ -40,7 +40,12 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	}
 
 	@Override
-	public void approvalRequest(String orderNo) {
-		sst.update("headns.approvalRequest", orderNo);
+	public int approvalRequest(String orderNo) {
+		return sst.update("headns.approvalRequest", orderNo);
+	}
+
+	@Override
+	public int approvalCancel(String orderNo) {
+		return sst.update("headns.approvalCancel", orderNo);
 	}
 }
