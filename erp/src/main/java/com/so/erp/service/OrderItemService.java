@@ -13,6 +13,6 @@ public interface OrderItemService {
 
 	List<OrderItem> orderStatusList();
 
-	List<OrderItem> search(OrderItem orderItem);
+	List<OrderHead> search(OrderHead orderHead);
 
 }

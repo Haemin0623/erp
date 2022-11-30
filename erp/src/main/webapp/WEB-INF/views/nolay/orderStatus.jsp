@@ -57,21 +57,20 @@
 				상품명 <input type="text" name="pname" value="${orderItem.pname }">
 				영업담당자코드 <input type="text" name="employeeCd" value="${orderItem.employeeCd }">
 				영업담당자
-					<select name="ename">
+					<select name="employeeCd">
 						<option value="${orderItem.ename }"></option>
 							<c:forEach var="emp" items="${empList}">
 								<c:if test="${emp.department=='영업'}">
-									<option>${emp.ename} ${emp.job}(${emp.department})</option>
+									<option value="${emp.employeeCd }">${emp.ename} ${emp.job}(${emp.department})</option>
 								</c:if>
 							</c:forEach>
 					</select>
-				승인자코드영업담당자코드 <input type="text" name="signempCd" value="${orderItem.signempCd }">
 				승인자
-					<select name="signempName">
-						<option value="${orderItem.signempCd }"></option>
+					<select name="signempCd">
+						<option value="${orderItem.signempName }"></option>
 							<c:forEach var="emp" items="${empList}">
 								<c:if test="${emp.department=='영업'}">
-									<option>${emp.ename} ${emp.job}(${emp.department})</option>
+									<option value="${emp.employeeCd}">${emp.ename} ${emp.job}(${emp.department})</option>
 								</c:if>
 							</c:forEach>
 					</select>
@@ -92,7 +91,7 @@
 					<select name="countryCd">
 						<option value="${orderItem.countryCd }"></option>
 							<c:forEach var="country" items="${countryList}">
-								<option>${country.cname}(${country.countryCd})</option>
+								<option value="${country.countryCd}">${country.cname}(${country.countryCd})</option>
 							</c:forEach>
 					</select>
 			</div>
@@ -174,7 +173,6 @@
 			employeeCd : searchBoxx.employeeCd.value,
 			ename : searchBoxx.ename.value,
 			signempCd : searchBoxx.signempCd.value,
-			signempName : searchBoxx.signempName.value,
 			orderFromDate : searchBoxx.orderFromDate.value,	
 			orderToDate : searchBoxx.orderToDate.value,	
 			requestFromDate : searchBoxx.requestFromDate.value,
@@ -187,10 +185,10 @@
 		
 		$.ajax({
 		     method: 'post',
-		     url: 'orderStatusSearch.do',
+		     url: 'orderSearch2.do',
 		     traditional: true,
 		     data: {
-		    	keywordd: JSON.stringify(keyword)
+		    	keyword: JSON.stringify(keyword)
 		     },
 		     success: function (result) {
 		    	 $('#content').children().remove();

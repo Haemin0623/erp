@@ -31,8 +31,29 @@ public class OrderHead {
     private String job;
     private String authority;
     
-    // console에 오류
+
     private String pname;
     private int requestqty;
     private int price;
+    
+
+    private String volume;
+    private String unit;
+    private String category;
+    private Date adddate;
+
+    private String countryCd; 
+    private String bname;       
+    private String manager;    
+    private String address;   
+    private String tel;        
+    private String email; 
+    
+    private Date requestdate;
+    private int amount;
+    private String remark;
+    
+    // 검색용
+    //될지안될지모르겠따,.,
+    private String signempName;
 }

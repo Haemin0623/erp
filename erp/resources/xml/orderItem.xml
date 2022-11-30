@@ -33,7 +33,7 @@
     	order by h.orderdate desc , h.order_no asc
 	</select>
 	
-	<select id="search" parameterType="orderItem" resultType="orderItem">
+	<select id="search" parameterType="orderHead" resultType="orderHead">
 		select	distinct *
 		from	order_head h, 
 				order_item i, 
@@ -59,6 +59,12 @@
 			</if>
 			<if test="status != null and status != 'null'">
 				and h.status like '%' || #{status} || '%'
+			</if>
+			<if test="signempCd != null and signempCd != ''">
+				and h.signemp_cd like '%' || #{signempCd} || '%'
+			</if>
+			<if test="countryCd != null and countryCd != ''">
+				and b.country_cd like '%' || #{countryCd} || '%'
 			</if>
 		</where>
 		

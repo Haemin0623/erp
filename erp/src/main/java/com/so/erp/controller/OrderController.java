@@ -235,18 +235,19 @@ public class OrderController {
 
 
 	@RequestMapping("orderStatus")
-	public String orderStatus(Model model) {
+	public String orderStatus(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
-//		List<Product> productList = ps.list();
-//		List<Buyer> buyerList = bs.list();
-//		List<Country> countryList = cs.list();
-//		List<Employee> empList = es.list();
-		List<OrderItem> orderStatusList = is.orderStatusList();
+		List<Product> productList = ps.list();
+		List<Buyer> buyerList = bs.list();
+		List<Country> countryList = cs.list();
+		List<Employee> empList = es.list();
+	//	List<OrderItem> orderStatusList = is.orderStatusList();
+		List<OrderHead> orderStatusList = is.search(orderHead);
 		
-//		model.addAttribute("productList", productList);
-//		model.addAttribute("buyerList", buyerList);
-//		model.addAttribute("countryList", countryList);
-//		model.addAttribute("empList", empList);
+		model.addAttribute("productList", productList);
+		model.addAttribute("buyerList", buyerList);
+		model.addAttribute("countryList", countryList);
+		model.addAttribute("empList", empList);
 		model.addAttribute("orderStatusList", orderStatusList);
 		
 		return "nolay/orderStatus";
@@ -321,32 +322,30 @@ public class OrderController {
 		
 		return result;
 	}
-	@RequestMapping("orderStatusSearch")
-	public String orderStatusSearch(Model model, @RequestParam(name="keywordd") String keywordd) {
+	@RequestMapping("orderSearch2")
+	public String orderSearch2(Model model, @RequestParam(name="keyword") String keyword) {
 		
 		System.out.println("1");
 		
 		try {
 			
 			JSONParser p = new JSONParser();
-			Object obj = p.parse(keywordd);
+			Object obj = p.parse(keyword);
 			JSONObject keywordObj = JSONObject.fromObject(obj);
 			
-			OrderItem orderItem = new OrderItem();
 			
+			OrderHead orderHead = new OrderHead();
 			String orderNo = (String) keywordObj.get("orderNo");
-			orderItem.setOrderNo(orderNo);
-			System.out.println(orderItem.getOrderNo());
-			
+			orderHead.setOrderNo(orderNo);
 			String buyerCd = (String) keywordObj.get("buyerCd");
-			orderItem.setBuyerCd(buyerCd);
+			orderHead.setBuyerCd(buyerCd);
 			
 			System.out.println("2");
 			
 			String orderFromDate = (String) keywordObj.get("orderFromDate");
 			if (orderFromDate != null && !orderFromDate.equals("") ) {
 				Date date = Date.valueOf(orderFromDate);
-				orderItem.setOrderFromDate(date);
+				orderHead.setOrderFromDate(date);
 			}
 
 			System.out.println("3");
@@ -354,43 +353,85 @@ public class OrderController {
 			String orderToDate = (String) keywordObj.get("orderToDate");
 			if (orderToDate != null && !orderToDate.equals("") ) {
 				Date date = Date.valueOf(orderToDate);
-				orderItem.setOrderToDate(date);
+				orderHead.setOrderToDate(date);
 			}
 			
 			System.out.println("4");
 			
 			String employeeCd = (String) keywordObj.get("employeeCd");
-			orderItem.setEmployeeCd(employeeCd);
+			orderHead.setEmployeeCd(employeeCd);
 			String status = (String) keywordObj.get("status");
-			orderItem.setStatus(status);
+			orderHead.setStatus(status);
 			
+			// item 검색
 			String productCd = (String) keywordObj.get("productCd");
-			orderItem.setProductCd(productCd);
 			
+			System.out.println(productCd);
+			
+			orderHead.setProductCd(productCd);
 			String requestFromDate = (String) keywordObj.get("requestFromDate");
 			if (requestFromDate != null && !requestFromDate.equals("") ) {
 				Date date = Date.valueOf(requestFromDate);
-				orderItem.setRequestFromDate(date);
+				orderHead.setRequestFromDate(date);
 			}
-			System.out.println(orderItem.getRequestFromDate());
+			System.out.println(orderHead.getRequestFromDate());
 			String requestToDate = (String) keywordObj.get("requestToDate");
 			if (requestToDate != null && !requestToDate.equals("") ) {
 				Date date = Date.valueOf(requestToDate);
-				orderItem.setRequestToDate(date);
+				orderHead.setRequestToDate(date);
 			}
-			System.out.println(orderItem.getRequestToDate());
-			List<OrderItem> orderStatusList = is.search(orderItem);
-			model.addAttribute("orderStatusList", orderStatusList);
-			model.addAttribute("orderItem", orderItem);
+			System.out.println(orderHead.getRequestToDate());
 			
-			System.out.println("5");
+			// 고객명
+			
+			// 상품명
+			
+			// 영업담당자명
+			
+			// 승인자
+			String signempCd = keywordObj.getString("signempCd");
+			orderHead.setSignempCd(signempCd);
+			
+
+			
+			// 국가코드
+			String countryCd = keywordObj.getString("countryCd");
+			orderHead.setCountryCd(countryCd);
+			
+			
+			
+			
+			
+			List<OrderHead> orderStatusList = is.search(orderHead);
+			
+			System.out.println(orderStatusList.size());
+			
+			for (OrderHead oh : orderStatusList) {
+				System.out.println(oh.toString());
+			}
+			
+			model.addAttribute("orderStatusList", orderStatusList);
+			model.addAttribute("orderHead", orderHead);
+			
+			
+			List<Product> productList = ps.list();
+			List<Buyer> buyerList = bs.list();
+			List<Country> countryList = cs.list();
+			List<Employee> empList = es.list();
+			
+			model.addAttribute("productList", productList);
+			model.addAttribute("buyerList", buyerList);
+			model.addAttribute("countryList", countryList);
+			model.addAttribute("empList", empList);
+			
+			
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
-		return "nolay/orderStatus";
 		
-
+		
+			return "nolay/orderStatus";
 		
 	}
 	

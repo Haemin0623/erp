@@ -32,7 +32,7 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	}
 
 	@Override
-	public List<OrderItem> search(OrderItem orderItem) {
-		return sst.selectList("headns.search", orderItem);
+	public List<OrderHead> search(OrderHead orderHead) {
+		return sst.selectList("itemns.search", orderHead);
 	}
 }

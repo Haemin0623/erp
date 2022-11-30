@@ -32,7 +32,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	}
 
 	@Override
-	public List<OrderItem> search(OrderItem orderItem) {
-		return item.search(orderItem);
+	public List<OrderHead> search(OrderHead orderHead) {
+		return item.search(orderHead);
 	}
 }
