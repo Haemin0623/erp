@@ -60,4 +60,13 @@ public class BuyerController {
 		}
 		return result;
 	}
+	
+	@RequestMapping("buyerUpdate")
+	@ResponseBody
+	public int buyerUpdate(Buyer buyer) {
+		int result=0;
+		result = bs.update(buyer);
+		return result;
+		
+	}
 }

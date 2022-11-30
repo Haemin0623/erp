@@ -28,4 +28,9 @@ public class BuyerDaoImpl implements BuyerDao {
 	public int delete(String buyerCd) {
 		return sst.delete("buyerns.delete",buyerCd);
 	}
+
+	@Override
+	public int update(Buyer buyer) {
+		return sst.update("buyerns.update",buyer);
+	}
 }

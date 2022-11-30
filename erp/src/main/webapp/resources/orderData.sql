@@ -14,9 +14,10 @@ insert into M_COUNTRY values ('CH', '스위스', 41);
 -- update M_BUYER set country_cd = 'KR' where name = '이마트';
 
 
-
 --고객코드--
 select * from M_BUYER;
+
+
 insert into M_BUYER values ('CVS001', 'KR', 'BGF리테일', '황시유', '서울특별시 강남구 테헤란로 405', '02-1234-1234', 'hwang@cu.com',sysdate, 'N', null);
 insert into M_BUYER values ('CVS002', 'KR', 'GS리테일', '이시보', '서울시 강남구 논현로 508', '02-5678-1234', 'lee25@gs.com',sysdate, 'N', null);
 insert into M_BUYER values ('CVS003', 'KR', '롯데', '김로티', '서울특별시 송파구 올림픽로 300', '02-4321-4321', 'lotti@seven.com',sysdate, 'N', null);

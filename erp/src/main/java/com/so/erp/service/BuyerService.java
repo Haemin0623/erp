@@ -12,4 +12,6 @@ public interface BuyerService {
 
 	int delete(String buyerCd);
 
+	int update(Buyer buyer);
+
 }

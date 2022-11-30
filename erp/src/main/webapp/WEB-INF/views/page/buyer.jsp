@@ -313,7 +313,76 @@
             $(this).html(input);
             $('#focus').focus();
             
-
+            $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
+                var key=e.which;
+                if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
+                    var value=$(this).val();
+                    var td=$(this).parent("td");
+                    td.html(value);
+                    td.addClass("editable");
+                
+                    // 테이블의 Row 클릭시 값 가져오기
+    	            $("#list tr").keypress(function(){    
+    	
+    		            const str = ""
+    		            const tdArr = new Array(); // 배열 선언
+    		             
+    		             // 현재 클릭된 Row(<tr>)
+    		            const tr = $(this);
+    		            const tdd = tr.children();
+    		             
+    		             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+    		             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+    		             
+    		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+    		             tdd.each(function(i){
+	    		             tdArr.push(tdd.eq(i).text());
+    		             });
+    		             
+    		             console.log("배열에 담긴 값 : "+tdArr);
+    		             
+    		             // td.eq(index)를 통해 값을 가져올 수도 있다.
+    		             buyerCd = tdd.eq(1).text();
+    		             bname = tdd.eq(2).text();
+    		             manager = tdd.eq(3).text();
+    		             tel = tdd.eq(4).text();
+    		             email = tdd.eq(5).text();
+    		             address = tdd.eq(6).text();
+    		             countryCd = tdd.eq(7).text();
+    		             console.log(buyerCd);
+    		             console.log(bname);
+    		             console.log(manager);
+    		             console.log(tel);
+    		             console.log(email);
+    		             console.log(address);
+    		             console.log(countryCd);
+    	             
+		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		    			     method: 'post', 
+		    			     url: 'buyerUpdate.do', 
+		    			     traditional: true,
+		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    			    	buyerCd: buyerCd,
+		    					bname: bname,
+		    					manager: manager,
+		    					tel: tel,
+		    					email: email,
+		    					address: address,
+		    					countryCd: countryCd
+		    			     },
+		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    			    	 console.log(result);
+		    			        if (result) {
+		    			        	document.location.reload();
+		    						alert("수정성공");
+		    			        } else {
+		    			        	alert("수정실패");
+		    			        }
+		    				}
+		    		   	});
+    	            });
+               	}
+            });
         });
 
         $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
@@ -324,72 +393,7 @@
             td.addClass("editable")
             });
         
-        $(document).on("keypress", ".input-data", function(e) {
-            var key=e.which;
-            if(key==13) { //13은 enter키를 의미. 테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
-                var value=$(this).val();
-                var td=$(this).parent("td");
-//                 $(this).remove();
-                td.html(value);
-                td.addClass("editable");
-            
-                // 테이블의 Row 클릭시 값 가져오기
-// 	            $("#list tr").dblclick(function(){    
-	
-		            const str = ""
-		            const tdArr = new Array(); // 배열 선언
-		             
-		             // 현재 클릭된 Row(<tr>)
-		            const tr = $("#list tr");
-		            const tdd = tr.children();
-		             
-		             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
-		             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
-		             
-		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
-		             tdd.each(function(i){
-		              tdArr.push(tdd.eq(i).text());
-		             });
-		             
-		             console.log("배열에 담긴 값 : "+tdArr);
-		             
-		             // td.eq(index)를 통해 값을 가져올 수도 있다.
-		             bname = tdd.eq(1).text();
-		             manager = tdd.eq(2).text();
-		             tel = tdd.eq(3).text();
-		             email = tdd.eq(4).text();
-		             address = tdd.eq(5).text();
-		             countryCd = tdd.eq(6).text();
-		             console.log(bname);
-	             
-// 	            });
-           }
-            
-            
-//             $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-// 			     method: 'post', 
-// 			     url: 'buyerUpdate.do', 
-// 			     traditional: true,
-// 			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-// 			    	buyerCd: bt.buyer.buyerCd.value,
-// 					bname: frm.bname.value,
-// 					manager: frm.manager.value,
-// 					tel: frm.tel.value,
-// 					email: frm.email.value,
-// 					address: frm.address.value,
-// 					countryCd: frm.countryCd.value
-// 			     },
-// 			     success: function (result) { //성공했을떄 호출할 콜백을 지정
-// 			    	 console.log(result);
-// 			        if (result) {
-// 			        	document.location.reload();
-// 						alert("입력성공");
-// 			        } else {
-// 			        	alert("실패");
-// 			        }
-// 				}
-// 		   });
-        });
+       
    });
 
 	document.querySelector("#addBuyer").addEventListener("click", addBuyer); 

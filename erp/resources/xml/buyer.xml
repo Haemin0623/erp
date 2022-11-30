@@ -4,13 +4,40 @@
 <mapper namespace="buyerns">
 
 	<select id="list" resultType="buyer">
-		select * from m_buyer
+		select	* 
+		from 	m_buyer
 	</select>
 	<insert id="insert" parameterType="buyer">
-		insert into m_buyer values (#{buyerCd}, #{countryCd},#{bname},#{manager},#{address},#{tel},#{email},sysdate,'N', null)
+		insert 	into m_buyer 
+		values (#{buyerCd}, 
+				#{countryCd},
+				#{bname},
+				#{manager},
+				#{address},
+				#{tel},
+				#{email},
+				sysdate,
+				'N', 
+				null
+				)
 	</insert>
 	<update id="delete" parameterType="String">
-		update m_buyer set del='Y', statusdate = sysdate where buyer_cd=#{buyerCd}	
+		update 	m_buyer 
+		set 	del='Y', 
+				statusdate = sysdate 
+		where 	buyer_cd=#{buyerCd}	
 	</update>
-	
+	<update id="update" parameterType="buyer" > <!-- 테이블에서 바로 수정가능하게 기능 -->
+		update 	m_buyer 
+		set 	bname = #{bname},
+				manager = #{manager},
+				tel = #{tel},
+				email = #{email},
+				address = #{address},
+				country_cd = #{countryCd},
+				adddate = sysdate,
+				del ='N', 
+				statusdate = null
+		where  buyer_cd=#{buyerCd}
+	</update>
 </mapper>

@@ -12,4 +12,6 @@ public interface BuyerDao {
 
 	int delete(String buyerCd);
 
+	int update(Buyer buyer);
+
 }
