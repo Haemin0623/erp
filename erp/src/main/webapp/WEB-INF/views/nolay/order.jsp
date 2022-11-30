@@ -121,13 +121,13 @@
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr>
-					<td><input type="checkbox" value="${head.orderNo }"></td>
-					<td>${head.orderNo }</td>
-					<td>${head.buyerCd }</td>
-					<td>${head.orderdate }</td>
-					<td>${head.employeeCd }</td>
-					<td>${head.status }</td>
-					<td>${head.statusdate }</td>
+					<td class="editable"><input type="checkbox" value="${head.orderNo }"></td>
+					<td class="editable">${head.orderNo }</td>
+					<td class="editable">${head.buyerCd }</td>
+					<td class="editable">${head.orderdate }</td>
+					<td class="editable">${head.employeeCd }</td>
+					<td class="editable">${head.status }</td>
+					<td class="editable">${head.statusdate }</td>
 					<td><button>예시</button></td>
 				</tr>
 			</c:forEach>
@@ -377,6 +377,35 @@
 	}
 	
 	document.querySelector("#searchBtn").addEventListener("click", search);
+</script>
+
+<!-- 테이블 요소 더블클릭 하면 수정 가능 input으로 변경 -->
+<script>
+    $(document).ready(function() {
+        $(document).on("dblclick", ".editable", function() {
+            var value=$(this).text();
+            var input="<input type='text' class='input-data' value='"+value+"' class='form-control'>";
+            $(this).html(input);
+            $(this).removeClass("editable")
+        });
+        $(document).on("blur", ".input-data", function() {
+            var value=$(this).val();
+            var td=$(this).parent("td");
+            $(this).remove();
+            td.html(value);
+            td.addClass("editable")
+            });
+        $(document).on("keypress", ".input-data", function(e) {
+            var key=e.which;
+            if(key==13) {
+                var value=$(this).val();
+                var td=$(this).parent("td");
+                $(this).remove();
+                td.html(value);
+                td.addClass("editable");
+            }
+        });
+   });
 </script>
 
 </html>
