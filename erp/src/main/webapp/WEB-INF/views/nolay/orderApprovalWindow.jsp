@@ -111,7 +111,9 @@ tr:active{
 				</tr>
 				<tbody id="statusTable"/>
 				<tbody id="area"/>
-				<tbody id="updateBtn"/>
+				
+							
+				<!-- <tbody id="updateBtn"/> -->
 				
 			<!-- 	<tr>
 					<td colspan="6"><textarea rows="5" cols="40" name="reason"></td>
@@ -119,6 +121,10 @@ tr:active{
 					<th><button></button></th>
 				</tr> -->
 			</table>
+			<div id="btn">
+				<button id='orderApproval'>승인</button>
+				<button onclick='orderReturn'>반려</button>
+			</div>
 		</div>
 		
 		
@@ -195,45 +201,36 @@ tr:active{
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' readonly style='background-color:silver;'></textarea></td>"+
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver;'></textarea></td>"+
 								"</tr>"
 							);
-							$('#reason').val(reason);
+							$('#textarea').val(reason);
 						}
-					} 
-				if (status == "승인요청")
+					} else if (status == "승인대기" ) {
+						if (reason == "") {
+								
+							$('#area').append(
+								"<tr>" +
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver;'></textarea></td>"+
+								"</tr>"
+							);
+							$('#textarea').val("승인 대기");
+						}
+					
+					}
+/* 				if (status == "승인요청")
+					 
 					$('#updateBtn').append(
 							"<tr>" +
 								"<td colspan='3'></td>"+
-								"<td><button onclick='orderApproval("+ data[i].orderNo+ "," + $('#reason').val() + ")'>승인</button></td>"+
-								"<td><button onclick='orderReturn("+ data[i].orderNo +")'>반려</button></td>"+
+								"<td><button onclick='orderApproval("+ orderNo+ ")'>승인</button></td>"+
+								"<td><button onclick='orderReturn("+ orderNo +")'>반려</button></td>"+
 							"<td colspan='3'></td>"+
 							"</tr>"
 					);
 			
-				
+				 */
 
-				
-				$('#orderApprovall').on("click", function(orderNo) {
-					
-					
-					
-					console.log(orderNo);
-					console.log(reason);
-					alert(reason);
-					$.ajax({
-						method: 'post',
-						url: 'orderApproval.do',
-						data: {
-							orderNo:orderNo,
-							reason:reason 
-							},
-						success: function(data) {
-							console.log(data)
-						}
-					});
-				
-				});
 				
 				
 				
@@ -245,9 +242,32 @@ tr:active{
 		})
 	});
 	
+	let textarea = document.getElementById('#textarea'); 
+	console.log(textarea);
 	
+	/* 
+	"," + textarea + 
+	$('#orderApproval').on("click", function(orderNo) {
+		 */
+		
+	function orderApproval(orderNo) {
+		
+		console.log(orderNo);
+		console.log(reason);
+		alert(reason);
+		$.ajax({
+			method: 'post',
+			url: 'orderApproval.do',
+			data: {
+				orderNo:orderNo,
+				reason:reason 
+				},
+			success: function(data) {
+				console.log(data)
+			}
+		});
 	
-	
+	};
 </script>
 
 
