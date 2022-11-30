@@ -102,8 +102,8 @@
 	
 	<div id="searchBox">
 		<form name="searchBoxx">		
-			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }" style="text-transform: uppercase;">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }" style="text-transform: uppercase;">
 			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
 			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
 			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
@@ -116,7 +116,7 @@
 				<option value="반려">반려</option>
 			</select>
 			
-			상품코드<input type="text" name="productCd">
+			상품코드<input type="text" name="productCd" style="text-transform: uppercase;">
 			납품요청일<input type="date" name="requestdate">
 			
 		</form>
@@ -179,13 +179,6 @@
 				</tr>
 				<tbody id="statusTable"/>
 				<tbody id="area"/>
-				<tbody id="updateBtn"/>
-				
-			<!-- 	<tr>
-					<td colspan="6"><textarea rows="5" cols="40" name="reason"></td>
-					<th><button onclick="updateStatus"></button></th>
-					<th><button></button></th>
-				</tr> -->
 			</table>
 		</div>
 	
@@ -375,7 +368,8 @@
 			employeeCd : searchBoxx.employeeCd.value,	
 			status : searchBoxx.status.value,	
 			productCd : searchBoxx.productCd.value,	
-			requestdate : searchBoxx.requestdate.value
+			requestdate : searchBoxx.requestdate.value,
+			window : '주문관리'
 		}
 		console.log(keyword);
 		
@@ -390,8 +384,6 @@
 		    	 $('#content').children().remove();
 				 $('#content').html(result);
 			 }
-		     
-		     
 	   });
 	}
 	
@@ -438,7 +430,6 @@
 		
 		$('#statusTable').empty();
 		$('#area').empty();
-		$('#updateBtn').empty();
 		
 		let thisRow = $(this).closest('tr');
 		let orderNo = thisRow.find('td:eq(0)').find('input').val();

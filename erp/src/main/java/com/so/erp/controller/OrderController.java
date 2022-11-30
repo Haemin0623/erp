@@ -64,12 +64,16 @@ public class OrderController {
 	public String orderSearch(Model model, @RequestParam(name="keyword") String keyword) {
 		
 		System.out.println("1");
+		String window = null;
 		
 		try {
 			
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(keyword);
 			JSONObject keywordObj = JSONObject.fromObject(obj);
+			
+			window = keywordObj.getString("window");
+			System.out.println(window);
 			
 			OrderHead orderHead = new OrderHead();
 			String orderNo = (String) keywordObj.get("orderNo");
@@ -111,7 +115,16 @@ public class OrderController {
 			System.out.println(e.getMessage());
 		}
 		
-		return "nolay/order";
+		System.out.println(window);
+		
+		if (window.equals("주문관리")) {
+			return "nolay/order";
+		} else if (window.equals("주문승인")) {
+			return "nolay/orderApprovalWindow";
+		} else {
+			return window;
+		}
+		
 	}
 	
 	
@@ -170,7 +183,6 @@ public class OrderController {
 				System.out.println(requestdate);
 				String remark = (String) itemObj.get("remark");
 				System.out.println(remark);
-				
 				
 				
 				item.setOrderNo(orderNo);
@@ -245,12 +257,11 @@ public class OrderController {
 		OrderHead orderHead = new OrderHead();
 		orderHead.setOrderNo(orderNo);
 		orderHead.setReason(reason);
-		orderHead.setStatus(btnValue);
+		orderHead.setStatus(btnValue);	// 승인버튼 누르면 승인으로, 반려버튼 누르면 반려로
 		
 		System.out.println("orderNo"+orderHead.getOrderNo());
 		System.out.println("raseon"+orderHead.getReason());
 		System.out.println("btnValue"+orderHead.getStatus());
-		
 		
 		try {
 			hs.orderApproval(orderHead);
@@ -260,9 +271,6 @@ public class OrderController {
 			System.out.println("에러"+e.getMessage());
 			result = false;
 		}
-		
-		
-		
 		return result;
 	}
 	
@@ -271,12 +279,10 @@ public class OrderController {
 	public String approvalRequest(String orderNo) {
 		
 		System.out.println(orderNo);
-		
 		hs.approvalRequest(orderNo);
 		
 		return orderNo;
 	}
-	
 	
 	
 	

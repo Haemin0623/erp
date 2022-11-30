@@ -38,14 +38,26 @@ tr:active{
 	<h1>주문 승인</h1>
 	
 	<div id="searchBox">
-		<form action="">		
-			주문번호<input type="number" name="orderNo">
-			고객코드<input type="text" name="buyerCd">
-			신청일<input type="date" name="orderDate">
-			상품코드<input type="text" name="productCD">
-			납품요청일<input type="date" name="requestDate">
-			<input type="submit" value="검색">
+		<form name="searchBoxx">		
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }" style="text-transform: uppercase;">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }" style="text-transform: uppercase;">
+			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
+			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
+			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
+			
+			<select name="status">
+				<option value="null">모두</option>			
+				<option value="승인대기">승인대기</option>
+				<option value="승인요청">승인요청</option>
+				<option value="승인">승인</option>
+				<option value="반려">반려</option>
+			</select>
+			
+			상품코드<input type="text" name="productCd" style="text-transform: uppercase;">
+			납품요청일<input type="date" name="requestdate">
+			
 		</form>
+			<button id="searchBtn">검색</button>
 	</div>
 	
 	
@@ -70,12 +82,14 @@ tr:active{
 					<td>${head.ename } ${head.job } (${head.department })</td>
 					<td><input type="hidden" value="${head.status }">${head.status }</td>
 					<td>${head.statusdate }</td>
-					<c:if test="${head.reason == null}">
-						<td style="text-align: center;"><input type="hidden" value="${head.reason }">-</td>
-					</c:if>
-					<c:if test="${head.reason != null}">
-						<td style="text-align: center;"><input type="hidden" value="${head.reason }">${head.reason }</td>
-					</c:if>
+					<td style="text-align: center;">
+						<c:if test="${head.reason == null}">
+							<input type="hidden" value="${head.reason }">-
+						</c:if>
+						<c:if test="${head.reason != null}">
+							<input type="hidden" value="${head.reason }">${head.reason }
+						</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -89,16 +103,6 @@ tr:active{
 
 		<div class="statusWindow">
 			<table>
-<%-- 				<tr>
-					<th>주문번호</th>
-					<td>${head.orderNo }</td>
-					<th>주문일</th>
-					<td>${head.orderdate }</td>
-					<th>고객코드</th>
-					<td>${head.buyerCd }</td>
-					<th>작성자</th>
-					<td>${head.employeeCd } <!-- 쿼리수정해서이름도? --></td>
-				</tr> --%>
 				<tr>
 					<th>No.</th>
 					<th>상품코드</th>
@@ -111,19 +115,10 @@ tr:active{
 				</tr>
 				<tbody id="statusTable"/>
 				<tbody id="area"/>
-				
-							
-				<!-- <tbody id="updateBtn"/> -->
-				
-			<!-- 	<tr>
-					<td colspan="6"><textarea rows="5" cols="40" name="reason"></td>
-					<th><button onclick="updateStatus"></button></th>
-					<th><button></button></th>
-				</tr> -->
 			</table>
 			<div>
-				<button id='orderApproval' name='btn' value='승인'>승인</button>
-				<button id='orderApproval' name='btn' value='반려'>반려</button>
+				<button class='orderApproval' name='btn' value='승인'>승인</button>
+				<button class='orderApproval' name='btn' value='반려'>반려</button>
 			</div>
 		</div>
 		
@@ -132,18 +127,50 @@ tr:active{
 
 		
 <script type="text/javascript">
-
+	/* search */
+	function search() {
+				
+		const keyword = {
+			orderNo : searchBoxx.orderNo.value,	
+			buyerCd : searchBoxx.buyerCd.value,	
+			orderFromDate : searchBoxx.orderFromDate.value,	
+			orderToDate : searchBoxx.orderToDate.value,	
+			employeeCd : searchBoxx.employeeCd.value,	
+			status : searchBoxx.status.value,	
+			productCd : searchBoxx.productCd.value,	
+			requestdate : searchBoxx.requestdate.value,
+			window : '주문승인'
+		}
+		console.log(keyword);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'orderSearch.do',
+		     traditional: true,
+		     data: {
+		    	keyword: JSON.stringify(keyword)
+		     },
+		     success: function (result) {
+		    	 $('#content').children().remove();
+				 $('#content').html(result);
+			 }
+	   });
+	}
+	
+	document.querySelector("#searchBtn").addEventListener("click", search);
+	
+	
+	/* 행 색상 */
 	$("#table tr").on( "click", function() {
 		$(".itemRow").removeClass('clickColor');
 	    $(this).addClass('clickColor');
 	});
 
-	
+	/* head 행 클릭시 itemList */
 	$('.itemRow').on('click', function() {
 		
 		$('#statusTable').empty();
 		$('#area').empty();
-		$('#updateBtn').empty();
 		
 		let thisRow = $(this).closest('tr');
 		let orderNo = thisRow.find('td:eq(0)').find('input').val();
@@ -218,23 +245,6 @@ tr:active{
 						}
 					
 					}
-/* 				if (status == "승인요청")
-					 
-					$('#updateBtn').append(
-							"<tr>" +
-								"<td colspan='3'></td>"+
-								"<td><button onclick='orderApproval("+ orderNo+ ")'>승인</button></td>"+
-								"<td><button onclick='orderReturn("+ orderNo +")'>반려</button></td>"+
-							"<td colspan='3'></td>"+
-							"</tr>"
-					);
-			
-				 */
-
-				
-				
-				
-				
 			}, error : function(error) {
 					alert("error"+error);
 					console.log("에러");
@@ -242,8 +252,8 @@ tr:active{
 		})
 	});
 	
-
-	$('#orderApproval').on("click", function() {
+	/* 승인 or 반려 */
+	$('.orderApproval').on("click", function() {
 		
 		let thisRow = $('.clickColor').closest('tr');
 		let orderNo = thisRow.find('td:eq(0)').find('input').val();
