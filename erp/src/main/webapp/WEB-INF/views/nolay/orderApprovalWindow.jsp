@@ -30,14 +30,30 @@
 	}
 
 	#table {
-	margin-top: 50px; 
-	width: 90%;
+		margin-top: 50px;
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;
 	}
-	#table th {
+	tr th {
 	background-color: #5b6996;
 	color: white;
 	}
-
+	#list {
+		width: 100%;
+		border: 1px solid;
+		
+	}
+	.statusWindow {
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;	
+	}
+	
+	#statusList {
+		width: 100%;
+		border: 1px solid;
+	}
 	
 /* 마우스 오버(마우스 올렸을때) */
 tr{
@@ -127,8 +143,8 @@ tr:active{
 
 
 
-		<div class="statusWindow" id="table">
-			<table id="list">
+		<div class="statusWindow" >
+			<table id="statusList">
 				<tr>
 					<th>No.</th>
 					<th>상품코드</th>
