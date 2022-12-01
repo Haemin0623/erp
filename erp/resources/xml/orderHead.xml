@@ -39,7 +39,7 @@
 				and h.employee_cd like '%' || #{employeeCd} || '%'
 			</if>
 			<if test="status != null and status != 'null'">
-				and h.status like '%' || #{status} || '%'
+				and h.status = #{status}
 			</if>
 			<if test="productCd != null and productCd != 'null'">
 				and i.product_cd like '%' || #{productCd} || '%'
