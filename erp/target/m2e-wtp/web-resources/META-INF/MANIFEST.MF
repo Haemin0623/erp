@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: eh640
-=======
-Built-By: 1seon
->>>>>>> d28c69b (주문현황 검색 승인자 빼고 완료)
-Build-Jdk: 11.0.16.1
+Built-By: 88bhs
+Build-Jdk: 1.8.0_292
 Created-By: Maven Integration for Eclipse
 

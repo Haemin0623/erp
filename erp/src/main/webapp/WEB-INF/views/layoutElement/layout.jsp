@@ -20,9 +20,9 @@ body {
 
 #menu {
 	float: left;
-	width: 200px;
+	width: 250px;
 	height: 100vh;
-	background-color: silver;
+	background-color: #5b6996;
 }
 
 #content {

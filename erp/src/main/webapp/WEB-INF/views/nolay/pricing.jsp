@@ -10,7 +10,7 @@
 <style type="text/css">
 
 	.pricingPage {
-		margin-left: 100px;
+		margin-left: 300px;
 	}
 	.menuName {
 /* 		align-content: center; */
@@ -18,7 +18,7 @@
 
 	.searchBox {
  		height: 150px;
-		background: gray;
+		background: #5b6996;
 		margin-top: 50px;
 		color: white;
 	}
@@ -31,10 +31,15 @@
  	margin-top: 50px;
 	}
 	
+	.listCount {
+		float: right;
+	}
+	
 	.listBox {
 		height: 280;
 		margin-top: 10px;
-		overflow:auto
+		overflow:auto;
+		width: 100%;
 	}
 	
 	.keyword {
@@ -55,12 +60,12 @@
 	}
 	
 	.header td {
-		background: gray;
+		background: #5b6996;
 		color: white;
 	}
 	
 	.list {
- 		background: silver;
+ 		background: #e5ebff;
 	}
 	
 	
@@ -260,7 +265,7 @@ function changeContent(data) {
 	<button id="show">추가 </button>
 	<button type="button" onclick="deleteAction()">삭제</button>
 	
-	<form name="page">
+	<form name="page" class="listCount">
 		<span>
 			<select id="listview">
 			<c:if test="${rowPerPage ==10}">
