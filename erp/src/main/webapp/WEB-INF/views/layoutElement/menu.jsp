@@ -52,14 +52,12 @@
 	<!-- </table> -->
 
 	<div>
-		
-
-			<ul>
-				<li>마스터</li>
-				<li><button onclick="changeContent('productList.do')">상품</button></li>
-				<li><a href="javascript:void(0);" onclick="changeContent('buyer.do')">고객</a><li> <!-- head는 유지하면서 content부분만 바뀌게 -->
-				<li><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
-				<li><button onclick="changeContent('emp.do')">승인</button></li>
+			<ul class="menuList">
+				<li class="subMenu">마스터</li>
+				<li class="subMenu"><button onclick="changeContent('productList.do')">상품</button></li>
+				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('buyer.do')">고객</a><li> <!-- head는 유지하면서 content부분만 바뀌게 -->
+				<li class="subMenu"><a href="#" onclick="changeContent('pricing.do')">판매가</a></li>
+				<li class="subMenu"><button onclick="changeContent('emp.do')">승인</button></li>
 			</ul>
 			
 			<ul class="menuList">

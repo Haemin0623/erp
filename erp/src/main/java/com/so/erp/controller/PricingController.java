@@ -127,7 +127,14 @@ public class PricingController {
 		}
 		
 		return result;
-
+	}
+	
+	@RequestMapping("pricingUpdate")
+	@ResponseBody
+	public int pricingUpdate(Pricing pricing) {
+		int result = 0;
+		result = prs.pricingUpdate(pricing);
+		return result;
 	}
 	
 }

@@ -14,5 +14,7 @@ public interface PricingService {
 
 	int pricingDelete(Pricing pricing);
 
+	int pricingUpdate(Pricing pricing);
+
 
 }

@@ -8,24 +8,33 @@
 <title>Insert title here</title>
 
 <style type="text/css">
+
+	.pricingPage {
+		margin-left: 100px;
+	}
 	.menuName {
 /* 		align-content: center; */
 	}
 
 	.searchBox {
-		width: 90%;
-/* 		height: 150px; */
+ 		height: 150px;
 		background: gray;
-/* 		margin-left: 50px; */
 		margin-top: 50px;
 		color: white;
 	}
 	
+	#searchList {
+	margin-left: 20px;
+	}
+	
+	.btn {
+ 	margin-top: 50px;
+	}
+	
 	.listBox {
-		width: 90%;
 		height: 280;
-		margin-top: 50px;
-/* 		margin-left: 50px; */
+		margin-top: 10px;
+		overflow:auto
 	}
 	
 	.keyword {
@@ -42,10 +51,7 @@
 	}
 	
 	table {
-		width: 100%;
-		border: black;
-		position: absolute;
-		    width: inherit;
+
 	}
 	
 	.header td {
@@ -225,6 +231,7 @@ function changeContent(data) {
 
 </head>
 <body>
+<div class="pricingPage">
 	<h1 class="menuName">판매가 관리</h1>
 	
 	<!-- 검색 박스 -->
@@ -248,9 +255,11 @@ function changeContent(data) {
 			
 		</form>
 	</div>
-	<br>
+	
+	<div class="btn">
 	<button id="show">추가 </button>
 	<button type="button" onclick="deleteAction()">삭제</button>
+	</div>
 	
 	<!-- 리스트 박스 -->
 	<div class="listBox">
@@ -265,10 +274,19 @@ function changeContent(data) {
 			<c:if test="${not empty pricingList}">
 				<c:forEach var="pricing" items="${pricingList}" varStatus="status">
 					<tr class="list">
-						<td><input type="checkbox" name="checkRow" value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }"></td><td>${status.count }</td><td>${pricing.buyerCd }</td>
-						<td>${pricing.productCd }</td><td>${pricing.price }</td><td>${pricing.startdate }</td>
-						<td>${pricing.enddate }</td><td>${pricing.discountrate }</td><td>${pricing.finalPrice }</td>
-						<td>${pricing.currency }</td><td>${pricing.adddate }</td><td>${pricing.statusdate }</td>
+						<td><input type="checkbox" name="checkRow" 
+								value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }"></td>
+						<td>${status.count }</td>
+						<td>${pricing.buyerCd }</td>
+						<td>${pricing.productCd }</td>
+						<td class="editable">${pricing.price }</td>
+						<td class="editable">${pricing.startdate }</td>
+						<td class="editable">${pricing.enddate }</td>
+						<td class="editable">${pricing.discountrate }</td>
+						<td>${pricing.finalPrice }</td>
+						<td class="editable">${pricing.currency }</td>
+						<td>${pricing.adddate }</td>
+						<td>${pricing.statusdate }</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -373,7 +391,7 @@ function changeContent(data) {
 				</c:if>
 		</div>
 		<!-- 페이징 끝 -->
-	
+</div>
 </body>
 
 <script type="text/javascript">
@@ -540,6 +558,7 @@ function changeContent(data) {
 		     success: function (result) {
 		        if (result) {
 					callView('pricing.do');
+					alert("삭제 성공");
 		        } else {
 		        	alert("실패");
 		        }
@@ -548,6 +567,96 @@ function changeContent(data) {
 	}
 	
 	document.querySelector("#pricingInsert").addEventListener("click", pricingInsert);
+	
+	
+	
+// 	테이블 더블클릭하여 수정
+	
+let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
+
+	$(document).ready(function() {
+        $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
+        	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
+            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
+            $(this).removeClass("editable")
+            $(this).html(input);
+            $('#focus').focus();
+            
+            $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
+                var key=e.which;
+            
+                if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
+                    var value=$(this).val();
+                    var td=$(this).parent("td");
+                    td.html(value);
+                    td.addClass("editable");
+                
+                    // 테이블의 Row 클릭시 값 가져오기
+    	            $(".tableList tr").keypress(function(){    
+    	
+    		            const str = ""
+    		            const tdArr = new Array(); // 배열 선언
+    		             
+    		             // 현재 클릭된 Row(<tr>)
+    		            const tr = $(this);
+    		            const tdd = tr.children();
+    		             
+    		             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+    		             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+    		             
+    		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+    		             tdd.each(function(i){
+	    		             tdArr.push(tdd.eq(i).text());
+    		             });
+    		             
+    		             console.log("배열에 담긴 값 : "+tdArr);
+    		             
+    		             // td.eq(index)를 통해 값을 가져올 수도 있다.
+    		             price = tdd.eq(4).text();
+    		             startdate = tdd.eq(5).text();
+    		             enddate = tdd.eq(6).text();
+    		             discountrate = tdd.eq(7).text();
+    		             currency = tdd.eq(9).text();
+    		             
+    		             console.log(buyerCd);
+    	             
+		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		    			     method: 'post', 
+		    			     url: 'pricingUpdate.do', 
+		    			     traditional: true,
+		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    			    	 buyerCd: buyerCd,
+		    			    	 product_cd: product_cd,
+		    			    	 price: price,
+		    			    	 startdate: startdate,
+		    			    	 enddate: enddate,
+		    			    	 discountrate: discountrate,
+		    			    	 currency: currency,
+		    			     },
+		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    			    	 console.log(result);
+		    			        if (result) {
+		    			        	callView('pricing.do');
+		    						alert("수정성공");
+		    			        } else {
+		    			        	alert("수정실패");
+		    			        }
+		    				}
+		    		   	});
+    	            });
+               	}
+            });
+        });
+
+        $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
+            
+            var td=$(this).parent("td"); // 해당 td를 td에 저장
+            $(this).remove();
+            td.html(initValue);
+            td.addClass("editable")
+            });
+   });
+	
 	
 </script>
 

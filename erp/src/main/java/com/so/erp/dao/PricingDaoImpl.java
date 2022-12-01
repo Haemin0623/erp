@@ -34,4 +34,9 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.update("pricingns.delete", pricing);
 	}
 
+	@Override
+	public int pricingUpdate(Pricing pricing) {
+		return sst.update("pricingns.update", pricing);
+	}
+
 }

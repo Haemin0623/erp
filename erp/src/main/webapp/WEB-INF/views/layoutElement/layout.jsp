@@ -20,23 +20,24 @@ body {
 
 #menu {
 	float: left;
-	width: 15%;
-	height: 100%;
+	width: 200px;
+	height: 100vh;
 	background-color: silver;
 }
 
 #content {
-	position: relative;
-	left: 15%;
-	width: 85%;
-	height: 100%;
+/* 	position: relative; */
+/* 	left: 15%; */
+/* 	width: 85%; */
+/* 	height: 100%; */ 
+	height: 100vh;
 }
 
 </style>
 
 </head>
 <body style="overflow-y: scroll; overflow-x: hidden; align-content: center;">
-	<div>
+	<div style="display:flex;">
 		<div id="menu">
 			<tiles:insertAttribute name="menu"></tiles:insertAttribute>
 		</div>
