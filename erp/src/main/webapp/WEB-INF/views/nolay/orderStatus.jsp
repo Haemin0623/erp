@@ -10,11 +10,42 @@
 
 <style type="text/css">
 
-	#searchBox{
-		width: 
+	#container {
+		margin-left: 100px;
 	}
+	#searchBox {
+	width:90%;
+	height: 150px;
+	background: #5b6996;
+	padding: 30px;
+	color: white;
+	}
+	#searchBtn{
+	background: #d9dbe1;
+	color: black;
+	float: right;
+	margin-top: 20px;
+	margin-right: 100px;
+
+	}
+
+	#table {
+	margin-top: 50px; 
+	width: 90%;
+	}
+	#table th {
+	background-color: #5b6996;
+	color: white;
+	}
+
+
 	
-	.scrollwrap {position: relative; display: block; width: 1000px; overflow-x: auto;}
+	
+	
+	
+	
+	
+	.scrollwrap {position: relative; display: block; width: 1100px; overflow-x: auto;}
 	.scrollcontent {width: 2200px;}
 	
 </style>
@@ -66,6 +97,7 @@
 					</select> 
 				상품코드 <input type="text" name="productCd" value="${orderItem.productCd }" >
 				상품명 <input type="text" name="pname" value="${orderItem.pname }">
+				<br>
 				영업담당자 
 					<select name="employeeCd">
 						<c:if test="${orderItem.employeeCd != null}">
@@ -99,7 +131,7 @@
 					-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
 				납품요청일<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
 					-<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
-				
+				<br>
 				상태 
 					<select name="status">
 						<c:if test="${orderItem.status != null}">
@@ -126,8 +158,8 @@
 					</select>
 			</div>
 		</form>
-			<button id="searchBtn">검색</button>
 	</div>	
+			<button id="searchBtn">검색</button>
 	
 	<div class="scrollwrap" id="table">
 		<table class="scrollcontent" id="list">
@@ -153,7 +185,7 @@
 				<th>비고</th>
 </tr>
 		<c:forEach var="item" items="${orderStatusList}">
-			<tr>
+			<tr class="itemRow">
 				<td><input type="checkbox" name="check"></td>
 				<td>${item.orderdate }</td>
 				<td>${item.orderNo }</td>

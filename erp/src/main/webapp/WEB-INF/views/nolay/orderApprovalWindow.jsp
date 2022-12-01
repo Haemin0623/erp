@@ -10,9 +10,34 @@
 
 <style type="text/css">
 
-	#searchBox{
-		width: 
+	#container {
+	margin-left: 100px;
 	}
+	#searchBox {
+	width:90%;
+	height: 150px;
+	background: #5b6996;
+	padding: 30px;
+	color: white;
+	}
+	#searchBtn{
+	background: #d9dbe1;
+	color: black;
+	float: right;
+	margin-top: 20px;
+	margin-right: 100px;
+
+	}
+
+	#table {
+	margin-top: 50px; 
+	width: 90%;
+	}
+	#table th {
+	background-color: #5b6996;
+	color: white;
+	}
+
 	
 /* 마우스 오버(마우스 올렸을때) */
 tr{
@@ -58,8 +83,8 @@ tr:active{
 			납품요청일<input type="date" name="requestdate">
 			
 		</form>
-			<button id="searchBtn">검색</button>
 	</div>
+			<button id="searchBtn">검색</button>
 	
 	
 	<div id="table">
@@ -219,7 +244,7 @@ tr:active{
 					console.log(reqDate);
 					
 					$('#statusTable').append(
-						"<tr>" +
+						"<tr class='itemRow'>" +
 							"<td>" + x + "</td>" +
 							"<td>" + data[i].productCd + "</td>" +
 							"<td>" + data[i].pname + "</td>" +

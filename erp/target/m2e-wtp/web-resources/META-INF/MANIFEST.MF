@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: ￬ﾝﾴ￭ﾕﾴ￫ﾯﾼ
+=======
+Built-By: 1seon
+>>>>>>> fc38157 (주문현황, 승인 css)
 Build-Jdk: 11.0.16.1
 Created-By: Maven Integration for Eclipse
 
