@@ -11,16 +11,15 @@
 <style type="text/css">
 
 #container{
-	text-align: center;
-	margin-left:40px;
+	margin-left: 50px;
 }
 
 #searchBox {
-	width:90%;
 	height: 150px;
-	background: #5b6996;
-	margin-right: 10px;
-	color: white;
+ 		width: 120vh;
+		background: #5b6996;
+		margin-top: 50px;
+		color: white;
 	
 }
 
@@ -32,12 +31,29 @@
 /* 	margin-left:50px; */
 /* } */
 
-table #list {
-	width: 90%;
-	height: 280;
-	margin-top: 40px;
-	margin-left:20px;
-}
+	div#table{
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;
+	}
+	
+	tr th {
+		background: #5b6996;
+		color: white;
+	}
+
+/* table #list { */
+/* 	width: 90%; */
+/* 	height: 280; */
+/* 	margin-top: 40px; */
+/* 	margin-left:20px; */
+/* } */
+
+#list {
+		width: 100%;
+		border: 1px solid;
+		
+	}
 /* 검색 조건 */
 .keyword {
 	margin-top: 30px;
