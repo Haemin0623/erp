@@ -9,13 +9,18 @@
 
 <style type="text/css">
 
-	#searchBox{
-		margin: 0 auto;
-		width: 90%;
-		height: 100px;
-		background-color: gray;
+	.pricingPage {
+		margin-left: 100px;
+	}
+
+	.searchBox {
+ 		height: 150px;
+		background: gray;
+		margin-top: 50px;
 		color: white;
 	}
+	
+	
 	
 	table {
 		border: 1px solid;
@@ -92,20 +97,25 @@
 		border: 1px solid;
 	}
 	
+	
+	
+	
+	
+	
 </style>
 
 
 
 </head>
 <body>
+<div class="pricingPage">	
 	<h1>주문 관리</h1>
-	
-	<div id="searchBox">
+	<div class="searchBox">
 		<form name="searchBoxx">		
-			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }"">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }"">
-			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
-			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
+			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }"><p>
+			신청일<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
+			~<input type="date" name="orderToDate" value="${orderHead.orderToDate }"><p>
 			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
 			
 			<select name="status">
@@ -116,8 +126,8 @@
 				<option value="반려">반려</option>
 			</select>
 			
-
-			상품코드<input type="text" name="productCd" value="${orderHead.productCd }"">
+			<p>
+			상품코드<input type="text" name="productCd" value="${orderHead.productCd }">
 			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 
@@ -231,7 +241,7 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </body>
 
 <script type="text/javascript">

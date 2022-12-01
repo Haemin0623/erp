@@ -36,7 +36,7 @@ body {
 </style>
 
 </head>
-<body style="overflow-y: scroll; overflow-x: hidden; align-content: center;">
+<body>
 	<div style="display:flex;">
 		<div id="menu">
 			<tiles:insertAttribute name="menu"></tiles:insertAttribute>
