@@ -10,87 +10,113 @@
 
 <style type="text/css">
 
-	#searchBox{
-		margin: 0 auto;
-		width: 90%;
-		height: 100px;
-		background-color: gray;
-		color: white;
-	}
-	
-	table {
-		border: 1px solid;
-	}
-	
-		/* 마우스 오버(마우스 올렸을때) */
-	tr{
+#searchBox {
+	width: 90%;
+	height: 150px;
+	background: gray;
+/* 	margin-top: 50px; */
+	color: white;
+}
+
+table {
+	width: 100%;
+	border: black;
+	position: absolute;
+	width: inherit;
+}
+
+#list {
+	width: 90%;
+	height: 280;
+	margin-top: 50px;
+}
+.keyword {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+#searchBtn{
+	background: navy;
+	color: white;
+	cursor: pointer;
+	float: right;
+	margin-right: 50px;
+	margin-top: 15px
+}
+#addBuyerBtn{
+margin-top:200px;
+}
+
+.header th {
+	background: gray;
+	color: white;
+}
+
+/* 마우스 오버(마우스 올렸을때) */
+tr {
 	color: black;
-	}
-	tr:hover{
-	    background-color: #f4f4f4;
-	    cursor: pointer;
-	}
-	/* 마우스 클릭하고있을때 */
-	tr:active{
-	    background-color: #B9E2FA;
-	}
-	
-	.clickColor {
-		background-color: #B9E2FA;
-		
-	}
-	
-	.background {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100vh;
-	  background-color: rgba(0, 0, 0, 0.3);
-	  z-index: 1000;
-	  
-	  /* 숨기기 */
-	  z-index: -1;
-	  opacity: 0;
-	}
-	
-	.window {
-	  position: relative;
-	  width: 100%;
-	  height: 100%;
-	}
-	
-	.popup {
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  transform: translate(-50%, -50%);
-	  background-color: #ffffff;
-	  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-	  
-	  /* 임시 지정 */
-	  width: 500px;
-	  height: 500px;
-	  
-	  /* 초기에 약간 아래에 배치 */
-	  transform: translate(-50%, -40%);
-	}
-	
-	.show {
-	  opacity: 1;
-	  z-index: 1000;
-	  transition: all .5s;
-	}
-	
-	.show .popup {
-	  transform: translate(-50%, -50%);
-	  transition: all .5s;
-	}
-	
-	#item {
-		border: 1px solid;
-	}
-	
+}
+
+tr:hover {
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+/* 마우스 클릭하고있을때 */
+tr:active {
+	background-color: #B9E2FA;
+}
+
+.clickColor {
+	background-color: #B9E2FA;
+}
+
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	/* 숨기기 */
+	z-index: -1;
+	opacity: 0;
+}
+
+.window {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.popup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+	/* 임시 지정 */
+	width: 500px;
+	height: 500px;
+	/* 초기에 약간 아래에 배치 */
+	transform: translate(-50%, -40%);
+}
+
+.show {
+	opacity: 1;
+	z-index: 1000;
+	transition: all .5s;
+}
+
+.show .popup {
+	transform: translate(-50%, -50%);
+	transition: all .5s;
+}
+
+#item {
+	border: 1px solid;
+}
 </style>
 
 </head>
@@ -99,20 +125,20 @@
 	<!-- 검색박스 -->
 	<h1> 고객 관리</h1>
 	<div id="searchBox">
-		<form name ="searchBoxx">
-		고객코드 <input type="text" name="buyerCd" value="${buyer.buyerCd}">
-		고객명 <input type="text" name="bname" value="${buyer.bname}">
-		담당자 <input type="text" name="manager" value="${buyer.manager}">
+		<form name ="searchBoxx" id="searchBox">
+		고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">
+		고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">
+		담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">
 		국가코드
-			<select name="countryCd">
+			<select name="countryCd" >
 				<option value=""></option>
 				<c:forEach var="countryCd" items="${countryCdList}">
 					<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 				</c:forEach>
 			</select><br>
-		전화번호<input type="text" name="tel" value="${buyer.tel}">
-		이메일 <input type="text" name="email" value="${buyer.email}">
-		주소 <input type="text" name="address" value="${buyer.address}">
+		전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">
+		이메일 <input type="text" name="email" class="keyword" value="${buyer.email}">
+		주소 <input type="text" name="address" class="keyword" value="${buyer.address}">
 		
 		</form>	
 			<button id="searchBtn">검색</button>
@@ -125,7 +151,7 @@
 	<div id="table">
 	<form action="" name="bt">
 	<table id="list" >
-		<tr>
+		<tr class="header">
 			<th>선택</th>
 			<th>고객코드</th>
 			<th>고객명</th>
@@ -207,7 +233,7 @@
 				</table>
 
 				</form>
-					<button id="addBuyer">등록</button>
+					<button id="addBuyerBtn">등록</button>
 			</div>
 		</div>
 	</div>
@@ -306,7 +332,7 @@ function callView(request) {
 	   });
 	}
 	
-	document.querySelector("#addBuyer").addEventListener("click", addBuyer); 
+	document.querySelector("#addBuyerBtn").addEventListener("click", addBuyer); 
 	
 	function delBuyer() {
 		var cdArr = new Array(); //del 체크가 여러개일수도 있기에 배열로 받음

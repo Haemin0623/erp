@@ -5,7 +5,7 @@
 
 	<select id="list" resultType="buyer">
 		select	* 
-		from 	m_buyer
+		from 	m_buyer order by adddate desc
 	</select>
 	<insert id="insert" parameterType="buyer">
 		insert 	into m_buyer 
