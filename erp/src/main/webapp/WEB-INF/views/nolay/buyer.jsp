@@ -11,7 +11,7 @@
 <style type="text/css">
 
 #searchBox {
-	width: 90%;
+	width:90%;
 	height: 150px;
 	background: gray;
 /* 	margin-top: 50px; */
@@ -19,16 +19,17 @@
 }
 
 table {
-	width: 100%;
+	width: 95%;
 	border: black;
-	position: absolute;
+/* 	position: absolute; */
 	width: inherit;
+	margin-left:50px;
 }
 
 #list {
-	width: 90%;
+	width: 80%;
 	height: 280;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 .keyword {
 	margin-top: 10px;
@@ -123,30 +124,31 @@ tr:active {
 <body>
 
 	<!-- 검색박스 -->
-	<h1> 고객 관리</h1>
-	<div id="searchBox">
-		<form name ="searchBoxx" id="searchBox">
-		고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">
-		고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">
-		담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">
-		국가코드
-			<select name="countryCd" >
-				<option value=""></option>
-				<c:forEach var="countryCd" items="${countryCdList}">
-					<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
-				</c:forEach>
-			</select><br>
-		전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">
-		이메일 <input type="text" name="email" class="keyword" value="${buyer.email}">
-		주소 <input type="text" name="address" class="keyword" value="${buyer.address}">
-		
-		</form>	
-			<button id="searchBtn">검색</button>
+	<div class="top-content" align="center">
+		<h1> 고객 관리</h1>
+		<div id="searchBox">
+			<form name ="searchBoxx" id="searchBox">
+			고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">
+			고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">
+			담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">
+			국가코드
+				<select name="countryCd" >
+					<option value=""></option>
+					<c:forEach var="countryCd" items="${countryCdList}">
+						<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
+					</c:forEach>
+				</select><br>
+			전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">
+			이메일 <input type="text" name="email" class="keyword" value="${buyer.email}">
+			주소 <input type="text" name="address" class="keyword" value="${buyer.address}">
+			
+			</form>	
+				<button id="searchBtn">검색</button>
+		</div>
 	</div>
-	
-	<button id="show">신규등록</button>
-	<button id="delBuyer">삭제</button>
-	
+		
+		<button id="show">신규등록</button>
+		<button id="delBuyer">삭제</button>
 	<!-- 고객리스트 & 수정가능한 테이블 -->
 	<div id="table">
 	<form action="" name="bt">
