@@ -13,21 +13,21 @@
 
 
 <style type="text/css">
-	#searchBox{
-		idth: 90%;
-/* 		height: 150px; */
-		background: gray;
-/* 		margin-left: 50px; */
+
+	#container {
+		margin-left: 50px;
+	}
+	
+	#searchBox {
+ 		height: 150px;
+ 		width: 120vh;
+		background: #5b6996;
 		margin-top: 50px;
 		color: white;
 	}
 	#productList{
 		margin-left: 80%
 	}
-	#CCD{
-		margin-left: -20%;
-	}
-	#searchBtn{
 		margin-left: 72%
 	}
 	
@@ -37,19 +37,21 @@
 		position: absolute;
 		    width: inherit;
 	}
-	.header th {
-		background: gray;
+	tr th {
+		background: #5b6996;
 		color: white;
 	}
 	#table{
-	
-		width: 90%;
-		height: 280;
-		margin-top: 50px;
-/* 		margin-left: 50px; */
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;
 	}
 	
-	
+	#list {
+		width: 100%;
+		border: 1px solid;
+		
+	}
 	
 	#productList{
 		width: 70%;
@@ -114,19 +116,19 @@
 	<h1 class="menuName">상품관리</h1>
 	<div id="searchBox">
 		<form id="searchBoxx">
-				<span style="margin-left: -20%; ">
+				<span>
 					상품코드 <input type="text" name="productCd" value="${product.productCd }">
 				</span>
-				<span style="margin-left: 5%">
+				<span>
 					상품명 <input type="text" name="pname" value="${product.pname }">
 				</span>
-				<span style="margin-left: 5%">
+				<span>
 					용량 <input type="text" name="volume" value="${product.volume }" >
 				</span>
-				<span style="margin-left: 5%">
+				<span>
 					상품카테고리 <input type="text" name="category" value="${product.category }">
 				</span>
-				<span style="margin-left: 12%;">
+				<span>
 					등록일 <input type="date" name="adddate"> ~ <input type="date" name="adddate2">
 				</span>
 				<span>
