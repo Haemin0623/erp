@@ -10,46 +10,73 @@
 
 <style type="text/css">
 
+#container{
+	text-align: center;
+	margin-left:40px;
+}
+
 #searchBox {
 	width:90%;
 	height: 150px;
-	background: gray;
-/* 	margin-top: 50px; */
+	background: #5b6996;
+	margin-right: 10px;
 	color: white;
+	
 }
 
-table {
-	width: 95%;
-	border: black;
-/* 	position: absolute; */
-	width: inherit;
-	margin-left:50px;
-}
+/* table { */
+/* 	width: 95%; */
+/* 	border: black; */
+/* /* 	position: absolute; */ */
+/* 	width: inherit; */
+/* 	margin-left:50px; */
+/* } */
 
-#list {
-	width: 80%;
+table #list {
+	width: 90%;
 	height: 280;
 	margin-top: 40px;
+	margin-left:20px;
 }
+/* 검색 조건 */
 .keyword {
-	margin-top: 10px;
-	margin-left: 20px;
+	margin-top: 30px;
+	margin-left: 10px;
+	height: 27px;
 }
 
+/* 이메일 input 길이 */
+.long1 { 
+	width: 250px;
+}
+
+/* 주소 input 길이 */
+.long2 {
+	width: 320px;
+}
+
+/* 검색버튼 */
 #searchBtn{
-	background: navy;
-	color: white;
+	background: #d9dbe1;
+	color: black;	
 	cursor: pointer;
 	float: right;
 	margin-right: 50px;
 	margin-top: 15px
 }
+
+/* 신규등록 버튼 */
 #addBuyerBtn{
 margin-top:200px;
 }
 
+#tableBtn {
+margin-top:50px;
+text-align:left;
+
+}
 .header th {
-	background: gray;
+	background: #5b6996;
 	color: white;
 }
 
@@ -122,33 +149,36 @@ tr:active {
 
 </head>
 <body>
-
+	<div id="container">
 	<!-- 검색박스 -->
 	<div class="top-content" align="center">
 		<h1> 고객 관리</h1>
 		<div id="searchBox">
-			<form name ="searchBoxx" id="searchBox">
-			고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">
-			고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">
-			담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">
+			<form name ="searchBoxx">
+			고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">&nbsp;&nbsp;&nbsp;
+			고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">&nbsp;&nbsp;&nbsp;
+			담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">&nbsp;&nbsp;&nbsp;
 			국가코드
-				<select name="countryCd" >
+				<select name="countryCd" class="keyword">
 					<option value=""></option>
 					<c:forEach var="countryCd" items="${countryCdList}">
 						<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 					</c:forEach>
-				</select><br>
-			전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">
-			이메일 <input type="text" name="email" class="keyword" value="${buyer.email}">
-			주소 <input type="text" name="address" class="keyword" value="${buyer.address}">
+				</select><p>
+			전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">&nbsp;&nbsp;&nbsp;
+			이메일 <input type="text" name="email" class="keyword long1" value="${buyer.email}">&nbsp;&nbsp;&nbsp;
+			주소 <input type="text" name="address" class="keyword long2" value="${buyer.address}">
 			
 			</form>	
 				<button id="searchBtn">검색</button>
 		</div>
 	</div>
-		
+	
+	<div id="tableBtn">
 		<button id="show">신규등록</button>
 		<button id="delBuyer">삭제</button>
+	</div>
+		
 	<!-- 고객리스트 & 수정가능한 테이블 -->
 	<div id="table">
 	<form action="" name="bt">
@@ -166,7 +196,7 @@ tr:active {
 			<th>최종수정일</th>
 		</tr>
 		<c:forEach var="buyer" items="${buyerList }">
-			<tr>
+			<tr class="itemRow">
 				<td>
 					<c:if test="${buyer.del =='Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
 						<input type="checkbox" name="del" value="${buyer.buyerCd}" disabled="disabled">
@@ -240,7 +270,7 @@ tr:active {
 		</div>
 	</div>
 	
-	
+	</div>
 </body>
 
 
