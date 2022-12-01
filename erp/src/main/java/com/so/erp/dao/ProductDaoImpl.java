@@ -17,7 +17,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	private SqlSessionTemplate sst;
 
-	@Override
+	@Override 
 	public List<Product> productList(PagingBean pagingBean, Product product) {
 		Map<String,Object> map = new HashMap<>();
 		map.put("product", product);

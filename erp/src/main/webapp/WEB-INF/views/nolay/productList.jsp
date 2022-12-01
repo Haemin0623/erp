@@ -13,23 +13,43 @@
 
 
 <style type="text/css">
-	th{
-		border: 1px solid green;
-		margin: 0;
-	}
-	td{
-		border: 1px solid green;
-		margin: 0;
-	}
-	
-	
 	#searchBox{
-		margin: 0 auto;
-		width: 90%;
-		height: 100px;
-		background-color: gray;
+		idth: 90%;
+/* 		height: 150px; */
+		background: gray;
+/* 		margin-left: 50px; */
+		margin-top: 50px;
 		color: white;
 	}
+	#productList{
+		margin-left: 80%
+	}
+	#CCD{
+		margin-left: -20%;
+	}
+	#searchBtn{
+		margin-left: 72%
+	}
+	
+	table {
+		width: 100%;
+		border: black;
+		position: absolute;
+		    width: inherit;
+	}
+	.header th {
+		background: gray;
+		color: white;
+	}
+	#table{
+	
+		width: 90%;
+		height: 280;
+		margin-top: 50px;
+/* 		margin-left: 50px; */
+	}
+	
+	
 	
 	#productList{
 		width: 70%;
@@ -82,28 +102,32 @@
 	  transform: translate(-50%, -50%);
 	  transition: all .5s;
 	}
+	.list {
+ 		background: silver;
+	}
 </style>
 
 
 </head>
 <body>
-	<h2>상품관리</h2>
+<div id="container">
+	<h1 class="menuName">상품관리</h1>
 	<div id="searchBox">
-		<form action="productList.do">
-				<span>
+		<form id="searchBoxx">
+				<span style="margin-left: -20%; ">
 					상품코드 <input type="text" name="productCd" value="${product.productCd }">
 				</span>
-				<span>
+				<span style="margin-left: 5%">
 					상품명 <input type="text" name="pname" value="${product.pname }">
 				</span>
-				<span>
+				<span style="margin-left: 5%">
 					용량 <input type="text" name="volume" value="${product.volume }" >
 				</span>
-				<span>
+				<span style="margin-left: 5%">
 					상품카테고리 <input type="text" name="category" value="${product.category }">
 				</span>
-				<span>
-					등록일 <input type="text" name="adddDate"> ~ <input type="text" name="adddDate2">
+				<span style="margin-left: 12%;">
+					등록일 <input type="date" name="adddate"> ~ <input type="date" name="adddate2">
 				</span>
 				<span>
 				상태 <select name="del">
@@ -112,16 +136,17 @@
 						<option value="Y">삭제완료
 					</select>
 				</span>
-				<input type="submit" value="검색" >
 		</form>
+		<button id="searchBtn" >검색</button>
 	</div>
 	
-<div id="productList">
-	<span>
+
+	<span id="CCD">
 		<button id="show">상품등록 </button>
 		<button type="button" onclick="deleteAction()">삭제</button>
 		<button>엑셀로 대량등록</button>
 	</span>	
+	<div id="productList">
 	<form name="page">
 		<span>
 			<select id="listview">
@@ -159,14 +184,14 @@
 			<c:if test="${rowPerPage !=500}">
 				<option value="500">500개씩보기</option>
 			</c:if>
-			
-			
 			</select>
 		</span>
 	</form>
+	</div>
+	<div id="table">
 	<form action="">
 		<table id="list">
-			<tr>
+			<tr class="haeder">
 				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
 				<th>상품코드</th>
 				<th>상품명</th>
@@ -178,7 +203,7 @@
 				<th>삭제여부</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
-			<tr>
+			<tr class="itemRow">
 				<td>
 				<c:if test="${productList.del=='Y'}">
 					<input type="checkbox" name="checkRow" value="${productList.productCd }" disabled="disabled" >
@@ -199,6 +224,7 @@
 			</c:forEach> 
 		</table>
 	</form>
+	</div>
 	<div align="center">
 			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
 		<c:if test="${pb.startPage > pb.pagePerBlock}">
@@ -216,35 +242,36 @@
 			</c:if>		
 		</c:forEach>
 		<!-- endPage보다 totalPage가 크면 보여줄 것이 뒤에 남아 있다 -->
-		<c:if test="${pb.endPage < pb.totalPage}">
-			<a href="productList.do?pageNum=${pb.endPage+1 }">
-				<span class="glyphicon glyphicon-triangle-right"></span></a>
-			<a href="productList.do?pageNum=${pb.totalPage }">
-				<span class="glyphicon glyphicon-fast-forward"></span></a>
-		</c:if>		
-	</div>
-</div>
-<div class="background">
-	<div class="window">
-		<div class="popup">
-			<form action="" name="frm">
-			<p>상품등록</p>
-				카테고리<select name="category" id="codeMix" autofocus="autofocus">
-					<option value="라면">라면</option>
-					<option value="스낵">스낵</option>
-					<option value="음료">음료</option>
-				</select><br>
-				상품코드<input type="text" name="productCd" readonly="readonly"><br>
-				상품명<input type="text" name="pname" required="required"><br>
-				용량<input type="text" name="volume" required="required"><br>
-				단위<input type="text" name="unit" required="required"><br>
-				
-			</form>
-			<button id="addItem">추가</button>
-			<button id="close">닫기</button>
+			<c:if test="${pb.endPage < pb.totalPage}">
+				<a href="productList.do?pageNum=${pb.endPage+1 }">
+					<span class="glyphicon glyphicon-triangle-right"></span></a>
+				<a href="productList.do?pageNum=${pb.totalPage }">
+					<span class="glyphicon glyphicon-fast-forward"></span></a>
+			</c:if>		
 		</div>
 	</div>
-</div>
+	<div class="background">
+		<div class="window">
+			<div class="popup">
+				<form action="" name="frm">
+				<p>상품등록</p>
+					카테고리<select name="category" id="codeMix" autofocus="autofocus">
+						<option value="">선택</option>
+						<option value="라면">라면</option>
+						<option value="스낵">스낵</option>
+						<option value="음료">음료</option>
+					</select><br>
+					상품코드<input type="text" name="productCd" readonly="readonly"><br>
+					상품명<input type="text" name="pname" required="required"><br>
+					용량<input type="text" name="volume" required="required"><br>
+					단위<input type="text" name="unit" required="required"><br>
+					
+				</form>
+				<button id="addItem">추가</button>
+				<button id="close">닫기</button>
+			</div>
+		</div>
+	</div>
 <script type="text/javascript">
 	// 등록 팝업 열기 닫기
 	function show() {
@@ -447,6 +474,37 @@
     	}
     	
    });
+</script>
+<script type="text/javascript">
+	function search() {
+				
+		const keyword = {
+			productCd : searchBoxx.productCd.value,	
+			pname : searchBoxx.pname.value,	
+			volume : searchBoxx.volume.value,	
+			category : searchBoxx.category.value,	
+			adddate : searchBoxx.adddate.value,	
+			adddate2 : searchBoxx.adddate2.value,	
+			del : searchBoxx.del.value	
+		}
+		console.log(keyword);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'productSearch.do',
+		     traditional: true,
+		     data: {
+		    	keyword: JSON.stringify(keyword)
+		     },
+		     success: function (result) {
+		    	 $('#content').children().remove();
+				 $('#content').html(result);
+			 }
+	   });
+
+	};
+
+document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
 </body>
 </html>
