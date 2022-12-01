@@ -16,7 +16,7 @@
 	#searchBox {
  		height: 150px;
  		width: 120vh;
-		background: gray;
+		background: #5b6996;
 		margin-top: 50px;
 		color: white;
 	}	
@@ -28,7 +28,7 @@
 	}
 	
 	tr th {
-		background: gray;
+		background: #5b6996;
 		color: white;
 	}
 	
