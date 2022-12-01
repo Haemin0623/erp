@@ -19,5 +19,7 @@ public interface ProductDao {
 
 	String selectCode(String category);
 
+	int update(Product product);
+
 
 }

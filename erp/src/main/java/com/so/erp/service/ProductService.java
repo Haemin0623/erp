@@ -19,5 +19,7 @@ public interface ProductService {
 
 	String selectCode(String category);
 
+	int update(Product product);
+
 
 }

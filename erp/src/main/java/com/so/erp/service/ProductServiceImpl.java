@@ -45,5 +45,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.selectCode(category);
 	}
 
+	@Override
+	public int update(Product product) {
+		return pds.update(product);
+	}
+
 
 }

@@ -69,6 +69,16 @@
 		</select>
 		
 	    <select id="list" resultType="product">
-	            select * from m_product
+	        select * from m_product
     	</select>
+    	
+    	<update id="update" parameterType="product">
+    		update 	m_product 
+    		set 	pname=#{pname}, 
+    				volume=#{volume}, 
+    				unit=#{unit}, 
+    				category=#{category}, 
+    				statusdate=sysdate 
+    		where 	product_cd=#{productCd}
+    	</update>
 	</mapper>

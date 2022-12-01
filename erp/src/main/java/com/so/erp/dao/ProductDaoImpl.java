@@ -53,5 +53,10 @@ public class ProductDaoImpl implements ProductDao {
 		return sst.selectOne("productns.selectCode",category);
 	}
 
+	@Override
+	public int update(Product product) {
+		return sst.update("productns.update",product);
+	}
+
 
 }

@@ -25,8 +25,13 @@ public class ProductController {
 	
 	
 	@RequestMapping("productList")
-	public String productList(Model model, PagingBean pagingBean, String pageNum, Product product) {
-		int rowPerPage = 5; // 한 화면에 보여주는 갯수
+	public String productList(Model model, PagingBean pagingBean, String pageNum, Product product, String page) {
+		System.out.println(page);
+		int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+		if (page == null || page == "") {
+			rowPerPage = 10;
+		}else rowPerPage = Integer.parseInt(page);
+		System.out.println(rowPerPage);
 		if (pageNum == null || pageNum.equals("")) pageNum = "1";
 		int currentPage = Integer.parseInt(pageNum);
 		int total = pds.getTotal(pagingBean,product);
@@ -40,8 +45,10 @@ public class ProductController {
 		model.addAttribute("productList",productList);
 		model.addAttribute("num",num);
 		model.addAttribute("pb",pb);
+		model.addAttribute("product",product);
+		model.addAttribute("rowPerPage",rowPerPage);
 		
-		return "page/productList";
+		return "nolay/productList";
 	}
 	
 	@RequestMapping("productDelete")
@@ -100,5 +107,14 @@ public class ProductController {
 		}
 		
 		return code1+code2;
+	}
+	
+	@RequestMapping("productUpdate")
+	@ResponseBody
+	public int productUpdate(Product product) {
+		int result = 0;
+		result = pds.update(product);
+		
+		return result;
 	}
 }

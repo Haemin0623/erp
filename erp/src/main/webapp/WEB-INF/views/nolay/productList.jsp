@@ -91,16 +91,16 @@
 	<div id="searchBox">
 		<form action="productList.do">
 				<span>
-					상품코드 <input type="text" name="productCd">
+					상품코드 <input type="text" name="productCd" value="${product.productCd }">
 				</span>
 				<span>
-					상품명 <input type="text" name="pname">
+					상품명 <input type="text" name="pname" value="${product.pname }">
 				</span>
 				<span>
-					용량 <input type="text" name="volume">
+					용량 <input type="text" name="volume" value="${product.volume }" >
 				</span>
 				<span>
-					상품카테고리 <input type="text" name="category">
+					상품카테고리 <input type="text" name="category" value="${product.category }">
 				</span>
 				<span>
 					등록일 <input type="text" name="adddDate"> ~ <input type="text" name="adddDate2">
@@ -122,15 +122,48 @@
 		<button type="button" onclick="deleteAction()">삭제</button>
 		<button>엑셀로 대량등록</button>
 	</span>	
-	<span>
-		<select name="listNum">
-			<option id="listview" value="10">10개씩보기</option>
-			<option id="listview" value="50">50개씩보기</option>
-			<option id="listview" value="100">100개씩보기</option>
-			<option id="listview" value="300">300개씩보기</option>
-			<option id="listview" value="500">500개씩보기</option>
-		</select>
-	</span>
+	<form name="page">
+		<span>
+			<select id="listview">
+			<c:if test="${rowPerPage ==10}">
+				<option value="10" selected="selected">10개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=10}">
+				<option value="10">10개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==50}">
+				<option value="50" selected="selected">50개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=50}">
+				<option value="50">50개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==100}">
+				<option value="100" selected="selected">100개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=100}">
+				<option value="100">100개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==300}">
+				<option value="300" selected="selected">300개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=300}">
+				<option value="300">300개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==500}">
+				<option value="500" selected="selected">500개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=500}">
+				<option value="500">500개씩보기</option>
+			</c:if>
+			
+			
+			</select>
+		</span>
+	</form>
 	<form action="">
 		<table id="list">
 			<tr>
@@ -169,7 +202,7 @@
 	<div align="center">
 			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
 		<c:if test="${pb.startPage > pb.pagePerBlock}">
-			<a href="productList.do?pageNum=1">
+			<a href="productList.do?pageNum=1 ">
 				<span class="glyphicon glyphicon-fast-backward"></span></a>
 			<a href="productList.do?pageNum=${pb.startPage-1 }">
 				<span class="glyphicon glyphicon-triangle-left"></span></a>
@@ -284,12 +317,7 @@
 		    }
 	  	});
 	};
-	document.querySelector("#listview").addEventListener("change", listview);
 	
-	function listview() {
-		const listNums = listNum.value;
-		console.log(listNums);
-	}
 	
 	
 	
@@ -327,53 +355,97 @@
 	
 	
 	$(document).ready(function() {
-		 // 테이블의 Row 클릭시 값 가져오기
-         let first = ""; 
-         let last ="";
-		$(document).on("dblclick", "#editable", function() {
-        	let value=$(this).text();
-   //     	alert(value);
-        	let input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focuss' >";
-        	$(this).html(input);
+        $(document).on("dblclick", "#editable", function() { //editable 클래스를 더블클릭했을때 함수실행
+            var value=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
+            var input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focus'>";
             $(this).removeClass("editable")
-            $('#focuss').focus();
-            first = value;
-            console.log(first);
+            $(this).html(input);
+            $('#focus').focus();
+            
+            $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
+                var key=e.which;
+                if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
+                    var value=$(this).val();
+                    var td=$(this).parent("td");
+                    td.html(value);
+                    td.addClass("editable");
+                
+                    // 테이블의 Row 클릭시 값 가져오기
+    	            $("#list tr").keypress(function(){    
+    	
+    		            const str = ""
+    		            const tdArr = new Array(); // 배열 선언
+    		             
+    		             // 현재 클릭된 Row(<tr>)
+    		            const tr = $(this);
+    		            const tdd = tr.children();
+    		             
+    		             
+    		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+    		             tdd.each(function(i){
+	    		             tdArr.push(tdd.eq(i).text());
+    		             });
+    		             
+    		             
+    		             // td.eq(index)를 통해 값을 가져올 수도 있다.
+    		             productCd = tdd.eq(1).text();
+    		             pname = tdd.eq(2).text();
+    		             volume = tdd.eq(3).text();
+    		             unit = tdd.eq(4).text();
+    		             category = tdd.eq(5).text();
+    	             
+		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		    			     method: 'post', 
+		    			     url: 'productUpdate.do', 
+		    			     traditional: true,
+		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    			    	productCd: productCd,
+		    			    	pname: pname,
+		    			    	volume: volume,
+		    			    	unit: unit,
+		    			    	category: category
+		    			     },
+		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    			    	 console.log(result);
+		    			        if (result) {
+		    			        	document.location.reload();
+		    			        } else {
+		    			        }
+		    				}
+		    		   	});
+    	            });
+               	}
+            });
         });
-		$("#list tr").click(function(){    
 
-            const str = ""
-            let tdArr = new Array(); // 배열 선언
-            
-            // 현재 클릭된 Row(<tr>)
-            const tr = $(this);
-            const td = tr.children();
-            
-            
-            // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
-            td.each(function(i){
-             tdArr.push(td.eq(i).text());
-          });
-		  
-        $(document).on("blur", ".input-data", function() {
-        	const value=$(this).val();
-        	const td=$(this).parent("td");
+        $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
+            var value=$(this).val();
+            var td=$(this).parent("td");
+            $(this).remove();
             td.html(value);
             td.addClass("editable")
             });
         
-        $(document).on("keypress", ".input-data", function(e) {
-        	const key=e.which;
-            if(key==13) {
-            	const value=$(this).val();
-            	const td=$(this).parent("td");
-            	$(this).remove();
-                td.html(value);
-                td.addClass("editable");
-                last = value;
-            }
-        });
-        });
+        document.querySelector("#listview").addEventListener("change", listview);
+    	
+    	function listview() {
+    		let target = document.getElementById("listview");
+    	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
+    	      
+    		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+   		     method: 'post', 
+   		     url: 'productList.do', 
+   		     traditional: true,
+   		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+   		    	 page: page
+   		     },
+   		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+   		    	$('#content').children().remove();
+   				$('#content').html(result);
+   			}
+   	   	});
+    	}
+    	
    });
 </script>
 </body>
