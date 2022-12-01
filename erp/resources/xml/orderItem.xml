@@ -130,7 +130,7 @@
 			</if>
 	
 			<if test="status != null and status != ''">
-				and h.status like '%' || #{status} || '%'
+				and h.status = = #{status}
 			</if>
 			<if test="signempCd != null and signempCd != ''">
 				and h.signemp_cd like '%' || #{signempCd} || '%' and department = '관리'

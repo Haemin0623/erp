@@ -11,33 +11,33 @@
 <style type="text/css">
 
 	#container {
-	margin-left: 100px;
+		margin-left: 100px;
 	}
 	#searchBox {
-	width:90%;
-	height: 150px;
-	background: #5b6996;
-	padding: 30px;
-	color: white;
+		width: 120vh;
+		height: 150px;
+		background: #5b6996;
+		padding: 30px;
+		color: white;
 	}
 	#searchBtn{
-	background: #d9dbe1;
-	color: black;
-	float: right;
-	margin-top: 20px;
-	margin-right: 100px;
+		background: #d9dbe1;
+		color: black;
+		float: right;
+		margin-top: 20px;
+		margin-right: 100px;
 
 	}
 
 	#table {
-		margin-top: 50px;
+		margin-top: 100px;
 		overflow: auto;
 		height: 40vh;
 		width: 120vh;
 	}
 	tr th {
-	background-color: #5b6996;
-	color: white;
+		background-color: #5b6996;
+		color: white;
 	}
 	#list {
 		width: 100%;
@@ -57,7 +57,7 @@
 	
 /* 마우스 오버(마우스 올렸을때) */
 tr{
-color: black;
+	color: black;
 }
 tr:hover{
     background-color: #f4f4f4;

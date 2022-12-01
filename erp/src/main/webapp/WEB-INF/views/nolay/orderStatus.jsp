@@ -14,37 +14,32 @@
 		margin-left: 100px;
 	}
 	#searchBox {
-	width:90%;
-	height: 150px;
-	background: #5b6996;
-	padding: 30px;
-	color: white;
+		width: 120vh;
+		height: 150px;
+		background: #5b6996;
+		padding: 30px;
+		color: white;
 	}
 	#searchBtn{
-	background: #d9dbe1;
-	color: black;
-	float: right;
-	margin-top: 20px;
-	margin-right: 100px;
+		background: #d9dbe1;
+		color: black;
+		float: right;
+		margin-top: 20px;
+		margin-right: 100px;
 
 	}
 
 	#table {
-	margin-top: 50px; 
-	width: 90%;
+		margin-top: 50px;
+		overflow: auto;
+		height: 60vh;
+		width: 120vh;
 	}
 	#table th {
-	background-color: #5b6996;
-	color: white;
+		background-color: #5b6996;
+		color: white;
 	}
 
-
-	
-	
-	
-	
-	
-	
 	.scrollwrap {position: relative; display: block; width: 1100px; overflow-x: auto;}
 	.scrollcontent {width: 2200px;}
 	
@@ -112,7 +107,7 @@
 							</c:if>
 						</c:forEach>
 					</select>
-				승인자
+				<%-- 승인자
 					<select name="signempCd">
 						<c:if test="${orderItem.signempCd != null}">
 							<option value="${orderItem.signempCd}">${orderItem.signempName} ${orderItem.job}(${orderItem.department})</option>
@@ -126,7 +121,7 @@
 								<option value="${emp.employeeCd}">${emp.ename} ${emp.job}(${emp.department})</option>
 							</c:if>
 						</c:forEach>
-					</select>
+					</select> --%>
 				신청일<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
 					-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
 				납품요청일<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
@@ -234,7 +229,7 @@
 			pname : searchBoxx.pname.value,	
 			employeeCd : searchBoxx.employeeCd.value,
 		/* 	ename : searchBoxx.ename.value, */
-			signempCd : searchBoxx.signempCd.value,
+			/* signempCd : searchBoxx.signempCd.value, */
 			orderFromDate : searchBoxx.orderFromDate.value,	
 			orderToDate : searchBoxx.orderToDate.value,	
 			requestFromDate : searchBoxx.requestFromDate.value,

@@ -397,9 +397,9 @@ public class OrderController {
 			
 			
 			// 승인자
-			String signempCd = keywordObj.getString("signempCd");
-			orderHead.setSignempCd(signempCd);
-			System.out.println("승인자코드" + orderHead.getSignempCd());
+//			String signempCd = keywordObj.getString("signempCd");
+//			orderHead.setSignempCd(signempCd);
+//			System.out.println("승인자코드" + orderHead.getSignempCd());
 			
 
 			
@@ -425,7 +425,7 @@ public class OrderController {
 				// 국가명
 				orderHead.setCname(oh.getCname());
 				// 승인자명
-				orderHead.setSignempName(oh.getAuth());
+//				orderHead.setSignempName(oh.getAuth());
 			}
 			System.out.println(orderHead.getAuth());
 			System.out.println(orderHead.getSignempName());
