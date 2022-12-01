@@ -43,6 +43,7 @@ public class OrderHead {
     private Date adddate;
 
     private String countryCd; 
+    private String cname; 
     private String bname;       
     private String manager;    
     private String address;   
@@ -56,4 +57,5 @@ public class OrderHead {
     // 검색용
     //될지안될지모르겠따,.,
     private String signempName;
+    private String auth;
 }

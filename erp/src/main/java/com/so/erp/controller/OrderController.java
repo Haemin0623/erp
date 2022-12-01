@@ -234,6 +234,7 @@ public class OrderController {
 	public String orderStatus(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
 		List<Product> productList = ps.list();
+		
 		List<Buyer> buyerList = bs.list();
 		List<Country> countryList = cs.list();
 		List<Employee> empList = es.list();
@@ -241,6 +242,7 @@ public class OrderController {
 		List<OrderHead> orderStatusList = is.search(orderHead);
 		
 		model.addAttribute("productList", productList);
+		
 		model.addAttribute("buyerList", buyerList);
 		model.addAttribute("countryList", countryList);
 		model.addAttribute("empList", empList);
@@ -335,6 +337,7 @@ public class OrderController {
 			orderHead.setOrderNo(orderNo);
 			String buyerCd = (String) keywordObj.get("buyerCd");
 			orderHead.setBuyerCd(buyerCd);
+			System.out.println(buyerCd);
 			
 			System.out.println("2");
 			
@@ -356,6 +359,7 @@ public class OrderController {
 			
 			String employeeCd = (String) keywordObj.get("employeeCd");
 			orderHead.setEmployeeCd(employeeCd);
+			
 			String status = (String) keywordObj.get("status");
 			orderHead.setStatus(status);
 			
@@ -378,15 +382,24 @@ public class OrderController {
 			}
 			System.out.println(orderHead.getRequestToDate());
 			
+			
 			// 고객명
-			
+			String bname = keywordObj.getString("bname");
+			orderHead.setBname(bname);
+			System.out.println("고객명"+orderHead.getBname());
+						
 			// 상품명
+			String pname = keywordObj.getString("pname");
+			orderHead.setPname(pname);
+			System.out.println("상품명"+orderHead.getPname());
 			
-			// 영업담당자명
+			
+			
 			
 			// 승인자
 			String signempCd = keywordObj.getString("signempCd");
 			orderHead.setSignempCd(signempCd);
+			System.out.println("승인자코드" + orderHead.getSignempCd());
 			
 
 			
@@ -404,10 +417,21 @@ public class OrderController {
 			
 			for (OrderHead oh : orderStatusList) {
 				System.out.println(oh.toString());
+				
+				// 영업담당자명
+				orderHead.setEname(oh.getEname());
+				orderHead.setJob(oh.getJob());
+				orderHead.setDepartment(oh.getDepartment());
+				// 국가명
+				orderHead.setCname(oh.getCname());
+				// 승인자명
+				orderHead.setSignempName(oh.getAuth());
 			}
+			System.out.println(orderHead.getAuth());
+			System.out.println(orderHead.getSignempName());
 			
 			model.addAttribute("orderStatusList", orderStatusList);
-			model.addAttribute("orderHead", orderHead);
+			model.addAttribute("orderItem", orderHead);
 			
 			
 			List<Product> productList = ps.list();

@@ -19,7 +19,8 @@
 					null)
 	</insert>
 	
-	<select id="search" parameterType="orderHead" resultType="orderHead">
+	<select id="search" parameterType="orderHead" resultType="orderHead">	
+	
 		select	distinct h.*
 		from	order_head h left outer join
 				order_item i
@@ -48,8 +49,6 @@
 			</if>			
 		</where>
 		order by h.orderdate desc
-	
-			
 	</select> 
 	
 	<select id="headEmpList" resultType="orderHead">
@@ -59,6 +58,9 @@
    		where	h.employee_cd=e.employee_cd
    	order by	h.orderdate desc, h.order_no asc
 	</select>
+	
+
+	
 	
 	<update id="orderApproval" parameterType="orderHead">
 		update	order_head 

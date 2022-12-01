@@ -35,6 +35,7 @@ tr:active{
 
 </head>
 <body>
+<div id="container">
 	<h1>주문 승인</h1>
 	
 	<div id="searchBox">
@@ -62,7 +63,7 @@ tr:active{
 	
 	
 	<div id="table">
-		<table>
+		<table id="list">
 			<tr>
 				<th>선택</th>
 				<th>주문번호</th>
@@ -101,8 +102,8 @@ tr:active{
 
 
 
-		<div class="statusWindow">
-			<table>
+		<div class="statusWindow" id="table">
+			<table id="list">
 				<tr>
 					<th>No.</th>
 					<th>상품코드</th>
@@ -122,7 +123,7 @@ tr:active{
 			</div>
 		</div>
 		
-		
+</div>	
 </body>
 
 		

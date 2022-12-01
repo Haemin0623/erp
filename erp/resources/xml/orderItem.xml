@@ -34,34 +34,106 @@
 	</select>
 	
 	<select id="search" parameterType="orderHead" resultType="orderHead">
-		select	distinct *
+<!-- 			select	distinct *
 		from	order_head h, 
 				order_item i, 
 				m_product p, 
-				m_employee e, 
-				m_buyer b
+				(select a.*, ee.ename 
+				from	(select distinct h.*, 
+								h.employee_cd empcd, 
+								e.ename auth  
+						from	order_head h, 
+								m_employee e
+						where
+       				 		h.signemp_cd=e.employee_cd 
+						
+						) a, 
+       				 	m_employee ee 
+       			where	empcd=ee.employee_cd) eee,
+				m_buyer b,
+				m_country c
 		<where>
 			h.order_no=i.order_no
    				and i.product_cd=p.product_cd 
-      			and h.employee_cd=e.employee_cd
+      			and h.employee_cd=eee.employee_cd
         		and h.buyer_cd=b.buyer_cd
+        		and b.country_cd=c.country_cd
 			<if test="orderNo != null and orderNo != ''">
 				and h.order_no like '%' || #{orderNo} || '%'
 			</if>
 			<if test="buyerCd != null and buyerCd != ''">
 				and b.buyer_cd like '%' || #{buyerCd} || '%'
 			</if>
+			<if test="bname != null">
+				and bname like '%' || #{bname} || '%'
+			</if>
+			<if test="productCd != null and productCd != 'null'">
+				and i.product_cd like '%' || #{productCd} || '%'
+			</if>
 			<if test="orderFromDate != null and orderToDate != null">
 				and h.orderdate between #{orderFromDate} and #{orderToDate}
 			</if>
-			<if test="employeeCd != null and employeeCd != 'null'">
-				and e.employee_cd like '%' || #{employeeCd} || '%'
+			<if test="pname != null">
+				and pname like '%' || #{pname} || '%'
 			</if>
-			<if test="status != null and status != 'null'">
+			
+			<if test="employeeCd != null and employeeCd != 'null'">
+				and eee.employee_cd like '%' || #{employeeCd} || '%' 
+			</if>
+	
+			<if test="status != null and status != ''">
 				and h.status like '%' || #{status} || '%'
 			</if>
 			<if test="signempCd != null and signempCd != ''">
-				and h.signemp_cd like '%' || #{signempCd} || '%'
+				and h.signemp_cd = #{signempCd}
+			</if>
+			<if test="countryCd != null and countryCd != ''">
+				and b.country_cd like '%' || #{countryCd} || '%'
+			</if>
+		</where>
+		
+		order by h.orderdate desc , h.order_no asc -->
+		select	distinct *
+		from	order_head h, 
+				order_item i, 
+				m_product p, 
+				m_employee e, 
+				m_buyer b,
+				m_country c
+		<where>
+			h.order_no=i.order_no
+   				and i.product_cd=p.product_cd 
+      			and h.employee_cd=e.employee_cd
+        		and h.buyer_cd=b.buyer_cd
+        		and b.country_cd=c.country_cd
+			<if test="orderNo != null and orderNo != ''">
+				and h.order_no like '%' || #{orderNo} || '%'
+			</if>
+			<if test="buyerCd != null and buyerCd != ''">
+				and b.buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="bname != null">
+				and bname like '%' || #{bname} || '%'
+			</if>
+			<if test="productCd != null and productCd != 'null'">
+				and i.product_cd like '%' || #{productCd} || '%'
+			</if>
+			<if test="orderFromDate != null and orderToDate != null">
+				and h.orderdate between #{orderFromDate} and #{orderToDate}
+			</if>
+			<if test="pname != null">
+				and pname like '%' || #{pname} || '%'
+			</if>
+			
+			<if test="employeeCd != null and employeeCd != 'null'">
+				and e.employee_cd like '%' || #{employeeCd} || '%' and department = '영업'
+			</if>
+	
+			<if test="status != null and status != ''">
+				and h.status like '%' || #{status} || '%'
+			</if>
+			<if test="signempCd != null and signempCd != ''">
+				and h.signemp_cd like '%' || #{signempCd} || '%' and department = '관리'
 			</if>
 			<if test="countryCd != null and countryCd != ''">
 				and b.country_cd like '%' || #{countryCd} || '%'
