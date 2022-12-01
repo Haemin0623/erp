@@ -29,9 +29,12 @@ public class PricingController {
 	private PricingService prs;
 	
 	@RequestMapping("pricing")
-	public String pricing(Model model, Pricing pricing, String pageNum) {
+	public String pricing(Model model, Pricing pricing, String pageNum, String page) {
 		//페이징
-		int rowPerPage = 10; // 페이지 당 게시글 갯수
+		int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+		if (page == null || page == "") {
+			rowPerPage = 10;
+		}else rowPerPage = Integer.parseInt(page);
 		if (pageNum == null || pageNum.equals("")) pageNum = "1";
 		int currentPage = Integer.parseInt(pageNum);
 		int total = prs.getTotal();
@@ -52,6 +55,7 @@ public class PricingController {
 		model.addAttribute("pricingList", pricingList);
 		model.addAttribute("pb", pb);
 		model.addAttribute("num", num);
+		model.addAttribute("rowPerPage", rowPerPage);
 		return "nolay/pricing";
 	}
 	

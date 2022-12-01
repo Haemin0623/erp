@@ -259,6 +259,49 @@ function changeContent(data) {
 	<div class="btn">
 	<button id="show">추가 </button>
 	<button type="button" onclick="deleteAction()">삭제</button>
+	
+	<form name="page">
+		<span>
+			<select id="listview">
+			<c:if test="${rowPerPage ==10}">
+				<option value="10" selected="selected">10개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=10}">
+				<option value="10">10개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==50}">
+				<option value="50" selected="selected">50개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=50}">
+				<option value="50">50개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==100}">
+				<option value="100" selected="selected">100개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=100}">
+				<option value="100">100개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==300}">
+				<option value="300" selected="selected">300개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=300}">
+				<option value="300">300개씩보기</option>
+			</c:if>
+			
+			<c:if test="${rowPerPage ==500}">
+				<option value="500" selected="selected">500개씩보기</option>
+			</c:if>
+			<c:if test="${rowPerPage !=500}">
+				<option value="500">500개씩보기</option>
+			</c:if>
+			
+			
+			</select>
+		</span>
+	</form>
 	</div>
 	
 	<!-- 리스트 박스 -->
@@ -571,10 +614,8 @@ function changeContent(data) {
 	
 	
 // 	테이블 더블클릭하여 수정
-	
-let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
-
 	$(document).ready(function() {
+		let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
         	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
             var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
@@ -612,26 +653,26 @@ let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다�
     		             console.log("배열에 담긴 값 : "+tdArr);
     		             
     		             // td.eq(index)를 통해 값을 가져올 수도 있다.
+    		             buyerCd = tdd.eq(2).text();
+    		             productCd = tdd.eq(3).text();
     		             price = tdd.eq(4).text();
     		             startdate = tdd.eq(5).text();
     		             enddate = tdd.eq(6).text();
     		             discountrate = tdd.eq(7).text();
     		             currency = tdd.eq(9).text();
     		             
-    		             console.log(buyerCd);
-    	             
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
 		    			     url: 'pricingUpdate.do', 
 		    			     traditional: true,
 		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
 		    			    	 buyerCd: buyerCd,
-		    			    	 product_cd: product_cd,
+		    			    	 productCd: productCd,
 		    			    	 price: price,
 		    			    	 startdate: startdate,
 		    			    	 enddate: enddate,
 		    			    	 discountrate: discountrate,
-		    			    	 currency: currency,
+		    			    	 currency: currency
 		    			     },
 		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
 		    			    	 console.log(result);
@@ -657,6 +698,30 @@ let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다�
             });
    });
 	
+// 	리스트 보기 갯수변경
+	 document.querySelector("#listview").addEventListener("change", listview);
+ 	
+ 	function listview() {
+ 		let target = document.getElementById("listview");
+ 	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
+ 	      
+ 		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		     method: 'post', 
+		     url: 'pricing.do', 
+		     traditional: true,
+		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    	 page: page
+		     },
+		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    	$('#content').children().remove();
+				$('#content').html(result);
+				 console.log(page);
+				{
+					
+				}
+			}
+	   	});
+ 	}
 	
 </script>
 
