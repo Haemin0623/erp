@@ -9,22 +9,46 @@
 
 <style type="text/css">
 
-	.pricingPage {
-		margin-left: 100px;
+	#container {
+		margin-left: 50px;
 	}
 
-	.searchBox {
+	#searchBox {
  		height: 150px;
+ 		width: 120vh;
 		background: gray;
 		margin-top: 50px;
 		color: white;
+	}	
+	
+	#table{
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;
 	}
 	
+	tr th {
+		background: gray;
+		color: white;
+	}
 	
+	#list {
+		width: 100%;
+		border: 1px solid;
+		
+	}
 	
-	table {
+	.statusWindow {
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;	
+	}
+	
+	#statusList {
+		width: 100%;
 		border: 1px solid;
 	}
+	
 	
 		/* 마우스 오버(마우스 올렸을때) */
 	tr{
@@ -108,16 +132,16 @@
 
 </head>
 <body>
-<div class="pricingPage">	
+<div id="container">	
 	<h1>주문 관리</h1>
-	<div class="searchBox">
+	<div id="searchBox">
 		<form name="searchBoxx">		
 			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }"><p>
+			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
+			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
 			신청일<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
 			~<input type="date" name="orderToDate" value="${orderHead.orderToDate }"><p>
-			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
-			
+			상태
 			<select name="status">
 				<option value="null">모두</option>			
 				<option value="승인대기">승인대기</option>
@@ -133,9 +157,10 @@
 
 			
 		</form>
-			<button id="searchBtn">검색</button>
+		<button id="searchBtn">검색</button>
 	</div>
-	
+	<p>
+	<p>
 	<button id="show">추가 </button>
 	
 	<div id="table">
@@ -179,7 +204,7 @@
 	</div>
 	
 	<div class="statusWindow">
-			<table>
+			<table id="statusList">
 				<tr>
 					<th>No.</th>
 					<th>상품코드</th>

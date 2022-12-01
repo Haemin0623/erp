@@ -9,16 +9,33 @@
 
 <style type="text/css">
 
-	#searchBox{
-		margin: 0 auto;
-		width: 90%;
-		height: 100px;
-		background-color: gray;
+	#container {
+		margin-left: 50px;
+	}
+
+	#searchBox {
+ 		height: 150px;
+ 		width: 120vh;
+		background: gray;
+		margin-top: 50px;
+		color: white;
+	}	
+	
+	#table{
+		overflow: auto;
+		height: 40vh;
+		width: 120vh;
+	}
+	
+	tr th {
+		background: gray;
 		color: white;
 	}
 	
-	table {
+	#list {
+		width: 100%;
 		border: 1px solid;
+		
 	}
 	
 		/* 마우스 오버(마우스 올렸을때) */
@@ -98,6 +115,7 @@
 
 </head>
 <body>
+<div id="container">
 	<h1>승인 권한 관리</h1>
 	
 	<div id="searchBox">
@@ -176,7 +194,7 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </body>
 
 <script type="text/javascript">
