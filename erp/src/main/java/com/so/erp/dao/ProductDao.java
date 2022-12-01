@@ -21,5 +21,7 @@ public interface ProductDao {
 
 	int update(Product product);
 
+	Product insertselect(Product product);
+
 
 }

@@ -50,5 +50,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.update(product);
 	}
 
+	@Override
+	public Product insertselect(Product product) {
+		return pds.insertselect(product);
+	}
+
 
 }

@@ -83,10 +83,15 @@ public class ProductController {
 		product.setVolume(volume);
 		product.setUnit(unit);
 		
-		
+		Product product2 = pds.insertselect(product);
+		if(product2 != null) {
+			result=-1;
+			return result; 
+		}else 
 		
 		result = pds.insert(product);
 		return result;
+		
 	}
 	
 	@RequestMapping("codeMix")

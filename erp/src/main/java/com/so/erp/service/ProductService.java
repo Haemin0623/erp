@@ -21,5 +21,7 @@ public interface ProductService {
 
 	int update(Product product);
 
+	Product insertselect(Product product);
+
 
 }

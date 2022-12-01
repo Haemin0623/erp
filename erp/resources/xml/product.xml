@@ -78,4 +78,8 @@
     				statusdate=sysdate 
     		where 	product_cd=#{productCd}
     	</update>
+    	
+    	<select id="insertselect" parameterType="product" resultType="product">
+    		select * from m_product where pname = #{pname} and volume = #{volume} and unit= #{unit} and category= #{category}
+    	</select>
 	</mapper>

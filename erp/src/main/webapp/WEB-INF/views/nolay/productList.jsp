@@ -146,7 +146,7 @@
 	<span id="CCD">
 		<button id="show">상품등록 </button>
 		<button type="button" onclick="deleteAction()">삭제</button>
-		<button>엑셀로 대량등록</button>
+		<button>엑셀 대량등록</button>
 	</span>	
 	<div id="productList">
 	<form name="page">
@@ -218,7 +218,7 @@
 				<td id="editable">${productList.pname}</td>
 				<td id="editable">${productList.volume}</td>
 				<td id="editable">${productList.unit}</td>
-				<td id="editable">${productList.category}</td>
+				<td>${productList.category}</td>
 				<td>${productList.adddate}</td>
 				<td>${productList.statusdate}</td>
 				<td>${productList.del}</td>
@@ -309,7 +309,12 @@
 		  if(checkRow == ''){
 		    alert("삭제할 대상을 선택하세요.");
 		    return false;
+		    
 		  }
+		  if(confirm("선택한 상품을 삭제하시겠습니까?")){
+			  
+		  }else return false;
+
 		  $.ajax({
 			    url : "productDelete.do",
 			    type : "post",
@@ -318,7 +323,7 @@
 			    
 			    success : function(result){
 			    	if(result ==1){
-			    		document.location.reload();
+			    		search();
 			    		alert("삭제완료");
 			    		
 			    	}else
@@ -371,12 +376,13 @@
 		     dataType: 'json',
 		    success : function(result){
 		    	if(result ==1){
-		    		document.location.reload();
+		    		search();
 		    		alert("등록완료");
 		    		
+		    	}else if(result== -1){
+		    		alert("이미 등록된 상품입니다.");
 		    	}else
-		    		alert("등록실패");
-				console.log(result);
+		    	alert("등록실패");
 		    }
 	  	});
 	}
@@ -437,7 +443,7 @@
 		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
 		    			    	 console.log(result);
 		    			        if (result) {
-		    			        	document.location.reload();
+		    			        	search();
 		    			        } else {
 		    			        }
 		    				}
