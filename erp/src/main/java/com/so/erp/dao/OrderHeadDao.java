@@ -20,4 +20,6 @@ public interface OrderHeadDao {
 
 	int approvalCancel(String orderNo);
 
+	int updateHead(OrderHead orderHead);
+
 }

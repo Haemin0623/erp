@@ -12,10 +12,26 @@ import com.so.erp.model.Employee;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
-	private EmployeeDao employee;
+	private EmployeeDao ed;
 
 	@Override
 	public List<Employee> list() {
-		return employee.list();
+		return ed.list();
+	}
+
+	@Override
+	public void insert(Employee employee) {
+		ed.insert(employee);
+		
+	}
+
+	@Override
+	public List<Employee> search(Employee employee) {
+		return ed.search(employee);
+	}
+
+	@Override
+	public void update(Employee employee) {
+		ed.update(employee);
 	}
 }

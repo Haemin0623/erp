@@ -50,4 +50,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public int approvalCancel(String orderNo) {
 		return head.approvalCancel(orderNo);
 	}
+
+	@Override
+	public int updateHead(OrderHead orderHead) {
+		return head.updateHead(orderHead);
+	}
 }

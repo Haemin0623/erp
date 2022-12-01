@@ -20,4 +20,6 @@ public interface OrderHeadService {
 
 	int approvalCancel(String orderNo);
 
+	int updateHead(OrderHead orderHead);
+
 }

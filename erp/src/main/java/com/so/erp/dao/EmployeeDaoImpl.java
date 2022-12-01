@@ -19,4 +19,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return sst.selectList("employeens.list");
 	}
 
+	@Override
+	public void insert(Employee employee) {
+		sst.insert("employeens.insert", employee);
+		
+	}
+
+	@Override
+	public List<Employee> search(Employee employee) {
+		return sst.selectList("employeens.search", employee);
+	}
+
+	@Override
+	public void update(Employee employee) {
+		sst.update("employeens.update", employee);
+	}
+
 }

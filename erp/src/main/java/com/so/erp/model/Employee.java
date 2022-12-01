@@ -16,4 +16,7 @@ public class Employee {
     private Date adddate;
     private String del;
     private Date statusdate;
+    
+    private Date addFromDate;
+    private Date addToDate;
 }

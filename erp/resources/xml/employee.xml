@@ -5,7 +5,56 @@
 
 	<select id="list" resultType="employee">
 		select	*
-		from	m_employee
-		
+		from	m_employee		
 	</select>
+	
+	<insert id="insert" parameterType="employee">
+		insert into m_employee
+		values		(#{employeeCd},
+					#{ename},
+					#{password},
+					#{department},
+					#{job},
+					#{authority},
+					sysdate,
+					'N',
+					null					
+					)
+	</insert>
+	
+	<select id="search" parameterType="employee" resultType="employee">
+		select	*
+		from	m_employee
+		<where>
+			<if test="employeeCd != null and employeeCd != ''">
+				and employee_cd like '%' || #{employeeCd} || '%'
+			</if>
+			<if test="ename != null and ename != ''">
+				and ename like '%' || #{ename} || '%'
+			</if>
+			<if test="addFromDate != null and addToDate != null">
+				and adddate between #{addFromDate} and #{addToDate}
+			</if>
+			<if test="job != null and job != 'null'">
+				and job like '%' || #{job} || '%'
+			</if>
+			<if test="department != null and department != 'null'">
+				and department like '%' || #{department} || '%'
+			</if>
+			<if test="authority != null and authority != 'null'">
+				and authority like '%' || #{authority} || '%'
+			</if>		
+		</where>
+		order by adddate desc
+	</select>
+	
+	<update id="update" parameterType="employee">
+		update	m_employee
+		set		ename = #{ename},
+				job = #{job},
+				department = #{department},
+				authority = #{authority},
+				statusdate = sysdate
+		where	employee_cd = #{employeeCd}
+	</update>
 </mapper>

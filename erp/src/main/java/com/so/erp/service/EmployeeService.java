@@ -8,4 +8,10 @@ public interface EmployeeService {
 
 	List<Employee> list();
 
+	void insert(Employee employee);
+
+	List<Employee> search(Employee employee);
+
+	void update(Employee employee);
+
 }

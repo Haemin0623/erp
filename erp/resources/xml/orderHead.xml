@@ -7,7 +7,16 @@
 		select * from order_head
 	</select>
 	<insert id="insert" parameterType="orderHead">
-		insert into order_head values (#{orderNo}, #{buyerCd}, #{orderdate}, #{employeeCd}, null, '승인대기', null, null, null)
+		insert into	order_head
+		values 		(#{orderNo},
+					#{buyerCd},
+					#{orderdate},
+					#{employeeCd},
+					null,
+					'승인대기',
+					null,
+					null,
+					null)
 	</insert>
 	
 	<select id="search" parameterType="orderHead" resultType="orderHead">
@@ -71,5 +80,15 @@
 		set		status = '승인대기',
 				statusdate = sysdate
 		where	order_no=#{orderNo}
+	</update>
+	
+	<update id="updateHead" parameterType="orderHead">
+		update	order_head
+		set		buyer_cd = #{buyerCd},
+				orderdate = #{orderdate},
+				employee_cd = #{employeeCd},
+				status = #{status},
+				statusdate = sysdate
+		where	order_no = #{orderNo}
 	</update>
 </mapper>

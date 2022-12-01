@@ -431,4 +431,18 @@ public class OrderController {
 		
 	}
 	
+	@RequestMapping("orderUpdate.do")
+	@ResponseBody
+	public boolean orderUpdate(OrderHead orderHead) {
+		
+		boolean result = false;
+		
+		int check = hs.updateHead(orderHead);
+		
+		if (check > 0) {
+			result = true;
+		}
+		
+		return result;
+	}
 }
