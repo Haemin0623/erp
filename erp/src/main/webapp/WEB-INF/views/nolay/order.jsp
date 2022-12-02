@@ -128,8 +128,6 @@
 	
 </style>
 
-
-
 </head>
 <body>
 <div id="container">	
@@ -143,11 +141,31 @@
 			~<input type="date" name="orderToDate" value="${orderHead.orderToDate }"><p>
 			상태
 			<select name="status">
-				<option value="null">모두</option>			
-				<option value="승인대기">승인대기</option>
-				<option value="승인요청">승인요청</option>
-				<option value="승인">승인</option>
-				<option value="반려">반려</option>
+				<option value="null">모두</option>		
+				<c:if test="${orderHead.status == '승인대기' }">
+					<option value="승인대기" selected="selected">승인대기</option>
+				</c:if>
+				<c:if test="${orderHead.status != '승인대기' }">
+					<option value="승인대기">승인대기</option>
+				</c:if>
+				<c:if test="${orderHead.status == '승인요청' }">
+					<option value="승인요청" selected="selected">승인요청</option>
+				</c:if>
+				<c:if test="${orderHead.status != '승인요청' }">
+					<option value="승인요청">승인요청</option>
+				</c:if>
+				<c:if test="${orderHead.status == '승인' }">
+					<option value="승인" selected="selected">승인</option>
+				</c:if>
+				<c:if test="${orderHead.status != '승인' }">
+					<option value="승인">승인</option>
+				</c:if>
+				<c:if test="${orderHead.status == '반려' }">
+					<option value="반려" selected="selected">반려</option>
+				</c:if>
+				<c:if test="${orderHead.status != '반려' }">
+					<option value="반려">반려</option>
+				</c:if>
 			</select>
 			
 			<p>
@@ -155,18 +173,49 @@
 			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 
+
+			삭제 된 주문 보기
+			<select name="del">
+				<option value="N">삭제 안된것</option>
+				<c:if test="${orderHead.del == 'Y'}">
+					<option value="Y" selected="selected">삭제 된것</option>
+				</c:if>
+				<c:if test="${orderHead.del != 'Y'}">
+					<option value="Y">삭제 된것</option>
+				</c:if>
+				<c:if test="${orderHead.del == 'All'}">
+					<option value="All" selected="selected">모두</option>
+				</c:if>
+				<c:if test="${orderHead.del != 'All'}">
+					<option value="All">모두</option>
+				</c:if>
+			</select>
 			
 		</form>
 		<button id="searchBtn">검색</button>
 	</div>
 	<p>
 	<p>
+	
 	<button id="show">추가 </button>
+	<c:if test="${orderHead.del != 'Y'}">
+		<button type="button" onclick="deleteAction()">삭제</button>
+	</c:if>
+	<c:if test="${orderHead.del == 'Y'}">
+		<button type="button" onclick="restoreAction()">복원</button>
+	</c:if>
 	
 	<div id="table">
 		<table id="list">
 			<tr>
-				<th>선택</th>
+				<th>
+					<c:if test="${orderHead.del =='Y'}">
+						<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
+					</c:if>
+					<c:if test="${orderHead.del =='N' or orderHead.del == 'All' }">
+						<input type="checkbox" name="checkAll" id="th_checkAll">
+					</c:if>
+				</th>
 				<th>주문번호</th>
 				<th>고객코드</th>
 				<th>신청일</th>
@@ -177,7 +226,14 @@
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow">
-					<td><input type="checkbox" value="${head.orderNo }"></td>
+					<td>
+						<c:if test="${head.del =='Y'}">
+							<input type="checkbox" name="deletedRow" value="${head.orderNo }" >
+						</c:if>
+						<c:if test="${head.del =='N' and head.status == '승인대기'}">
+							<input type="checkbox" name="checkRow" value="${head.orderNo }" >
+						</c:if>
+					</td>
 					<td>${head.orderNo }</td>
 					<td class="editable">${head.buyerCd }</td>
 					<td class="editable">${head.orderdate }</td>
@@ -231,8 +287,8 @@
 				
 				<form action="" name="frm">
 					주문번호<input type="text" name="orderNo" readonly="readonly"><br>
-					발주일<input type="date" name="orderdate"><br>
-					고객코드<input type="text" name="buyerCd"><br>
+					발주일<input type="date" id="orderdate" name="orderdate"><br>
+					고객코드<input type="text" id="buyerCd" name="buyerCd"><br>
 					상품코드<input type="text" name="productCd"><br>
 					고객명<input type="text" name="buyerName"><br>
 					상품명<input type="text" name="productName"><br>
@@ -260,8 +316,7 @@
 					<button id="insertOrder">등록</button>
 					
 					 
-
-`				</div>
+				</div>
 				
 			</div>
 		</div>
@@ -411,6 +466,7 @@
 			productCd : searchBoxx.productCd.value,	
 			requestFromDate : searchBoxx.requestFromDate.value,
 			requestToDate : searchBoxx.requestToDate.value,
+			del : searchBoxx.del.value,
 			window : '주문관리'
 		}
 		console.log(keyword);
@@ -637,6 +693,152 @@ $(document).ready(function() {
          td.addClass("editable")
          });
 });
+</script>
+
+<script type="text/javascript">
+
+
+	var insertorderdate = "";
+	var insertbuyerCd = "";
+	var insertorderNo = "";
+	$('#orderdate').on("change", function(){
+		insertorderdate = frm.orderdate.value;
+		insertorderdate = insertorderdate.charAt(2) + insertorderdate.charAt(2) + 
+						insertorderdate.charAt(5) + insertorderdate.charAt(6) + 
+						insertorderdate.charAt(8) + insertorderdate.charAt(9);
+		insertorderNo = insertorderdate + insertbuyerCd;
+		frm.orderNo.value = insertorderNo;
+		console.log(insertorderNo.length);
+		
+		if(insertorderNo.length == 12){
+			console.log('조건');
+			console.log(insertorderNo);
+			const count = getOrderCount(insertorderNo);
+			alert(count);
+			insertorderNo = insertorderNo + count;
+			frm.orderNo.value = insertorderNo;
+		}
+	});
+	$('#buyerCd').on("change", function(){
+		insertbuyerCd = frm.buyerCd.value;
+		insertorderNo = insertorderdate + insertbuyerCd
+		frm.orderNo.value = insertorderNo;
+		console.log(frm.orderNo.value.length);
+		
+		if(insertorderNo.length == 12){
+			console.log('조건');
+			console.log(insertorderNo);
+			const count = getOrderCount(insertorderNo);
+			insertorderNo = insertorderNo + count;
+			frm.orderNo.value = insertorderNo;
+		}
+	});
+	
+	function getOrderCount(insertorderNo) {
+		let count = "";
+		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		     method: 'post', 
+		     url: 'getOrderCount.do', 
+		     traditional: true,
+		     async: false,
+		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    	orderNo: insertorderNo
+		     },
+		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    	 count = result;
+			}
+	   	});
+		return count;
+	}
+	
+	
+</script>
+
+<!-- 전체 선택 / 삭제  -->
+<script type="text/javascript">
+
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
+	}
+	
+	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	
+	function deleteAction(){
+		  var checkRow = new Array();
+		  $( "input[name='checkRow']:checked" ).each (function (){
+		    checkRow.push($(this).val()) ;
+		  });
+		  
+		  console.log(checkRow);
+		  
+		  if(checkRow == ''){
+		    alert("삭제할 대상을 선택하세요.");
+		    return false;
+		  }
+		  $.ajax({
+			    url : "orderDelete.do",
+			    type : "post",
+			    traditional : true,
+			    data : { checkRows : checkRow },
+			    
+			    success : function(result){
+			    	if(result){
+			    		alert("삭제완료");
+			    		search();
+			    		
+			    	}else
+			    		alert("삭제실패");
+					console.log(result);
+			    }
+		  });
+	};
+	
+</script>
+<!-- 삭제 항목 복원  -->
+<script type="text/javascript">
+function delCheckAll(){
+    if( $("#th_deletedCheckAll").is(':checked') ){
+      $("input[name=deletedRow]").prop("checked", true);
+    }else{
+      $("input[name=deletedRow]").prop("checked", false);
+    }
+}
+
+document.querySelector("#th_deletedCheckAll").addEventListener("click", delCheckAll);
+
+function restoreAction(){
+	  var checkRow = new Array();
+	  $( "input[name='deletedRow']:checked" ).each (function (){
+	    checkRow.push($(this).val()) ;
+	  });
+	  
+	  console.log(checkRow);
+	  
+	  if(checkRow == ''){
+	    alert("복원할 대상을 선택하세요.");
+	    return false;
+	  }
+	  $.ajax({
+		    url : "orderRestore.do",
+		    type : "post",
+		    traditional : true,
+		    data : { checkRows : checkRow },
+		    
+		    success : function(result){
+		    	if(result ==1){
+		    		alert("복원완료");
+		    		search();
+		    		
+		    	}else
+		    		alert("복원실패");
+				console.log(result);
+		    }
+	  });
+};
 </script>
 
 </html>

@@ -55,4 +55,20 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public int updateHead(OrderHead orderHead) {
 		return head.updateHead(orderHead);
 	}
+
+	@Override
+	public String getOrderCount(String orderNo) {
+		return head.getOrderCount(orderNo);
+	}
+
+	@Override
+	public void orderDelete(String orderNo) {
+		head.orderDelete(orderNo);
+		
+	}
+
+	@Override
+	public void orderRestore(String orderNo) {
+		head.orderRestore(orderNo);
+	}
 }

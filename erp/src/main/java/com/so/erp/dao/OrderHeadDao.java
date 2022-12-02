@@ -22,4 +22,10 @@ public interface OrderHeadDao {
 
 	int updateHead(OrderHead orderHead);
 
+	String getOrderCount(String orderNo);
+
+	void orderDelete(String orderNo);
+
+	void orderRestore(String orderNo);
+
 }

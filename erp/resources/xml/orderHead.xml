@@ -4,8 +4,12 @@
 <mapper namespace="headns">
 	
 	<select id="list" resultType="orderHead">
-		select * from order_head
+		select	*
+		from	order_head
+		where	del == 'N'
+		order by h.orderdate desc
 	</select>
+	
 	<insert id="insert" parameterType="orderHead">
 		insert into	order_head
 		values 		(#{orderNo},
@@ -46,7 +50,10 @@
 			</if>
 			<if test="requestFromDate != null and requestToDate != null">
 				and i.requestdate between #{requestFromDate} and #{requestToDate}
-			</if>			
+			</if>
+			<if test="del != 'All'">
+				and h.del = #{del}
+			</if>	
 		</where>
 		order by h.orderdate desc
 	</select> 
@@ -89,7 +96,26 @@
 		set		buyer_cd = #{buyerCd},
 				orderdate = #{orderdate},
 				employee_cd = #{employeeCd},
-				status = #{status},
+				statusdate = sysdate
+		where	order_no = #{orderNo}
+	</update>
+	
+	<select id="getOrderCount" parameterType="String" resultType="String">
+		select	LPAD(count(*)+1,3 , 0)
+		from	order_head
+		where	order_no like '%' || #{orderNo} || '%'
+	</select>
+	
+	<update id="orderDelete" parameterType="String">
+		update	order_head
+		set		del = 'Y',
+				statusdate = sysdate
+		where	order_no = #{orderNo}
+	</update>
+	
+	<update id="orderRestore" parameterType="String">
+		update	order_head
+		set		del = 'N',
 				statusdate = sysdate
 		where	order_no = #{orderNo}
 	</update>

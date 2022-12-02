@@ -53,4 +53,21 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	public int updateHead(OrderHead orderHead) {
 		return sst.update("headns.updateHead", orderHead);
 	}
+
+	@Override
+	public String getOrderCount(String orderNo) {
+		return sst.selectOne("headns.getOrderCount", orderNo);
+	}
+
+	@Override
+	public void orderDelete(String orderNo) {
+		sst.update("headns.orderDelete", orderNo);
+		
+	}
+
+	@Override
+	public void orderRestore(String orderNo) {
+		sst.update("headns.orderRestore", orderNo);
+		
+	}
 }

@@ -48,11 +48,12 @@ public class OrderController {
 	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
 		System.out.println(orderHead.getStatus());
-		orderHead.setStatus("null");
 		// List<OrderHead> headList = hs.list();
+		orderHead.setDel("N");
 		List<OrderHead> headList = hs.search(orderHead);
 		
 		model.addAttribute("headList", headList);
+		model.addAttribute("orderHead", orderHead);
 		
 		return "nolay/order";
 	}
@@ -101,6 +102,10 @@ public class OrderController {
 			String status = (String) keywordObj.get("status");
 			orderHead.setStatus(status);
 			
+			String del = (String) keywordObj.get("del");
+			orderHead.setDel(del);
+			System.out.println(orderHead.getDel());
+			
 			// item 검색
 			String productCd = (String) keywordObj.get("productCd");
 			
@@ -130,6 +135,7 @@ public class OrderController {
 			model.addAttribute("headList", headList);
 			model.addAttribute("orderHead", orderHead);
 			
+			System.out.println(orderHead.getStatus());
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
@@ -163,7 +169,7 @@ public class OrderController {
 			
 			System.out.println(headObj.toString());
 			OrderHead orderHead = new OrderHead();
-			String orderNo = "221128CVS001015";
+			String orderNo = (String) headObj.get("orderNo");
 			System.out.println("1");
 			String buyerCd = (String) headObj.get("buyerCd");
 			System.out.println("2");
@@ -173,6 +179,8 @@ public class OrderController {
 			orderHead.setOrderNo(orderNo);
 			orderHead.setBuyerCd(buyerCd);
 			orderHead.setOrderdate(orderdate);
+			
+			//세션에서 직원 아이디 받아와야 할듯.
 			orderHead.setEmployeeCd("SAL005");
 			
 			System.out.println("헤드 삽입");
@@ -467,6 +475,49 @@ public class OrderController {
 			result = true;
 		}
 		
+		return result;
+	}
+	
+	@RequestMapping("getOrderCount")
+	@ResponseBody
+	public String getOrderCount(String orderNo) {
+		
+		String count = hs.getOrderCount(orderNo);
+		System.out.println("몇개?" + count);
+		
+		return count;
+	}
+	
+	@RequestMapping("orderDelete")
+	@ResponseBody
+	public boolean orderDelete(String[] checkRows) {
+		boolean result = true;
+		
+		for (String orderNo : checkRows){
+			try {
+				hs.orderDelete(orderNo);
+			} catch (Exception e) {
+				System.out.println("실패 : " + orderNo);
+				result = false;
+			}			
+		}
+		return result;
+	}
+	
+	
+	@RequestMapping("orderRestore")
+	@ResponseBody
+	public boolean orderRestore(String[] checkRows) {
+		boolean result = true;
+		
+		for (String orderNo : checkRows){
+			try {
+				hs.orderRestore(orderNo);
+			} catch (Exception e) {
+				System.out.println("실패 : " + orderNo);
+				result = false;
+			}			
+		}
 		return result;
 	}
 }
