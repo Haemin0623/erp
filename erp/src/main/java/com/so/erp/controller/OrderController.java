@@ -550,7 +550,6 @@ public class OrderController {
 		}
 		return result;
 	}
-=======
 	@RequestMapping("excelDown.do")
 	@ResponseBody
 	public void excelDown(HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
@@ -599,6 +598,8 @@ public class OrderController {
 		
 		
 		
+		try {
+			
 		
 		
 		// 워크북 생성
@@ -801,9 +802,10 @@ public class OrderController {
 	    wb.write(response.getOutputStream());
 	    wb.close();
 	    
-	    
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	    
 	}
 	
->>>>>>> 5ac19d1 (검색초기화 / orderStatus.jsp / orderApprovalWindow.jsp)
 }
