@@ -34,4 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void update(Employee employee) {
 		ed.update(employee);
 	}
+
+	@Override
+	public Employee select(String employeeCd) {
+		return ed.select(employeeCd);
+	}
+
 }

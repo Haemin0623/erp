@@ -14,4 +14,6 @@ public interface EmployeeDao {
 
 	void update(Employee employee);
 
+	Employee select(String employeeCd);
+
 }

@@ -55,5 +55,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.insertselect(product);
 	}
 
+	@Override
+	public List<Product> allList() {
+		return pds.allList();
+	}
+
 
 }

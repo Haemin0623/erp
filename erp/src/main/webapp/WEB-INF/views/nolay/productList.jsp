@@ -108,6 +108,13 @@
 	.list {
  		background: silver;
 	}
+	
+	.sumo {
+		color : black;
+	}
+	li.opt {
+		color : black;
+	}
 </style>
 
 
@@ -118,19 +125,39 @@
 	<div id="searchBox">
 		<form id="searchBoxx">
 				<span>
-					상품코드 <input type="text" name="productCd" value="${product.productCd }">
+					<select name="productCd" class="productCd sumo">
+						<option value="All"></option>
+						<c:forEach var="item" items="${allList }">
+							<option value="${item.productCd }">${item.productCd }</option>
+						</c:forEach>
+					</select>
 				</span>
 				<span>
-					상품명 <input type="text" name="pname" value="${product.pname }">
+					<select name="pname" class="pname sumo">
+						<option value="All"></option>
+						<c:forEach var="item" items="${allList }">
+							<option value="${item.pname }">${item.pname }</option>
+						</c:forEach>
+					</select>
 				</span>
 				<span>
-					용량 <input type="text" name="volume" value="${product.volume }" >
+					<select name="volume" class="volume sumo">
+						<option value="All"></option>
+						<c:forEach var="item" items="${allList }">
+							<option value="${item.volume }">${item.volume }</option>
+						</c:forEach>
+					</select>
 				</span>
 				<span>
-					상품카테고리 <input type="text" name="category" value="${product.category }">
+					<select name="category" class="category sumo">
+						<option value="All"></option>
+						<c:forEach var="item" items="${allList }">
+							<option value="${item.category }">${item.category }</option>
+						</c:forEach>
+					</select>
 				</span>
 				<span>
-					등록일 <input type="date" name="adddate"> ~ <input type="date" name="adddate2">
+					등록일<input type="date" name="adddate"> ~ <input type="date" name="adddate2">
 				</span>
 				<span>
 				상태 <select name="del">
@@ -547,6 +574,23 @@
 	};
 
 document.querySelector("#searchBtn").addEventListener("click", search);
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.productCd')[0].sumo.selectItem("${product.productCd }");
+	
+	$('select.pname')[0].sumo.selectItem("${product.pname }");
+	
+	$('select.volume')[0].sumo.selectItem("${product.volume }");
+	
+	$('select.category')[0].sumo.selectItem("${product.category }");
+	
+});
+
 </script>
 </body>
 </html>

@@ -10,7 +10,13 @@ public class ErpController {
 	@RequestMapping("hello")
 	public String hello() {
 		
-		return "page/hello";
+		return "page/logIn";
+	}
+	
+	@RequestMapping("/")
+	public String main() {
+		
+		return "page/main";
 	}
 
 	

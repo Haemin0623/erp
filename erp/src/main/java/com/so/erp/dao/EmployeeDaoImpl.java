@@ -35,4 +35,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		sst.update("employeens.update", employee);
 	}
 
+	@Override
+	public Employee select(String employeeCd) {
+		return sst.selectOne("employeens.select",employeeCd);
+	}
+
 }

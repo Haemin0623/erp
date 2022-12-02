@@ -23,5 +23,7 @@ public interface ProductDao {
 
 	Product insertselect(Product product);
 
+	List<Product> allList();
+
 
 }

@@ -57,4 +57,8 @@
 				statusdate = sysdate
 		where	employee_cd = #{employeeCd}
 	</update>
+	
+	<select id="select" parameterType="string" resultType="employee">
+		select * from m_employee where employee_cd = #{employeeCd}
+	</select>
 </mapper>

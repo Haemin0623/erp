@@ -42,12 +42,14 @@ public class ProductController {
 		pagingBean.setEndRow(endRow);
 		
 		List<Product> productList = pds.productList(pagingBean,product);
+		List<Product> allList = pds.allList();
 		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
 		model.addAttribute("productList",productList);
 		model.addAttribute("num",num);
 		model.addAttribute("pb",pb);
 		model.addAttribute("product",product);
 		model.addAttribute("rowPerPage",rowPerPage);
+		model.addAttribute("allList",allList);
 		
 		return "nolay/productList";
 	}
@@ -175,9 +177,10 @@ public class ProductController {
 			int num = total - startRow + 1;
 			pagingBean.setStartRow(startRow);
 			pagingBean.setEndRow(endRow);
+			
 			System.out.println("search"+product.getDel());
 			List<Product> productList = pds.productList(pagingBean,product);
-			
+			List<Product> allList = pds.allList();
 			
 			PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
 			model.addAttribute("productList",productList);
@@ -185,6 +188,7 @@ public class ProductController {
 			model.addAttribute("pb",pb);
 			model.addAttribute("product",product);
 			model.addAttribute("rowPerPage",rowPerPage);
+			model.addAttribute("allList",allList);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());

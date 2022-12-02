@@ -14,4 +14,6 @@ public interface EmployeeService {
 
 	void update(Employee employee);
 
+	Employee select(String employeeCd);
+
 }

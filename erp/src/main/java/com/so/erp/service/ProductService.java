@@ -23,5 +23,7 @@ public interface ProductService {
 
 	Product insertselect(Product product);
 
+	List<Product> allList();
+
 
 }

@@ -3,6 +3,10 @@ package com.so.erp.controller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Employee;
-import com.so.erp.model.OrderHead;
 import com.so.erp.service.EmployeeService;
 
 import net.sf.json.JSONObject;
@@ -122,6 +125,24 @@ public class EmployeeController {
 		
 		return result;
 	}
-
-	
+	@RequestMapping("login.do")
+	public String login(String employeeCd, String password, Model model, HttpServletResponse response,HttpServletRequest request) {
+		int result = 0;
+		Employee employee = es.select(employeeCd);
+		
+		if(employee == null || employee.getDel().equals("Y")) {
+			result = -1;//탈퇴 회원(퇴사자) 또는 조회한 아이디가 없으면  로그인실패
+		}else {
+				
+			 if(employee.getPassword().equals(password)) {
+				 String empc = employee.getEmployeeCd();
+				 HttpSession session = request.getSession(); 
+				 session.setAttribute("employeeCd", empc);
+				 result = 1;	//패스워드가 일치하는것은 1 로그인성공
+			} else 
+				result = 0; //패스워드 불일치
+		}
+		model.addAttribute("result",result);
+		return "page/loginResult";
+	}
 }
