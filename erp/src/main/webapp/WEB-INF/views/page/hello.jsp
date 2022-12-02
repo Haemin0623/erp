@@ -7,8 +7,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-hello
-
+<form>
+	<table>
+		<tr>
+			<th>ID</th>
+			<td>
+				<input type="text" name="id">
+			</td>
+		</tr>
+		<tr>
+			<th>password</th>
+			<td>
+				<input type="password" name="password">
+			</td>
+		</tr>	
+	</table>
+</form>
 </body>
 </html>

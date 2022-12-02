@@ -40,6 +40,7 @@ public class ProductController {
 		int num = total - startRow + 1;
 		pagingBean.setStartRow(startRow);
 		pagingBean.setEndRow(endRow);
+		
 		List<Product> productList = pds.productList(pagingBean,product);
 		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
 		model.addAttribute("productList",productList);
@@ -125,8 +126,7 @@ public class ProductController {
 	
 	
 	@RequestMapping("productSearch")
-	public String productSearch(@RequestParam(name="keyword")String keyword, PagingBean pagingBean, Model model ){
-		System.out.println("1");
+	public String productSearch(@RequestParam(name="keyword")String keyword, String pageNum, PagingBean pagingBean,String page, Model model ){
 		
 		try {
 			JSONParser p = new JSONParser();
@@ -143,7 +143,6 @@ public class ProductController {
 			String category = (String) keywordObj.get("category");
 			product.setCategory(category);
 					
-			System.out.println("2");
 			
 			String adddate = (String) keywordObj.get("adddate");
 			if (adddate != null && !adddate.equals("") ) {
@@ -151,7 +150,6 @@ public class ProductController {
 				product.setAdddate(date);
 			}
 
-			System.out.println("3");
 			
 			String adddate2 = (String) keywordObj.get("adddate2");
 			if (adddate2 != null && !adddate2.equals("") ) {
@@ -159,24 +157,34 @@ public class ProductController {
 				product.setAdddate2(date);
 			}
 			
-			System.out.println("4");
 			
 			String del = (String) keywordObj.get("del");
 			product.setDel(del);
 			
 			// item 검색
-			System.out.println(product.getCategory());
-			System.out.println(product.getDel());
-			System.out.println(product.getPname());
-			System.out.println(product.getProductCd());
-			System.out.println(product.getVolume());
-			System.out.println(product.getAdddate());
-			System.out.println(product.getAdddate2());
+			
+			int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+			if (page == null || page == "") {
+				rowPerPage = 10;
+			}else rowPerPage = Integer.parseInt(page);
+			if (pageNum == null || pageNum.equals("")) pageNum = "1";
+			int currentPage = Integer.parseInt(pageNum);
+			int total = pds.getTotal(pagingBean,product);
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			int num = total - startRow + 1;
+			pagingBean.setStartRow(startRow);
+			pagingBean.setEndRow(endRow);
+			System.out.println("search"+product.getDel());
 			List<Product> productList = pds.productList(pagingBean,product);
-			System.out.println(productList.size());
 			
 			
-			model.addAttribute("productList", productList);
+			PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
+			model.addAttribute("productList",productList);
+			model.addAttribute("num",num);
+			model.addAttribute("pb",pb);
+			model.addAttribute("product",product);
+			model.addAttribute("rowPerPage",rowPerPage);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());

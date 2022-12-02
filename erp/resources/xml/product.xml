@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="productns">
-		<select id="productList" parameterType="map" resultType="Product">
+		<select id="productList" parameterType="map" resultType="product">
 			select 	* 
 			from 	(select a.*, rowNum rn from 
 						(select * from m_product
@@ -19,8 +19,14 @@
 							<if test="product.category!=null and product.category!=''">
 									and category like '%' || #{product.category} || '%'
 							</if>
-							<if test="product.adddate!=null and product.adddate!='' and product.adddate2!=null and product.adddate2!=''" >
+							<if test="product.adddate!=null and product.adddate2!=null" >
 									and adddate between #{product.adddate} and #{product.adddate2} 
+							</if>
+							<if test='product.del=="N"'>
+									and del='N'							
+							</if>
+							<if test='product.del=="Y"'>
+									and del='Y'							
 							</if>
 						</where>
 						order by adddate desc)
@@ -41,9 +47,9 @@
 					<if test="product.volume!=null and product.volume!=''">
 							and volume like '%' || #{product.volume} || '%'
 					</if>
-					<if test="product.unit!=null and product.unit!=''">
-							and unit like '%' || #{product.unit} || '%'
-					</if>
+<!-- 					<if test="product.unit!=null and product.unit!=''"> -->
+<!-- 							and unit like '%' || #{product.unit} || '%' -->
+<!-- 					</if> -->
 					<if test="product.category!=null and product.category!=''">
 							and category like '%' || #{product.category} || '%'
 					</if>

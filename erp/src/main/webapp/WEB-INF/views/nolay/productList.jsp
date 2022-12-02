@@ -42,6 +42,7 @@
 		color: white;
 	}
 	#table{
+		 
 		overflow: auto;
 		height: 40vh;
 		width: 120vh;
@@ -133,9 +134,25 @@
 				</span>
 				<span>
 				상태 <select name="del">
-						<option value="null">모두보기
-						<option value="N" selected="selected">등록중
-						<option value="Y">삭제완료
+						<c:if test="${product.del == null }">
+							<option value="null" selected="selected">모두보기
+						</c:if>
+						<c:if test="${product.del != null }">
+							<option value="null">모두보기
+						</c:if>
+						<c:if test="${product.del == 'N' }">
+							<option value="N" selected="selected">등록중
+						</c:if>
+						<c:if test="${product.del != 'N' }">
+							<option value="N">등록중
+						</c:if>
+						<c:if test="${product.del == 'Y' }">
+							<option value="Y" selected="selected">삭제완료
+						</c:if>
+						<c:if test="${product.del != 'Y' }">
+							<option value="Y">삭제완료
+						</c:if>
+						
 					</select>
 				</span>
 		</form>
@@ -215,9 +232,9 @@
 				</c:if>
 				</td>
 				<td>${productList.productCd }</td>
-				<td id="editable">${productList.pname}</td>
-				<td id="editable">${productList.volume}</td>
-				<td id="editable">${productList.unit}</td>
+				<td class="editable">${productList.pname}</td>
+				<td class="editable">${productList.volume}</td>
+				<td class="editable">${productList.unit}</td>
 				<td>${productList.category}</td>
 				<td>${productList.adddate}</td>
 				<td>${productList.statusdate}</td>
@@ -389,51 +406,85 @@
 	
 	
 	
-	$(document).ready(function() {
-        $(document).on("dblclick", "#editable", function() { //editable 클래스를 더블클릭했을때 함수실행
-            var value=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-            var input="<input type='text' class='input-data' value='"+value+"' class='form-control' id='focus'>";
-            $(this).removeClass("editable")
-            $(this).html(input);
-            $('#focus').focus();
-            
-            $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
-                var key=e.which;
-                if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
-                    var value=$(this).val();
-                    var td=$(this).parent("td");
-                    td.html(value);
-                    td.addClass("editable");
-                
-                    // 테이블의 Row 클릭시 값 가져오기
-    	            $("#list tr").keypress(function(){    
+	
+        document.querySelector("#listview").addEventListener("change", listview);
     	
-    		            const str = ""
-    		            const tdArr = new Array(); // 배열 선언
-    		             
-    		             // 현재 클릭된 Row(<tr>)
-    		            const tr = $(this);
-    		            const tdd = tr.children();
-    		             
-    		             
-    		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
-    		             tdd.each(function(i){
+    	function listview() {
+    		let target = document.getElementById("listview");
+    	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
+    	      const keyword = {
+    	  			productCd : searchBoxx.productCd.value,	
+    	  			pname : searchBoxx.pname.value,	
+    	  			volume : searchBoxx.volume.value,	
+    	  			category : searchBoxx.category.value,	
+    	  			adddate : searchBoxx.adddate.value,	
+    	  			adddate2 : searchBoxx.adddate2.value,	
+    	  			del : searchBoxx.del.value	
+    	  		} 
+    		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+   		     method: 'post', 
+   		     url: 'productSearch.do', 
+   		     traditional: true,
+   		 	 data: {
+		    	keyword: JSON.stringify(keyword),
+		    	page : page
+   		     },
+   		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+   		    	$('#content').children().remove();
+   				$('#content').html(result);
+   			}
+   	   	});
+    }
+    	
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var initvalue = "";
+	    $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
+	    	initvalue = $(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
+	    	console.log(initvalue);
+	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus'>";
+	        $(this).removeClass("editable")
+	        $(this).html(input);
+	        $('#focus').focus();
+	        
+	        $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
+	            var key=e.which;
+	            if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
+	                var value=$(this).val();
+	                var td=$(this).parent("td");
+	                td.html(value);
+	                td.addClass("editable");
+	            
+	                // 테이블의 Row 클릭시 값 가져오기
+		            $("#list tr").keypress(function(){    
+		
+			            const str = ""
+			            const tdArr = new Array(); // 배열 선언
+			             
+			             // 현재 클릭된 Row(<tr>)
+			            const tr = $(this);
+			            const tdd = tr.children();
+			             
+			             
+			             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+			             tdd.each(function(i){
 	    		             tdArr.push(tdd.eq(i).text());
-    		             });
-    		             
-    		             
-    		             // td.eq(index)를 통해 값을 가져올 수도 있다.
-    		             productCd = tdd.eq(1).text();
-    		             pname = tdd.eq(2).text();
-    		             volume = tdd.eq(3).text();
-    		             unit = tdd.eq(4).text();
-    		             category = tdd.eq(5).text();
-    	             
+			             });
+			             
+			             
+			             // td.eq(index)를 통해 값을 가져올 수도 있다.
+			             productCd = tdd.eq(1).text();
+			             pname = tdd.eq(2).text();
+			             volume = tdd.eq(3).text();
+			             unit = tdd.eq(4).text();
+			             category = tdd.eq(5).text();
+		             
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
 		    			     url: 'productUpdate.do', 
 		    			     traditional: true,
-		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+		    			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. 
 		    			    	productCd: productCd,
 		    			    	pname: pname,
 		    			    	volume: volume,
@@ -448,40 +499,20 @@
 		    			        }
 		    				}
 		    		   	});
-    	            });
-               	}
-            });
-        });
-
-        $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
-            var value=$(this).val();
-            var td=$(this).parent("td");
-            $(this).remove();
-            td.html(value);
-            td.addClass("editable")
-            });
-        
-        document.querySelector("#listview").addEventListener("change", listview);
-    	
-    	function listview() {
-    		let target = document.getElementById("listview");
-    	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
-    	      
-    		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-   		     method: 'post', 
-   		     url: 'productList.do', 
-   		     traditional: true,
-   		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-   		    	 page: page
-   		     },
-   		     success: function (result) { //성공했을떄 호출할 콜백을 지정
-   		    	$('#content').children().remove();
-   				$('#content').html(result);
-   			}
-   	   	});
-    	}
-    	
-   });
+		            });
+	           	}
+	        });
+	    });
+	
+	    $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
+	        
+	        var td=$(this).parent("td");
+	        $(this).remove();
+	        td.html(initvalue);
+	        td.addClass("editable")
+	       });
+	    
+	});
 </script>
 <script type="text/javascript">
 	function search() {
@@ -495,6 +526,8 @@
 			adddate2 : searchBoxx.adddate2.value,	
 			del : searchBoxx.del.value	
 		}
+		let target = document.getElementById("listview");
+	      page= target.options[target.selectedIndex].value;
 		console.log(keyword);
 		
 		$.ajax({
@@ -502,7 +535,8 @@
 		     url: 'productSearch.do',
 		     traditional: true,
 		     data: {
-		    	keyword: JSON.stringify(keyword)
+		    	keyword: JSON.stringify(keyword),
+		    	page : page
 		     },
 		     success: function (result) {
 		    	 $('#content').children().remove();
