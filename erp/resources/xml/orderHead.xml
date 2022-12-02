@@ -33,19 +33,19 @@
 			<if test="orderNo != null and orderNo != ''">
 				and h.order_no like '%' || #{orderNo} || '%'
 			</if>
-			<if test="buyerCd != null and buyerCd != ''">
+			<if test="buyerCd != null and buyerCd != 'All'">
 				and h.buyer_cd like '%' || #{buyerCd} || '%'
 			</if>
 			<if test="orderFromDate != null and orderToDate != null">
 				and h.orderdate between #{orderFromDate} and #{orderToDate}
 			</if>
-			<if test="employeeCd != null and employeeCd != 'null'">
+			<if test="employeeCd != null and employeeCd != 'All'">
 				and h.employee_cd like '%' || #{employeeCd} || '%'
 			</if>
 			<if test="status != null and status != 'null'">
 				and h.status = #{status}
 			</if>
-			<if test="productCd != null and productCd != 'null'">
+			<if test="productCd != null and productCd != 'All'">
 				and i.product_cd like '%' || #{productCd} || '%'
 			</if>
 			<if test="requestFromDate != null and requestToDate != null">
