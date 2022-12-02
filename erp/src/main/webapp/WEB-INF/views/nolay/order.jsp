@@ -121,7 +121,12 @@
 		border: 1px solid;
 	}
 	
-	
+	.sumo {
+		color : black;
+	}
+	li.opt {
+		color : black;
+	}
 	
 	
 	
@@ -135,41 +140,46 @@
 	<div id="searchBox">
 		<form name="searchBoxx">		
 			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
-			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
-			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
+			고객코드
+			<select name="buyerCd" class="sumoBuy sumo">
+				<c:forEach var="buyer" items="${buyerEx }">
+					<option value="${buyer.buyerCd }" 
+						<c:if test="${buyer.buyerCd == orderHead.buyerCd }">seleted="selected"</c:if> >
+						${buyer.buyerCd }</option>
+				</c:forEach>
+			</select>
+			신청인
+			<select name="employeeCd" class="sumoEmp sumo">
+				<c:forEach var="employee" items="${employeeEx }">
+					<option value="${employee.employeeCd }" 
+						<c:if test="${employee.employeeCd == orderHead.employeeCd }">seleted="selected"</c:if> >
+						${employee.employeeCd }
+					</option>
+				</c:forEach>
+			</select>
+			
 			신청일<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
 			~<input type="date" name="orderToDate" value="${orderHead.orderToDate }"><p>
 			상태
 			<select name="status">
 				<option value="null">모두</option>		
-				<c:if test="${orderHead.status == '승인대기' }">
-					<option value="승인대기" selected="selected">승인대기</option>
-				</c:if>
-				<c:if test="${orderHead.status != '승인대기' }">
-					<option value="승인대기">승인대기</option>
-				</c:if>
-				<c:if test="${orderHead.status == '승인요청' }">
-					<option value="승인요청" selected="selected">승인요청</option>
-				</c:if>
-				<c:if test="${orderHead.status != '승인요청' }">
-					<option value="승인요청">승인요청</option>
-				</c:if>
-				<c:if test="${orderHead.status == '승인' }">
-					<option value="승인" selected="selected">승인</option>
-				</c:if>
-				<c:if test="${orderHead.status != '승인' }">
-					<option value="승인">승인</option>
-				</c:if>
-				<c:if test="${orderHead.status == '반려' }">
-					<option value="반려" selected="selected">반려</option>
-				</c:if>
-				<c:if test="${orderHead.status != '반려' }">
-					<option value="반려">반려</option>
-				</c:if>
+				<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+				<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+				<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
+				<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
 			</select>
 			
 			<p>
-			상품코드<input type="text" name="productCd" value="${orderHead.productCd }">
+			상품코드
+			<select name="productCd" class="sumoProd sumo">
+				<c:forEach var="product" items="${productEx }">
+					<option value="${product.productCd }" 
+						<c:if test="${product.productCd == orderHead.productCd }">selected="selected"</c:if> >
+						${product.productCd }
+					</option>
+				</c:forEach>
+			</select>
+			
 			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 
@@ -234,7 +244,7 @@
 							<input type="checkbox" name="checkRow" value="${head.orderNo }" >
 						</c:if>
 					</td>
-					<td>${head.orderNo }</td>
+					<td>${head.orderNo }<input type="hidden" value="${head.orderNo }"> </td>
 					<td class="editable">${head.buyerCd }</td>
 					<td class="editable">${head.orderdate }</td>
 					<td class="editable">${head.employeeCd }</td>
@@ -250,7 +260,7 @@
 						<c:if test="${head.status == '승인'}">
 						</c:if>
 						<c:if test="${head.status == '반려'}">
-							<button onclick="approvalReject('${head.orderNo }')">재요청</button>
+							<button onclick="approvalRequest('${head.orderNo }')">재요청</button>
 						</c:if>
 					
 					</td>
@@ -506,7 +516,7 @@ document.querySelector("#searchBtn").addEventListener("click", search);
 		$('#area').empty();
 		
 		let thisRow = $(this).closest('tr');
-		let orderNo = thisRow.find('td:eq(0)').find('input').val();
+		let orderNo = thisRow.find('td:eq(1)').find('input').val();
 		let status = thisRow.find('td:eq(5)').find('input').val();
 		let reason = thisRow.find('td:eq(6)').find('input').val();
 		
@@ -538,9 +548,7 @@ document.querySelector("#searchBtn").addEventListener("click", search);
 							"<td>" + data[i].amount + "</td>" +
 							"<td>" + data[i].remark + "</td>" +
 						"</tr>"
-					);
-				
-					
+					);					
 				
 				}
 				if (status == "승인" || status == "반려" ) {
@@ -619,6 +627,9 @@ $(document).ready(function() {
     $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
      	 initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
          var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
+         
+         
+         
          $(this).removeClass("editable")
          $(this).html(input);
          $('#focus').focus();
@@ -755,17 +766,20 @@ $(document).ready(function() {
 </script>
 
 <!-- 전체 선택 / 삭제  -->
+<c:if test="${orderHead.del =='N' or orderHead.del == 'All' }">
+	<script type="text/javascript">
+		function checkAll(){
+		    if( $("#th_checkAll").is(':checked') ){
+		      $("input[name=checkRow]").prop("checked", true);
+		    }else{
+		      $("input[name=checkRow]").prop("checked", false);
+		    }
+		}
+		
+		document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	</script>
+</c:if>
 <script type="text/javascript">
-
-	function checkAll(){
-	    if( $("#th_checkAll").is(':checked') ){
-	      $("input[name=checkRow]").prop("checked", true);
-	    }else{
-	      $("input[name=checkRow]").prop("checked", false);
-	    }
-	}
-	
-	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
 	
 	function deleteAction(){
 		  var checkRow = new Array();
@@ -798,22 +812,28 @@ $(document).ready(function() {
 	};
 	
 </script>
-<!-- 삭제 항목 복원  -->
-<script type="text/javascript">
-function delCheckAll(){
-    if( $("#th_deletedCheckAll").is(':checked') ){
-      $("input[name=deletedRow]").prop("checked", true);
-    }else{
-      $("input[name=deletedRow]").prop("checked", false);
-    }
-}
 
-document.querySelector("#th_deletedCheckAll").addEventListener("click", delCheckAll);
+<!-- 삭제 항목 복원  -->
+<c:if test="${orderHead.del =='Y'}">
+	<script type="text/javascript">
+		function delCheckAll(){
+		    if( $("#th_deletedCheckAll").is(':checked') ){
+		      $("input[name=deletedRow]").prop("checked", true);
+		    }else{
+		      $("input[name=deletedRow]").prop("checked", false);
+		    }
+		}
+	
+		document.querySelector("#th_deletedCheckAll").addEventListener("click", delCheckAll);
+	</script>
+</c:if>
+<script type="text/javascript">
+
 
 function restoreAction(){
 	  var checkRow = new Array();
 	  $( "input[name='deletedRow']:checked" ).each (function (){
-	    checkRow.push($(this).val()) ;
+	    checkRow.push($(this).val());
 	  });
 	  
 	  console.log(checkRow);
@@ -839,6 +859,22 @@ function restoreAction(){
 		    }
 	  });
 };
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.sumoBuy')[0].sumo.selectItem("${orderHead.buyerCd }");
+	
+	$('select.sumoEmp')[0].sumo.selectItem("${orderHead.employeeCd }");
+	
+	$('select.sumoProd')[0].sumo.selectItem("${orderHead.productCd }");
+});
+
+	
 </script>
 
 </html>

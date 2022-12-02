@@ -44,6 +44,17 @@ public class OrderController {
 	@Autowired
 	private BuyerService bs;
 	
+	public void exData(Model model) {
+		List<Buyer> buyerEx = bs.list();
+		model.addAttribute("buyerEx", buyerEx);
+		
+		List<Employee> employeeEx = es.list();
+		model.addAttribute("employeeEx", employeeEx);
+		
+		List<Product> productEx = ps.list();
+		model.addAttribute("productEx", productEx);
+	}
+	
 	@RequestMapping("order")
 	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
@@ -51,6 +62,8 @@ public class OrderController {
 		// List<OrderHead> headList = hs.list();
 		orderHead.setDel("N");
 		List<OrderHead> headList = hs.search(orderHead);
+		
+		exData(model);
 		
 		model.addAttribute("headList", headList);
 		model.addAttribute("orderHead", orderHead);
@@ -60,6 +73,8 @@ public class OrderController {
 	
 	@RequestMapping("orderSearch")
 	public String orderSearch(Model model, @RequestParam(name="keyword") String keyword) {
+		
+		exData(model);
 		
 		System.out.println("1");
 		String window = null;
