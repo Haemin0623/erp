@@ -606,7 +606,7 @@ function changeContent(data) {
 		     success: function (result) {
 		        if (result) {
 					callView('pricing.do');
-					alert("삭제 성공");
+					alert("등록 성공");
 		        } else {
 		        	alert("실패");
 		        }
