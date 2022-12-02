@@ -142,14 +142,14 @@
 			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
 			고객코드
 			<select name="buyerCd" class="sumoBuy sumo">
-				<option value="All">모두</option>
+				<option value="All"></option>
 				<c:forEach var="buyer" items="${buyerEx }">
 					<option value="${buyer.buyerCd }">${buyer.buyerCd }</option>
 				</c:forEach>
 			</select>
 			신청인
 			<select name="employeeCd" class="sumoEmp sumo">
-				<option value="All">모두</option>
+				<option value="All"></option>
 				<c:forEach var="employee" items="${employeeEx }">
 					<option value="${employee.employeeCd }">${employee.employeeCd }</option>
 				</c:forEach>
@@ -169,7 +169,7 @@
 			<p>
 			상품코드
 			<select name="productCd" class="sumoProd sumo">
-				<option value="All">모두</option>
+				<option value="All"></option>
 				<c:forEach var="product" items="${productEx }">
 					<option value="${product.productCd }">${product.productCd }</option>
 				</c:forEach>

@@ -36,9 +36,23 @@
 			<if test="buyerCd != null and buyerCd != 'All'">
 				and h.buyer_cd like '%' || #{buyerCd} || '%'
 			</if>
-			<if test="orderFromDate != null and orderToDate != null">
-				and h.orderdate between #{orderFromDate} and #{orderToDate}
+			
+			
+			
+			<if test="orderFromDate != null or orderToDate != null">
+				<if test="orderFromDate == null">
+					and h.orderdate between '0001-01-01' and #{orderToDate}
+				</if>
+				<if test="orderToDate == null">
+					and h.orderdate between #{orderFromDate} and '9999-12-31'
+				</if>
+				<if test="orderFromDate != null and orderToDate != null">
+					and h.orderdate between #{orderFromDate} and #{orderToDate}
+				</if>
 			</if>
+			
+			
+			
 			<if test="employeeCd != null and employeeCd != 'All'">
 				and h.employee_cd like '%' || #{employeeCd} || '%'
 			</if>
@@ -48,8 +62,16 @@
 			<if test="productCd != null and productCd != 'All'">
 				and i.product_cd like '%' || #{productCd} || '%'
 			</if>
-			<if test="requestFromDate != null and requestToDate != null">
-				and i.requestdate between #{requestFromDate} and #{requestToDate}
+			<if test="requestFromDate != null or requestToDate != null">				
+				<if test="requestFromDate == null">
+					and h.orderdate between '0001-01-01' and #{requestToDate}
+				</if>
+				<if test="requestToDate == null">
+					and h.orderdate between #{requestFromDate} and '9999-12-31'
+				</if>
+				<if test="requestFromDate != null and requestToDate != null">
+					and i.requestdate between #{requestFromDate} and #{requestToDate}
+				</if>				
 			</if>
 			<if test="del != 'All'">
 				and h.del = #{del}
