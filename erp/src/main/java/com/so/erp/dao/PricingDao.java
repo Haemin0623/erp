@@ -16,5 +16,7 @@ public interface PricingDao {
 
 	int pricingUpdate(Pricing pricing);
 
+	int getPrice(Pricing pricing);
+
 
 }

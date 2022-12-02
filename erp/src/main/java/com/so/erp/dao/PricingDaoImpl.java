@@ -39,4 +39,9 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.update("pricingns.update", pricing);
 	}
 
+	@Override
+	public int getPrice(Pricing pricing) {
+		return sst.selectOne("pricingns.getPrice", pricing);
+	}
+
 }

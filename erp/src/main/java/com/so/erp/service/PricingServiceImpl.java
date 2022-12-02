@@ -39,4 +39,9 @@ public class PricingServiceImpl implements PricingService {
 		return prd.pricingUpdate(pricing);
 	}
 
+	@Override
+	public int getPrice(Pricing pricing) {
+		return prd.getPrice(pricing);
+	}
+
 }

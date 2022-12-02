@@ -20,7 +20,7 @@
 					'승인대기',
 					null,
 					null,
-					null)
+					'N')
 	</insert>
 	
 	<select id="search" parameterType="orderHead" resultType="orderHead">	

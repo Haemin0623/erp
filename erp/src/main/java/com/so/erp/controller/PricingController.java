@@ -141,6 +141,22 @@ public class PricingController {
 		return result;
 	}
 	
+	@RequestMapping("getPrice")
+	@ResponseBody
+	public int getPrice(String buyerCd, String productCd) {
+		
+		System.out.println(buyerCd);
+		System.out.println(productCd);
+		
+		Pricing pricing = new Pricing();
+		pricing.setBuyerCd(buyerCd);
+		pricing.setProductCd(productCd);
+		
+		int price = prs.getPrice(pricing);
+		
+		return price;
+	}
+	
 }
 
 

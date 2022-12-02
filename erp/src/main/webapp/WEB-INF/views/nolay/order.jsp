@@ -144,14 +144,14 @@
 			<select name="buyerCd" class="sumoBuy sumo">
 				<option value="All"></option>
 				<c:forEach var="buyer" items="${buyerEx }">
-					<option value="${buyer.buyerCd }">${buyer.buyerCd }</option>
+					<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
 				</c:forEach>
 			</select>
 			신청인
 			<select name="employeeCd" class="sumoEmp sumo">
 				<option value="All"></option>
 				<c:forEach var="employee" items="${employeeEx }">
-					<option value="${employee.employeeCd }">${employee.employeeCd }</option>
+					<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
 				</c:forEach>
 			</select>
 			
@@ -171,7 +171,7 @@
 			<select name="productCd" class="sumoProd sumo">
 				<option value="All"></option>
 				<c:forEach var="product" items="${productEx }">
-					<option value="${product.productCd }">${product.productCd }</option>
+					<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
 				</c:forEach>
 			</select>
 			
@@ -293,10 +293,22 @@
 				<form action="" name="frm">
 					주문번호<input type="text" name="orderNo" readonly="readonly"><br>
 					발주일<input type="date" id="orderdate" name="orderdate"><br>
-					고객코드<input type="text" id="buyerCd" name="buyerCd"><br>
-					상품코드<input type="text" name="productCd"><br>
-					고객명<input type="text" name="buyerName"><br>
-					상품명<input type="text" name="productName"><br>
+					고객코드
+					<select name="buyerCd" class="sumo" id="buyerCd">
+						<option value=""></option>
+						<c:forEach var="buyer" items="${buyerEx }">
+							<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
+						</c:forEach>
+					</select>
+					<br>
+					상품코드
+					<select name="productCd" class="sumo" id="productCd">
+						<option value=""></option>
+						<c:forEach var="product" items="${productEx }">
+							<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
+						</c:forEach>
+					</select>
+					<br>
 					수량<input type="number" name="requestqty"><br>
 					판매가<input type="number" name="price"><br>
 					납품요청일<input type="date" name="requestdate"><br>
@@ -360,6 +372,9 @@
 	}
 	
 	function changeTable() {
+		document.querySelector('#orderdate').setAttribute("disabled", "disabled");
+		document.querySelector('#buyerCd').setAttribute("disabled", "disabled");
+		
 		const productCd = frm.productCd.value;
 		const requestqty = frm.requestqty.value;
 		const price = frm.price.value;
@@ -386,7 +401,6 @@
 			frm.productCd.value = '';
 			frm.requestqty.value = '';
 			frm.price.value = '';
-			frm.requestdate.value = '';
 			frm.remark.value = '';
 			
 		}
@@ -701,13 +715,16 @@ $(document).ready(function() {
 });
 </script>
 
+<!-- 주문번호 생성 -->
 <script type="text/javascript">
 
 
 	var insertorderdate = "";
 	var insertbuyerCd = "";
 	var insertorderNo = "";
-	$('#orderdate').on("change", function(){
+	var insertproductCd = "";
+	
+	$('#orderdate').on("change", function() {
 		insertorderdate = frm.orderdate.value;
 		insertorderdate = insertorderdate.charAt(2) + insertorderdate.charAt(2) + 
 						insertorderdate.charAt(5) + insertorderdate.charAt(6) + 
@@ -720,12 +737,13 @@ $(document).ready(function() {
 			console.log('조건');
 			console.log(insertorderNo);
 			const count = getOrderCount(insertorderNo);
-			alert(count);
 			insertorderNo = insertorderNo + count;
 			frm.orderNo.value = insertorderNo;
+			
 		}
 	});
-	$('#buyerCd').on("change", function(){
+	
+	$('#buyerCd').on("change", function() {
 		insertbuyerCd = frm.buyerCd.value;
 		insertorderNo = insertorderdate + insertbuyerCd
 		frm.orderNo.value = insertorderNo;
@@ -738,23 +756,57 @@ $(document).ready(function() {
 			insertorderNo = insertorderNo + count;
 			frm.orderNo.value = insertorderNo;
 		}
+		
+		insertproductCd = frm.productCd.value;
+		
+		console.log('되냐?' + insertbuyerCd + insertproductCd);
+		if(insertproductCd != "" && insertbuyerCd != ""){
+			frm.price.value = getPrice(insertbuyerCd, insertproductCd);
+		}
 	});
 	
-	function getOrderCount(insertorderNo) {
+	$('#productCd').on("change", function() {
+		insertproductCd = frm.productCd.value;
+		
+		console.log('되냐?' + insertbuyerCd + insertproductCd);
+		if(insertproductCd != "" && insertbuyerCd != ""){
+			frm.price.value = getPrice(insertbuyerCd, insertproductCd);
+		}
+	})
+	
+	function getOrderCount(orderNo) {
 		let count = "";
-		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+		$.ajax({
 		     method: 'post', 
 		     url: 'getOrderCount.do', 
 		     traditional: true,
 		     async: false,
-		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-		    	orderNo: insertorderNo
+		     data: {
+		    	orderNo: orderNo
 		     },
-		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		     success: function (result) {
 		    	 count = result;
 			}
 	   	});
 		return count;
+	}
+	
+	function getPrice(buyerCd, productCd){
+		let price = "";
+		$.ajax({
+		     method: 'post', 
+		     url: 'getPrice.do', 
+		     traditional: true,
+		     async: false,
+		     data: {
+		    	 buyerCd: buyerCd,
+		    	 productCd: productCd
+		     },
+		     success: function (result) {
+		    	 price = result;
+			}
+	   	});
+		return price;
 	}
 	
 	

@@ -16,5 +16,7 @@ public interface PricingService {
 
 	int pricingUpdate(Pricing pricing);
 
+	int getPrice(Pricing pricing);
+
 
 }

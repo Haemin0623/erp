@@ -61,6 +61,13 @@
 		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
 	</update>
 	
+	<select id="getPrice" parameterType="pricing" resultType="integer">
+		select	price
+		from	m_pricing
+		where	buyer_cd = #{buyerCd}
+			and product_cd = #{productCd}
+			and sysdate between startdate and enddate
+	</select>
 	
 	
 	
