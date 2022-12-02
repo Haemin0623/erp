@@ -35,4 +35,9 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public List<OrderHead> search(OrderHead orderHead) {
 		return sst.selectList("itemns.search", orderHead);
 	}
+
+	@Override
+	public OrderHead listForExcel(OrderHead item) {
+		return sst.selectOne("itemns.listForExcel", item);
+	}
 }

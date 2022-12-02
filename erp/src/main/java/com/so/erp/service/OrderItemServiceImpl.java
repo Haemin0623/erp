@@ -13,26 +13,31 @@ import com.so.erp.model.OrderItem;
 public class OrderItemServiceImpl implements OrderItemService {
 
 	@Autowired
-	private OrderItemDao item;
+	private OrderItemDao id;
 
 	@Override
 	public void insert(OrderItem orderItem) {
-		item.insert(orderItem);
+		id.insert(orderItem);
 		
 	}
 
 	@Override
 	public List<OrderItem> itemList(String orderNo) {
-		return item.itemList(orderNo);
+		return id.itemList(orderNo);
 	}
 
 	@Override
 	public List<OrderItem> orderStatusList() {
-		return item.orderStatusList();
+		return id.orderStatusList();
 	}
 
 	@Override
 	public List<OrderHead> search(OrderHead orderHead) {
-		return item.search(orderHead);
+		return id.search(orderHead);
+	}
+
+	@Override
+	public OrderHead listForExcel(OrderHead item) {
+		return id.listForExcel(item);
 	}
 }

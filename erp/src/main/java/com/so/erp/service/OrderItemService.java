@@ -15,4 +15,6 @@ public interface OrderItemService {
 
 	List<OrderHead> search(OrderHead orderHead);
 
+	OrderHead listForExcel(OrderHead item);
+
 }

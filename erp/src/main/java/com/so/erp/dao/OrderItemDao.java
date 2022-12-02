@@ -15,4 +15,6 @@ public interface OrderItemDao {
 
 	List<OrderHead> search(OrderHead orderHead);
 
+	OrderHead listForExcel(OrderHead item);
+
 }

@@ -85,8 +85,8 @@ tr:active{
 			고객코드<input type="text" name="buyerCd" value="${orderHead.buyerCd }">
 			신청일<input type="date" name="orderFromDate" value=${orderHead.orderFromDate }>
 			~<input type="date" name="orderToDate" value=${orderHead.orderToDate }>
-			신청인<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
-			
+			작성자<input type="text" name="employeeCd" value="${orderHead.employeeCd }">
+			상태
 			<select name="status">
 				<option value="null">모두</option>			
 				<option value="승인대기">승인대기</option>
@@ -100,9 +100,10 @@ tr:active{
 			
 		</form>
 	</div>
+	<div>
 			<button id="searchBtn">검색</button>
-	
-	
+			<button id="initBtn">검색결과 초기화</button>
+	</div>
 	<div id="table">
 		<table id="list">
 			<tr>
@@ -186,6 +187,8 @@ tr:active{
 			$('#content').html(data);
 		});
 	}
+	document.querySelector("#initBtn").addEventListener("click",  function(){callView('orderApprovalWindow.do')});
+	
 	
 	/* search */
 	function search() {
@@ -216,10 +219,7 @@ tr:active{
 			 }
 	   });
 	}
-	
 	document.querySelector("#searchBtn").addEventListener("click", search);
-	
-	
 	/* 행 색상 */
 	$("#table tr").on( "click", function() {
 		$(".itemRow").removeClass('clickColor');

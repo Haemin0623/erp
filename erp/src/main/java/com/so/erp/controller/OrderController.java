@@ -1,8 +1,22 @@
 package com.so.erp.controller;
 
+import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -451,7 +465,7 @@ public class OrderController {
 //				orderHead.setSignempName(oh.getAuth());
 			}
 			System.out.println(orderHead.getAuth());
-			System.out.println(orderHead.getSignempName());
+			//System.out.println(orderHead.getSignempName());
 			
 			model.addAttribute("orderStatusList", orderStatusList);
 			model.addAttribute("orderItem", orderHead);
@@ -493,6 +507,7 @@ public class OrderController {
 		return result;
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping("getOrderCount")
 	@ResponseBody
 	public String getOrderCount(String orderNo) {
@@ -535,4 +550,260 @@ public class OrderController {
 		}
 		return result;
 	}
+=======
+	@RequestMapping("excelDown.do")
+	@ResponseBody
+	public void excelDown(HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
+		
+		// 출력할 주문리스트
+		List<OrderHead> list = new ArrayList<>();
+		OrderHead orderRow = new OrderHead();
+
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			System.out.println("1");
+			
+			OrderHead item = new OrderHead();
+			
+			for (int i = 0; i < arr.size(); i++) {
+				
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				String orderNo = (String) itemObj.get("orderNo");
+				System.out.println(orderNo);
+				String productCd = (String) itemObj.get("productCd");
+				System.out.println(productCd);
+				
+				item.setOrderNo(orderNo);
+				item.setProductCd(productCd);
+				
+				orderRow = is.listForExcel(item);
+				System.out.println(orderRow.getOrderdate());
+				orderRow.getOrderdate();
+				list.add(orderRow);
+			}
+			
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		System.out.println("size"+list.size());
+		
+		for (OrderHead oh : list) {
+			System.out.println(oh.toString());
+		}
+		
+		
+		
+		
+		
+		// 워크북 생성
+		Workbook wb = new HSSFWorkbook();
+		Sheet sheet = wb.createSheet("주문 현황");
+		Row row = null;
+		Cell cell = null;
+		int rowNo = 0;
+		
+		// 테이블 헤더용 스타일
+		CellStyle headStyle = wb.createCellStyle();
+		
+		// 가는 경계선
+		headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+
+	    // 배경색 노란색
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    
+	    // 데이터 가운데 정렬
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+	    // 데이터용 경계 스타일 테두리만 지정
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++);
+	    
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("주문일");
+	    
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("주문번호");
+	    
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상품코드");
+	    
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상품명");
+	    
+	    cell = row.createCell(4);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("주문수량");
+	    
+	    cell = row.createCell(5);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("판매가");
+	    
+	    cell = row.createCell(6);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("금액 합계");
+	    
+	    cell = row.createCell(7);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("영업담당자");
+	    
+	    cell = row.createCell(8);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상태");
+	    
+	    cell = row.createCell(9);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상태변경일");
+	    
+	    cell = row.createCell(10);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("승인자");
+	    
+	    cell = row.createCell(11);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("납품요청일");
+	    
+	    cell = row.createCell(12);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객코드");
+	    
+	    cell = row.createCell(13);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객명");
+	    
+	    cell = row.createCell(14);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객담당자");
+	    
+	    cell = row.createCell(15);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객연락처");
+	    
+	    cell = row.createCell(16);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객이메일");
+	    
+	    cell = row.createCell(17);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("비고");
+	    
+	 // 데이터 부분 생성
+	    for(OrderHead li : list) {
+
+	        row = sheet.createRow(rowNo++);
+
+	        cell = row.createCell(0);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getOrderdate());
+	        System.out.println(li.getOrderdate());
+	        
+		    cell = row.createCell(1);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getOrderNo());
+		    System.out.println(li.getOrderNo());
+		    
+		    cell = row.createCell(2);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getProductCd());
+		    System.out.println(li.getProductCd());
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getPname());
+		    System.out.println(li.getPname());
+		    
+		    cell = row.createCell(4);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getRequestqty());
+		    System.out.println(li.getRequestqty());
+		    
+		    cell = row.createCell(5);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getPrice());
+		    System.out.println(li.getPrice());
+		    
+		    
+		    cell = row.createCell(6);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getAmount());
+		    System.out.println(li.getAmount());
+		    
+		    cell = row.createCell(7);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getEname());
+		    
+		    cell = row.createCell(8);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStatus());
+		    
+		    cell = row.createCell(9);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStatusdate());
+		    
+		    cell = row.createCell(10);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getAuth());
+		    
+		    cell = row.createCell(11);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getRequestdate());
+		    
+		    cell = row.createCell(12);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getBuyerCd());
+		    
+		    cell = row.createCell(13);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getBname());
+		    
+		    cell = row.createCell(14);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getManager());
+		    
+		    cell = row.createCell(15);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getTel());
+		    
+		    cell = row.createCell(16);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getEmail());
+		    
+		    cell = row.createCell(17);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getRemark());
+
+	    }
+	
+	    // 컨텐츠 타입과 파일명 지정
+	    response.setContentType("ms-vnd/excel");
+	    response.setHeader("Content-Disposition", "attachment;filename=order.xls");
+	    
+	    // 엑셀 출력
+	    wb.write(response.getOutputStream());
+	    wb.close();
+	    
+	    
+	    
+	}
+	
+>>>>>>> 5ac19d1 (검색초기화 / orderStatus.jsp / orderApprovalWindow.jsp)
 }

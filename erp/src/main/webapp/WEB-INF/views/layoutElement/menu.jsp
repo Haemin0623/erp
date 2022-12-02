@@ -93,12 +93,13 @@
 				<li class="menuList">주문</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('order.do')">주문 관리</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderApprovalWindow.do')">주문 승인</a></li>
+				<li><a href="orderApprovalWindow.do">주문 승인</a></li>
 			</ul>
 			
 			<ul>
 				<li class="menuList">REPORT</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderStatus.do')">주문 현황</a></li>
-				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
+				<li><a href="orderStatus.do">주문 현황</a></li>
 			</ul>
 	</div>
 	<hr class="line2">

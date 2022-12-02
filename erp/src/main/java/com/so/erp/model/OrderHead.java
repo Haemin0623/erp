@@ -55,7 +55,5 @@ public class OrderHead {
     private String remark;
     
     // 검색용
-    //될지안될지모르겠따,.,
-    private String signempName;
     private String auth;
 }

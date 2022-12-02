@@ -44,18 +44,6 @@
 	.scrollcontent {width: 2200px;}
 	
 </style>
-
-<script type="text/javascript">
-
-	function allCheck(allCheck)  {
-		  const checkboxes 
-		       = document.getElementsByName('check');
-		  
-		  checkboxes.forEach((checkbox) => {
-		    checkbox.checked = allCheck.checked;
-		  })
-		}
-</script>
 	
 </head>
 <body>
@@ -154,12 +142,15 @@
 			</div>
 		</form>
 	</div>	
+			<button id="excelBtn">Excel</button>
 			<button id="searchBtn">검색</button>
+			<button id="initBtn">검색결과 초기화</button>
 	
+		
 	<div class="scrollwrap" id="table">
 		<table class="scrollcontent" id="list">
 			<tr>
-				<th><input type="checkbox" name="check" value="allcheck" onclick="allCheck(this)"></th>
+				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
 				<th>주문일</th>
 				<th>주문번호</th>
 				<th>상품코드</th>
@@ -181,10 +172,10 @@
 </tr>
 		<c:forEach var="item" items="${orderStatusList}">
 			<tr class="itemRow">
-				<td><input type="checkbox" name="check"></td>
+				<td><input type="checkbox" name="checkRow" value="${item.orderNo }"></td>
 				<td>${item.orderdate }</td>
-				<td>${item.orderNo }</td>
-				<td>${item.productCd }</td>
+				<td><input type="hidden" value="${item.orderNo }">${item.orderNo }</td>
+				<td><input type="hidden" value="${item.productCd }">${item.productCd }</td>
 				<td>${item.pname }</td>
 				<td>${item.requestqty }</td>
 				<td>${item.price }</td>
@@ -219,6 +210,25 @@
 </body>
 
 <script type="text/javascript">
+	function callView(request) {
+		var addr = request;
+	
+		var ajaxOption = {
+			url : request,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
+	
+	document.querySelector("#initBtn").addEventListener("click",  function(){callView('orderStatus.do')});
+	
 	
 	function search() {
 		const keyword = {
@@ -255,6 +265,61 @@
 	}
 	
 	document.querySelector("#searchBtn").addEventListener("click", search);
+	
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
+	}
+	
+	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	
+	
+	function excel() {
+		
+		let checkRow = new Array();
+		
+		$( "input[name='checkRow']:checked" ).each (function (){
+			 let thisRow = $(this).closest('tr');
+	/* 		 
+			orderNo = thisRow.find('td:eq(2)').find('input').val();
+			productCD = thisRow.find('td:eq(3)').find('input').val();
+			  */
+			 const item = {
+						orderNo : thisRow.find('td:eq(2)').find('input').val(),	
+						productCd : thisRow.find('td:eq(3)').find('input').val()
+					}
+			 
 
+			 checkRow.push(item);
+		
+		});
+		
+		  
+		 console.log(checkRow);
+		 
+		 $.ajax({
+			  url : 'excelDown.do',
+			  method : 'post',
+			  traditional : true,
+			  data : {
+				  items : JSON.stringify(checkRow)
+			  },
+			  
+			  success : function(result) {
+				alert("엑셀다운완료?!");
+				
+			}, error: function (xhr, status, error) {
+				console.log("error");
+			} 
+		 });
+		  
+	}
+	
+	document.querySelector("#excelBtn").addEventListener("click", excel);
+	
+	
 </script>
 </html>

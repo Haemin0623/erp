@@ -143,4 +143,17 @@
 		order by h.orderdate desc , h.order_no asc
 			
 	</select> 
+	<select id="listForExcel" parameterType="orderHead" resultType="orderHead">
+		select ss.*,e.*, e.ename auth, b.*, p.*,c.* from (select distinct oi.*, oh.buyer_cd, oh.orderdate, oh.employee_cd empCd, oh.reason, oh.status, oh.statusdate, oh.signemp_cd signCd, oh.del from order_item oi, order_head oh 
+		    where oh.order_no=oi.order_no and oi.product_cd=#{productCd} and oi.order_no=#{orderNo}) ss, 
+		    
+		    m_employee e,
+		    m_buyer b,
+		   m_country c,
+		    m_product p
+		    where signCd = e.employee_cd(+) 
+		        and ss.buyer_cd=b.buyer_cd 
+		        and ss.product_cd=p.product_cd 
+		        and c.country_cd=b.country_cd
+	</select>
 </mapper>
