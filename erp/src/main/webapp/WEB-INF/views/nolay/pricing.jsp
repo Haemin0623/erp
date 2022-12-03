@@ -10,7 +10,7 @@
 <style type="text/css">
 
 	.pricingPage {
-		margin-left: 300px;
+		margin-left: 250px;
 	}
 	.menuName {
 /* 		align-content: center; */
