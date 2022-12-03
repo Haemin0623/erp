@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.so.erp.model.Buyer;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Pricing;
+import com.so.erp.model.Product;
 import com.so.erp.service.PricingService;
 
 import net.sf.json.JSONArray;
@@ -152,9 +154,38 @@ public class PricingController {
 		pricing.setBuyerCd(buyerCd);
 		pricing.setProductCd(productCd);
 		
-		int price = prs.getPrice(pricing);
+		int price = 0;
+		try {
+			price = prs.getPrice(pricing);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			price = -123;
+			
+		}
 		
 		return price;
+	}
+	
+	@RequestMapping("getPricingProductList")
+	@ResponseBody
+	public String[] getPricingProductList(String buyerCd) {
+		System.out.println(buyerCd);
+		
+		List<Product> list = prs.getProductList(buyerCd);
+		String[] productList = new String[list.size()];
+		int i = 0;
+		
+		for (Product product : list) {
+			String code = product.getProductCd() +"(" + product.getPname() + ")";
+		
+			productList[i] = code;
+			i++;
+		}
+		
+		System.out.println(Arrays.toString(productList));
+		
+		
+		return productList;
 	}
 	
 }

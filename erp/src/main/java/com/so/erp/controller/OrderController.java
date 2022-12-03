@@ -507,7 +507,6 @@ public class OrderController {
 		return result;
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping("getOrderCount")
 	@ResponseBody
 	public String getOrderCount(String orderNo) {

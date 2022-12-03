@@ -9,6 +9,10 @@
 
 <style type="text/css">
 
+	input:disabled {
+		background: red;
+	}
+
 	#container {
 		margin-left: 50px;
 	}
@@ -121,11 +125,18 @@
 		border: 1px solid;
 	}
 	
+	
 	.sumo {
 		color : black;
 	}
 	li.opt {
 		color : black;
+	}
+	
+	
+	.fixed {
+		position: sticky;
+		top: 0;
 	}
 	
 	
@@ -198,6 +209,7 @@
 			
 		</form>
 		<button id="searchBtn">검색</button>
+		<button id="initBtn">검색결과 초기화</button>
 	</div>
 	<p>
 	<p>
@@ -213,7 +225,7 @@
 	<div id="table">
 		<table id="list">
 			<tr>
-				<th>
+				<th class="fixed">
 					<c:if test="${orderHead.del =='Y'}">
 						<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
 					</c:if>
@@ -221,13 +233,13 @@
 						<input type="checkbox" name="checkAll" id="th_checkAll">
 					</c:if>
 				</th>
-				<th>주문번호</th>
-				<th>고객코드</th>
-				<th>신청일</th>
-				<th>신청인</th>
-				<th>상태</th>
-				<th>상태변경일</th>
-				<th>버튼</th>
+				<th class="fixed">주문번호</th>
+				<th class="fixed">고객코드</th>
+				<th class="fixed">신청일</th>
+				<th class="fixed">신청인</th>
+				<th class="fixed">상태</th>
+				<th class="fixed">상태변경일</th>
+				<th class="fixed">버튼</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow">
@@ -240,10 +252,10 @@
 						</c:if>
 					</td>
 					<td>${head.orderNo }<input type="hidden" value="${head.orderNo }"> </td>
-					<td class="editable">${head.buyerCd }</td>
-					<td class="editable">${head.orderdate }</td>
-					<td class="editable">${head.employeeCd }</td>
-					<td class="editable"><input type="hidden" value="${head.status }">${head.status }</td>
+					<td>${head.buyerCd }</td>
+					<td>${head.orderdate }</td>
+					<td>${head.employeeCd }</td>
+					<td ><input type="hidden" value="${head.status }">${head.status }</td>
 					<td><input type="hidden" value="${head.reason }">${head.statusdate }</td>
 					<td>
 						<c:if test="${head.status == '승인대기'}">
@@ -304,9 +316,6 @@
 					상품코드
 					<select name="productCd" class="sumo" id="productCd">
 						<option value=""></option>
-						<c:forEach var="product" items="${productEx }">
-							<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
-						</c:forEach>
 					</select>
 					<br>
 					수량<input type="number" name="requestqty"><br>
@@ -318,20 +327,24 @@
 				<div id="addItemDiv">
 				
 					<table id="addItemTable">
-						<tr>
-							<th>상품코드</th>
-							<th>수량</th>
-							<th>판매가</th>
-							<th>총액</th>
-							<th>납품요청일</th>
-							<th>비고</th>
-							<th>삭제</th>
-						</tr>
+						<thead>
+							<tr>
+								<th>상품코드</th>
+								<th>수량</th>
+								<th>판매가</th>
+								<th>총액</th>
+								<th>납품요청일</th>
+								<th>비고</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>						
+						</tbody>
 					</table>
 				
 					
 					<button id="insertOrder">등록</button>
-					
+					<button id="reset">초기화</button>
 					 
 				</div>
 				
@@ -371,10 +384,11 @@
 		});
 	}
 	
+	// 	검색초기화
+	document.querySelector("#initBtn").addEventListener("click",  function(){callView('order.do')});
+	
 	function changeTable() {
-		document.querySelector('#orderdate').setAttribute("disabled", "disabled");
-		document.querySelector('#buyerCd').setAttribute("disabled", "disabled");
-		
+		const orderdate = frm.orderdate.value;
 		const productCd = frm.productCd.value;
 		const requestqty = frm.requestqty.value;
 		const price = frm.price.value;
@@ -382,12 +396,12 @@
 		const requestdate = frm.requestdate.value;
 		const remark = frm.remark.value;
 		
-		if (productCd == '' || requestqty == '' || price == '' || 
+		if (orderdate == '' || productCd == '' || requestqty == '' || price == '' || 
 				amount == '' || requestdate == '' || remark == ''){
 			alert('값을 채워넣어주세요');
 		} else {
 			
-			$('#addItemTable').append(
+			$('#addItemTable > tbody').append(
 					"<tr>" +
 						"<td>" + productCd + "</td>" +
 						"<td>" + requestqty + "</td>" +
@@ -402,6 +416,9 @@
 			frm.requestqty.value = '';
 			frm.price.value = '';
 			frm.remark.value = '';
+			
+			document.querySelector('#orderdate').setAttribute("disabled", "disabled");
+			$('select#buyerCd')[0].sumo.disable();
 			
 		}
 		
@@ -419,7 +436,6 @@
 		const table = document.querySelector('#addItemTable');
 		const rows = table.getElementsByTagName("tr");
 		const tableLength = table.rows.length-1;
-		console.log(rows);
 		
 		const head = {
 			orderNo: frm.orderNo.value,
@@ -443,11 +459,7 @@
 				requestdate: cells[4].firstChild.data,
 				remark: cells[5].firstChild.data
 			};
-			console.log('야호');
-			console.log(items[i]);
 		};
-		
-		console.log(items);
 		
 		$.ajax({
 		     method: 'post',
@@ -488,7 +500,6 @@
 			del : searchBoxx.del.value,
 			window : '주문관리'
 		}
-		console.log(keyword);
 		
 		$.ajax({
 		     method: 'post',
@@ -577,7 +588,6 @@ document.querySelector("#searchBtn").addEventListener("click", search);
 				
 			}, error : function(error) {
 					alert("error"+error);
-					console.log("에러");
 			}
 		})
 	});
@@ -627,94 +637,6 @@ document.querySelector("#searchBtn").addEventListener("click", search);
 	}
 </script>
 
-<!-- 테이블 요소 더블클릭 하면 수정 가능 input으로 변경 -->
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게). 새로불러오면서 다시 설정하므로 변수 설정위치도 중요
-	
-    $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
-     	 initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-         var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
-         
-         
-         
-         $(this).removeClass("editable")
-         $(this).html(input);
-         $('#focus').focus();
-         
-         $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
-             var key=e.which;
-         
-             if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
-                 var value=$(this).val(); // 새로 입력한 값을 value에 
-                 var td=$(this).parent("td"); 
-                 td.html(value);
-                 td.addClass("editable");
-             
-                 // 테이블의 Row 클릭시 값 가져오기
- 	            $("#list tr").keypress(function(){    
- 	
- 		            const str = ""
- 		            const tdArr = new Array(); // 배열 선언
- 		             
- 		             // 현재 클릭된 Row(<tr>)
- 		            const tr = $(this);
- 		            const tdd = tr.children();
- 		             
- 		             // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
- 		             console.log("클릭한 Row의 모든 데이터 : "+tr.text());
- 		             
- 		             // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
- 		             tdd.each(function(i){
-  		             tdArr.push(tdd.eq(i).text());
- 		             });
- 		             
- 		             console.log("배열에 담긴 값 : "+tdArr);
- 		             
- 		             // td.eq(index)를 통해 값을 가져올 수도 있다.
- 		             orderNo = tdd.eq(1).text();
- 		             buyerCd = tdd.eq(2).text();
- 		             orderdate = tdd.eq(3).text();
- 		             employeeCd = tdd.eq(4).text();
- 		             
- 		             console.log(buyerCd);
- 	             
-               $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-   			     method: 'post', 
-   			     url: 'orderUpdate.do', 
-   			     traditional: true,
-   			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-   			    	orderNo: orderNo,
-   			    	buyerCd: buyerCd,
-   			    	orderdate: orderdate,
-   			    	employeeCd: employeeCd
-   			     },
-   			     success: function (result) { //성공했을떄 호출할 콜백을 지정
-   			    	 console.log(result);
-   			        if (result) {
-   						alert("수정성공");
-   						search(); // 수정후에도 검색된 페이지 유지하게
-   			        } else {
-   			        	alert("수정실패");
-   			        }
-   				}
-   		   	});
- 	            });
-            	}
-         });
-     });
-
-     $(document).on("blur", ".input-data", function() { //그 칸에서 포커스out 되면 발생하는 함수
-         alert(initValue);
-         var td=$(this).parent("td"); // 해당 td를 td에 저장
-         $(this).remove();
-         td.html(initValue);
-         td.addClass("editable")
-         });
-});
-</script>
-
 <!-- 주문번호 생성 -->
 <script type="text/javascript">
 
@@ -731,11 +653,8 @@ $(document).ready(function() {
 						insertorderdate.charAt(8) + insertorderdate.charAt(9);
 		insertorderNo = insertorderdate + insertbuyerCd;
 		frm.orderNo.value = insertorderNo;
-		console.log(insertorderNo.length);
 		
 		if(insertorderNo.length == 12){
-			console.log('조건');
-			console.log(insertorderNo);
 			const count = getOrderCount(insertorderNo);
 			insertorderNo = insertorderNo + count;
 			frm.orderNo.value = insertorderNo;
@@ -747,11 +666,8 @@ $(document).ready(function() {
 		insertbuyerCd = frm.buyerCd.value;
 		insertorderNo = insertorderdate + insertbuyerCd
 		frm.orderNo.value = insertorderNo;
-		console.log(frm.orderNo.value.length);
 		
 		if(insertorderNo.length == 12){
-			console.log('조건');
-			console.log(insertorderNo);
 			const count = getOrderCount(insertorderNo);
 			insertorderNo = insertorderNo + count;
 			frm.orderNo.value = insertorderNo;
@@ -759,7 +675,6 @@ $(document).ready(function() {
 		
 		insertproductCd = frm.productCd.value;
 		
-		console.log('되냐?' + insertbuyerCd + insertproductCd);
 		if(insertproductCd != "" && insertbuyerCd != ""){
 			frm.price.value = getPrice(insertbuyerCd, insertproductCd);
 		}
@@ -768,7 +683,6 @@ $(document).ready(function() {
 	$('#productCd').on("change", function() {
 		insertproductCd = frm.productCd.value;
 		
-		console.log('되냐?' + insertbuyerCd + insertproductCd);
 		if(insertproductCd != "" && insertbuyerCd != ""){
 			frm.price.value = getPrice(insertbuyerCd, insertproductCd);
 		}
@@ -803,7 +717,13 @@ $(document).ready(function() {
 		    	 productCd: productCd
 		     },
 		     success: function (result) {
-		    	 price = result;
+		    	 if (result == -123){
+		    		alert('계약기간이 지났습니다.');
+		    		price = 0;
+		    	 } else {
+			    	 price = result;		    		 
+		    	 }
+		    	 
 			}
 	   	});
 		return price;
@@ -834,8 +754,6 @@ $(document).ready(function() {
 		    checkRow.push($(this).val()) ;
 		  });
 		  
-		  console.log(checkRow);
-		  
 		  if(checkRow == ''){
 		    alert("삭제할 대상을 선택하세요.");
 		    return false;
@@ -853,7 +771,6 @@ $(document).ready(function() {
 			    		
 			    	}else
 			    		alert("삭제실패");
-					console.log(result);
 			    }
 		  });
 	};
@@ -883,8 +800,6 @@ function restoreAction(){
 	    checkRow.push($(this).val());
 	  });
 	  
-	  console.log(checkRow);
-	  
 	  if(checkRow == ''){
 	    alert("복원할 대상을 선택하세요.");
 	    return false;
@@ -902,12 +817,12 @@ function restoreAction(){
 		    		
 		    	}else
 		    		alert("복원실패");
-				console.log(result);
 		    }
 	  });
 };
 </script>
 
+<!-- 스모셀렉트 -->
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.sumo').SumoSelect({
@@ -919,9 +834,66 @@ $(document).ready(function() {
 	$('select.sumoEmp')[0].sumo.selectItem("${orderHead.employeeCd }");
 	
 	$('select.sumoProd')[0].sumo.selectItem("${orderHead.productCd }");
+	
 });
 
-	
 </script>
+
+<!-- 고객 코드 설정시 계약된(판매가마스터에 존재하는) 상품만 가져오기 -->
+<script type="text/javascript">
+	$('#buyerCd').on("change", function() {
+		const prod = $('select#productCd');
+		
+		console.log("지워져라~");
+		console.log($('select#productCd option').length);
+		var leng = $('select#productCd option').length
+		for (var i = 1; i < leng; i++) {
+			$('select#productCd')[0].sumo.remove(1);
+		}
+		
+		$.ajax({
+		    url : "getPricingProductList.do",
+		    type : "post",
+		    traditional : true,
+		    data : { 
+		    	buyerCd  : frm.buyerCd.value
+		    },		    
+		    success : function(result){
+		    	console.log("성공?");
+		    	console.log(result);
+		    	console.log(result.length);
+		    	for (var i = 0; i < result.length; i++) {
+		    		const codeName = result[i];
+		    		const code = result[i].split('(')[0];
+		    		console.log(code);
+		    		$('select#productCd')[0].sumo.add(code, result[i]);
+		    	}
+		    	
+		    }
+	  	});
+	});
+</script>
+
+<!-- 등록창 초기화 -->
+<script type="text/javascript">
+	$('#reset').on('click', function() {
+		frm.orderNo.value = '';
+		frm.orderdate.value = '';
+		document.querySelector('#orderdate').removeAttribute("disabled");
+		$('select#buyerCd')[0].sumo.enable();
+		$('select#buyerCd')[0].sumo.unSelectAll();
+		$('select#productCd')[0].sumo.unSelectAll();		
+		frm.requestqty.value = '';
+		frm.price.value = '';
+		frm.requestdate.value = '';
+		frm.remark.value = '';
+		
+		console.log($('#addItemTable').length);
+		$('#addItemTable > tbody').empty();
+		
+	});
+</script>
+
+
 
 </html>

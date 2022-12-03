@@ -2,7 +2,9 @@ package com.so.erp.service;
 
 import java.util.List;
 
+import com.so.erp.model.Buyer;
 import com.so.erp.model.Pricing;
+import com.so.erp.model.Product;
 
 public interface PricingService {
 
@@ -17,6 +19,8 @@ public interface PricingService {
 	int pricingUpdate(Pricing pricing);
 
 	int getPrice(Pricing pricing);
+
+	List<Product> getProductList(String buyerCd);
 
 
 }

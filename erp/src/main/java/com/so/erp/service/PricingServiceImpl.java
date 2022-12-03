@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.so.erp.dao.PricingDao;
+import com.so.erp.model.Buyer;
 import com.so.erp.model.Pricing;
+import com.so.erp.model.Product;
 
 @Service
 public class PricingServiceImpl implements PricingService {
@@ -42,6 +44,11 @@ public class PricingServiceImpl implements PricingService {
 	@Override
 	public int getPrice(Pricing pricing) {
 		return prd.getPrice(pricing);
+	}
+
+	@Override
+	public List<Product> getProductList(String buyerCd) {
+		return prd.getProductList(buyerCd);
 	}
 
 }
