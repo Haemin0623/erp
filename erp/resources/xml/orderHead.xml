@@ -24,60 +24,93 @@
 	</insert>
 	
 	<select id="search" parameterType="orderHead" resultType="orderHead">	
-	
-		select	distinct h.*
-		from	order_head h left outer join
-				order_item i
-		on		h.order_no = i.order_no
-		<where>
-			<if test="orderNo != null and orderNo != ''">
-				and h.order_no like '%' || #{orderNo} || '%'
-			</if>
-			<if test="buyerCd != null and buyerCd != 'All'">
-				and h.buyer_cd like '%' || #{buyerCd} || '%'
-			</if>
-			
-			
-			
-			<if test="orderFromDate != null or orderToDate != null">
-				<if test="orderFromDate == null">
-					and h.orderdate between '0001-01-01' and #{orderToDate}
-				</if>
-				<if test="orderToDate == null">
-					and h.orderdate between #{orderFromDate} and '9999-12-31'
-				</if>
-				<if test="orderFromDate != null and orderToDate != null">
-					and h.orderdate between #{orderFromDate} and #{orderToDate}
-				</if>
-			</if>
-			
-			
-			
-			<if test="employeeCd != null and employeeCd != 'All'">
-				and h.employee_cd like '%' || #{employeeCd} || '%'
-			</if>
-			<if test="status != null and status != 'null'">
-				and h.status = #{status}
-			</if>
-			<if test="productCd != null and productCd != 'All'">
-				and i.product_cd like '%' || #{productCd} || '%'
-			</if>
-			<if test="requestFromDate != null or requestToDate != null">				
-				<if test="requestFromDate == null">
-					and h.orderdate between '0001-01-01' and #{requestToDate}
-				</if>
-				<if test="requestToDate == null">
-					and h.orderdate between #{requestFromDate} and '9999-12-31'
-				</if>
-				<if test="requestFromDate != null and requestToDate != null">
-					and i.requestdate between #{requestFromDate} and #{requestToDate}
-				</if>				
-			</if>
-			<if test="del != 'All'">
-				and h.del = #{del}
-			</if>	
-		</where>
-		order by h.orderdate desc
+		select	*
+		from	(select a.*,
+						rowNum rn
+				from	(select	distinct h.*
+						from	order_head h left outer join
+								order_item i
+						on		h.order_no = i.order_no
+						<where>
+							<if test="orderNo != null and orderNo != ''">
+								and h.order_no like '%' || #{orderNo} || '%'
+							</if>
+							<if test="buyerCd != null and buyerCd != 'All'">
+								and h.buyer_cd like '%' || #{buyerCd} || '%'
+							</if><if test="orderFromDate != null or orderToDate != null">
+								<if test="orderFromDate == null">
+									and h.orderdate between '0001-01-01' and #{orderToDate}
+								</if>
+								<if test="orderToDate == null">
+									and h.orderdate between #{orderFromDate} and '9999-12-31'
+								</if>
+								<if test="orderFromDate != null and orderToDate != null">
+									and h.orderdate between #{orderFromDate} and #{orderToDate}
+								</if>
+							</if><if test="employeeCd != null and employeeCd != 'All'">
+								and h.employee_cd like '%' || #{employeeCd} || '%'
+							</if>
+							<if test="status != null and status != 'null'">
+								and h.status = #{status}
+							</if>
+							<if test="productCd != null and productCd != 'All'">
+								and i.product_cd like '%' || #{productCd} || '%'
+							</if>
+							<if test="requestFromDate != null or requestToDate != null">				
+								<if test="requestFromDate == null">
+									and h.orderdate between '0001-01-01' and #{requestToDate}
+								</if>
+								<if test="requestToDate == null">
+									and h.orderdate between #{requestFromDate} and '9999-12-31'
+								</if>
+								<if test="requestFromDate != null and requestToDate != null">
+									and i.requestdate between #{requestFromDate} and #{requestToDate}
+								</if>				
+							</if>
+							<if test="del != 'All'">
+								and h.del = #{del}
+							</if>	
+						</where>
+						order by
+							<if test="sortOrderDate == 1">
+								h.orderdate desc
+							</if>
+							<if test="sortOrderDate == 2">
+								h.orderdate asc
+							</if>
+							<if test="sortOrderNo == 1">
+								h.order_no desc
+							</if>
+							<if test="sortOrderNo == 2">
+								h.order_no asc
+							</if>
+							<if test="sortBuyerCd == 1">
+								h.buyer_cd desc
+							</if>
+							<if test="sortBuyerCd == 2">
+								h.buyer_cd asc
+							</if>
+							<if test="sortEmployeeCd == 1">
+								h.employee_cd desc
+							</if>
+							<if test="sortEmployeeCd == 2">
+								h.employee_cd asc
+							</if>
+							<if test="sortStatus == 1">
+								h.status desc
+							</if>
+							<if test="sortStatus == 2">
+								h.status asc
+							</if>
+							<if test="sortStatusDate == 1">
+								h.statusdate desc
+							</if>
+							<if test="sortStatusDate == 2">
+								h.statusdate asc
+							</if>
+						) a
+				)
+		where	rn between #{startRow} and #{endRow}
 	</select> 
 	
 	<select id="headEmpList" resultType="orderHead">
@@ -141,4 +174,51 @@
 				statusdate = sysdate
 		where	order_no = #{orderNo}
 	</update>
+	
+	<select id="getTotal" parameterType="orderHead" resultType="integer">
+		select	count(distinct h.order_no)
+		from	order_head h left outer join
+				order_item i
+		on		h.order_no = i.order_no
+		<where>
+			<if test="orderNo != null and orderNo != ''">
+				and h.order_no like '%' || #{orderNo} || '%'
+			</if>
+			<if test="buyerCd != null and buyerCd != 'All'">
+				and h.buyer_cd like '%' || #{buyerCd} || '%'
+			</if><if test="orderFromDate != null or orderToDate != null">
+				<if test="orderFromDate == null">
+					and h.orderdate between '0001-01-01' and #{orderToDate}
+				</if>
+				<if test="orderToDate == null">
+					and h.orderdate between #{orderFromDate} and '9999-12-31'
+				</if>
+				<if test="orderFromDate != null and orderToDate != null">
+					and h.orderdate between #{orderFromDate} and #{orderToDate}
+				</if>
+			</if><if test="employeeCd != null and employeeCd != 'All'">
+				and h.employee_cd like '%' || #{employeeCd} || '%'
+			</if>
+			<if test="status != null and status != 'null'">
+				and h.status = #{status}
+			</if>
+			<if test="productCd != null and productCd != 'All'">
+				and i.product_cd like '%' || #{productCd} || '%'
+			</if>
+			<if test="requestFromDate != null or requestToDate != null">				
+				<if test="requestFromDate == null">
+					and h.orderdate between '0001-01-01' and #{requestToDate}
+				</if>
+				<if test="requestToDate == null">
+					and h.orderdate between #{requestFromDate} and '9999-12-31'
+				</if>
+				<if test="requestFromDate != null and requestToDate != null">
+					and i.requestdate between #{requestFromDate} and #{requestToDate}
+				</if>				
+			</if>
+			<if test="del != 'All'">
+				and h.del = #{del}
+			</if>
+		</where>
+	</select>
 </mapper>

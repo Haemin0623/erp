@@ -31,6 +31,7 @@ import com.so.erp.model.Country;
 import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
+import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
@@ -72,9 +73,34 @@ public class OrderController {
 	@RequestMapping("order")
 	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
 		
-		System.out.println(orderHead.getStatus());
-		// List<OrderHead> headList = hs.list();
-		orderHead.setDel("N");
+		int rowPerPage = 10 ;
+		
+		if (orderHead.getRowPerPage() != 0) {
+			rowPerPage = orderHead.getRowPerPage();
+		} 
+		if (orderHead.getPageNum() == null || orderHead.getPageNum().equals("")) {
+			orderHead.setPageNum("1");
+		}
+		
+		orderHead.setDel("N");		
+		orderHead.setSortOrderNo(0);
+		orderHead.setSortBuyerCd(0);
+		orderHead.setSortOrderDate(1);
+		orderHead.setSortEmployeeCd(0);
+		orderHead.setSortStatus(0);
+		orderHead.setSortStatusDate(0);
+		
+		int currentPage = Integer.parseInt(orderHead.getPageNum());
+		int total = hs.getTotal(orderHead);
+		
+		orderHead.pagingBean(currentPage, rowPerPage, total);
+		
+		int startRow = (currentPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		orderHead.setStartRow(startRow);
+		orderHead.setEndRow(endRow);
+		
+		
 		List<OrderHead> headList = hs.search(orderHead);
 		
 		exData(model);
@@ -153,6 +179,32 @@ public class OrderController {
 				orderHead.setRequestToDate(date);
 			}
 			System.out.println(orderHead.getRequestToDate());
+			
+			int sortOrderNo = Integer.valueOf((String) keywordObj.get("sortOrderNo"));
+			orderHead.setSortOrderNo(sortOrderNo);
+			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
+			orderHead.setSortBuyerCd(sortBuyerCd);
+			int sortOrderDate = Integer.valueOf((String) keywordObj.get("sortOrderDate"));
+			orderHead.setSortOrderDate(sortOrderDate);
+			int sortEmployeeCd = Integer.valueOf((String) keywordObj.get("sortEmployeeCd"));
+			orderHead.setSortEmployeeCd(sortEmployeeCd);
+			int sortStatus = Integer.valueOf((String) keywordObj.get("sortStatus"));
+			orderHead.setSortStatus(sortStatus);
+			int sortStatusDate = Integer.valueOf((String) keywordObj.get("sortStatusDate"));
+			orderHead.setSortStatusDate(sortStatusDate);
+			
+			
+			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			int total = hs.getTotal(orderHead);
+			
+			orderHead.pagingBean(currentPage, rowPerPage, total);
+			
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			orderHead.setStartRow(startRow);
+			orderHead.setEndRow(endRow);
+			
 			
 			List<OrderHead> headList = hs.search(orderHead);
 			System.out.println(headList.size());

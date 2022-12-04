@@ -71,4 +71,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public void orderRestore(String orderNo) {
 		head.orderRestore(orderNo);
 	}
+
+	@Override
+	public int getTotal(OrderHead orderHead) {
+		return head.getTotal(orderHead);
+	}
 }

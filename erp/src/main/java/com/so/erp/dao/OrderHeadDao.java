@@ -28,4 +28,6 @@ public interface OrderHeadDao {
 
 	void orderRestore(String orderNo);
 
+	int getTotal(OrderHead orderHead);
+
 }

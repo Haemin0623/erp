@@ -149,7 +149,15 @@
 <div id="container">	
 	<h1>주문 관리</h1>
 	<div id="searchBox">
-		<form name="searchBoxx">		
+		<form name="searchBoxx">	
+			<!-- 정렬용 -->
+			<input type="hidden" name="sortOrderNo" value="${orderHead.sortOrderNo }">
+			<input type="hidden" name="sortBuyerCd" value="${orderHead.sortBuyerCd }">
+			<input type="hidden" name="sortOrderDate" value="${orderHead.sortOrderDate }">
+			<input type="hidden" name="sortEmployeeCd" value="${orderHead.sortEmployeeCd }">
+			<input type="hidden" name="sortStatus" value="${orderHead.sortStatus }">
+			<input type="hidden" name="sortStatusDate" value="${orderHead.sortStatusDate }">
+				
 			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
 			고객코드
 			<select name="buyerCd" class="sumoBuy sumo">
@@ -222,6 +230,28 @@
 		<button type="button" onclick="restoreAction()">복원</button>
 	</c:if>
 	
+	<div id="page">
+		<form name="itemLimit">
+			<select name="rowPerPage" id="limit">
+				<option value="10" <c:if test="${orderHead.rowPerPage == 10 }">selected="selected"</c:if> >
+					10개씩보기
+				</option>
+				<option value="50" <c:if test="${orderHead.rowPerPage == 50 }">selected="selected"</c:if> >
+					50개씩보기
+				</option>
+				<option value="100" <c:if test="${orderHead.rowPerPage == 100 }">selected="selected"</c:if> >
+					100개씩보기
+				</option>
+				<option value="300" <c:if test="${orderHead.rowPerPage == 300 }">selected="selected"</c:if> >
+					300개씩보기
+				</option>
+				<option value="500" <c:if test="${orderHead.rowPerPage == 500 }">selected="selected"</c:if> >
+					500개씩보기
+				</option>
+			</select>
+		</form>
+	</div>
+	
 	<div id="table">
 		<table id="list">
 			<tr>
@@ -233,12 +263,12 @@
 						<input type="checkbox" name="checkAll" id="th_checkAll">
 					</c:if>
 				</th>
-				<th class="fixed">주문번호</th>
-				<th class="fixed">고객코드</th>
-				<th class="fixed">신청일</th>
-				<th class="fixed">신청인</th>
-				<th class="fixed">상태</th>
-				<th class="fixed">상태변경일</th>
+				<th class="fixed" id="sortOrderNo">주문번호</th>
+				<th class="fixed" id="sortBuyerCd">고객코드</th>
+				<th class="fixed" id="sortOrderDate">신청일</th>
+				<th class="fixed" id="sortEmployeeCd">신청인</th>
+				<th class="fixed" id="sortStatus">상태</th>
+				<th class="fixed" id="sortStatusDate">상태변경일</th>
 				<th class="fixed">버튼</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
@@ -276,22 +306,34 @@
 		</table>
 	</div>
 	
+	<div id="pageBtn">
+		<c:if test="${orderHead.currentPage != 1}">
+			<h6 id="prev">이전</h6>
+		</c:if>
+		<form name="paging">
+		 	<input type="number" name="currentPage" value="${orderHead.currentPage }" id="currentPage"> / ${orderHead.totalPage }
+		</form>
+		<c:if test="${orderHead.currentPage != orderHead.totalPage}">
+			<h6 id="next">다음</h6>
+		</c:if>
+	</div>
+	
 	<div class="statusWindow">
-			<table id="statusList">
-				<tr>
-					<th>No.</th>
-					<th>상품코드</th>
-					<th>상품명</th>
-					<th>주문수량</th>
-					<th>납품요청일</th>
-					<th>가격</th>
-					<th>합계</th>
-					<th>비고</th>
-				</tr>
-				<tbody id="statusTable"/>
-				<tbody id="area"/>
-			</table>
-		</div>
+		<table id="statusList">
+			<tr>
+				<th>No.</th>
+				<th>상품코드</th>
+				<th>상품명</th>
+				<th>주문수량</th>
+				<th>납품요청일</th>
+				<th>가격</th>
+				<th>합계</th>
+				<th>비고</th>
+			</tr>
+			<tbody id="statusTable"/>
+			<tbody id="area"/>
+		</table>
+	</div>
 	
 
 
@@ -498,6 +540,18 @@
 			requestFromDate : searchBoxx.requestFromDate.value,
 			requestToDate : searchBoxx.requestToDate.value,
 			del : searchBoxx.del.value,
+			
+			sortOrderNo : searchBoxx.sortOrderNo.value,
+			sortBuyerCd : searchBoxx.sortBuyerCd.value,
+			sortOrderDate : searchBoxx.sortOrderDate.value,
+			sortEmployeeCd : searchBoxx.sortEmployeeCd.value,
+			sortStatus : searchBoxx.sortStatus.value,
+			sortStatusDate : searchBoxx.sortStatusDate.value,
+			
+			rowPerPage : itemLimit.rowPerPage.value,
+			
+			currentPage : paging.currentPage.value,
+			
 			window : '주문관리'
 		}
 		
@@ -516,7 +570,7 @@
 
 	};
 
-document.querySelector("#searchBtn").addEventListener("click", search);
+	document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
 
 
@@ -891,6 +945,109 @@ $(document).ready(function() {
 		console.log($('#addItemTable').length);
 		$('#addItemTable > tbody').empty();
 		
+	});
+</script>
+
+<!-- 정렬 -->
+<script type="text/javascript">
+	function initSort() {
+		searchBoxx.sortOrderNo.value = 0;
+		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortOrderDate.value = 0;
+		searchBoxx.sortEmployeeCd.value = 0;
+		searchBoxx.sortStatus.value = 0;
+		searchBoxx.sortStatusDate.value = 0;
+	}
+
+	$('#sortOrderNo').on('click', function() {
+		if (searchBoxx.sortOrderNo.value == 0 || searchBoxx.sortOrderNo.value == 2) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 1;			
+		} else if (searchBoxx.sortOrderNo.value == 1) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 2;
+		}		
+		search();
+	});
+	$('#sortBuyerCd').on('click', function() {
+		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 1;			
+		} else if (searchBoxx.sortBuyerCd.value == 1) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortOrderDate').on('click', function() {
+		if (searchBoxx.sortOrderDate.value == 0 || searchBoxx.sortOrderDate.value == 2) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 1;		
+		} else if (searchBoxx.sortOrderDate.value == 1) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 2;
+		}		
+		search();
+	});
+	$('#sortEmployeeCd').on('click', function() {
+		if (searchBoxx.sortEmployeeCd.value == 0 || searchBoxx.sortEmployeeCd.value == 2) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 1;			
+		} else if (searchBoxx.sortEmployeeCd.value == 1) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatus').on('click', function() {
+		if (searchBoxx.sortStatus.value == 0 || searchBoxx.sortStatus.value == 2) {
+			initSort();
+			searchBoxx.sortStatus.value = 1;			
+		} else if (searchBoxx.sortStatus.value == 1) {
+			initSort();
+			searchBoxx.sortStatus.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatusDate').on('click', function() {
+		if (searchBoxx.sortStatusDate.value == 0 || searchBoxx.sortStatusDate.value == 2) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;			
+		} else if (searchBoxx.sortStatusDate.value == 1) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 2;
+		}		
+		search();
+	});
+</script>
+
+<!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${orderHead.totalPage }') {
+			paging.currentPage.value = ${orderHead.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	
+	$('#currentPage').keydown(function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();
+			search();
+		}
 	});
 </script>
 

@@ -70,4 +70,9 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 		sst.update("headns.orderRestore", orderNo);
 		
 	}
+
+	@Override
+	public int getTotal(OrderHead orderHead) {
+		return sst.selectOne("headns.getTotal", orderHead);
+	}
 }

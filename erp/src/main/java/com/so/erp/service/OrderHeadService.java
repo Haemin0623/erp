@@ -28,4 +28,6 @@ public interface OrderHeadService {
 
 	void orderRestore(String orderNo);
 
+	int getTotal(OrderHead orderHead);
+
 }
