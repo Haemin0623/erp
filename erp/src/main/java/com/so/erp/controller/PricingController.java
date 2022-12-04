@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
@@ -59,6 +60,88 @@ public class PricingController {
 		model.addAttribute("num", num);
 		model.addAttribute("rowPerPage", rowPerPage);
 		return "nolay/pricing";
+	}
+	
+	
+	@RequestMapping("pricingSearch")
+	public String pricingSearch(Model model, String keyword, Pricing pricing, String pageNum, String page) {
+		System.out.println("1");
+		
+		//페이징
+			int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+			if (page == null || page == "") {
+				rowPerPage = 10;
+			}else rowPerPage = Integer.parseInt(page);
+			if (pageNum == null || pageNum.equals("")) pageNum = "1";
+			int currentPage = Integer.parseInt(pageNum);
+			int total = prs.getTotal();
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage -1;
+			int num = total - startRow + 1;
+			pricing.setStartRow(startRow);
+			pricing.setEndRow(endRow);
+			PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
+		
+		try {
+			
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(keyword);
+			JSONObject keywordObj = JSONObject.fromObject(obj);
+			
+//			Pricing pricing = new Pricing();
+			
+			String buyerCd = (String) keywordObj.get("buyerCd");
+			pricing.setBuyerCd(buyerCd);
+			
+			String productCd = (String) keywordObj.get("productCd");
+			pricing.setProductCd(productCd);
+			
+			int startPrice = Integer.valueOf((String)keywordObj.get("startPrice"));
+			pricing.setStartPrice(startPrice);
+			System.out.println(startPrice);
+			int endPrice = Integer.valueOf((String)keywordObj.get("endPrice"));
+			pricing.setEndPrice(endPrice);
+			System.out.println(endPrice);
+			String validDate = (String) keywordObj.get("validDate");
+			if (validDate != null && !validDate.equals("") ) {
+				Date date = Date.valueOf(validDate);
+				pricing.setValidDate(date);
+			}
+			int discountrate = Integer.valueOf((String)keywordObj.get("discountrate"));
+			pricing.setDiscountrate(discountrate);
+			
+			String currency = (String) keywordObj.get("currency");
+			pricing.setCurrency(currency);
+			
+			String del = (String) keywordObj.get("del");
+			pricing.setDel(del);
+			
+			
+			
+			
+			List<Pricing> searchList = prs.search(pricing);
+			System.out.println(searchList.size());
+			
+			for (Pricing pricing1 : searchList) {
+				System.out.println(pricing1.toString());
+			}
+			
+			for (Pricing pricing1 : searchList) {
+				pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
+			}
+			
+			model.addAttribute("pricingList", searchList);
+//			model.addAttribute("pricingList", pricing);
+			model.addAttribute("pb", pb);
+			model.addAttribute("num", num);
+			model.addAttribute("rowPerPage", rowPerPage);
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return "nolay/pricing";
+		
+		
 	}
 	
 	

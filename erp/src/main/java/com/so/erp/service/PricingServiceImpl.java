@@ -50,5 +50,9 @@ public class PricingServiceImpl implements PricingService {
 	public List<Product> getProductList(String buyerCd) {
 		return prd.getProductList(buyerCd);
 	}
+		
+	public List<Pricing> search(Pricing pricing) {
+		return prd.search(pricing);
+	}
 
 }

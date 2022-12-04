@@ -5,50 +5,38 @@
 
 
 	<select id="pricingList" parameterType="pricing" resultType="pricing">
-		select * from (select a.*, rowNum rn from (select * from m_pricing where
-		
-			<if test="buyerCd != null and buyerCd != ''" >
-				buyer_cd like '%'||#{buyerCd}||'%'
-			</if>
-			<trim prefixOverrides="and"></trim>
-			<if test="productCd != null and productCd != ''">
-				product_cd like '%'||#{productCd}||'%'
-			</if>
-			<trim prefixOverrides="and"></trim>
-			<if test="price != 0">
-				price between #{startPrice} and #{endPrice}
-			</if>
-			<trim prefixOverrides="and"></trim>
-			<if test="validDate != null and validDate != ''">
-				startdate <![CDATA[<=]]> #{validDate} and enddate <![CDATA[>=]]> #{validDate}
-			</if>
-			<trim prefixOverrides="and"></trim>
-			<if test="discountrate != 0">
-				discountrate = #{discountrate}
-			</if>
-			<trim prefixOverrides="and"></trim>
-			<if test="currency != null and currency != ''">
-				currency = #{currency}
-			</if>
-			<trim prefixOverrides="and"></trim>
-		
-		del='N' order by adddate desc
-		)a) where rn between #{startRow} and #{endRow} 
+		select	*
+		from	(select	a.*,
+						rowNum rn
+				from	(select	*
+						from	m_pricing
+						where	del='N'
+						order by adddate desc)a
+				)
+		where	rn between #{startRow} and #{endRow} 
 	</select>
+	
+	
 	
 	<insert id="insert" parameterType="pricing">
 		insert into m_pricing values (#{buyerCd}, #{productCd}, #{startdate}, #{enddate}, 
 			#{price}, #{currency}, #{discountrate}, sysdate, 'N', null)
 	</insert>
 	
+	
+	
 	<select id="getTotal" resultType="Integer">
 		select count(*) from m_pricing where del='N'
 	</select>
+	
+	
 	
 	<update id="delete" parameterType="pricing">
 		update m_pricing set del='Y', statusdate = sysdate 
 		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
 	</update>
+	
+	
 	
 	<update id="update" parameterType="pricing">
 		update m_pricing set 
@@ -60,6 +48,8 @@
 			statusdate = sysdate
 		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
 	</update>
+	
+	
 	
 	<select id="getPrice" parameterType="pricing" resultType="integer">
 		select	price
@@ -77,6 +67,39 @@
 		where	pd.product_cd = pr.product_cd
 			and pr.buyer_cd = #{buyerCd}
 	</select>
+	
+	<select id="search" parameterType="pricing" resultType="pricing">
+		select	*
+		from	m_pricing
+		<where>
+			<if test="buyerCd != null and buyerCd != 'All'">
+				and buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="productCd != null and productCd != 'All'">
+				and product_cd like '%' || #{productCd} || '%'
+			</if>
+			<if test="startPrice != 0 and endPrice != 0">
+				and price between #{startPrice} and #{endPrice}
+			</if>
+			
+			<if test="validDate != null">
+					and startdate <![CDATA[<=]]> #{validDate} 
+					and enddate <![CDATA[>=]]> #{validDate}
+			</if>
+			
+			<if test="discountrate != null and discountrate != ''">
+				and discountrate = #{discountrate}
+			</if>
+			<if test="currency != null and currency != ''">
+				and currency = #{currency}
+			</if>
+			<if test="del != 'All'">
+				and del = #{del}
+			</if>
+		</where>
+		order by adddate desc
+	</select>
+	
 	
 	
 	

@@ -50,5 +50,9 @@ public class PricingDaoImpl implements PricingDao {
 	public List<Product> getProductList(String buyerCd) {
 		return sst.selectList("pricingns.getProductList", buyerCd);
 	}
+		
+	public List<Pricing> search(Pricing pricing) {
+		return sst.selectList("pricingns.search", pricing);
+	}
 
 }

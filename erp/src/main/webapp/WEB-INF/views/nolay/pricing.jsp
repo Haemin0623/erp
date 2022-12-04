@@ -47,7 +47,7 @@
 		margin-left: 20px;
 	}
 	
-	.submitBtn {
+	.searchBtn {
 		background: navy;
 		color: white;
 		cursor: pointer;
@@ -208,6 +208,13 @@
 	    text-decoration: none;
 	}
 	/* 페이징 끝 */
+	
+	.sumo {
+		color : black;
+	}
+	li.opt {
+		color : black;
+	}
 </style>
 
 <script type="text/javascript">
@@ -241,28 +248,59 @@ function changeContent(data) {
 	
 	<!-- 검색 박스 -->
 	<div class="searchBox">
-		<form action="pricing.do?buyerCd=${buyerCd }&productCd=${productCd}&startPrice=${startPrice}&endPrice=${endPrice}&validDate=${validDate}&discountrate=${discountrate}" id="searchList">
-			<p>고객코드<input type="text" name="buyerCd" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				상품코드<input type="text" name="productCd" class="keyword"></p><p>
-			<p>판매가<input type="number" name="startPrice" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;~
-			<input type="number" name="endPrice" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				유효기간<input type="date" name="validDate" class="keyword"></p><p>
-				할인율<input type="number" name="discountrate" class="keyword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="currency" class="keyword">
-<!-- 					<option>통화단위 선택</option> -->
-					<option value="won">원(₩)</option>
-					<option value="dollar">달러($)</option>
-					<option value="yen">앤(¥)</option>
-					<option value="yuan">위안(元)</option>
+		<form name="searchBoxx">
+			고객코드
+			<select name="buyerCd" class="keyword sumo sumoBuy">
+				<option value="All"></option>
+				<c:forEach var="pricing" items="${pricingList }">
+					<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+				</c:forEach>
+			</select>
+			상품코드
+			<select name="productCd" class="keyword sumo sumoProd">
+				<option value="All"></option>
+				<c:forEach var="pricing" items="${pricingList }">
+					<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+				</c:forEach>
+			</select>
+			판매가
+			<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword">~
+					<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword">
+			기준일
+			<input type="date" name="validDate" value="${pricing.validDate }">
+			할인율
+			<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword">
+			통화단위선택
+				<select name="currency" class="keyword">
+					<option value="원(₩)" <c:if test="${pricing.currency == '원(₩)'}">selected="selected"</c:if>>원(₩)</option>
+					<option value="달러($)" <c:if test="${pricing.currency == '달러($)'}">selected="selected"</c:if>>달러($)</option>
+					<option value="앤(¥)" <c:if test="${pricing.currency == '앤(¥)'}">selected="selected"</c:if>>앤(¥)</option>
+					<option value="위안(元)" <c:if test="${pricing.currency == '위안(元)'}">selected="selected"</c:if>>위안(元)</option>
 				</select>
-			
-				<input type="submit" value="검색" class="submitBtn">
-			
+			삭제 보기
+			<select name="del">
+				<option value="N">삭제 안된것</option>
+				<c:if test="${pricing.del == 'Y'}">
+					<option value="Y" selected="selected">삭제 된것</option>
+				</c:if>
+				<c:if test="${pricing.del != 'Y'}">
+					<option value="Y">삭제 된것</option>
+				</c:if>
+				<c:if test="${pricing.del == 'All'}">
+					<option value="All" selected="selected">모두</option>
+				</c:if>
+				<c:if test="${pricing.del != 'All'}">
+					<option value="All">모두</option>
+				</c:if>
+			</select>
 		</form>
+		<button id="searchBtn">검색</button>
 	</div>
 	
+	
+	<!-- 판매가 등록 -->
 	<div class="btn">
-	<button id="show">추가 </button>
+	<button id="show">등록</button>
 	<button type="button" onclick="deleteAction()">삭제</button>
 	
 	<form name="page" class="listCount">
@@ -727,6 +765,52 @@ function changeContent(data) {
 			}
 	   	});
  	}
+ 	
+//  	검색
+ 	function search() {
+		
+		const keyword = {
+			buyerCd : searchBoxx.buyerCd.value,	
+			productCd : searchBoxx.productCd.value,	
+			startPrice : searchBoxx.startPrice.value,	
+			endPrice : searchBoxx.endPrice.value,	
+			validDate : searchBoxx.validDate.value,	
+			discountrate : searchBoxx.discountrate.value,	
+			currency : searchBoxx.currency.value,
+			del : searchBoxx.del.value,
+		}
+		console.log(keyword);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'pricingSearch.do',
+		     traditional: true,
+		     data: {
+		    	keyword: JSON.stringify(keyword)
+		     },
+		     success: function (result) {
+		    	 $('#content').children().remove();
+				 $('#content').html(result);
+			 },
+			 error: function () {
+				 alert('실패');
+			 }
+	   });
+
+	};
+
+document.querySelector("#searchBtn").addEventListener("click", search);
+
+
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.sumoBuy')[0].sumo.selectItem("${pricing.buyerCd }");
+	
+	$('select.sumoProd')[0].sumo.selectItem("${pricing.productCd }");
+});
 	
 </script>
 
