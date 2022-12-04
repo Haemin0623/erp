@@ -10,7 +10,8 @@
 <style type="text/css">
 
 	.pricingPage {
-		margin-left: 250px;
+		margin-left: 5%;
+		margin-right: 5%;
 	}
 	.menuName {
 /* 		align-content: center; */
@@ -21,6 +22,7 @@
 		background: #5b6996;
 		margin-top: 50px;
 		color: white;
+		width: 100%;
 	}
 	
 	#searchList {
@@ -42,6 +44,10 @@
 		width: 100%;
 	}
 	
+	.tableList {
+		width: 100%;
+	}
+	
 	.keyword {
 		margin-top: 10px;
 		margin-left: 20px;
@@ -59,7 +65,7 @@
 
 	}
 	
-	.header td {
+	.header th {
 		background: #5b6996;
 		color: white;
 	}
@@ -215,6 +221,11 @@
 	li.opt {
 		color : black;
 	}
+	
+	.fixed {
+		position: sticky;
+		top: 0;
+	}
 </style>
 
 <script type="text/javascript">
@@ -295,6 +306,7 @@ function changeContent(data) {
 			</select>
 		</form>
 		<button id="searchBtn">검색</button>
+		<button id="initBtn">검색결과 초기화</button>
 	</div>
 	
 	
@@ -351,8 +363,18 @@ function changeContent(data) {
 	<div class="listBox">
 		<table class="tableList">
 			<tr class="header">
-				<td><input type="checkbox" name="checkAll" id="th_checkAll"></td><td>번호</td><td>고객코드</td><td>상품코드</td><td>판매가</td>
-				<td>계약시작일</td><td>계약종료일</td><td>할인율(%)</td><td>최종판매가</td><td>통화단위</td><td>등록일</td><td>상태변경일</td>
+				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll"></th>
+				<th class="fixed">번호</th>
+				<th class="fixed" id="sortBuyerCd">고객코드</th>
+				<th class="fixed" id="sortProductCd">상품코드</th>
+				<th class="fixed" id="sortPrice">판매가</th>
+				<th class="fixed" id="sortStartdate">계약시작일</th>
+				<th class="fixed" id="sortEnddate">계약종료일</th>
+				<th class="fixed" id="sortDiscountrate">할인율(%)</th>
+				<th class="fixed" id="sortFinalPrice">최종판매가</th>
+				<th class="fixed" id="sortCurrency">통화단위</th>
+				<th class="fixed" id="sortAdddate">등록일</th>
+				<th class="fixed" id="sortStatusdate">상태변경일</th>
 			</tr>
 			<c:if test="${empty pricingList}">
 				검색 결과가 없습니다
@@ -811,6 +833,9 @@ $(document).ready(function() {
 	
 	$('select.sumoProd')[0].sumo.selectItem("${pricing.productCd }");
 });
+
+//	검색초기화
+document.querySelector("#initBtn").addEventListener("click",  function(){callView('pricing.do')});
 	
 </script>
 
