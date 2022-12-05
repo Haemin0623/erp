@@ -19,25 +19,29 @@ body {
 }
 
 #menu {
-	float: left;
-	width: 250px;
-	height: 100vh;
+	position:fixed;
+	width: 200px;
+	height: 100%;
+
+/* 	float: left; */
+/* 	width: 250px; */
+/* 	height: 100vh; */
 	background-color: #5b6996;
 }
 
 #content {
-/* 	position: relative; */
-/* 	left: 15%; */
-/* 	width: 85%; */
-/* 	height: 100%; */ 
-	height: 100vh;
+	margin-left: 200px;
+	padding-left: 20px;
+	padding-right: 20px;
+	
+	height: 100%;
 }
 
 </style>
 
 </head>
 <body>
-	<div style="display:flex;">
+	<div>
 		<div id="menu">
 			<tiles:insertAttribute name="menu"></tiles:insertAttribute>
 		</div>

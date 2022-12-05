@@ -5,28 +5,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+	#container {
+		position: inherit;	
+		margin-left: 50px;
+	}
+</style>
+
 </head>
 <body>
-	<form action="login.do">
-		<table>
-			<tr>
-				<th>사번</th>
-				<td>
-					<input type="text" name="employeeCd">
-				</td>
-			</tr>
-			<tr>
-				<th>패스워드</th>
-				<td>
-					<input type="password" name="password">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" value="로그인">
-				</td>
-			</tr>	
-		</table>
-	</form>
+	<div id="container">
+		<form action="login.do">
+			<table>
+				<tr>
+					<th>사번</th>
+					<td>
+						<input type="text" name="employeeCd">
+					</td>
+				</tr>
+				<tr>
+					<th>패스워드</th>
+					<td>
+						<input type="password" name="password">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="로그인">
+					</td>
+				</tr>	
+			</table>
+		</form>
+	</div>
+	
 </body>
 </html>
