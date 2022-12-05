@@ -16,4 +16,8 @@ public interface BuyerDao {
 
 	List<Buyer> search(Buyer buyer);
 
+	List<Buyer> ndlist();
+
+	Buyer select(String buyerCd);
+
 }

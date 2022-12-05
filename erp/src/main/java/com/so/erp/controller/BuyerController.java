@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ch.chackcheckPrac.model.Member;
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
 import com.so.erp.service.BuyerService;
@@ -37,6 +38,18 @@ public class BuyerController {
 		return "nolay/buyer"; // head가 중복으로 나오는 것 방지
 		
 	}
+	
+	//아이디 중복검사
+	@RequestMapping(value = "dupChk", produces = "text/html;charset=utf-8")
+	@ResponseBody //jsp로 가지말고 바로 본문을 전달
+	public String dupChk(String buyerCd, Model model) {
+		String msg = "";
+		Buyer buyer = bs.select(buyerCd);
+		if(buyer == null) msg = "사용 가능";
+		else msg = "이미 사용중입니다";
+		return msg;
+	}
+	
 	@RequestMapping("buyerInsert")
 	// view 페이지가 아닌 반환값 그대로 return 하고 싶을 때 사용
 	@ResponseBody
@@ -58,12 +71,17 @@ public class BuyerController {
 	@RequestMapping("buyerDelete")
 	@ResponseBody
 	//보내준 delBuyers라는 파라미터 값을 delBuyers라고 전달받아줘(파라미터 맵핑)
-	public int buyerDelete(@RequestParam(name="delBuyers") List<String> delBuyers) { 
+	public int buyerDelete(Model model, @RequestParam(name="delBuyers") List<String> delBuyers) { 
 		int result=0;
 		for(String buyerCd:delBuyers) {
 			result = bs.delete(buyerCd);
 		}
+		List <Buyer> notDelList = bs.ndlist();
+		
+		model.addAttribute("notDelList", notDelList);
+		model.addAttribute("result", result);
 		return result;
+		
 	}
 	
 	@RequestMapping("buyerUpdate")

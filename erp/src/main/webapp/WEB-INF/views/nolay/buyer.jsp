@@ -22,15 +22,6 @@
 	color: white;
 }
 
-/* table { */
-/* 	width: 95%; */
-/* 	border: black; */
-/* /* 	position: absolute; */
-* /
-	/* 	width: inherit; */
-	/* 	margin-left:50px; */
-	/* } */    
-
 #table {
 	overflow: auto;
 	height: 40vh;
@@ -47,12 +38,6 @@ tr th {
 	color: white;
 }
 
-/* table #list { */
-/* 	width: 90%; */
-/* 	height: 280; */
-/* 	margin-top: 40px; */
-/* 	margin-left:20px; */
-/* } */
 
 #list {
 	width: 100%;
@@ -178,7 +163,29 @@ tr:active {
 li.opt {
 	color: black;
 }
+	.fixed {
+		position: sticky;
+		top: 0;
+	}
+
 </style>
+<script type="text/javascript">
+function dupChk() {
+	if(!frm.buyerCd.value) {
+		alert("입력한 후에 체크하시오");
+		frm.buyerCd.focus(); return false;
+	}
+	$.post('dupChk.do', "buyerCd="+frm.buyerCd.value, function(data) {
+		$('#buyerCdChk-msg').html(data);  
+	});
+}
+
+$('#dupChk').on('click', function(event){
+	event.preventDefault();
+	dupChk();
+});
+
+</script>
 
 </head>
 <body>
@@ -191,14 +198,14 @@ li.opt {
 			
 			고객코드
 				<select name="buyerCd" class="buyerCd sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="buyer" items="${buyerList}">
 						<option>${buyer.buyerCd}</option>
 					</c:forEach>
 				</select>
 			고객명 
 				<select name="bname" class="bname sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="buyer" items="${buyerList}">
 						<option>${buyer.bname}</option>
 					</c:forEach>
@@ -206,7 +213,7 @@ li.opt {
 			
 			담당자 
 				<select name="manager" class="manager sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="buyer" items="${buyerList}">
 						<option>${buyer.manager}</option>
 					</c:forEach>
@@ -214,7 +221,7 @@ li.opt {
 			
 			국가코드
 				<select name="countryCd" class="countryCd sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="countryCd" items="${countryCdList}">
 						<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 					</c:forEach>
@@ -222,7 +229,7 @@ li.opt {
 				
 			전화번호
 				<select name="tel" class="tel sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="buyer" items="${buyerList}">
 						<option>${buyer.tel}</option>
 					</c:forEach>
@@ -231,19 +238,21 @@ li.opt {
 			
 			이메일 
 				<select name="email" class="email sumo">
-					<option value="All"></option>
+					<option value=""></option>
 					<c:forEach var="buyer" items="${buyerList}">
 						<option>${buyer.email}</option>
 					</c:forEach>
 				</select>
 			
 			주소 
-				<select name="address" class="address sumo long2">
-					<option value="All"></option>
-					<c:forEach var="buyer" items="${buyerList}" >
-						<option class="long2">${buyer.address}</option>
-					</c:forEach>
-				</select>
+<!-- 				<select name="address" class="address sumo long2"> -->
+<!-- 					<option value="All"></option> -->
+<%-- 					<c:forEach var="buyer" items="${buyerList}" > --%>
+<%-- 						<option class="long2">${buyer.address}</option> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</select> -->
+				<input type="text" name="address" class="keyword long2" value="${buyer.address}"> 
+				
 			
 			</form>	
 				<button id="searchBtn">검색</button>
@@ -307,7 +316,8 @@ li.opt {
 				<table> 
 					<tr>
 						<th>고객코드</th>
-						<td><input type="text" name="buyerCd"></td>
+						<td><input type="text" name="buyerCd"><button id="dupChk">중복체크</button></td>
+						<th><div id="buyerCdChk-msg"></div><th>
 					</tr>
 					<tr>
 						<th>고객명</th>
@@ -333,7 +343,7 @@ li.opt {
 						<th>국가코드</th>
 						<td>
 							<select name="countryCd" class="countryCd sumo" id="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
-								<option value="All"></option>
+								<option value=""></option>
 								<c:forEach var="countryCd" items="${countryCdList}">
 									<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 								</c:forEach>

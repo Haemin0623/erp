@@ -39,4 +39,14 @@ public class BuyerServiceImpl implements BuyerService {
 		return bd.search(buyer);
 	}
 
+	@Override
+	public List<Buyer> ndlist() {
+		return bd.ndlist();
+	}
+
+	@Override
+	public Buyer select(String buyerCd) {
+		return bd.select(buyerCd);
+	}
+
 }

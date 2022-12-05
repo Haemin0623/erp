@@ -5,7 +5,7 @@
 
 	<select id="list" resultType="buyer">
 		select	* 
-		from 	m_buyer order by adddate desc
+		from 	m_buyer where del='N' order by adddate desc
 	</select>
 	<insert id="insert" parameterType="buyer">
 		insert 	into m_buyer 
@@ -65,6 +65,17 @@
 				and address like '%' || #{address} || '%'
 			</if>
 		</where>
-		
 	</select>
+	<select id="ndlist" resultType="buyer">
+		select  * 
+		from  m_buyer 
+		where  del='N' 
+		order by adddate desc
+	</select>
+	<select id="select" parameterType="String" resultType="buyer">
+		select 	* 
+		from 	m_buyer 
+		where 	buyer_cd = #{buyerCd}
+	</select>
+	
 </mapper>

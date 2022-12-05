@@ -16,4 +16,8 @@ public interface BuyerService {
 
 	List<Buyer> search(Buyer buyer);
 
+	List<Buyer> ndlist();
+
+	Buyer select(String buyerCd); //고객 신규등록시 중복체크
+
 }

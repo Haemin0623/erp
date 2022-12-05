@@ -38,4 +38,14 @@ public class BuyerDaoImpl implements BuyerDao {
 	public List<Buyer> search(Buyer buyer) {
 		return sst.selectList("buyerns.search", buyer); //select 문을 사용할건데(여러개니까 list), 이름을 search로 하겠다
 	}
+
+	@Override
+	public List<Buyer> ndlist() { //삭제후 리스트업
+		return sst.selectList("buyerns.ndlist");
+	}
+
+	@Override
+	public Buyer select(String buyerCd) {
+		return sst.selectOne("buyerns.select",buyerCd);
+	}
 }

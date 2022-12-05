@@ -12,6 +12,8 @@ create table m_country(
     calling_cd  number(3) not null
 );
 
+select * from m_buyer order by adddate desc where del='N';
+
 create table m_buyer(
     buyer_cd    varchar2(40) not null PRIMARY KEY,
     country_cd  varchar2(3) not null,
@@ -27,6 +29,8 @@ create table m_buyer(
     constraint check_del check(del in ('N', 'Y')),
     constraint fk_buyer_country_cd foreign key (country_cd) references m_country(country_cd)
 );
+
+select * from m_buyer where buyer_Cd='123';
 
 create table m_product(
     product_cd  varchar2(40) not null PRIMARY KEY,
