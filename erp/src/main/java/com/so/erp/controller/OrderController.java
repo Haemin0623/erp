@@ -343,10 +343,42 @@ public class OrderController {
 	}
 	
 	@RequestMapping("orderApprovalWindow")
-	public String orderApprovalWindow(Model model) {
+	public String orderApprovalWindow(Model model, OrderHead orderHead, OrderItem orderItem) {
+
+		int rowPerPage = 10 ;
 		
-		List<OrderHead> headList = hs.headEmpList();	// head, employee
+		if (orderHead.getRowPerPage() != 0) {
+			rowPerPage = orderHead.getRowPerPage();
+		} 
+		if (orderHead.getPageNum() == null || orderHead.getPageNum().equals("")) {
+			orderHead.setPageNum("1");
+		}
 		
+		orderHead.setDel("N");		
+		orderHead.setSortOrderNo(0);
+		orderHead.setSortBuyerCd(0);
+		orderHead.setSortOrderDate(1);
+		orderHead.setSortEmployeeCd(0);
+		orderHead.setSortStatus(0);
+		orderHead.setSortStatusDate(0);
+		
+		int currentPage = Integer.parseInt(orderHead.getPageNum());
+		int total = hs.getTotal(orderHead);
+		
+		orderHead.pagingBean(currentPage, rowPerPage, total);
+		
+		int startRow = (currentPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		orderHead.setStartRow(startRow);
+		orderHead.setEndRow(endRow);
+		
+		
+		List<OrderHead> headList = hs.search(orderHead);
+		
+		exData(model);
+		
+		//List<OrderHead> headList = hs.headEmpList();	// head, employee
+		model.addAttribute("orderHead", orderHead);
 		model.addAttribute("headList", headList);
 		
 		return "nolay/orderApprovalWindow";

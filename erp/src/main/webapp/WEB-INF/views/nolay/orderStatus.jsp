@@ -39,7 +39,10 @@
 		background-color: #5b6996;
 		color: white;
 	}
-
+	.fixed {
+		position: sticky;
+		top: 0;
+	}
 	.scrollwrap {position: relative; display: block; width: 1100px; overflow-x: auto;}
 	.scrollcontent {width: 2200px;}
 	
@@ -151,24 +154,24 @@
 		<table class="scrollcontent" id="list">
 			<tr>
 				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
-				<th>주문일</th>
-				<th>주문번호</th>
-				<th>상품코드</th>
-				<th>상품명</th>
-				<th>주문수량</th>
-				<th>판매가</th>
-				<th>금액 합계</th>
-				<th>영업담당자</th>
-				<th>상태</th>
-				<th>상태변경일</th>
-				<th>승인자</th>
-				<th>납품요청일</th>
-				<th>고객코드</th>
-				<th>고객명</th>
-				<th>고객담당자</th>
-				<th>고객연락처</th>
-				<th>고객이메일</th>
-				<th>비고</th>
+				<th class="fixed">주문일</th>
+				<th class="fixed">주문번호</th>
+				<th class="fixed">상품코드</th>
+				<th class="fixed">상품명</th>
+				<th class="fixed">주문수량</th>
+				<th class="fixed">판매가</th>
+				<th class="fixed">금액 합계</th>
+				<th class="fixed">영업담당자</th>
+				<th class="fixed">상태</th>
+				<th class="fixed">상태변경일</th>
+				<th class="fixed">승인자</th>
+				<th class="fixed">납품요청일</th>
+				<th class="fixed">고객코드</th>
+				<th class="fixed">고객명</th>
+				<th class="fixed">고객담당자</th>
+				<th class="fixed">고객연락처</th>
+				<th class="fixed">고객이메일</th>
+				<th class="fixed">비고</th>
 </tr>
 		<c:forEach var="item" items="${orderStatusList}">
 			<tr class="itemRow">
