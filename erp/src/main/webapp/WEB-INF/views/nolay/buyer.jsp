@@ -10,37 +10,42 @@
 
 <style type="text/css">
 
-#container{
+#container {
 	margin-left: 50px;
 }
 
 #searchBox {
 	height: 150px;
- 		width: 120vh;
-		background: #5b6996;
-		margin-top: 50px;
-		color: white;
-	
+	width: 120vh;
+	background: #5b6996;
+	margin-top: 50px;
+	color: white;
 }
 
 /* table { */
 /* 	width: 95%; */
 /* 	border: black; */
-/* /* 	position: absolute; */ */
-/* 	width: inherit; */
-/* 	margin-left:50px; */
-/* } */
+/* /* 	position: absolute; */
+* /
+	/* 	width: inherit; */
+	/* 	margin-left:50px; */
+	/* } */    
 
-	div#table{
-		overflow: auto;
-		height: 40vh;
-		width: 120vh;
-	}
-	
-	tr th {
-		background: #5b6996;
-		color: white;
-	}
+#table {
+	overflow: auto;
+	height: 40vh;
+	width: 120vh;
+}
+
+.fixed {
+	position: sticky;
+	top: 0;
+}
+
+tr th {
+	background: #5b6996;
+	color: white;
+}
 
 /* table #list { */
 /* 	width: 90%; */
@@ -50,10 +55,10 @@
 /* } */
 
 #list {
-		width: 100%;
-		border: 1px solid;
-		
-	}
+	width: 100%;
+	border: 1px solid;
+}
+
 /* 검색 조건 */
 .keyword {
 	margin-top: 30px;
@@ -62,19 +67,19 @@
 }
 
 /* 이메일 input 길이 */
-.long1 { 
+.long1 {
 	width: 250px;
 }
 
 /* 주소 input 길이 */
 .long2 {
-	width: 320px;
+	width: 400px;
 }
 
 /* 검색버튼 */
-#searchBtn{
+#searchBtn {
 	background: #d9dbe1;
-	color: black;	
+	color: black;
 	cursor: pointer;
 	float: right;
 	margin-right: 50px;
@@ -82,15 +87,15 @@
 }
 
 /* 신규등록 버튼 */
-#addBuyerBtn{
-margin-top:200px;
+#addBuyerBtn {
+	margin-top: 200px;
 }
 
 #tableBtn {
-margin-top:50px;
-text-align:left;
-
+	margin-top: 50px;
+	text-align: left;
 }
+
 .header th {
 	background: #5b6996;
 	color: white;
@@ -161,6 +166,18 @@ tr:active {
 #item {
 	border: 1px solid;
 }
+
+.list {
+	background: silver;
+}
+
+.sumo {
+	color: black;
+}
+
+li.opt {
+	color: black;
+}
 </style>
 
 </head>
@@ -171,22 +188,66 @@ tr:active {
 		<h1> 고객 관리</h1>
 		<div id="searchBox">
 			<form name ="searchBoxx">
-			고객코드 <input type="text" name="buyerCd" class="keyword" value="${buyer.buyerCd}">&nbsp;&nbsp;&nbsp;
-			고객명 <input type="text" name="bname" class="keyword" value="${buyer.bname}">&nbsp;&nbsp;&nbsp;
-			담당자 <input type="text" name="manager" class="keyword" value="${buyer.manager}">&nbsp;&nbsp;&nbsp;
+			
+			고객코드
+				<select name="buyerCd" class="buyerCd sumo">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}">
+						<option>${buyer.buyerCd}</option>
+					</c:forEach>
+				</select>
+			고객명 
+				<select name="bname" class="bname sumo">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}">
+						<option>${buyer.bname}</option>
+					</c:forEach>
+				</select>
+			
+			담당자 
+				<select name="manager" class="manager sumo">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}">
+						<option>${buyer.manager}</option>
+					</c:forEach>
+				</select>
+			
 			국가코드
-				<select name="countryCd" class="keyword">
-					<option value=""></option>
+				<select name="countryCd" class="countryCd sumo">
+					<option value="All"></option>
 					<c:forEach var="countryCd" items="${countryCdList}">
 						<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 					</c:forEach>
 				</select><p>
-			전화번호<input type="text" name="tel" class="keyword" value="${buyer.tel}">&nbsp;&nbsp;&nbsp;
-			이메일 <input type="text" name="email" class="keyword long1" value="${buyer.email}">&nbsp;&nbsp;&nbsp;
-			주소 <input type="text" name="address" class="keyword long2" value="${buyer.address}">
+				
+			전화번호
+				<select name="tel" class="tel sumo">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}">
+						<option>${buyer.tel}</option>
+					</c:forEach>
+				</select>
+			
+			
+			이메일 
+				<select name="email" class="email sumo">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}">
+						<option>${buyer.email}</option>
+					</c:forEach>
+				</select>
+			
+			주소 
+				<select name="address" class="address sumo long2">
+					<option value="All"></option>
+					<c:forEach var="buyer" items="${buyerList}" >
+						<option class="long2">${buyer.address}</option>
+					</c:forEach>
+				</select>
 			
 			</form>	
 				<button id="searchBtn">검색</button>
+				<button id="initBtn"> 검색결과 초기화 </button>
 		</div>
 	</div>
 	
@@ -197,43 +258,43 @@ tr:active {
 		
 	<!-- 고객리스트 & 수정가능한 테이블 -->
 	<div id="table">
-	<form action="" name="bt">
-	<table id="list" >
-		<tr class="header">
-			<th>선택</th>
-			<th>고객코드</th>
-			<th>고객명</th>
-			<th>담당자</th>
-			<th>전화번호</th>
-			<th>이메일</th>
-			<th>주소</th>
-			<th>국가코드</th>
-			<th>등록일</th>
-			<th>최종수정일</th>
-		</tr>
-		<c:forEach var="buyer" items="${buyerList }">
-			<tr class="itemRow">
-				<td>
-					<c:if test="${buyer.del =='Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
-						<input type="checkbox" name="del" value="${buyer.buyerCd}" disabled="disabled">
-					</c:if>
-					<c:if test="${buyer.del =='N'}">
-						<input type="checkbox" name="del" value="${buyer.buyerCd}">
-					</c:if>
-				</td>
-				<td>${buyer.buyerCd }</td>
-				<td class="editable">${buyer.bname }</td>
-				<td class="editable">${buyer.manager}</td>
-				<td class="editable">${buyer.tel}</td>
-				<td class="editable">${buyer.email}</td>
-				<td class="editable">${buyer.address}</td>
-				<td>${buyer.countryCd}</td>
-				<td>${buyer.adddate}</td>
-				<td>${buyer.statusdate}</td>
+<!-- 	<form action="" name="bt"> -->
+		<table id="list" >
+			<tr class="header fixed">
+				<th>선택</th>
+				<th>고객코드</th>
+				<th>고객명</th>
+				<th>담당자</th>
+				<th>전화번호</th>
+				<th>이메일</th>
+				<th>주소</th>
+				<th>국가코드</th>
+				<th>등록일</th>
+				<th>최종수정일</th>
 			</tr>
-		</c:forEach>
-	</table>
-	</form>
+			<c:forEach var="buyer" items="${buyerList }">
+				<tr class="itemRow">
+					<td>
+						<c:if test="${buyer.del =='Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
+							<input type="checkbox" name="del" value="${buyer.buyerCd}" disabled="disabled">
+						</c:if>
+						<c:if test="${buyer.del =='N'}">
+							<input type="checkbox" name="del" value="${buyer.buyerCd}">
+						</c:if>
+					</td>
+					<td>${buyer.buyerCd }</td>
+					<td class="editable">${buyer.bname }</td>
+					<td class="editable">${buyer.manager}</td>
+					<td class="editable">${buyer.tel}</td>
+					<td class="editable">${buyer.email}</td>
+					<td class="editable">${buyer.address}</td>
+					<td>${buyer.countryCd}</td>
+					<td>${buyer.adddate}</td>
+					<td>${buyer.statusdate}</td>
+				</tr>
+			</c:forEach>
+		</table>
+<!-- 	</form> -->
 	</div>
 	
 	<!-- 	등록 창 팝업 -->
@@ -271,7 +332,8 @@ tr:active {
 					<tr>
 						<th>국가코드</th>
 						<td>
-							<select name="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
+							<select name="countryCd" class="countryCd sumo" id="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
+								<option value="All"></option>
 								<c:forEach var="countryCd" items="${countryCdList}">
 									<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 								</c:forEach>
@@ -282,6 +344,7 @@ tr:active {
 
 				</form>
 					<button id="addBuyerBtn">등록</button>
+					<button id="reset">초기화</button>
 			</div>
 		</div>
 	</div>
@@ -308,6 +371,9 @@ function callView(request) {
 		$('#content').html(data);
 	});
 }
+
+// 	검색초기화
+document.querySelector("#initBtn").addEventListener("click",  function(){callView('buyer.do')});
 
 	//검색 기능
 	function search() {
@@ -509,8 +575,45 @@ function callView(request) {
             });
    });
 	
+</script>
+
+<!-- 스모셀렉트 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.buyerCd')[0].sumo.selectItem("${buyer.buyerCd }");
 	
-	  
+	$('select.bname')[0].sumo.selectItem("${product.bname }");
+	
+	$('select.manager')[0].sumo.selectItem("${product.manager }");
+	
+	$('select.countryCd')[0].sumo.selectItem("${product.countryCd }");
+	
+	$('select.tel')[0].sumo.selectItem("${product.tel }");
+
+	$('select.email')[0].sumo.selectItem("${product.email }");
+	
+	$('select.address')[0].sumo.selectItem("${product.address }");
+
+	
+});
+</script>
+
+<!-- 등록창 초기화 -->
+<script type="text/javascript">
+	$('#reset').on('click', function() {
+		frm.buyerCd.value = '';
+		frm.bname.value = '';
+		frm.manager.value = '';
+		frm.tel.value = '';
+		frm.email.value = '';
+		frm.address.value = '';
+		$('select#countryCd')[0].sumo.unSelectAll();		
+		
+	});
 </script>
 
 </html>
