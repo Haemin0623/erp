@@ -275,7 +275,7 @@
 	}
 	
 	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
-	
+
 	
 	function excel() {
 		
@@ -283,10 +283,10 @@
 		
 		$( "input[name='checkRow']:checked" ).each (function (){
 			 let thisRow = $(this).closest('tr');
-	/* 		 
-			orderNo = thisRow.find('td:eq(2)').find('input').val();
-			productCD = thisRow.find('td:eq(3)').find('input').val();
-			  */
+			 
+//			orderNo = thisRow.find('td:eq(2)').find('input').val();
+//			productCD = thisRow.find('td:eq(3)').find('input').val();
+			  
 			 const item = {
 						orderNo : thisRow.find('td:eq(2)').find('input').val(),	
 						productCd : thisRow.find('td:eq(3)').find('input').val()
@@ -307,10 +307,39 @@
 			  data : {
 				  items : JSON.stringify(checkRow)
 			  },
-			  
-			  success : function(result) {
-				alert("엑셀다운완료?!");
-				
+			  xhr: function () {
+                  var xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange = function () {
+                      if (xhr.readyState == 2) {
+                          if (xhr.status == 200) {
+                              xhr.responseType = "blob";
+                          } else {
+                              xhr.responseType = "text";
+                          }
+                      }
+                  };
+                  return xhr;
+			    },
+			  success : function(data) {
+				  console.log(data);
+				//alert("엑셀다운완료?");
+				//Convert the Byte Data to BLOB object.
+                var blob = new Blob([data], { type: "application/octetstream" });
+
+                //Check the Browser type and download the File.
+                var isIE = false || !!document.documentMode;
+                if (isIE) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL || window.webkitURL;
+                    link = url.createObjectURL(blob);
+                    var a = $("<a />");
+                    a.attr("download", "test.xlsx");
+                    a.attr("href", link);
+                    $("body").append(a);
+                    a[0].click();
+                    $("body").remove(a);
+                }
 			}, error: function (xhr, status, error) {
 				console.log("error");
 			} 

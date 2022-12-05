@@ -93,11 +93,19 @@
 				<li class="menuList">주문</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('order.do')">주문 관리</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderApprovalWindow.do')">주문 승인</a></li>
+<<<<<<< HEAD
+=======
+			<!-- 	<li><a href="orderApprovalWindow.do">주문 승인</a></li> -->
+>>>>>>> 50c6a6c (주문현황 엑셀파일로 다운로드 완료)
 			</ul>
 			
 			<ul>
 				<li class="menuList">REPORT</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderStatus.do')">주문 현황</a></li>
+<<<<<<< HEAD
+=======
+				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
+>>>>>>> 50c6a6c (주문현황 엑셀파일로 다운로드 완료)
 			</ul>
 	</div>
 	<hr class="line2">

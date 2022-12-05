@@ -7,7 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,6 +18,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -603,11 +605,16 @@ public class OrderController {
 	}
 	@RequestMapping("excelDown.do")
 	@ResponseBody
-	public void excelDown(HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
+	public void excelDown( HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
 		
+		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
 		// 출력할 주문리스트
 		List<OrderHead> list = new ArrayList<>();
+		
 		OrderHead orderRow = new OrderHead();
+		
+		
+		
 
 		try {
 			JSONParser p = new JSONParser();
@@ -649,12 +656,11 @@ public class OrderController {
 		
 		
 		
-		try {
 			
 		
 		
 		// 워크북 생성
-		Workbook wb = new HSSFWorkbook();
+		Workbook wb = new XSSFWorkbook();
 		Sheet sheet = wb.createSheet("주문 현황");
 		Row row = null;
 		Cell cell = null;
@@ -842,20 +848,21 @@ public class OrderController {
 		    cell = row.createCell(17);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getRemark());
+		    System.out.println(li.getRemark());
 
 	    }
 	
 	    // 컨텐츠 타입과 파일명 지정
 	    response.setContentType("ms-vnd/excel");
-	    response.setHeader("Content-Disposition", "attachment;filename=order.xls");
+	    response.setHeader("Content-Disposition", "attachment;filename=order.xlsx");
 	    
 	    // 엑셀 출력
-	    wb.write(response.getOutputStream());
-	    wb.close();
+	    try {
+            wb.write(response.getOutputStream());
+        } finally {
+            wb.close();
+        }
 	    
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	    
 	}
 	
