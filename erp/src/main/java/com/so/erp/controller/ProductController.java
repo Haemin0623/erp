@@ -144,7 +144,23 @@ public class ProductController {
 			product.setVolume(volume);
 			String category = (String) keywordObj.get("category");
 			product.setCategory(category);
-					
+			
+			int sortProductCd = Integer.valueOf((String) keywordObj.get("sortProductCd"));
+			product.setSortProductCd(sortProductCd);
+			int sortPname = Integer.valueOf((String) keywordObj.get("sortPname"));
+			product.setSortPname(sortPname);
+			int sortVolume = Integer.valueOf((String) keywordObj.get("sortVolume"));
+			product.setSortVolume(sortVolume);
+			int sortUnit = Integer.valueOf((String) keywordObj.get("sortUnit"));
+			product.setSortUnit(sortUnit);
+			int sortCategory = Integer.valueOf((String) keywordObj.get("sortCategory"));
+			product.setSortCategory(sortCategory);
+			int sortAddDate = Integer.valueOf((String) keywordObj.get("sortAddDate"));
+			product.setSortAddDate(sortAddDate);
+			int sortStatusDate = Integer.valueOf((String) keywordObj.get("sortStatusDate"));
+			product.setSortStatusDate(sortStatusDate);
+			int sortDel = Integer.valueOf((String) keywordObj.get("sortDel"));
+			product.setSortDel(sortDel);
 			
 			String adddate = (String) keywordObj.get("adddate");
 			if (adddate != null && !adddate.equals("") ) {

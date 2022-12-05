@@ -29,7 +29,56 @@
 									and del='Y'							
 							</if>
 						</where>
-						order by adddate desc)
+						order by
+							<if test="product.sortProductCd ==1">
+								product_cd desc
+							</if>
+							<if test="product.sortProductCd ==2">
+								product_cd asc
+							</if>
+							<if test="product.sortPname ==1">
+								Pname desc
+							</if>
+							<if test="product.sortPname ==2">
+								Pname asc
+							</if>
+							<if test="product.sortVolume ==1">
+								Volume desc
+							</if>
+							<if test="product.sortVolume ==2">
+								Volume asc
+							</if>
+							<if test="product.sortUnit ==1">
+								Unit desc
+							</if>
+							<if test="product.sortUnit ==2">
+								Unit asc
+							</if>
+							<if test="product.sortCategory ==1">
+								Category desc
+							</if>
+							<if test="product.sortCategory ==2">
+								Category asc
+							</if>
+							<if test="product.sortStatusDate ==1">
+								StatusDate desc
+							</if>
+							<if test="product.sortStatusDate ==2">
+								StatusDate asc
+							</if>
+							<if test="product.sortDel ==1">
+								Del desc
+							</if>
+							<if test="product.sortDel ==2">
+								Del asc
+							</if>
+							<if test="product.sortAddDate ==1 || product.sortAddDate ==0">
+								AddDate desc
+							</if>
+							<if test="product.sortAddDate ==2">
+								AddDate asc
+							</if>
+						)
 					a) 
 			where 	rn between #{pagingBean.startRow} and #{pagingBean.endRow}
 			

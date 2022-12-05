@@ -95,6 +95,10 @@
 	  transform: translate(-50%, -40%);
 	}
 	
+	.fixed{
+	 position: sticky;
+	 top:0;
+	}
 	.show {
 	  opacity: 1;
 	  z-index: 1000;
@@ -124,6 +128,14 @@
 	<h1 class="menuName">상품관리</h1>
 	<div id="searchBox">
 		<form id="searchBoxx">
+			<input type="hidden" id="sortProductCd" value="${ptoduct.productCd }">
+			<input type="hidden" id="sortPname" value="${ptoduct.pname }">
+			<input type="hidden" id="sortVolume" value="${ptoduct.volume }" >
+			<input type="hidden" id="sortUnit" value="${ptoduct.unit }">
+			<input type="hidden" id="sortCategory" value="${ptoduct.category }">
+			<input type="hidden" id="sortAdddate" value="${ptoduct.adddate }">
+			<input type="hidden" id="sortStatusDate" value="${ptoduct.statusdate }">
+			<input type="hidden" id="sortDel" value="${ptoduct.del }">
 				<span>
 					<select name="productCd" class="productCd sumo">
 						<option value="All"></option>
@@ -190,7 +202,7 @@
 	<span id="CCD">
 		<button id="show">상품등록 </button>
 		<button type="button" onclick="deleteAction()">삭제</button>
-		<button>엑셀 대량등록</button>
+<!-- 		<button>엑셀 대량등록</button> -->
 	</span>	
 	<div id="productList">
 	<form name="page">
@@ -238,15 +250,15 @@
 	<form action="">
 		<table id="list">
 			<tr class="haeder">
-				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
-				<th>상품코드</th>
-				<th>상품명</th>
-				<th>용량</th>
-				<th>단위</th>
-				<th>상품 카테고리</th>
-				<th>등록일</th>
-				<th>최종수정일</th>
-				<th>삭제여부</th>
+				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll" ></th>
+				<th class="fixed" id="sortProductCd">상품코드</th>
+				<th class="fixed" id="sortPname">상품명</th>
+				<th class="fixed" id="sortVolume">용량</th>
+				<th class="fixed" id="sortUnit">단위</th>
+				<th class="fixed" id="sortCategory">상품 카테고리</th>
+				<th class="fixed" id="sortAdddate">등록일</th>
+				<th class="fixed" id="sortStatusDate">최종수정일</th>
+				<th class="fixed" id="sortDel">삭제여부</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr class="itemRow">
@@ -551,7 +563,17 @@
 			category : searchBoxx.category.value,	
 			adddate : searchBoxx.adddate.value,	
 			adddate2 : searchBoxx.adddate2.value,	
-			del : searchBoxx.del.value	
+			del : searchBoxx.del.value,
+			
+			sortProductCd : searchBoxx.sortProductCd.value,
+			sortPname : searchBoxx.sortPname.value,
+			sortVolume : searchBoxx.sortVolume.value,
+			sortUnit : searchBoxx.sortUnit.value,
+			sortCategory : searchBoxx.sortCategory.value,
+			sortAddDate : searchBoxx.sortAddDate.value,
+			sortStatusDate : searchBoxx.sortStatusDate.value,
+			sortDel : searchBoxx.sortDel.value
+			
 		}
 		let target = document.getElementById("listview");
 	      page= target.options[target.selectedIndex].value;
@@ -592,5 +614,86 @@ $(document).ready(function() {
 });
 
 </script>
+<script type="text/javascript">
+	$('#sortProductCd').on('click', function(){
+		if(searchBoxx.sortProductCd.value==0 || serchBoxx.sortProductCd.value == 2){
+			initSort();
+			searchBoxx.sortProductCd.value = 1;
+		}else if (searchBoxx.sortProductCd.value == 1){
+			initSort();
+			searchBoxx.sortProductcd.value ==2;
+		}
+	$('#sortPname').on('click', function(){
+		if(searchBoxx.sortPname.value==0 || serchBoxx.sortPname.value == 2){
+			initSort();
+			searchBoxx.sortPname.value = 1;
+		}else if (searchBoxx.sortPname.value == 1){
+			initSort();
+			searchBoxx.sortPname.value ==2;
+		}
+	$('#sortVolume').on('click', function(){
+		if(searchBoxx.sortVolume.value==0 || serchBoxx.sortVolume.value == 2){
+			initSort();
+			searchBoxx.sortVolume.value = 1;
+		}else if (searchBoxx.sortVolume.value == 1){
+			initSort();
+			searchBoxx.sortVolume.value ==2;
+		}
+	$('#sortUnit').on('click', function(){
+		if(searchBoxx.sortUnit.value==0 || serchBoxx.sortUnit.value == 2){
+			initSort();
+			searchBoxx.sortUnit.value = 1;
+		}else if (searchBoxx.sortUnit.value == 1){
+			initSort();
+			searchBoxx.sortUnit.value ==2;
+		}
+	$('#sortCategory').on('click', function(){
+		if(searchBoxx.sortCategory.value==0 || serchBoxx.sortCategory.value == 2){
+			initSort();
+			searchBoxx.sortCategory.value = 1;
+		}else if (searchBoxx.sortCategory.value == 1){
+			initSort();
+			searchBoxx.sortCategory.value ==2;
+		}
+	$('#sortAddDate').on('click', function(){
+		if(searchBoxx.sortAddDate.value==0 || serchBoxx.sortAddDate.value == 2){
+			initSort();
+			searchBoxx.sortAddDate.value = 1;
+		}else if (searchBoxx.sortAddDate.value == 1){
+			initSort();
+			searchBoxx.sortAddDate.value ==2;
+		}
+	$('#sortStatusDate').on('click', function(){
+		if(searchBoxx.sortStatusDate.value==0 || serchBoxx.sortStatusDate.value == 2){
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;
+		}else if (searchBoxx.sortStatusDate.value == 1){
+			initSort();
+			searchBoxx.sortStatusDate.value ==2;
+		}
+	$('#sortDel').on('click', function(){
+		if(searchBoxx.sortDel.value==0 || serchBoxx.sortDel.value == 2){
+			initSort();
+			searchBoxx.sortDel.value = 1;
+		}else if (searchBoxx.sortDel.value == 1){
+			initSort();
+			searchBoxx.sortDel.value ==2;
+		}
+		search();
+	});
+</script>
+<script type="text/javascript">
+	function initSort() {
+		searchBoxx.sortProductCd.value=0;
+		searchBoxx.sortPname.value=0;
+		searchBoxx.sortVolume.value=0;
+		searchBoxx.sortUnit.value=0;
+		searchBoxx.sortCategory.value=0;
+		searchBoxx.sortAddDate.value=0;
+		searchBoxx.sortStatusDate.value=0;
+		searchBoxx.sortDel.value=0;
+	}
+</script>
+
 </body>
 </html>

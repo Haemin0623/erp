@@ -11,7 +11,7 @@
 	<c:if test="${result>1 }">
 		<script>
 			alert("로그인성공")
-			location.href="hello.do";
+			location.href="/.do";
 		</script>
 	</c:if>
 	
