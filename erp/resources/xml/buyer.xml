@@ -6,6 +6,7 @@
 	<select id="list" resultType="buyer">
 		select	* 
 		from 	m_buyer where del='N' order by adddate desc
+
 	</select>
 	<insert id="insert" parameterType="buyer">
 		insert 	into m_buyer 

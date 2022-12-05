@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>ERP</title>
 
-
+<link rel="stylesheet" type="text/css" href="/erp/resources/css/common.css">
 
 
 <style type="text/css">

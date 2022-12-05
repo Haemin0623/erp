@@ -86,7 +86,7 @@
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('productList.do')">상품</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('buyer.do')">고객</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('pricing.do')">판매가</a></li>
-				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('emp.do')">승인</a></li>
+				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('emp.do')">직원</a></li>
 			</ul>
 			
 			<ul>
