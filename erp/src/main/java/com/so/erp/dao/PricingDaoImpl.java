@@ -22,8 +22,8 @@ public class PricingDaoImpl implements PricingDao {
 	}
 
 	@Override
-	public int getTotal() {
-		return sst.selectOne("pricingns.getTotal");
+	public int getTotal(Pricing pricing) {
+		return sst.selectOne("pricingns.getTotal", pricing);
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class PricingDaoImpl implements PricingDao {
 		
 	public List<Pricing> search(Pricing pricing) {
 		return sst.selectList("pricingns.search", pricing);
+	}
+
+	@Override
+	public int pricingRestore(Pricing pricing) {
+		return sst.update("pricingns.restore", pricing);
 	}
 
 }

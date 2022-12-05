@@ -22,11 +22,46 @@ public class Pricing {
     private double finalPrice;
 //  리스트 순번
     private int number;
-//	페이징용
-	private int startRow;
-	private int endRow;
-//    검색용
+//  검색용
     private Date validDate;
     private int startPrice;
     private int endPrice;
+//  정렬용
+    private int sortBuyerCd;
+    private int sortProductCd;
+    private int sortPrice;
+    private int sortStartdate;
+    private int sortEnddate;
+    private int sortDiscountrate;
+    private int sortFinalPrice;
+    private int sortCurrency;
+    private int sortAdddate;
+    private int sortStatusdate;
+//  페이징용
+    private int currentPage;
+   	private int rowPerPage;
+   	private int total;
+   	private int totalPage;
+   	private int pagePerBlock = 10;
+   	private int startPage;
+   	private int endPage;
+   	private int startRow;
+   	private int endRow;
+   	private String pageNum;
+   	
+   	public void pagingBean(int currentPage, int rowPerPage, int total) {
+   		
+   		this.currentPage = currentPage;
+   		this.rowPerPage = rowPerPage; 
+   		this.total = total;
+   		
+   		totalPage = (int)(Math.ceil((double)total/rowPerPage));
+   		
+   		startPage = currentPage - (currentPage - 1) % pagePerBlock;		
+   		endPage = startPage + pagePerBlock - 1;
+   		
+   		if (endPage > totalPage) {
+   			endPage = totalPage;
+   		}
+   	}
 }

@@ -22,8 +22,8 @@ public class PricingServiceImpl implements PricingService {
 	}
 
 	@Override
-	public int getTotal() {
-		return prd.getTotal();
+	public int getTotal(Pricing pricing) {
+		return prd.getTotal(pricing);
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class PricingServiceImpl implements PricingService {
 		
 	public List<Pricing> search(Pricing pricing) {
 		return prd.search(pricing);
+	}
+
+	@Override
+	public int pricingRestore(Pricing pricing) {
+		return prd.pricingRestore(pricing);
 	}
 
 }

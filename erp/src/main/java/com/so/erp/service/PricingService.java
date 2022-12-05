@@ -10,7 +10,7 @@ public interface PricingService {
 
 	List<Pricing> pricingList(Pricing pricing);
 
-	int getTotal();
+	int getTotal(Pricing pricing);
 
 	void pricingInsert(Pricing pricing);
 
@@ -23,6 +23,8 @@ public interface PricingService {
 	List<Product> getProductList(String buyerCd);
 	
 	List<Pricing> search(Pricing pricing);
+
+	int pricingRestore(Pricing pricing);
 
 
 }

@@ -1,7 +1,6 @@
 package com.so.erp.controller;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.Buyer;
-import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
@@ -32,21 +29,36 @@ public class PricingController {
 	private PricingService prs;
 	
 	@RequestMapping("pricing")
-	public String pricing(Model model, Pricing pricing, String pageNum, String page) {
-		//페이징
-		int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
-		if (page == null || page == "") {
-			rowPerPage = 10;
-		}else rowPerPage = Integer.parseInt(page);
-		if (pageNum == null || pageNum.equals("")) pageNum = "1";
-		int currentPage = Integer.parseInt(pageNum);
-		int total = prs.getTotal();
+	public String pricing(Model model, Pricing pricing) {
+		
+		int rowPerPage = 10 ;
+		
+		if (pricing.getRowPerPage() != 0) {
+			rowPerPage = pricing.getRowPerPage();
+		} 
+		if (pricing.getPageNum() == null || pricing.getPageNum().equals("")) {
+			pricing.setPageNum("1");
+		}
+		pricing.setDel("N");		
+		pricing.setSortBuyerCd(0);
+		pricing.setSortProductCd(0);
+		pricing.setSortPrice(0);
+		pricing.setSortStartdate(0);
+		pricing.setSortEnddate(0);
+		pricing.setSortDiscountrate(0);
+		pricing.setSortFinalPrice(0);
+		pricing.setSortAdddate(1);
+		pricing.setSortStatusdate(0);
+		
+		int currentPage = Integer.parseInt(pricing.getPageNum());
+		int total = prs.getTotal(pricing);
+		
+		pricing.pagingBean(currentPage, rowPerPage, total);
+		
 		int startRow = (currentPage - 1) * rowPerPage + 1;
-		int endRow = startRow + rowPerPage -1;
-		int num = total - startRow + 1;
+		int endRow = startRow + rowPerPage - 1;
 		pricing.setStartRow(startRow);
 		pricing.setEndRow(endRow);
-		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
 		
 		List<Pricing> pricingList = new ArrayList<Pricing>();
 		pricingList = prs.pricingList(pricing);
@@ -56,39 +68,18 @@ public class PricingController {
 		}
 		
 		model.addAttribute("pricingList", pricingList);
-		model.addAttribute("pb", pb);
-		model.addAttribute("num", num);
-		model.addAttribute("rowPerPage", rowPerPage);
 		return "nolay/pricing";
 	}
 	
 	
 	@RequestMapping("pricingSearch")
-	public String pricingSearch(Model model, String keyword, Pricing pricing, String pageNum, String page) {
-		System.out.println("1");
-		
-		//페이징
-			int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
-			if (page == null || page == "") {
-				rowPerPage = 10;
-			}else rowPerPage = Integer.parseInt(page);
-			if (pageNum == null || pageNum.equals("")) pageNum = "1";
-			int currentPage = Integer.parseInt(pageNum);
-			int total = prs.getTotal();
-			int startRow = (currentPage - 1) * rowPerPage + 1;
-			int endRow = startRow + rowPerPage -1;
-			int num = total - startRow + 1;
-			pricing.setStartRow(startRow);
-			pricing.setEndRow(endRow);
-			PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
+	public String pricingSearch(Model model, String keyword, Pricing pricing) {
 		
 		try {
 			
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(keyword);
 			JSONObject keywordObj = JSONObject.fromObject(obj);
-			
-//			Pricing pricing = new Pricing();
 			
 			String buyerCd = (String) keywordObj.get("buyerCd");
 			pricing.setBuyerCd(buyerCd);
@@ -98,10 +89,10 @@ public class PricingController {
 			
 			int startPrice = Integer.valueOf((String)keywordObj.get("startPrice"));
 			pricing.setStartPrice(startPrice);
-			System.out.println(startPrice);
+		
 			int endPrice = Integer.valueOf((String)keywordObj.get("endPrice"));
 			pricing.setEndPrice(endPrice);
-			System.out.println(endPrice);
+	
 			String validDate = (String) keywordObj.get("validDate");
 			if (validDate != null && !validDate.equals("") ) {
 				Date date = Date.valueOf(validDate);
@@ -116,7 +107,37 @@ public class PricingController {
 			String del = (String) keywordObj.get("del");
 			pricing.setDel(del);
 			
+			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
+			pricing.setSortBuyerCd(sortBuyerCd);
+			int sortProductCd = Integer.valueOf((String) keywordObj.get("sortProductCd"));
+			pricing.setSortProductCd(sortProductCd);
+			int sortPrice = Integer.valueOf((String) keywordObj.get("sortPrice"));
+			pricing.setSortPrice(sortPrice);
+			int sortStartdate = Integer.valueOf((String) keywordObj.get("sortStartdate"));
+			pricing.setSortStartdate(sortStartdate);
+			int sortEnddate = Integer.valueOf((String) keywordObj.get("sortEnddate"));
+			pricing.setSortEnddate(sortEnddate);
+			int sortDiscountrate = Integer.valueOf((String) keywordObj.get("sortDiscountrate"));
+			pricing.setSortDiscountrate(sortDiscountrate);
+			int sortFinalPrice = Integer.valueOf((String) keywordObj.get("sortFinalPrice"));
+			pricing.setSortFinalPrice(sortFinalPrice);
+			int sortCurrency = Integer.valueOf((String) keywordObj.get("sortCurrency"));
+			pricing.setSortCurrency(sortCurrency);
+			int sortAdddate = Integer.valueOf((String) keywordObj.get("sortAdddate"));
+			pricing.setSortAdddate(sortAdddate);
+			int sortStatusdate = Integer.valueOf((String) keywordObj.get("sortStatusdate"));
+			pricing.setSortStatusdate(sortStatusdate);
 			
+			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			int total = prs.getTotal(pricing);
+			
+			pricing.pagingBean(currentPage, rowPerPage, total);
+			
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			pricing.setStartRow(startRow);
+			pricing.setEndRow(endRow);
 			
 			
 			List<Pricing> searchList = prs.search(pricing);
@@ -131,10 +152,6 @@ public class PricingController {
 			}
 			
 			model.addAttribute("pricingList", searchList);
-//			model.addAttribute("pricingList", pricing);
-			model.addAttribute("pb", pb);
-			model.addAttribute("num", num);
-			model.addAttribute("rowPerPage", rowPerPage);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
@@ -165,6 +182,32 @@ public class PricingController {
 				pricing.setEnddate(enddate);
 				
 				prs.pricingDelete(pricing);
+			}
+		result = 1;
+		return result;
+	}
+	
+	
+	@RequestMapping("pricingRestore")
+	@ResponseBody
+	public int pricingRestore(@RequestParam(name="checkRows")String[] arr, Pricing pricing) throws java.text.ParseException{
+		
+		int result = 0;
+			for (String i : arr) {
+				String[] a = i.split("&");
+				String buyerCd = a[0];
+				String productCd = a[1];
+				
+				Date startdate = Date.valueOf(a[2]);
+				Date enddate = Date.valueOf(a[3]);
+				System.out.println(enddate);
+				
+				pricing.setBuyerCd(buyerCd);
+				pricing.setProductCd(productCd);
+				pricing.setStartdate(startdate);
+				pricing.setEnddate(enddate);
+				
+				prs.pricingRestore(pricing);
 			}
 		result = 1;
 		return result;

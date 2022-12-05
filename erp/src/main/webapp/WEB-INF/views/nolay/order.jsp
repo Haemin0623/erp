@@ -478,7 +478,7 @@
 		     method: 'post',
 		     url: 'orderSearch.do',
 		     traditional: true,
-		     data: {
+		     data: { 
 		    	keyword: JSON.stringify(keyword)
 		     },
 		     success: function (result) {

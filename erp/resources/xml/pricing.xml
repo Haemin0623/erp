@@ -8,11 +8,11 @@
 		select	*
 		from	(select	a.*,
 						rowNum rn
-				from	(select	*
-						from	m_pricing
-						where	del='N'
-						order by adddate desc)a
-				)
+				from	(select			distinct *
+							from		m_pricing
+							where		del='N'
+							order by 	adddate desc)a
+				)	
 		where	rn between #{startRow} and #{endRow} 
 	</select>
 	
@@ -26,13 +26,46 @@
 	
 	
 	<select id="getTotal" resultType="Integer">
-		select count(*) from m_pricing where del='N'
+		select count(*) from m_pricing
+		<where>
+			<if test="buyerCd != null and buyerCd != 'All'">
+				and buyer_cd like '%' || #{buyerCd} || '%'
+			</if>
+			<if test="productCd != null and productCd != 'All'">
+				and product_cd like '%' || #{productCd} || '%'
+			</if>
+			<if test="startPrice != 0 and endPrice != 0">
+				and price between #{startPrice} and #{endPrice}
+			</if>
+			
+			<if test="validDate != null">
+					and startdate <![CDATA[<=]]> #{validDate} 
+					and enddate <![CDATA[>=]]> #{validDate}
+			</if>
+			
+			<if test="discountrate != null and discountrate != ''">
+				and discountrate = #{discountrate}
+			</if>
+			<if test="currency != null and currency != 'All'">
+				and currency = #{currency}
+			</if>
+			<if test="del != 'All'">
+				and del = #{del}
+			</if>
+		</where>
 	</select>
 	
 	
 	
 	<update id="delete" parameterType="pricing">
 		update m_pricing set del='Y', statusdate = sysdate 
+		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
+	</update>
+	
+	
+	
+	<update id="restore" parameterType="pricing">
+		update m_pricing set del='N', statusdate = sysdate 
 		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
 	</update>
 	
@@ -70,7 +103,10 @@
 	
 	<select id="search" parameterType="pricing" resultType="pricing">
 		select	*
-		from	m_pricing
+		from	(select	a.*,
+						rowNum rn
+				 from  (select 	*
+						from	m_pricing
 		<where>
 			<if test="buyerCd != null and buyerCd != 'All'">
 				and buyer_cd like '%' || #{buyerCd} || '%'
@@ -90,14 +126,86 @@
 			<if test="discountrate != null and discountrate != ''">
 				and discountrate = #{discountrate}
 			</if>
-			<if test="currency != null and currency != ''">
+			<if test="currency != null and currency != 'All'">
 				and currency = #{currency}
 			</if>
 			<if test="del != 'All'">
 				and del = #{del}
 			</if>
 		</where>
-		order by adddate desc
+		order by 
+			<if test="sortBuyerCd == 1">
+				buyer_cd desc
+			</if>
+			<if test="sortBuyerCd == 2">
+				buyer_cd asc
+			</if>
+			
+			<if test="sortProductCd == 1">
+				product_cd desc
+			</if>
+			<if test="sortProductCd == 2">
+				product_cd asc
+			</if>
+			
+			<if test="sortPrice == 1">
+				price desc
+			</if>
+			<if test="sortPrice == 2">
+				price asc
+			</if>
+			
+			<if test="sortStartdate == 1">
+				startdate desc
+			</if>
+			<if test="sortStartdate == 2">
+				startdate asc
+			</if>
+			
+			<if test="sortEnddate == 1">
+				enddate desc
+			</if>
+			<if test="sortEnddate == 2">
+				enddate asc
+			</if>
+			
+			<if test="sortDiscountrate == 1">
+				discountrate desc
+			</if>
+			<if test="sortDiscountrate == 2">
+				discountrate asc
+			</if>
+			
+			<if test="sortFinalPrice == 1">
+				finalPrice desc
+			</if>
+			<if test="sortFinalPrice == 2">
+				finalPrice asc
+			</if>
+			
+			<if test="sortCurrency == 1">
+				currency desc
+			</if>
+			<if test="sortCurrency == 2">
+				currency asc
+			</if>
+			
+			<if test="sortAdddate == 1">
+				adddate desc
+			</if>
+			<if test="sortAdddate == 2">
+				adddate asc
+			</if>
+			
+			<if test="sortStatusdate == 1">
+				statusdate desc
+			</if>
+			<if test="sortStatusdate == 2">
+				statusdate asc
+			</if>
+		)a
+				)
+		where rn between #{startRow} and #{endRow} 
 	</select>
 	
 	

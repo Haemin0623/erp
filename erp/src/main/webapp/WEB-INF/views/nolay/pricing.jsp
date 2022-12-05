@@ -18,11 +18,19 @@
 	}
 
 	.searchBox {
- 		height: 150px;
+ 		height: 160px;
 		background: #5b6996;
-		margin-top: 50px;
+		margin-top: 30px;
 		color: white;
 		width: 100%;
+	}
+	
+	.searchBoxxx {
+		position: absolute;
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
 	}
 	
 	#searchList {
@@ -33,12 +41,12 @@
  	margin-top: 50px;
 	}
 	
-	.listCount {
+	#page {
 		float: right;
 	}
 	
 	.listBox {
-		height: 280;
+		height: 320px;
 		margin-top: 10px;
 		overflow:auto;
 		width: 100%;
@@ -49,16 +57,25 @@
 	}
 	
 	.keyword {
-		margin-top: 10px;
-		margin-left: 20px;
 	}
-	
-	.searchBtn {
+	.price {
+		width: 90px;
+	}
+	.SumoSelect {
+		width: 135px;
+	}
+	#initBtn {
 		background: navy;
 		color: white;
 		cursor: pointer;
 		float: right;
-		margin-right: 50px;
+	}
+	#searchBtn {
+		background: navy;
+		color: white;
+		cursor: pointer;
+		float: right;
+		margin-right: 5px;
 	}
 	
 	table {
@@ -134,89 +151,8 @@
 	}
 	/* 팝업 추가창 end*/
 	
-	
-	/* 페이징 시작 */
-	.paging-div{
-		margin-top: 28px;
-	}
-	
-	/* 페이징 부분 가운데 정렬 */
-	.pagination-ul{
-		justify-content: right;
-    	margin-right: 100px;
-		display: flex;
-	}
-	.pagination-ul>li{
-		margin-right:5px;
-	}
-	/* 현재 눌려있는 페이지 버튼 */
-	.active-btn{
-		border: 1px solid #5055b1;
-	    border-radius: 6px;
-	    width: 35px;
-	    height: 35px;
-		display: flex;
-	    justify-content: center;
-	    align-items: center;
-	}
-	
-	.active-btn>a{
-		font-size:16px;
-		color: #5055b1;
-		text-decoration: none;
-	    font-weight: 700;
-	}
-	
-	/* 눌려있지 않은 페이지 버튼 */
-	.non-active-btn{
-		/* border: 1px solid #c8c8c8; */
-	    border-radius: 6px;
-	    width: 35px;
-	    height: 35px;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	}
-	
-	.non-active-btn>a{
-		font-size:16px;
-		color: #b1b1b1;
-		text-decoration: none;
-	}
-	/* 한 row 이전으로 가는 <버튼 */
-	.pre-btn{
-		border-radius: 6px;
-	    width: 35px;
-	    height: 35px;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;	
-	}
-	.pre-btn>a{
-			font-size: 16px;
-		color: #5055b1;
-	    text-decoration: none;
-	}
-	
-	/* 한 row 다음으로 가는 >버튼 */
-	.next-btn{
-		border-radius: 6px;
-	    width: 35px;
-	    height: 35px;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	}
-	
-	.next-btn>a{
-		font-size: 16px;
-		color: #5055b1;
-	    text-decoration: none;
-	}
-	/* 페이징 끝 */
-	
 	.sumo {
-		color : black;
+		color: black;
 	}
 	li.opt {
 		color : black;
@@ -225,6 +161,15 @@
 	.fixed {
 		position: sticky;
 		top: 0;
+	}
+	
+	#pageBtn {
+		display: flex;
+	    align-items: baseline;
+	    justify-content: flex-end;
+	}
+	#currentPage {
+		width: 30px;
 	}
 </style>
 
@@ -259,7 +204,21 @@ function changeContent(data) {
 	
 	<!-- 검색 박스 -->
 	<div class="searchBox">
+	<div class="searchBoxxx">
 		<form name="searchBoxx">
+		
+		<!-- 정렬용 -->
+			<input type="hidden" name="sortBuyerCd" value="${pricing.sortBuyerCd }">
+			<input type="hidden" name="sortProductCd" value="${pricing.sortProductCd }">
+			<input type="hidden" name="sortPrice" value="${pricing.sortPrice }">
+			<input type="hidden" name="sortStartdate" value="${pricing.sortStartdate }">
+			<input type="hidden" name="sortEnddate" value="${pricing.sortEnddate }">
+			<input type="hidden" name="sortDiscountrate" value="${pricing.sortDiscountrate }">
+			<input type="hidden" name="sortFinalPrice" value="${pricing.sortFinalPrice }">
+			<input type="hidden" name="sortCurrency" value="${pricing.sortCurrency }">
+			<input type="hidden" name="sortAdddate" value="${pricing.sortAdddate }">
+			<input type="hidden" name="sortStatusdate" value="${pricing.sortStatusdate }">
+		
 			고객코드
 			<select name="buyerCd" class="keyword sumo sumoBuy">
 				<option value="All"></option>
@@ -275,14 +234,16 @@ function changeContent(data) {
 				</c:forEach>
 			</select>
 			판매가
-			<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword">~
-					<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword">
+			<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword price">
+			~
+			<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword price"><p>
 			기준일
-			<input type="date" name="validDate" value="${pricing.validDate }">
+			<input type="date" name="validDate" value="${pricing.validDate }" class="keyword validDate">
 			할인율
-			<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword">
-			통화단위선택
+			<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword discountrate">
+			통화단위
 				<select name="currency" class="keyword">
+					<option value="All" <c:if test="${pricing.currency == 'All'}">selected="selected"</c:if>>선택</option>
 					<option value="원(₩)" <c:if test="${pricing.currency == '원(₩)'}">selected="selected"</c:if>>원(₩)</option>
 					<option value="달러($)" <c:if test="${pricing.currency == '달러($)'}">selected="selected"</c:if>>달러($)</option>
 					<option value="앤(¥)" <c:if test="${pricing.currency == '앤(¥)'}">selected="selected"</c:if>>앤(¥)</option>
@@ -305,65 +266,57 @@ function changeContent(data) {
 				</c:if>
 			</select>
 		</form>
-		<button id="searchBtn">검색</button>
 		<button id="initBtn">검색결과 초기화</button>
+		<button id="searchBtn">검색</button>
+	</div>
 	</div>
 	
 	
 	<!-- 판매가 등록 -->
 	<div class="btn">
-	<button id="show">등록</button>
-	<button type="button" onclick="deleteAction()">삭제</button>
+		<button id="show">등록</button>
+		<c:if test="${pricing.del != 'Y'}">
+			<button type="button" onclick="deleteAction()">삭제</button>
+		</c:if>
+		<c:if test="${pricing.del == 'Y'}">
+			<button type="button" onclick="restoreAction()">복원</button>
+		</c:if>
 	
-	<form name="page" class="listCount">
-		<span>
-			<select id="listview">
-			<c:if test="${rowPerPage ==10}">
-				<option value="10" selected="selected">10개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=10}">
-				<option value="10">10개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==50}">
-				<option value="50" selected="selected">50개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=50}">
-				<option value="50">50개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==100}">
-				<option value="100" selected="selected">100개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=100}">
-				<option value="100">100개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==300}">
-				<option value="300" selected="selected">300개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=300}">
-				<option value="300">300개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==500}">
-				<option value="500" selected="selected">500개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=500}">
-				<option value="500">500개씩보기</option>
-			</c:if>
-			
-			
-			</select>
-		</span>
-	</form>
+		<div id="page">
+			<form name="itemLimit">
+				<select name="rowPerPage" id="limit">
+					<option value="10" <c:if test="${pricing.rowPerPage == 10 }">selected="selected"</c:if> >
+						10개씩보기
+					</option>
+					<option value="50" <c:if test="${pricing.rowPerPage == 50 }">selected="selected"</c:if> >
+						50개씩보기
+					</option>
+					<option value="100" <c:if test="${pricing.rowPerPage == 100 }">selected="selected"</c:if> >
+						100개씩보기
+					</option>
+					<option value="300" <c:if test="${pricing.rowPerPage == 300 }">selected="selected"</c:if> >
+						300개씩보기
+					</option>
+					<option value="500" <c:if test="${pricing.rowPerPage == 500 }">selected="selected"</c:if> >
+						500개씩보기
+					</option>
+				</select>
+			</form>
+		</div>
 	</div>
 	
 	<!-- 리스트 박스 -->
 	<div class="listBox">
 		<table class="tableList">
 			<tr class="header">
-				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll"></th>
+				<th class="fixed">
+					<c:if test="${pricing.del == 'Y'}">
+						<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
+					</c:if>
+					<c:if test="${pricing.del == 'N' or pricing.del == 'All'}">
+						<input type="checkbox" name="checkAll" id="th_checkAll">
+					</c:if>
+				</th>
 				<th class="fixed">번호</th>
 				<th class="fixed" id="sortBuyerCd">고객코드</th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
@@ -382,8 +335,16 @@ function changeContent(data) {
 			<c:if test="${not empty pricingList}">
 				<c:forEach var="pricing" items="${pricingList}" varStatus="status">
 					<tr class="list">
-						<td><input type="checkbox" name="checkRow" 
-								value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }"></td>
+						<td>
+							<c:if test="${pricing.del == 'Y'}">
+								<input type="checkbox" name="deletedRow" 
+									value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }">
+							</c:if>
+							<c:if test="${pricing.del == 'N'}">
+								<input type="checkbox" name="checkRow" 
+									value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }">
+							</c:if>
+						</td>
 						<td>${status.count }</td>
 						<td>${pricing.buyerCd }</td>
 						<td>${pricing.productCd }</td>
@@ -410,21 +371,32 @@ function changeContent(data) {
 				<div class="writeForm">
 				
 				<form action="" name="pricing">
-					<p>고객명<input type="text" name="buyerName">&nbsp;&nbsp;&nbsp;&nbsp;
-						고객코드<input type="text" name="buyerCd"></p><p>
-					<p>상품명<input type="text" name="productName">&nbsp;&nbsp;&nbsp;&nbsp;
-						상품코드<input type="text" name="productCd"></p><p>
-						판매가<input type="number" name="price"><br>
-					<p>계약시작일<input type="date" name="startdate">&nbsp;&nbsp;&nbsp;&nbsp;
-						계약종료일<input type="date" name="enddate"></p><p>
-					<p>할인율<input type="number" name="discountrate">&nbsp;&nbsp;&nbsp;&nbsp;
+					고객코드
+					<select name="buyerCd" class="keyword sumo sumoBuy">
+						<option value="All"></option>
+						<c:forEach var="pricing" items="${pricingList }">
+							<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+						</c:forEach>
+					</select><br><br>
+					상품코드
+					<select name="productCd" class="keyword sumo sumoProd">
+						<option value="All"></option>
+						<c:forEach var="pricing" items="${pricingList }">
+							<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+						</c:forEach>
+					</select><br><br>
+					판매가<input type="number" name="price"><br><br>
+					할인율<input type="number" name="discountrate"><br><br>
+					계약시작일<input type="date" name="startdate">
+					계약종료일<input type="date" name="enddate"><br><br>
+					통화단위
 					<select name="currency">
-						<option>통화단위 선택</option>
+						<option>선택</option>
 						<option value="원(₩)">원(₩)</option>
 						<option value="달러($)">달러($)</option>
 						<option value="앤(¥)">앤(¥)</option>
 						<option value="위안(元)">위안(元)</option>
-					</select><p>
+					</select><br><br>
 				</form>
 				<button id="addItem">추가</button>
 				<div id="addItemDiv">
@@ -452,53 +424,17 @@ function changeContent(data) {
 	</div>
 	
 	<!-- 페이징 -->
-		<div class="paging-div">
- 				<c:if test="${empty pricingList }">
-				</c:if> 
-				<c:if test="${not empty pricingList }">
-					
-					<ul class="pagination-ul">
-						<c:if test="${pb.startPage > pb.pagePerBlock }">
-							<li class="pre-btn">
-								<a href="#" onclick="changeContent('pricing.do?pageNum=1')">
-<!-- 									<span class="glyphicon glyphicon-chevron-left"></span> -->
-								</a>
-							</li>
-							<li class="pre-btn">
-								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.startPage-1 }')">
-<!-- 									<span class="glyphicon glyphicon-chevron-left"></span> -->
-								</a>
-							</li>							
-						</c:if>
-						<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
-							<c:if test="${pb.currentPage == i }">
-								<li class="active-btn">
-									<a href="#" onclick="changeContent('pricing.do?pageNum=${i }')">${i }</a>
-								</li>
-							</c:if>
-							<c:if test="${pb.currentPage != i }">
-								<li class="non-active-btn">
-									<a href="#" onclick="changeContent('pricing.do?pageNum=${i }')">${i }</a>
-								</li>
-							</c:if>
-						</c:forEach>
-						<c:if test="${pb.endPage < pb.totalPage }">
-							<li class="next-btn">
-								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.endPage }')">
-<!-- 									<span class="glyphicon glyphicon-chevron-right"></span> -->
-								</a>
-							</li>
-							<li class="next-btn">
-								<a href="#" onclick="changeContent('pricing.do?pageNum=${pb.totalPage+1 }')">
-<!-- 									<span class="glyphicon glyphicon-chevron-right"></span> -->
-								</a>
-							</li>
-						</c:if>
-					</ul>
-					
-				</c:if>
-		</div>
-		<!-- 페이징 끝 -->
+	<div id="pageBtn">
+		<c:if test="${pricing.currentPage != 1}">
+			<h5 id="prev">이전</h5>
+		</c:if>
+		<form name="paging">
+		 	<input type="number" name="currentPage" value="${pricing.currentPage }" id="currentPage"> / ${pricing.totalPage }
+		</form>
+		<c:if test="${pricing.currentPage != pricing.totalPage}">
+			<h5 id="next">다음</h5>
+		</c:if>
+	</div>
 </div>
 </body>
 
@@ -537,15 +473,6 @@ function changeContent(data) {
 	
 	
 	
-	// 체크박스 모두선택
-	function checkAll(){
-	    if( $("#th_checkAll").is(':checked') ){
-	      $("input[name=checkRow]").prop("checked", true);
-	    }else{
-	      $("input[name=checkRow]").prop("checked", false);
-	    }
-	}
-	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
 	
 	
 	
@@ -595,7 +522,23 @@ function changeContent(data) {
 	function deleteItem(e) {
 		e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 	}
+	</script>
 	
+<c:if test="${pricing.del =='N' or pricing.del == 'All' }">
+	<script type="text/javascript">
+// 	체크박스 모두선택
+	function checkAll(){
+	    if( $("#th_checkAll").is(':checked') ){
+	      $("input[name=checkRow]").prop("checked", true);
+	    }else{
+	      $("input[name=checkRow]").prop("checked", false);
+	    }
+	}
+	document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	</script>
+</c:if>
+	
+	<script type="text/javascript">
 	// 체크박스 선택시 삭제
 	function deleteAction(){
 		  var checkRow = new Array();
@@ -626,8 +569,56 @@ function changeContent(data) {
 			    }
 		  });
 	};
+	</script>
 	
 	
+	<!-- 삭제 항목 복원  -->
+	<c:if test="${pricing.del =='Y'}">
+		<script type="text/javascript">
+			function delCheckAll(){
+			    if( $("#th_deletedCheckAll").is(':checked') ){
+			      $("input[name=deletedRow]").prop("checked", true);
+			    }else{
+			      $("input[name=deletedRow]").prop("checked", false);
+			    }
+			}
+		
+			document.querySelector("#th_deletedCheckAll").addEventListener("click", delCheckAll);
+		</script>
+	</c:if>
+	<script type="text/javascript">
+	
+	
+	function restoreAction(){
+		  var checkRow = new Array();
+		  $( "input[name='deletedRow']:checked" ).each (function (){
+		    checkRow.push($(this).val());
+		  });
+		  
+		  if(checkRow == ''){
+		    alert("복원할 대상을 선택하세요.");
+		    return false;
+		  }
+		  $.ajax({
+			    url : "pricingRestore.do",
+			    type : "post",
+			    traditional : true,
+			    data : { checkRows : checkRow },
+			    
+			    success : function(result){
+			    	if(result ==1){
+			    		alert("복원완료");
+			    		search();
+			    		
+			    	}else
+			    		alert("복원실패");
+			    }
+		  });
+	};
+	</script>
+	
+	
+	<script type="text/javascript">
 	//등록창 리스트 전체 등록
 	function pricingInsert() {
 		const table = document.querySelector('#addItemTable');
@@ -763,30 +754,6 @@ function changeContent(data) {
             });
    });
 	
-// 	리스트 보기 갯수변경
-	 document.querySelector("#listview").addEventListener("change", listview);
- 	
- 	function listview() {
- 		let target = document.getElementById("listview");
- 	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
- 	      
- 		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-		     method: 'post', 
-		     url: 'pricing.do', 
-		     traditional: true,
-		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-		    	 page: page
-		     },
-		     success: function (result) { //성공했을떄 호출할 콜백을 지정
-		    	$('#content').children().remove();
-				$('#content').html(result);
-				 console.log(page);
-				{
-					
-				}
-			}
-	   	});
- 	}
  	
 //  	검색
  	function search() {
@@ -800,6 +767,20 @@ function changeContent(data) {
 			discountrate : searchBoxx.discountrate.value,	
 			currency : searchBoxx.currency.value,
 			del : searchBoxx.del.value,
+			
+			sortBuyerCd : searchBoxx.sortBuyerCd.value,
+			sortProductCd : searchBoxx.sortProductCd.value,
+			sortPrice : searchBoxx.sortPrice.value,
+			sortStartdate : searchBoxx.sortStartdate.value,
+			sortEnddate : searchBoxx.sortEnddate.value,
+			sortDiscountrate : searchBoxx.sortDiscountrate.value,
+			sortFinalPrice : searchBoxx.sortFinalPrice.value,
+			sortCurrency : searchBoxx.sortCurrency.value,
+			sortAdddate : searchBoxx.sortAdddate.value,
+			sortStatusdate : searchBoxx.sortStatusdate.value,
+			
+			rowPerPage : itemLimit.rowPerPage.value,
+			currentPage : paging.currentPage.value
 		}
 		console.log(keyword);
 		
@@ -837,6 +818,149 @@ $(document).ready(function() {
 //	검색초기화
 document.querySelector("#initBtn").addEventListener("click",  function(){callView('pricing.do')});
 	
+	
+// 	정렬
+	function initSort() {
+		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortProductCd.value = 0;
+		searchBoxx.sortPrice.value = 0;
+		searchBoxx.sortStartdate.value = 0;
+		searchBoxx.sortEnddate.value = 0;
+		searchBoxx.sortDiscountrate.value = 0;
+		searchBoxx.sortFinalPrice.value = 0;
+		searchBoxx.sortCurrency.value = 0;
+		searchBoxx.sortAdddate.value = 0;
+		searchBoxx.sortStatusdate.value = 0;
+	}
+
+	$('#sortBuyerCd').on('click', function() {
+		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 1;			
+		} else if (searchBoxx.sortBuyerCd.value == 1) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortProductCd').on('click', function() {
+		if (searchBoxx.sortProductCd.value == 0 || searchBoxx.sortProductCd.value == 2) {
+			initSort();
+			searchBoxx.sortProductCd.value = 1;			
+		} else if (searchBoxx.sortProductCd.value == 1) {
+			initSort();
+			searchBoxx.sortProductCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortPrice').on('click', function() {
+		if (searchBoxx.sortPrice.value == 0 || searchBoxx.sortPrice.value == 2) {
+			initSort();
+			searchBoxx.sortPrice.value = 1;		
+		} else if (searchBoxx.sortPrice.value == 1) {
+			initSort();
+			searchBoxx.sortPrice.value = 2;
+		}		
+		search();
+	});
+	$('#sortStartdate').on('click', function() {
+		if (searchBoxx.sortStartdate.value == 0 || searchBoxx.sortStartdate.value == 2) {
+			initSort();
+			searchBoxx.sortStartdate.value = 1;			
+		} else if (searchBoxx.sortStartdate.value == 1) {
+			initSort();
+			searchBoxx.sortStartdate.value = 2;
+		}		
+		search();
+	});
+	$('#sortEnddate').on('click', function() {
+		if (searchBoxx.sortEnddate.value == 0 || searchBoxx.sortEnddate.value == 2) {
+			initSort();
+			searchBoxx.sortEnddate.value = 1;			
+		} else if (searchBoxx.sortEnddate.value == 1) {
+			initSort();
+			searchBoxx.sortEnddate.value = 2;
+		}		
+		search();
+	});
+	$('#sortDiscountrate').on('click', function() {
+		if (searchBoxx.sortDiscountrate.value == 0 || searchBoxx.sortDiscountrate.value == 2) {
+			initSort();
+			searchBoxx.sortDiscountrate.value = 1;			
+		} else if (searchBoxx.sortDiscountrate.value == 1) {
+			initSort();
+			searchBoxx.sortDiscountrate.value = 2;
+		}		
+		search();
+	});
+	$('#sortFinalPrice').on('click', function() {
+		if (searchBoxx.sortFinalPrice.value == 0 || searchBoxx.sortFinalPrice.value == 2) {
+			initSort();
+			searchBoxx.sortFinalPrice.value = 1;			
+		} else if (searchBoxx.sortFinalPrice.value == 1) {
+			initSort();
+			searchBoxx.sortFinalPrice.value = 2;
+		}		
+		search();
+	});
+	$('#sortCurrency').on('click', function() {
+		if (searchBoxx.sortCurrency.value == 0 || searchBoxx.sortCurrency.value == 2) {
+			initSort();
+			searchBoxx.sortCurrency.value = 1;			
+		} else if (searchBoxx.sortCurrency.value == 1) {
+			initSort();
+			searchBoxx.sortCurrency.value = 2;
+		}		
+		search();
+	});
+	$('#sortAdddate').on('click', function() {
+		if (searchBoxx.sortAdddate.value == 0 || searchBoxx.sortAdddate.value == 2) {
+			initSort();
+			searchBoxx.sortAdddate.value = 1;			
+		} else if (searchBoxx.sortAdddate.value == 1) {
+			initSort();
+			searchBoxx.sortAdddate.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatusdate').on('click', function() {
+		if (searchBoxx.sortStatusdate.value == 0 || searchBoxx.sortStatusdate.value == 2) {
+			initSort();
+			searchBoxx.sortStatusdate.value = 1;			
+		} else if (searchBoxx.sortStatusdate.value == 1) {
+			initSort();
+			searchBoxx.sortStatusdate.value = 2;
+		}		
+		search();
+	});
+	
+// 		페이지 버튼, 페이지 당 요소 갯수
+		$('#prev').on('click', function() {
+			paging.currentPage.value--;
+			if (paging.currentPage.value < 1) {
+				paging.currentPage.value = 1;
+			}
+			search();
+		});
+		$('#next').on('click', function() {
+			paging.currentPage.value++;
+			
+			if (paging.currentPage.value > '${pricing.totalPage }') {
+				paging.currentPage.value = ${pricing.totalPage };
+			}
+			search();
+		});
+		
+		$('#limit').on('change', function() {
+			search();
+		});
+		
+		$('#currentPage').keydown(function(key) {
+			if(key.keyCode == 13) {
+				key.preventDefault();
+				search();
+			}
+		});
 </script>
 
 </html>
