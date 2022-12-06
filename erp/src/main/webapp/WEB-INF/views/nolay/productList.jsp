@@ -128,41 +128,41 @@
 	<h1 class="menuName">상품관리</h1>
 	<div id="searchBox">
 		<form id="searchBoxx">
-			<input type="hidden" id="sortProductCd" value="${ptoduct.productCd }">
-			<input type="hidden" id="sortPname" value="${ptoduct.pname }">
-			<input type="hidden" id="sortVolume" value="${ptoduct.volume }" >
-			<input type="hidden" id="sortUnit" value="${ptoduct.unit }">
-			<input type="hidden" id="sortCategory" value="${ptoduct.category }">
-			<input type="hidden" id="sortAdddate" value="${ptoduct.adddate }">
-			<input type="hidden" id="sortStatusDate" value="${ptoduct.statusdate }">
-			<input type="hidden" id="sortDel" value="${ptoduct.del }">
-				<span>
+			<input type="hidden" name="sortProductCd" value="${product.sortProductCd }">
+			<input type="hidden" name="sortPname" value="${product.sortPname }">
+			<input type="hidden" name="sortVolume" value="${product.sortVolume }" >
+			<input type="hidden" name="sortUnit" value="${product.sortUnit }">
+			<input type="hidden" name="sortCategory" value="${product.sortCategory }">
+			<input type="hidden" name="sortAddDate" value="${product.sortAddDate }">
+			<input type="hidden" name="sortStatusDate" value="${product.sortStatusDate }">
+			<input type="hidden" name="sortDel" value="${product.sortDel }">
+				<span style="margin-right: 5px; ">상품코드
 					<select name="productCd" class="productCd sumo">
-						<option value="All"></option>
+						<option value=""></option>
 						<c:forEach var="item" items="${allList }">
 							<option value="${item.productCd }">${item.productCd }</option>
 						</c:forEach>
 					</select>
 				</span>
-				<span>
+				<span style="margin-right: 5px; ">상품명
 					<select name="pname" class="pname sumo">
-						<option value="All"></option>
+						<option value=""></option>
 						<c:forEach var="item" items="${allList }">
 							<option value="${item.pname }">${item.pname }</option>
 						</c:forEach>
 					</select>
 				</span>
-				<span>
+				<span style="margin-right: 5px; ">용량
 					<select name="volume" class="volume sumo">
-						<option value="All"></option>
+						<option value=""></option>
 						<c:forEach var="item" items="${allList }">
 							<option value="${item.volume }">${item.volume }</option>
 						</c:forEach>
 					</select>
 				</span>
-				<span>
+				<span style="margin-right: 5px; ">상품카테고리
 					<select name="category" class="category sumo">
-						<option value="All"></option>
+						<option value=""></option>
 						<c:forEach var="item" items="${allList }">
 							<option value="${item.category }">${item.category }</option>
 						</c:forEach>
@@ -171,8 +171,8 @@
 				<span>
 					등록일<input type="date" name="adddate"> ~ <input type="date" name="adddate2">
 				</span>
-				<span>
-				상태 <select name="del">
+				<span style="margin-left: 600px; ">
+				상태 <select name="del" >
 						<c:if test="${product.del == null }">
 							<option value="null" selected="selected">모두보기
 						</c:if>
@@ -195,17 +195,17 @@
 					</select>
 				</span>
 		</form>
-		<button id="searchBtn" >검색</button>
+		<button id="searchBtn" style="margin-left: 1000px; margin-top: 50px;">검색</button>
 	</div>
 	
 
 	<span id="CCD">
-		<button id="show">상품등록 </button>
+		<button id="show">상품등록  </button>
 		<button type="button" onclick="deleteAction()">삭제</button>
 <!-- 		<button>엑셀 대량등록</button> -->
 	</span>	
-	<div id="productList">
-	<form name="page">
+	<div id="productList" style="width: 100px; margin-left: 90%;">
+	<form name="page" style="width: 100px;">
 		<span>
 			<select id="listview">
 			<c:if test="${rowPerPage ==10}">
@@ -256,7 +256,7 @@
 				<th class="fixed" id="sortVolume">용량</th>
 				<th class="fixed" id="sortUnit">단위</th>
 				<th class="fixed" id="sortCategory">상품 카테고리</th>
-				<th class="fixed" id="sortAdddate">등록일</th>
+				<th class="fixed" id="sortAddDate">등록일</th>
 				<th class="fixed" id="sortStatusDate">최종수정일</th>
 				<th class="fixed" id="sortDel">삭제여부</th>
 			</tr>
@@ -283,31 +283,19 @@
 		</table>
 	</form>
 	</div>
-	<div align="center">
-			<!-- 시작페이지가 pagePerBlock(10)보다 크면 앞에 보여줄 것이 있다 -->		
-		<c:if test="${pb.startPage > pb.pagePerBlock}">
-			<a href="productList.do?pageNum=1 ">
-				<span class="glyphicon glyphicon-fast-backward"></span></a>
-			<a href="productList.do?pageNum=${pb.startPage-1 }">
-				<span class="glyphicon glyphicon-triangle-left"></span></a>
+	
+	<div id="pageBtn" style="margin-left: 80%">
+		<c:if test="${pb.currentPage != 1}">
+			<h6 id="prev">이전</h6>
 		</c:if>
-		<c:forEach var="i" begin="${pb.startPage }" end="${pb.endPage }">
-			<c:if test="${pb.currentPage == i }">
-				<a href="productList.do?pageNum=${i }">${i }</a>
-			</c:if>
-			<c:if test="${pb.currentPage != i }">
-				<a href="productList.do?pageNum=${i }">${i }</a>
-			</c:if>		
-		</c:forEach>
-		<!-- endPage보다 totalPage가 크면 보여줄 것이 뒤에 남아 있다 -->
-			<c:if test="${pb.endPage < pb.totalPage}">
-				<a href="productList.do?pageNum=${pb.endPage+1 }">
-					<span class="glyphicon glyphicon-triangle-right"></span></a>
-				<a href="productList.do?pageNum=${pb.totalPage }">
-					<span class="glyphicon glyphicon-fast-forward"></span></a>
-			</c:if>		
-		</div>
+		<form name="paging">
+		 	<input type="number" name="currentPage" value="${pb.currentPage }" id="currentPage"> / ${pb.totalPage }
+		</form>
+		<c:if test="${pb.currentPage != pb.totalPage}">
+			<h6 id="next">다음</h6>
+		</c:if>
 	</div>
+</div>
 	<div class="background">
 		<div class="window">
 			<div class="popup">
@@ -446,33 +434,43 @@
 	
 	
 	
-        document.querySelector("#listview").addEventListener("change", listview);
-    	
-    	function listview() {
-    		let target = document.getElementById("listview");
-    	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
-    	      const keyword = {
-    	  			productCd : searchBoxx.productCd.value,	
-    	  			pname : searchBoxx.pname.value,	
-    	  			volume : searchBoxx.volume.value,	
-    	  			category : searchBoxx.category.value,	
-    	  			adddate : searchBoxx.adddate.value,	
-    	  			adddate2 : searchBoxx.adddate2.value,	
-    	  			del : searchBoxx.del.value	
-    	  		} 
-    		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-   		     method: 'post', 
-   		     url: 'productSearch.do', 
-   		     traditional: true,
-   		 	 data: {
-		    	keyword: JSON.stringify(keyword),
-		    	page : page
-   		     },
-   		     success: function (result) { //성공했을떄 호출할 콜백을 지정
-   		    	$('#content').children().remove();
-   				$('#content').html(result);
-   			}
-   	   	});
+       document.querySelector("#listview").addEventListener("change", listview);
+   	
+   	function listview() {
+   		let target = document.getElementById("listview");
+   	      page= target.options[target.selectedIndex].value;     // 옵션 value 값
+   	      const keyword = {
+   	  			productCd : searchBoxx.productCd.value,	
+   	  			pname : searchBoxx.pname.value,	
+   	  			volume : searchBoxx.volume.value,	
+   	  			category : searchBoxx.category.value,	
+   	  			adddate : searchBoxx.adddate.value,	
+   	  			adddate2 : searchBoxx.adddate2.value,	
+	   	  		del : searchBoxx.del.value,
+	   	  		
+	   	  		sortProductCd : searchBoxx.sortProductCd.value,
+				sortPname : searchBoxx.sortPname.value,
+				sortVolume : searchBoxx.sortVolume.value,
+				sortUnit : searchBoxx.sortUnit.value,
+				sortCategory : searchBoxx.sortCategory.value,
+				sortAddDate : searchBoxx.sortAddDate.value,
+				sortStatusDate : searchBoxx.sortStatusDate.value,
+				sortDel : searchBoxx.sortDel.value
+   	  				
+   	  		} 
+   		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+  		     method: 'post', 
+  		     url: 'productSearch.do', 
+  		     traditional: true,
+  		 	 data: {
+	    	keyword: JSON.stringify(keyword),
+	    	page : page
+  		     },
+  		     success: function (result) { //성공했을떄 호출할 콜백을 지정
+  		    	$('#content').children().remove();
+  				$('#content').html(result);
+  			}
+  	   	});
     }
     	
 </script>
@@ -564,6 +562,7 @@
 			adddate : searchBoxx.adddate.value,	
 			adddate2 : searchBoxx.adddate2.value,	
 			del : searchBoxx.del.value,
+			currentPage : paging.currentPage.value,
 			
 			sortProductCd : searchBoxx.sortProductCd.value,
 			sortPname : searchBoxx.sortPname.value,
@@ -594,8 +593,8 @@
 	   });
 
 	};
+	document.querySelector("#searchBtn").addEventListener("click", search);
 
-document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -615,74 +614,7 @@ $(document).ready(function() {
 
 </script>
 <script type="text/javascript">
-	$('#sortProductCd').on('click', function(){
-		if(searchBoxx.sortProductCd.value==0 || serchBoxx.sortProductCd.value == 2){
-			initSort();
-			searchBoxx.sortProductCd.value = 1;
-		}else if (searchBoxx.sortProductCd.value == 1){
-			initSort();
-			searchBoxx.sortProductcd.value ==2;
-		}
-	$('#sortPname').on('click', function(){
-		if(searchBoxx.sortPname.value==0 || serchBoxx.sortPname.value == 2){
-			initSort();
-			searchBoxx.sortPname.value = 1;
-		}else if (searchBoxx.sortPname.value == 1){
-			initSort();
-			searchBoxx.sortPname.value ==2;
-		}
-	$('#sortVolume').on('click', function(){
-		if(searchBoxx.sortVolume.value==0 || serchBoxx.sortVolume.value == 2){
-			initSort();
-			searchBoxx.sortVolume.value = 1;
-		}else if (searchBoxx.sortVolume.value == 1){
-			initSort();
-			searchBoxx.sortVolume.value ==2;
-		}
-	$('#sortUnit').on('click', function(){
-		if(searchBoxx.sortUnit.value==0 || serchBoxx.sortUnit.value == 2){
-			initSort();
-			searchBoxx.sortUnit.value = 1;
-		}else if (searchBoxx.sortUnit.value == 1){
-			initSort();
-			searchBoxx.sortUnit.value ==2;
-		}
-	$('#sortCategory').on('click', function(){
-		if(searchBoxx.sortCategory.value==0 || serchBoxx.sortCategory.value == 2){
-			initSort();
-			searchBoxx.sortCategory.value = 1;
-		}else if (searchBoxx.sortCategory.value == 1){
-			initSort();
-			searchBoxx.sortCategory.value ==2;
-		}
-	$('#sortAddDate').on('click', function(){
-		if(searchBoxx.sortAddDate.value==0 || serchBoxx.sortAddDate.value == 2){
-			initSort();
-			searchBoxx.sortAddDate.value = 1;
-		}else if (searchBoxx.sortAddDate.value == 1){
-			initSort();
-			searchBoxx.sortAddDate.value ==2;
-		}
-	$('#sortStatusDate').on('click', function(){
-		if(searchBoxx.sortStatusDate.value==0 || serchBoxx.sortStatusDate.value == 2){
-			initSort();
-			searchBoxx.sortStatusDate.value = 1;
-		}else if (searchBoxx.sortStatusDate.value == 1){
-			initSort();
-			searchBoxx.sortStatusDate.value ==2;
-		}
-	$('#sortDel').on('click', function(){
-		if(searchBoxx.sortDel.value==0 || serchBoxx.sortDel.value == 2){
-			initSort();
-			searchBoxx.sortDel.value = 1;
-		}else if (searchBoxx.sortDel.value == 1){
-			initSort();
-			searchBoxx.sortDel.value ==2;
-		}
-		search();
-	});
-</script>
-<script type="text/javascript">
+
 	function initSort() {
 		searchBoxx.sortProductCd.value=0;
 		searchBoxx.sortPname.value=0;
@@ -693,6 +625,115 @@ $(document).ready(function() {
 		searchBoxx.sortStatusDate.value=0;
 		searchBoxx.sortDel.value=0;
 	}
+	$('#sortProductCd').on('click', function(){
+		if(searchBoxx.sortProductCd.value==0 || searchBoxx.sortProductCd.value == 2){
+			initSort();
+			searchBoxx.sortProductCd.value = 1;
+		}else if (searchBoxx.sortProductCd.value == 1){
+			initSort();
+			searchBoxx.sortProductCd.value = 2;
+		}
+		search();
+	});
+	$('#sortPname').on('click', function(){
+		if(searchBoxx.sortPname.value==0 || searchBoxx.sortPname.value == 2){
+			initSort();
+			searchBoxx.sortPname.value = 1;
+		}else if (searchBoxx.sortPname.value == 1){
+			initSort();
+			searchBoxx.sortPname.value = 2;
+		}
+		search();
+		
+	});
+	$('#sortVolume').on('click', function(){
+		if(searchBoxx.sortVolume.value==0 || searchBoxx.sortVolume.value == 2){
+			initSort();
+			searchBoxx.sortVolume.value = 1;
+		}else if (searchBoxx.sortVolume.value == 1){
+			initSort();
+			searchBoxx.sortVolume.value = 2;
+		}
+		search();
+	});
+	$('#sortUnit').on('click', function(){
+		if(searchBoxx.sortUnit.value==0 || searchBoxx.sortUnit.value == 2){
+			initSort();
+			searchBoxx.sortUnit.value = 1;
+		}else if (searchBoxx.sortUnit.value == 1){
+			initSort();
+			searchBoxx.sortUnit.value = 2;
+		}
+		search();
+	});
+	$('#sortCategory').on('click', function(){
+		if(searchBoxx.sortCategory.value==0 || searchBoxx.sortCategory.value == 2){
+			initSort();
+			searchBoxx.sortCategory.value = 1;
+		}else if (searchBoxx.sortCategory.value == 1){
+			initSort();
+			searchBoxx.sortCategory.value = 2;
+		}
+		search();
+	});
+	$('#sortAddDate').on('click', function(){
+		if(searchBoxx.sortAddDate.value==0 || searchBoxx.sortAddDate.value == 2){
+			initSort();
+			searchBoxx.sortAddDate.value = 1;
+		}else if (searchBoxx.sortAddDate.value == 1){
+			initSort();
+			searchBoxx.sortAddDate.value = 2;
+		}
+		search();
+	});
+	$('#sortStatusDate').on('click', function(){
+		if(searchBoxx.sortStatusDate.value==0 || searchBoxx.sortStatusDate.value == 2){
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;
+		}else if (searchBoxx.sortStatusDate.value == 1){
+			initSort();
+			searchBoxx.sortStatusDate.value = 2;
+		}
+		search();
+	});
+	$('#sortDel').on('click', function(){
+		if(searchBoxx.sortDel.value==0 || searchBoxx.sortDel.value == 2){
+			initSort();
+			searchBoxx.sortDel.value = 1;
+		}else if (searchBoxx.sortDel.value == 1){
+			initSort();
+			searchBoxx.sortDel.value = 2;
+		} 
+		search();
+	});
+</script>
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${pb.totalPage }') {
+			paging.currentPage.value = ${pb.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	
+	$('#currentPage').keydown(function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();
+			search();
+		}
+	});
 </script>
 
 </body>

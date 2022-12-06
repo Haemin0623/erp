@@ -41,6 +41,15 @@ public class ProductController {
 		pagingBean.setStartRow(startRow);
 		pagingBean.setEndRow(endRow);
 		
+		product.setSortAddDate(1);
+		product.setSortCategory(0);
+		product.setSortDel(0);
+		product.setSortPname(0);
+		product.setSortProductCd(0);
+		product.setSortUnit(0);
+		product.setSortStatusDate(0);
+		product.setSortVolume(0);
+		
 		List<Product> productList = pds.productList(pagingBean,product);
 		List<Product> allList = pds.allList();
 		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
@@ -145,6 +154,8 @@ public class ProductController {
 			String category = (String) keywordObj.get("category");
 			product.setCategory(category);
 			
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			pagingBean.setCurrentPage(currentPage);
 			int sortProductCd = Integer.valueOf((String) keywordObj.get("sortProductCd"));
 			product.setSortProductCd(sortProductCd);
 			int sortPname = Integer.valueOf((String) keywordObj.get("sortPname"));
@@ -161,18 +172,18 @@ public class ProductController {
 			product.setSortStatusDate(sortStatusDate);
 			int sortDel = Integer.valueOf((String) keywordObj.get("sortDel"));
 			product.setSortDel(sortDel);
-			
 			String adddate = (String) keywordObj.get("adddate");
 			if (adddate != null && !adddate.equals("") ) {
 				Date date = Date.valueOf(adddate);
 				product.setAdddate(date);
 			}
-
+				System.out.println(product.getAdddate());
 			
 			String adddate2 = (String) keywordObj.get("adddate2");
 			if (adddate2 != null && !adddate2.equals("") ) {
 				Date date = Date.valueOf(adddate2);
 				product.setAdddate2(date);
+				System.out.println(product.getAdddate2());
 			}
 			
 			
@@ -186,7 +197,6 @@ public class ProductController {
 				rowPerPage = 10;
 			}else rowPerPage = Integer.parseInt(page);
 			if (pageNum == null || pageNum.equals("")) pageNum = "1";
-			int currentPage = Integer.parseInt(pageNum);
 			int total = pds.getTotal(pagingBean,product);
 			int startRow = (currentPage - 1) * rowPerPage + 1;
 			int endRow = startRow + rowPerPage - 1;
@@ -194,10 +204,8 @@ public class ProductController {
 			pagingBean.setStartRow(startRow);
 			pagingBean.setEndRow(endRow);
 			
-			System.out.println("search"+product.getDel());
 			List<Product> productList = pds.productList(pagingBean,product);
 			List<Product> allList = pds.allList();
-			
 			PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
 			model.addAttribute("productList",productList);
 			model.addAttribute("num",num);

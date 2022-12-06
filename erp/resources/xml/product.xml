@@ -7,23 +7,23 @@
 			from 	(select a.*, rowNum rn from 
 						(select * from m_product
 						<where>
-							<if test="product.productCd!=null and product.productCd!=''and product.productCd != 'All'">
-									product_cd like '%' || #{product.productCd} || '%'
+							<if test="product.productCd!=null and product.productCd != ''">
+									and product_cd like '%' || #{product.productCd} || '%'
 							</if>
-							<if test="product.pname!=null and product.pname!='' and product.productCd != 'All'">
+							<if test="product.pname!=null and product.pname!='' ">
 									and pname like '%' || #{product.pname} || '%'
 							</if>
-							<if test="product.volume!=null and product.volume!='' and product.productCd != 'All'">
+							<if test="product.volume!=null and product.volume!='' ">
 									and volume like '%' || #{product.volume} || '%'
 							</if>
-							<if test="product.category!=null and product.category!='' and product.productCd != 'All'">
+							<if test="product.category!=null and product.category!='' ">
 									and category like '%' || #{product.category} || '%'
 							</if>
 							<if test="product.adddate!=null and product.adddate2!=null" >
 									and adddate between #{product.adddate} and #{product.adddate2} 
 							</if>
 							<if test='product.del=="N"'>
-									and del='N'							
+									and del='N'	
 							</if>
 							<if test='product.del=="Y"'>
 									and del='Y'							
@@ -72,7 +72,7 @@
 							<if test="product.sortDel ==2">
 								Del asc
 							</if>
-							<if test="product.sortAddDate ==1 || product.sortAddDate ==0">
+							<if test="product.sortAddDate ==1">
 								AddDate desc
 							</if>
 							<if test="product.sortAddDate ==2">
