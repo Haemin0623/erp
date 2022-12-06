@@ -7,7 +7,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style type="text/css">
+	.orderApprovalBtnBox {
+		text-align: center;
+		/* display: none; */
+		
+	}
+	.orderApproval {
+		display :inline-block;
+	}
+	.itemTable {
+		background-color: #fff;
+	    overflow-x: hidden;
+	    resize: both;
+	    box-shadow: 2px -1px 4px #b1b1b1;
+	    /* overflow-y: scroll; */
+	    height: 280px;
+	}
+	.itemList {
+		margin: 4px 10px 0 10px;
+		border-collapse: collapse;
+		font-size: 12px;
+ 		width: 100%;
+	}
+	.hideApprovalBtn {
+		display: none;
+	}
+</style>
 
 </head>
 <body>
@@ -171,8 +197,8 @@
 	</div>
 
 
-	<div class="table">
-		<table class="list">
+	<div class="itemTable">
+		<table class="itemList">
 			<tr>
 				<th>No.</th>
 				<th>상품코드</th>
@@ -186,11 +212,11 @@
 			<tbody id="statusTable"/>
 			<tbody id="area"/>
 		</table>
-		<div>
+	</div>
+		<div class="orderApprovalBtnBox">
 			<button class='orderApproval' name='btn' value='승인'>승인</button>
 			<button class='orderApproval' name='btn' value='반려'>반려</button>
 		</div>
-	</div>
 		
 </div>	
 </body>
@@ -275,11 +301,11 @@
 		
 		let thisRow = $(this).closest('tr');
 		let orderNo = thisRow.find('td:eq(0)').find('input').val();
-		let status = thisRow.find('td:eq(5)').find('input').val();
-		let reason = thisRow.find('td:eq(7)').find('input').val();
+		let status = thisRow.find('td:eq(4)').find('input').val();
+		let reason = thisRow.find('td:eq(6)').find('input').val();
 		
 		/* console.log(reason); */
-		/* console.log(status); */
+		console.log(status);
 		/* alert(orderNo); */
 		
 		$.ajax({
@@ -320,29 +346,32 @@
 						
 						$('#area').append(
 							"<tr>" +
-							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason'></textarea></td>"+
+							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' style='width:99%; resize: none; text-align: center;'></textarea></td>"+
 							"</tr>"
 						);
+						$(".orderApprovalBtnBox").removeClass('hideApprovalBtn');
 	
 					} else if (status == "승인" || status == "반려" ) {
 						if (reason != "") {
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver;'></textarea></td>"+
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
 								"</tr>"
 							);
 							$('#textarea').val(reason);
+							$(".orderApprovalBtnBox").addClass('hideApprovalBtn');
 						}
 					} else if (status == "승인대기" ) {
 						if (reason == "") {
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver;'></textarea></td>"+
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
 								"</tr>"
 							);
 							$('#textarea').val("승인 대기 중");
+							$(".orderApprovalBtnBox").addClass('hideApprovalBtn');
 						}
 					
 					}
