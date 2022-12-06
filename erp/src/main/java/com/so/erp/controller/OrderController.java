@@ -367,7 +367,7 @@ public class OrderController {
 		for (OrderHead oh : orderStatusList) {
 			
 			oh.setUnitedAmount(dc.format(oh.getAmount()));
-			System.out.println(oh.getUnitedAmount());
+			oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
 		}
 		
 		exData(model);
@@ -409,9 +409,7 @@ public class OrderController {
 		
 		
 		List<OrderHead> headList = hs.search(orderHead);
-		
-		
-		
+
 		
 		exData(model);
 		
@@ -434,7 +432,7 @@ public class OrderController {
 		for (OrderItem oh : itemList) {
 			
 			oh.setUnitedAmount(dc.format(oh.getAmount()));
-			System.out.println(oh.getUnitedAmount());
+			oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
 		}
 		
 		
@@ -582,7 +580,7 @@ public class OrderController {
 			for (OrderHead oh : orderStatusList) {
 				System.out.println(oh.toString());
 				oh.setUnitedAmount(dc.format(oh.getAmount()));
-				System.out.println(oh.getUnitedAmount());
+				oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
 			}
 			System.out.println(orderHead.getAuth());
 			
@@ -705,7 +703,7 @@ public class OrderController {
 		for (OrderHead oh : list) {
 			System.out.println(oh.toString());
 			oh.setUnitedAmount(dc.format(oh.getAmount()));
-			System.out.println(oh.getUnitedAmount());
+			oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
 		}
 
 		

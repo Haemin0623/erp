@@ -305,7 +305,7 @@
 							"<td>" + x + "</td>" +
 							"<td>" + data[i].productCd + "</td>" +
 							"<td>" + data[i].pname + "</td>" +
-							"<td>" + data[i].requestqty + "</td>" +
+							"<td>" + data[i].unitedrequestqty + "</td>" +
 							"<td>" + reqDate + "</td>" +
 							"<td>" + data[i].price + "</td>" +
 							"<td>" + data[i].unitedAmount + "</td>" +

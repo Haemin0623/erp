@@ -57,8 +57,10 @@ public class OrderHead {
     // 검색용
     private String auth;
     private Date hstatusdate;
-    // 상품 단가 및 총 결제 금액 천 단위, 표시
+    // amount,  주문수량 천 단위, 표시
  	private String unitedAmount;
+ 	private String unitedrequestqty;
+ 	
     
     private int sortOrderNo;
     private int sortBuyerCd;

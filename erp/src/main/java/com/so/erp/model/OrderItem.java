@@ -16,8 +16,9 @@ public class OrderItem {
     private int amount;
     private String remark;
     
-    // 상품 단가 및 총 결제 금액 천 단위, 표시
+ // amount,  주문수량 천 단위, 표시
   	private String unitedAmount;
+  	private String unitedrequestqty;
   	
 // orderStatusList 조인용
     // orderHead

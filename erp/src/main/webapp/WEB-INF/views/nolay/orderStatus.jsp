@@ -171,7 +171,7 @@
 				<td><input type="hidden" value="${item.orderNo }">${item.orderNo }</td>
 				<td><input type="hidden" value="${item.productCd }">${item.productCd }</td>
 				<td>${item.pname }</td>
-				<td>${item.requestqty }</td>
+				<td>${item.unitedrequestqty }</td>
 				<td>${item.price }</td>
 				<td>${item.unitedAmount }</td>
 				<td>${item.ename }</td>
