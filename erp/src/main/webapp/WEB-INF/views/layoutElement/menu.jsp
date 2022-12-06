@@ -100,19 +100,11 @@
 				<li class="menuList">주문</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('order.do')">주문 관리</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderApprovalWindow.do')">주문 승인</a></li>
-<<<<<<< HEAD
-=======
-			<!-- 	<li><a href="orderApprovalWindow.do">주문 승인</a></li> -->
->>>>>>> 7ad18d0 (주문현황 페이징 작업 중)
 			</ul>
 			
 			<ul>
 				<li class="menuList">REPORT</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderStatus.do')">주문 현황</a></li>
-<<<<<<< HEAD
-=======
-				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
->>>>>>> 7ad18d0 (주문현황 페이징 작업 중)
 			</ul>
 	</div>
 	<hr class="line2">
