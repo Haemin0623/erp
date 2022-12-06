@@ -2,6 +2,7 @@ package com.so.erp.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -336,6 +337,8 @@ public class OrderController {
 			orderHead.setPageNum("1");
 		}
 		
+		System.out.println("pP"+orderHead.getPageNum());
+		
 		orderHead.setDel("N");		
 		orderHead.setSortOrderNo(0);
 		orderHead.setSortBuyerCd(0);
@@ -345,7 +348,9 @@ public class OrderController {
 		orderHead.setSortStatusDate(0);
 		
 		int currentPage = Integer.parseInt(orderHead.getPageNum());
+		System.out.println("cP"+currentPage);
 		int total = is.getTotal(orderHead);
+		System.out.println("tt"+total);
 		orderHead.pagingBean(currentPage, rowPerPage, total);
 		
 		
@@ -358,8 +363,16 @@ public class OrderController {
 	//	List<OrderItem> orderStatusList = is.orderStatusList();
 		List<OrderHead> orderStatusList = is.search(orderHead);
 		
+		DecimalFormat dc = new DecimalFormat("###,###,###,###");	// price 천단위 
+		for (OrderHead oh : orderStatusList) {
+			
+			oh.setUnitedAmount(dc.format(oh.getAmount()));
+			System.out.println(oh.getUnitedAmount());
+		}
+		
 		exData(model);
 		model.addAttribute("orderStatusList", orderStatusList);
+		model.addAttribute("orderItem", orderHead);
 		
 		return "nolay/orderStatus";
 	}
@@ -397,6 +410,9 @@ public class OrderController {
 		
 		List<OrderHead> headList = hs.search(orderHead);
 		
+		
+		
+		
 		exData(model);
 		
 		//List<OrderHead> headList = hs.headEmpList();	// head, employee
@@ -412,6 +428,15 @@ public class OrderController {
 		System.out.println("넘어오나~");
 		
 		List<OrderItem> itemList = is.itemList(orderNo);
+		
+		DecimalFormat dc = new DecimalFormat("###,###,###,###");	// price 천단위 
+		
+		for (OrderItem oh : itemList) {
+			
+			oh.setUnitedAmount(dc.format(oh.getAmount()));
+			System.out.println(oh.getUnitedAmount());
+		}
+		
 		
 		return itemList;
 	}
@@ -549,26 +574,21 @@ public class OrderController {
 			orderHead.setStartRow(startRow);
 			orderHead.setEndRow(endRow);
 			
-			
-			
 			List<OrderHead> orderStatusList = is.search(orderHead);
-			
 			System.out.println(orderStatusList.size());
+			
+			DecimalFormat dc = new DecimalFormat("###,###,###,###");	// price 천단위 
 			
 			for (OrderHead oh : orderStatusList) {
 				System.out.println(oh.toString());
-				
-
+				oh.setUnitedAmount(dc.format(oh.getAmount()));
+				System.out.println(oh.getUnitedAmount());
 			}
 			System.out.println(orderHead.getAuth());
 			
 			model.addAttribute("orderStatusList", orderStatusList);
 			model.addAttribute("orderItem", orderHead);
-			
-			
 			exData(model);
-			
-			
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
@@ -645,9 +665,6 @@ public class OrderController {
 		List<OrderHead> list = new ArrayList<>();
 		
 		OrderHead orderRow = new OrderHead();
-		
-		
-		
 
 		try {
 			JSONParser p = new JSONParser();
@@ -683,10 +700,14 @@ public class OrderController {
 		
 		System.out.println("size"+list.size());
 		
+		DecimalFormat dc = new DecimalFormat("###,###,###,###");
+		
 		for (OrderHead oh : list) {
 			System.out.println(oh.toString());
+			oh.setUnitedAmount(dc.format(oh.getAmount()));
+			System.out.println(oh.getUnitedAmount());
 		}
-		
+
 		
 		
 			

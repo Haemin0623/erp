@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
 
 <style type="text/css">
 
@@ -15,7 +14,12 @@
 	.scrollcontent {width: 3000px;}
 
 </style>
-	
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var J300 =  $.noConflict(true);	
+</script>
+
+
 </head>
 <body>
 <div id = "container">
@@ -140,7 +144,7 @@
 	<div class="scrollwrap">
 		<table class="scrollcontent">
 			<tr>
-				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
+				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll"></th>
 				<th class="fixed" id="sortOrderDate">주문일</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed">상품코드</th>
@@ -169,7 +173,7 @@
 				<td>${item.pname }</td>
 				<td>${item.requestqty }</td>
 				<td>${item.price }</td>
-				<td>${item.amount }</td>
+				<td>${item.unitedAmount }</td>
 				<td>${item.ename }</td>
 				<td>${item.status }</td>
 				<td>${item.hstatusdate }</td>
@@ -303,7 +307,7 @@
 		  
 		 console.log(checkRow);
 		 
-		 $.ajax({
+		 J300.ajax({
 			  url : 'excelDown.do',
 			  method : 'post',
 			  traditional : true,
@@ -360,11 +364,11 @@ $(document).ready(function() {
 		search: true,
 		searchText: '검색어 입력',
 	});
-	$('select.sumoBuy')[0].sumo.selectItem("${orderHead.buyerCd }");
+	$('select.sumoBuy')[0].sumo.selectItem("${orderItem.buyerCd }");
 	
-	$('select.sumoEmp')[0].sumo.selectItem("${orderHead.employeeCd }");
+	$('select.sumoEmp')[0].sumo.selectItem("${orderItem.employeeCd }");
 	
-	$('select.sumoProd')[0].sumo.selectItem("${orderHead.productCd }");
+	$('select.sumoProd')[0].sumo.selectItem("${orderItem.productCd }");
 	
 });
 

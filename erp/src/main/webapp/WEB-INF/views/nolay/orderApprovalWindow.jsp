@@ -308,7 +308,7 @@
 							"<td>" + data[i].requestqty + "</td>" +
 							"<td>" + reqDate + "</td>" +
 							"<td>" + data[i].price + "</td>" +
-							"<td>" + data[i].amount + "</td>" +
+							"<td>" + data[i].unitedAmount + "</td>" +
 							"<td>" + data[i].remark + "</td>" +
 						"</tr>"
 					);
