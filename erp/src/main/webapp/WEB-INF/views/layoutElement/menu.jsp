@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../layoutElement/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +78,12 @@
 <body>
 
 	<h1 class="text-primary">2조</h1>
+	<h6 class="text-primary">
+		<c:if test="${sessionScope.employeeCd != null }">
+			${sessionScope.employeeCd }(${sessionScope.ename })
+			<a href="logout.do">로그 아웃</a>
+		</c:if>
+	</h6>
 	<hr class="line">
 
 
@@ -93,19 +100,11 @@
 				<li class="menuList">주문</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('order.do')">주문 관리</a></li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderApprovalWindow.do')">주문 승인</a></li>
-<<<<<<< HEAD
-=======
-			<!-- 	<li><a href="orderApprovalWindow.do">주문 승인</a></li> -->
->>>>>>> 50c6a6c (주문현황 엑셀파일로 다운로드 완료)
 			</ul>
 			
 			<ul>
 				<li class="menuList">REPORT</li>
 				<li class="subMenu"><a href="javascript:void(0);" onclick="changeContent('orderStatus.do')">주문 현황</a></li>
-<<<<<<< HEAD
-=======
-				<!-- <li><a href="orderStatus.do">주문 현황</a></li> -->
->>>>>>> 50c6a6c (주문현황 엑셀파일로 다운로드 완료)
 			</ul>
 	</div>
 	<hr class="line2">

@@ -125,24 +125,5 @@ public class EmployeeController {
 		
 		return result;
 	}
-	@RequestMapping("login.do")
-	public String login(String employeeCd, String password, Model model, HttpServletResponse response,HttpServletRequest request) {
-		int result = 0;
-		Employee employee = es.select(employeeCd);
-		
-		if(employee == null || employee.getDel().equals("Y")) {
-			result = -1;//탈퇴 회원(퇴사자) 또는 조회한 아이디가 없으면  로그인실패
-		}else {
-				
-			 if(employee.getPassword().equals(password)) {
-				 String empc = employee.getEmployeeCd();
-				 HttpSession session = request.getSession(); 
-				 session.setAttribute("employeeCd", empc);
-				 result = 1;	//패스워드가 일치하는것은 1 로그인성공
-			} else 
-				result = 0; //패스워드 불일치
-		}
-		model.addAttribute("result",result);
-		return "page/loginResult";
-	}
+	
 }

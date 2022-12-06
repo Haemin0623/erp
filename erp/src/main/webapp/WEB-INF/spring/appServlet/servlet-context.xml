@@ -38,6 +38,60 @@
 	
 	<context:component-scan base-package="com.so.erp" />
 	
-	
+	<beans:bean id="sc" class="com.so.erp.service.SessionChk"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<!-- BuyerController -->
+			<mapping path="/buyer.do"/>
+			<mapping path="/dupChk.do"/>
+			<mapping path="/buyerInsert.do"/>
+			<mapping path="/buyerDelete.do"/>
+			<mapping path="/buyerUpdate.do"/>
+			<mapping path="/buyerSearch.do"/>
+			
+			<!-- OrderController -->
+			<mapping path="/order.do"/>
+			<mapping path="/orderSearch.do"/>
+			<mapping path="/orderInsert.do"/>
+			<mapping path="/orderStatus.do"/>
+			<mapping path="/orderApprovalWindow.do"/>
+			<mapping path="/orderItemList.do"/>
+			<mapping path="/orderApproval.do"/>
+			<mapping path="/approvalRequest.do"/>
+			<mapping path="/approvalCancel.do"/>
+			<mapping path="/orderSearch2.do"/>
+			<mapping path="/orderUpdate.do"/>
+			<mapping path="/getOrderCount.do"/>
+			<mapping path="/orderDelete.do"/>
+			<mapping path="/orderRestore.do"/>
+			<mapping path="/excelDown.do"/>
+			
+			<!-- PricingController -->
+			<mapping path="/pricing.do"/>
+			<mapping path="/pricingSearch.do"/>
+			<mapping path="/pricingDelete.do"/>
+			<mapping path="/pricingRestore.do"/>
+			<mapping path="/pricingInsert.do"/>
+			<mapping path="/pricingUpdate.do"/>
+			<mapping path="/getPrice.do"/>
+			<mapping path="/getPricingProductList.do"/>
+			
+			<!-- EmployeeController -->
+			<mapping path="/emp.do"/>
+			<mapping path="/empInsert.do"/>
+			<mapping path="/empSearch.do"/>
+			<mapping path="/empUpdate.do"/>
+			
+			<!-- ProductController -->
+			<mapping path="/productList.do"/>
+			<mapping path="/productDelete.do"/>
+			<mapping path="/productInsert.do"/>
+			<mapping path="/codeMix.do"/>
+			<mapping path="/productUpdate.do"/>
+			<mapping path="/productSearch.do"/>
+
+			<beans:ref bean="sc"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
