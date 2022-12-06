@@ -102,7 +102,7 @@
 							<select name="countryCd">
 								<option value="All">모두</option>
 								<c:forEach var="country" items="${countryEx }">
-									<option value="${country.countryCd }">${country.countryCd }(${country.cname })</option>
+									<option value="${country.countryCd }" <c:if test="${orderItem.countryCd == country.countryCd }">selected="selected"</c:if>>${country.countryCd }(${country.cname })</option>
 								</c:forEach>
 						</select>
 					</div>
