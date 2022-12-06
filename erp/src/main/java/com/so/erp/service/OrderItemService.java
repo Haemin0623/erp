@@ -17,4 +17,6 @@ public interface OrderItemService {
 
 	OrderHead listForExcel(OrderHead item);
 
+	int getTotal(OrderHead orderHead);
+
 }

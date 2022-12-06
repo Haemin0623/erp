@@ -40,4 +40,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 	public OrderHead listForExcel(OrderHead item) {
 		return id.listForExcel(item);
 	}
+
+	@Override
+	public int getTotal(OrderHead orderHead) {
+		return id.getTotal(orderHead);
+	}
 }

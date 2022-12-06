@@ -17,4 +17,6 @@ public interface OrderItemDao {
 
 	OrderHead listForExcel(OrderHead item);
 
+	int getTotal(OrderHead orderHead);
+
 }

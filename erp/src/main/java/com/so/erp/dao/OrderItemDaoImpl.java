@@ -40,4 +40,9 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public OrderHead listForExcel(OrderHead item) {
 		return sst.selectOne("itemns.listForExcel", item);
 	}
+
+	@Override
+	public int getTotal(OrderHead orderHead) {
+		return sst.selectOne("itemns.getTotal", orderHead);
+	}
 }

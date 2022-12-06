@@ -70,6 +70,9 @@ public class OrderController {
 		
 		List<Product> productEx = ps.list();
 		model.addAttribute("productEx", productEx);
+		
+		List<Country> countryEx = cs.list();
+		model.addAttribute("countryEx", countryEx);
 	}
 	
 	@RequestMapping("order")
@@ -323,20 +326,39 @@ public class OrderController {
 
 	@RequestMapping("orderStatus")
 	public String orderStatus(Model model, OrderHead orderHead, OrderItem orderItem) {
+
+		int rowPerPage = 20 ;
 		
-		List<Product> productList = ps.list();
+		if (orderHead.getRowPerPage() != 0) {
+			rowPerPage = orderHead.getRowPerPage();
+		} 
+		if (orderHead.getPageNum() == null || orderHead.getPageNum().equals("")) {
+			orderHead.setPageNum("1");
+		}
 		
-		List<Buyer> buyerList = bs.list();
-		List<Country> countryList = cs.list();
-		List<Employee> empList = es.list();
+		orderHead.setDel("N");		
+		orderHead.setSortOrderNo(0);
+		orderHead.setSortBuyerCd(0);
+		orderHead.setSortOrderDate(1);
+		orderHead.setSortEmployeeCd(0);
+		orderHead.setSortStatus(0);
+		orderHead.setSortStatusDate(0);
+		
+		int currentPage = Integer.parseInt(orderHead.getPageNum());
+		int total = is.getTotal(orderHead);
+		orderHead.pagingBean(currentPage, rowPerPage, total);
+		
+		
+		int startRow = (currentPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		orderHead.setStartRow(startRow);
+		orderHead.setEndRow(endRow);
+
+		
 	//	List<OrderItem> orderStatusList = is.orderStatusList();
 		List<OrderHead> orderStatusList = is.search(orderHead);
 		
-		model.addAttribute("productList", productList);
-		
-		model.addAttribute("buyerList", buyerList);
-		model.addAttribute("countryList", countryList);
-		model.addAttribute("empList", empList);
+		exData(model);
 		model.addAttribute("orderStatusList", orderStatusList);
 		
 		return "nolay/orderStatus";
@@ -458,9 +480,10 @@ public class OrderController {
 			OrderHead orderHead = new OrderHead();
 			String orderNo = (String) keywordObj.get("orderNo");
 			orderHead.setOrderNo(orderNo);
+			System.out.println("orderNo"+orderNo);
 			String buyerCd = (String) keywordObj.get("buyerCd");
 			orderHead.setBuyerCd(buyerCd);
-			System.out.println(buyerCd);
+			System.out.println("buyerCd"+buyerCd);
 			
 			System.out.println("2");
 			
@@ -482,16 +505,18 @@ public class OrderController {
 			
 			String employeeCd = (String) keywordObj.get("employeeCd");
 			orderHead.setEmployeeCd(employeeCd);
+			System.out.println("employeeCd"+employeeCd);
 			
 			String status = (String) keywordObj.get("status");
 			orderHead.setStatus(status);
+			System.out.println("status"+status);
 			
 			// item 검색
 			String productCd = (String) keywordObj.get("productCd");
 			
-			System.out.println(productCd);
-			
 			orderHead.setProductCd(productCd);
+			System.out.println("productCd"+productCd);
+			
 			String requestFromDate = (String) keywordObj.get("requestFromDate");
 			if (requestFromDate != null && !requestFromDate.equals("") ) {
 				Date date = Date.valueOf(requestFromDate);
@@ -505,32 +530,24 @@ public class OrderController {
 			}
 			System.out.println(orderHead.getRequestToDate());
 			
-			
-			// 고객명
-			String bname = keywordObj.getString("bname");
-			orderHead.setBname(bname);
-			System.out.println("고객명"+orderHead.getBname());
-						
-			// 상품명
-			String pname = keywordObj.getString("pname");
-			orderHead.setPname(pname);
-			System.out.println("상품명"+orderHead.getPname());
-			
-			
-			
-			
-			// 승인자
-//			String signempCd = keywordObj.getString("signempCd");
-//			orderHead.setSignempCd(signempCd);
-//			System.out.println("승인자코드" + orderHead.getSignempCd());
-			
 
 			
 			// 국가코드
 			String countryCd = keywordObj.getString("countryCd");
 			orderHead.setCountryCd(countryCd);
+			System.out.println("countryCd"+countryCd);
 			
 			
+			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			int total = is.getTotal(orderHead);
+			
+			orderHead.pagingBean(currentPage, rowPerPage, total);
+			
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			orderHead.setStartRow(startRow);
+			orderHead.setEndRow(endRow);
 			
 			
 			
@@ -541,31 +558,15 @@ public class OrderController {
 			for (OrderHead oh : orderStatusList) {
 				System.out.println(oh.toString());
 				
-				// 영업담당자명
-				orderHead.setEname(oh.getEname());
-				orderHead.setJob(oh.getJob());
-				orderHead.setDepartment(oh.getDepartment());
-				// 국가명
-				orderHead.setCname(oh.getCname());
-				// 승인자명
-//				orderHead.setSignempName(oh.getAuth());
+
 			}
 			System.out.println(orderHead.getAuth());
-			//System.out.println(orderHead.getSignempName());
 			
 			model.addAttribute("orderStatusList", orderStatusList);
 			model.addAttribute("orderItem", orderHead);
 			
 			
-			List<Product> productList = ps.list();
-			List<Buyer> buyerList = bs.list();
-			List<Country> countryList = cs.list();
-			List<Employee> empList = es.list();
-			
-			model.addAttribute("productList", productList);
-			model.addAttribute("buyerList", buyerList);
-			model.addAttribute("countryList", countryList);
-			model.addAttribute("empList", empList);
+			exData(model);
 			
 			
 			

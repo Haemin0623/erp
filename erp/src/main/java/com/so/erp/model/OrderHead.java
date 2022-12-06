@@ -56,6 +56,7 @@ public class OrderHead {
     
     // 검색용
     private String auth;
+    private Date hstatusdate;
     
     private int sortOrderNo;
     private int sortBuyerCd;

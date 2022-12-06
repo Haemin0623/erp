@@ -8,75 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<style type="text/css">
-
-	#container {
-		margin-left: 100px;
-	}
-	#searchBox {
-		width: 120vh;
-		height: 150px;
-		background: #5b6996;
-		padding: 30px;
-		color: white;
-	}
-/* 	#searchBtn{
-		background: #d9dbe1;
-		color: black;
-		float: right;
-		margin-top: 20px;
-		margin-right: 100px;
-
-	} */
-
-	#table {
-		margin-top: 100px;
-		overflow: auto;
-		height: 40vh;
-		width: 120vh;
-	}
-	tr th {
-		background-color: #5b6996;
-		color: white;
-	}
-	#list {
-		width: 100%;
-		border: 1px solid;
-		
-	}
-	.statusWindow {
-		overflow: auto;
-		height: 40vh;
-		width: 120vh;	
-	}
-	
-	#statusList {
-		width: 100%;
-		border: 1px solid;
-	}
-	.fixed {
-		position: sticky;
-		top: 0;
-	}
-	
-/* 마우스 오버(마우스 올렸을때) */
-tr{
-	color: black;
-}
-tr:hover{
-    background-color: #f4f4f4;
-    cursor: pointer;
-}
-/* 마우스 클릭하고있을때 */
-tr:active{
-    background-color: #B9E2FA;
-}
-
-.clickColor {
-	background-color: #B9E2FA;
-	
-}
-</style>
 
 </head>
 <body>
@@ -84,104 +15,120 @@ tr:active{
 	<h1>주문 승인</h1>
 	
 	<div id="searchBox">
-		<form name="searchBoxx">	
-			<!-- 정렬용 -->
-			<input type="hidden" name="sortOrderNo" value="${orderHead.sortOrderNo }">
-			<input type="hidden" name="sortBuyerCd" value="${orderHead.sortBuyerCd }">
-			<input type="hidden" name="sortOrderDate" value="${orderHead.sortOrderDate }">
-			<input type="hidden" name="sortEmployeeCd" value="${orderHead.sortEmployeeCd }">
-			<input type="hidden" name="sortStatus" value="${orderHead.sortStatus }">
-			<input type="hidden" name="sortStatusDate" value="${orderHead.sortStatusDate }">
+		<div class="searchInBox">
+			<form name="searchBoxx">	
+				<!-- 정렬용 -->
+				<input type="hidden" name="sortOrderNo" value="${orderHead.sortOrderNo }">
+				<input type="hidden" name="sortBuyerCd" value="${orderHead.sortBuyerCd }">
+				<input type="hidden" name="sortOrderDate" value="${orderHead.sortOrderDate }">
+				<input type="hidden" name="sortEmployeeCd" value="${orderHead.sortEmployeeCd }">
+				<input type="hidden" name="sortStatus" value="${orderHead.sortStatus }">
+				<input type="hidden" name="sortStatusDate" value="${orderHead.sortStatusDate }">
 				
-			주문번호<input type="text" name="orderNo" value="${orderHead.orderNo }">
-			고객코드
-			<select name="buyerCd" class="sumoBuy sumo">
-				<option value="All"></option>
-				<c:forEach var="buyer" items="${buyerEx }">
-					<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
-				</c:forEach>
-			</select>
-			신청인
-			<select name="employeeCd" class="sumoEmp sumo">
-				<option value="All"></option>
-				<c:forEach var="employee" items="${employeeEx }">
-					<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
-				</c:forEach>
-			</select>
-			
-			신청일<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
-			~<input type="date" name="orderToDate" value="${orderHead.orderToDate }"><p>
-			상태
-			<select name="status">
-				<option value="null">모두</option>		
-				<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
-				<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
-				<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
-				<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
-			</select>
-			
-			<p>
-			상품코드
-			<select name="productCd" class="sumoProd sumo">
-				<option value="All"></option>
-				<c:forEach var="product" items="${productEx }">
-					<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
-				</c:forEach>
-			</select>
-			
-			납품요청일<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
-			~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
-
-
-			삭제 된 주문 보기
-			<select name="del">
-				<option value="N">삭제 안된것</option>
-				<c:if test="${orderHead.del == 'Y'}">
-					<option value="Y" selected="selected">삭제 된것</option>
-				</c:if>
-				<c:if test="${orderHead.del != 'Y'}">
-					<option value="Y">삭제 된것</option>
-				</c:if>
-				<c:if test="${orderHead.del == 'All'}">
-					<option value="All" selected="selected">모두</option>
-				</c:if>
-				<c:if test="${orderHead.del != 'All'}">
-					<option value="All">모두</option>
-				</c:if>
-			</select>
-			
-		</form>
-		<button id="searchBtn">검색</button>
-		<button id="initBtn">검색결과 초기화</button>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">주문번호</div>
+						<input type="text" name="orderNo" value="${orderHead.orderNo }">
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">고객코드</div>
+						<select name="buyerCd" class="sumoBuy sumo">
+							<option value="All"></option>
+							<c:forEach var="buyer" items="${buyerEx }">
+								<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">신청일</div>
+						<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
+						~<input type="date" name="orderToDate" value="${orderHead.orderToDate }">
+					</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">신청인</div>
+						<select name="employeeCd" class="sumoEmp sumo">
+							<option value="All"></option>
+							<c:forEach var="employee" items="${employeeEx }">
+								<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">			
+						<div class="search-item-text">상품코드</div>
+						<select name="productCd" class="sumoProd sumo">
+							<option value="All"></option>
+							<c:forEach var="product" items="${productEx }">
+								<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">납품요청일</div>
+						<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
+						~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
+					</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">상태</div>
+						<div class="boxx">
+							<select name="status">
+								<option value="null">모두</option>		
+								<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+								<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+								<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
+								<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
+							</select>
+						</div>
+					</div>
+					<div class="search-item-div">
+					<div class="search-item-text">삭제 여부</div>
+						<select name="del">
+							<option value="N">삭제 X</option>
+							<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >삭제 </option>
+							<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
+						</select>
+					</div>
+				</div>
+				<p>
+				
+			</form>
+		</div>
+		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
+		<div class="search-btn" id="initBtn" tabIndex="0"><button>초기화</button></div>
 	</div>
 	
 	
-	<div id="page">
-		<form name="itemLimit">
-			<select name="rowPerPage" id="limit">
-				<option value="10" <c:if test="${orderHead.rowPerPage == 10 }">selected="selected"</c:if> >
-					10개씩보기
-				</option>
-				<option value="50" <c:if test="${orderHead.rowPerPage == 50 }">selected="selected"</c:if> >
-					50개씩보기
-				</option>
-				<option value="100" <c:if test="${orderHead.rowPerPage == 100 }">selected="selected"</c:if> >
-					100개씩보기
-				</option>
-				<option value="300" <c:if test="${orderHead.rowPerPage == 300 }">selected="selected"</c:if> >
-					300개씩보기
-				</option>
-				<option value="500" <c:if test="${orderHead.rowPerPage == 500 }">selected="selected"</c:if> >
-					500개씩보기
-				</option>
-			</select>
-		</form>
+	<div id="button-div">
+		
+		<div id="page">
+			<form name="itemLimit">
+				<select name="rowPerPage" id="limit">
+					<option value="10" <c:if test="${orderHead.rowPerPage == 10 }">selected="selected"</c:if> >
+						10개씩보기
+					</option>
+					<option value="50" <c:if test="${orderHead.rowPerPage == 50 }">selected="selected"</c:if> >
+						50개씩보기
+					</option>
+					<option value="100" <c:if test="${orderHead.rowPerPage == 100 }">selected="selected"</c:if> >
+						100개씩보기
+					</option>
+					<option value="300" <c:if test="${orderHead.rowPerPage == 300 }">selected="selected"</c:if> >
+						300개씩보기
+					</option>
+					<option value="500" <c:if test="${orderHead.rowPerPage == 500 }">selected="selected"</c:if> >
+						500개씩보기
+					</option>
+				</select>
+			</form>
+		</div>
 	</div>
 	
-	<div id="table">
-		<table id="list">
+	<div class="table">
+		<table class="list">
 			<tr>
-				<th class="fixed">선택</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed" id="sortBuyerCd">고객코드</th>
 				<th class="fixed" id="sortOrderDate">신청일</th>
@@ -192,8 +139,7 @@ tr:active{
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow">
-					<td><input type="checkbox" value="${head.orderNo }"></td>
-					<td>${head.orderNo }</td>
+					<td><input type="hidden" value="${head.orderNo }">${head.orderNo }</td>
 					<td>${head.buyerCd }</td>
 					<td>${head.orderdate }</td>
 					<td>${head.ename } ${head.job } (${head.department })</td>
@@ -225,26 +171,26 @@ tr:active{
 	</div>
 
 
-		<div class="statusWindow" >
-			<table id="statusList">
-				<tr>
-					<th>No.</th>
-					<th>상품코드</th>
-					<th>상품명</th>
-					<th>주문수량</th>
-					<th>납품요청일</th>
-					<th>가격</th>
-					<th>합계</th>
-					<th>비고</th>
-				</tr>
-				<tbody id="statusTable"/>
-				<tbody id="area"/>
-			</table>
-			<div>
-				<button class='orderApproval' name='btn' value='승인'>승인</button>
-				<button class='orderApproval' name='btn' value='반려'>반려</button>
-			</div>
+	<div class="table">
+		<table class="list">
+			<tr>
+				<th>No.</th>
+				<th>상품코드</th>
+				<th>상품명</th>
+				<th>주문수량</th>
+				<th>납품요청일</th>
+				<th>가격</th>
+				<th>합계</th>
+				<th>비고</th>
+			</tr>
+			<tbody id="statusTable"/>
+			<tbody id="area"/>
+		</table>
+		<div>
+			<button class='orderApproval' name='btn' value='승인'>승인</button>
+			<button class='orderApproval' name='btn' value='반려'>반려</button>
 		</div>
+	</div>
 		
 </div>	
 </body>
@@ -444,6 +390,172 @@ tr:active{
 			}
 		});
 	
+	});
+</script>
+<!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${orderHead.totalPage }') {
+			paging.currentPage.value = ${orderHead.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	
+	$('#currentPage').keydown(function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();			
+			
+			if (paging.currentPage.value < 1) {
+				paging.currentPage.value = 1;
+			}
+			
+			if (paging.currentPage.value > '${orderHead.totalPage }') {
+				paging.currentPage.value = ${orderHead.totalPage };
+			}
+			
+			search();
+		}
+	});
+</script>
+<!-- 스모셀렉트 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.sumoBuy')[0].sumo.selectItem("${orderHead.buyerCd }");
+	
+	$('select.sumoEmp')[0].sumo.selectItem("${orderHead.employeeCd }");
+	
+	$('select.sumoProd')[0].sumo.selectItem("${orderHead.productCd }");
+	
+});
+
+</script>
+
+<!-- 정렬 -->
+<script type="text/javascript">
+	function initSort() {
+		searchBoxx.sortOrderNo.value = 0;
+		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortOrderDate.value = 0;
+		searchBoxx.sortEmployeeCd.value = 0;
+		searchBoxx.sortStatus.value = 0;
+		searchBoxx.sortStatusDate.value = 0;
+	}
+
+	$('#sortOrderNo').on('click', function() {
+		if (searchBoxx.sortOrderNo.value == 0 || searchBoxx.sortOrderNo.value == 2) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 1;			
+		} else if (searchBoxx.sortOrderNo.value == 1) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 2;
+		}		
+		search();
+	});
+	$('#sortBuyerCd').on('click', function() {
+		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 1;			
+		} else if (searchBoxx.sortBuyerCd.value == 1) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortOrderDate').on('click', function() {
+		if (searchBoxx.sortOrderDate.value == 0 || searchBoxx.sortOrderDate.value == 2) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 1;		
+		} else if (searchBoxx.sortOrderDate.value == 1) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 2;
+		}		
+		search();
+	});
+	$('#sortEmployeeCd').on('click', function() {
+		if (searchBoxx.sortEmployeeCd.value == 0 || searchBoxx.sortEmployeeCd.value == 2) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 1;			
+		} else if (searchBoxx.sortEmployeeCd.value == 1) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatus').on('click', function() {
+		if (searchBoxx.sortStatus.value == 0 || searchBoxx.sortStatus.value == 2) {
+			initSort();
+			searchBoxx.sortStatus.value = 1;			
+		} else if (searchBoxx.sortStatus.value == 1) {
+			initSort();
+			searchBoxx.sortStatus.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatusDate').on('click', function() {
+		if (searchBoxx.sortStatusDate.value == 0 || searchBoxx.sortStatusDate.value == 2) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;			
+		} else if (searchBoxx.sortStatusDate.value == 1) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 2;
+		}		
+		search();
+	});
+</script>
+
+<!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${orderHead.totalPage }') {
+			paging.currentPage.value = ${orderHead.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	
+	$('#currentPage').keydown(function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();			
+			
+			if (paging.currentPage.value < 1) {
+				paging.currentPage.value = 1;
+			}
+			
+			if (paging.currentPage.value > '${orderHead.totalPage }') {
+				paging.currentPage.value = ${orderHead.totalPage };
+			}
+			
+			search();
+		}
 	});
 </script>
 

@@ -7,45 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
 
 <style type="text/css">
 
-	#container {
-		margin-left: 100px;
-	}
-	#searchBox {
-		width: 120vh;
-		height: 150px;
-		background: #5b6996;
-		padding: 30px;
-		color: white;
-	}
-	#searchBtn{
-		background: #d9dbe1;
-		color: black;
-		float: right;
-		margin-top: 20px;
-		margin-right: 100px;
+	.scrollwrap {position: relative; display: block; width: 100%; overflow-x: auto; overflow-y: scroll;  height: 600px;}
+	.scrollcontent {width: 3000px;}
 
-	}
-
-	#table {
-		margin-top: 50px;
-		overflow: auto;
-		height: 60vh;
-		width: 120vh;
-	}
-	#table th {
-		background-color: #5b6996;
-		color: white;
-	}
-	.fixed {
-		position: sticky;
-		top: 0;
-	}
-	.scrollwrap {position: relative; display: block; width: 1100px; overflow-x: auto;}
-	.scrollcontent {width: 2200px;}
-	
 </style>
 	
 </head>
@@ -54,119 +22,138 @@
 	<h1>주문 현황</h1>
 
 	<div id="searchBox">
-		<form name="searchBoxx">		
-			<div>
-				주문번호 <input type="text" name="orderNo" value="${orderItem.orderNo }" >
-				고객코드
- 					<select name="buyerCd">
-						<c:if test="${orderItem.buyerCd != null}">
-							<option value="${orderItem.buyerCd}">${orderItem.buyerCd}</option>
-						</c:if>
-						<c:if test="${orderItem.buyerCd == null}">
-							<option></option>
-						</c:if>
-						<c:forEach var="buyer" items="${buyerList}">
-							<option value="${buyer.buyerCd}">${buyer.buyerCd}</option>
-						</c:forEach>
-					</select>
-				고객명 
-					<select name="bname">
-						<c:if test="${orderItem.bname != null}">
-							<option value="${orderItem.bname}">${orderItem.bname}</option>
-						</c:if>
-						<c:if test="${orderItem.bname == null}">
-							<option></option>
-						</c:if>
-						<c:forEach var="buyer" items="${buyerList}">
-							<option value="${buyer.bname}">${buyer.bname}</option>
-						</c:forEach>
-					</select> 
-				상품코드 <input type="text" name="productCd" value="${orderItem.productCd }" >
-				상품명 <input type="text" name="pname" value="${orderItem.pname }">
-				<br>
-				영업담당자 
-					<select name="employeeCd">
-						<c:if test="${orderItem.employeeCd != null}">
-							<option value="${orderItem.employeeCd}">${orderItem.ename} ${orderItem.job}(${orderItem.department})</option>
-						</c:if>
-						<c:if test="${orderItem.employeeCd == null}">
-							<option></option>
-						</c:if>
-						<c:forEach var="emp" items="${empList}">
-							<c:if test="${emp.department=='영업'}">
-								<option value="${emp.employeeCd }">${emp.ename} ${emp.job}(${emp.department})</option>
-							</c:if>
-						</c:forEach>
-					</select>
-				<%-- 승인자
-					<select name="signempCd">
-						<c:if test="${orderItem.signempCd != null}">
-							<option value="${orderItem.signempCd}">${orderItem.signempName} ${orderItem.job}(${orderItem.department})</option>
-						</c:if>
-						<c:if test="${orderItem.signempCd == null}">
-							<option></option>
-						</c:if>
-						
-						<c:forEach var="emp" items="${empList}">
-							<c:if test="${emp.department=='관리'}">
-								<option value="${emp.employeeCd}">${emp.ename} ${emp.job}(${emp.department})</option>
-							</c:if>
-						</c:forEach>
-					</select> --%>
-				신청일<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
-					-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
-				납품요청일<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
-					-<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
-				<br>
-				상태 
-					<select name="status">
-						<c:if test="${orderItem.status != null}">
-							<option value="${orderItem.status}">${orderItem.status}</option>
-						</c:if>
-						<c:if test="${orderItem.status == null}">
-							<option></option>
-						</c:if>			
-						<option value="승인요청">승인요청</option>
-						<option value="승인">승인</option>
-						<option value="반려">반려</option>
-					</select>
-				국가코드
-					<select name="countryCd">
-							<c:if test="${orderItem.countryCd != null}">
-								<option value="${orderItem.countryCd}">${orderItem.cname}(${orderItem.countryCd})</option>
-							</c:if>
-							<c:if test="${orderItem.countryCd == null}">
-								<option></option>
-							</c:if>
-							<c:forEach var="country" items="${countryList}">
-									<option value="${country.countryCd}">${country.cname}(${country.countryCd})</option>
+		<div class="searchInBox">
+			<form name="searchBoxx">	
+				<!-- 정렬용 -->
+				<input type="hidden" name="sortOrderNo" value="${orderItem.sortOrderNo }">
+				<input type="hidden" name="sortBuyerCd" value="${orderItem.sortBuyerCd }">
+				<input type="hidden" name="sortOrderDate" value="${orderItem.sortOrderDate }">
+				<input type="hidden" name="sortEmployeeCd" value="${orderItem.sortEmployeeCd }">
+				<input type="hidden" name="sortStatus" value="${orderItem.sortStatus }">
+				<input type="hidden" name="sortStatusDate" value="${orderItem.sortStatusDate }">
+				
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">주문번호</div>
+						<input type="text" name="orderNo" value="${orderItem.orderNo }">
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">고객코드</div>
+		 				<select name="buyerCd" class="sumoBuy sumo">
+							<option value="All"></option>
+							<c:forEach var="buyer" items="${buyerEx }">
+								<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
 							</c:forEach>
-					</select>
-			</div>
-		</form>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">신청일</div>
+							<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
+							-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
+					</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">상품코드</div>
+						<select name="productCd" class="sumoProd sumo">
+							<option value="All"></option>
+							<c:forEach var="product" items="${productEx }">
+								<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
+							</c:forEach>
+						</select>
+					</div>
+					
+					<div class="search-item-div">
+						<div class="search-item-text">영업담당자</div> 
+						<select name="employeeCd" class="sumoEmp sumo">
+							<option value="All"></option>
+							<c:forEach var="employee" items="${employeeEx }">
+								<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">납품요청일</div>
+						<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
+						~<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
+					</div>
+					
+				</div>
+				<div class="search-sub-div">
+					
+					<div class="search-item-div">
+						<div class="search-item-text">상태</div>
+						<div class="boxx">
+							<select name="status">
+								<option value="null">모두</option>		
+								<option value="승인대기" <c:if test="${orderItem.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+								<option value="승인요청" <c:if test="${orderItem.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+								<option value="승인" <c:if test="${orderItem.status == '승인' }">selected="selected"</c:if>>승인</option>
+								<option value="반려" <c:if test="${orderItem.status == '반려' }">selected="selected"</c:if>>반려</option>
+							</select>
+						</div>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">국가코드</div>
+							<select name="countryCd">
+								<option value="All">모두</option>
+								<c:forEach var="country" items="${countryEx }">
+									<option value="${country.countryCd }">${country.countryCd }(${country.cname })</option>
+								</c:forEach>
+						</select>
+					</div>
+				</div>
+				
+				<p>
+			</form>
+		</div>
+			<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
+			<div class="search-btn" id="initBtn" tabIndex="0"><button>검색결과 초기화</button></div>
 	</div>	
-			<button id="excelBtn">Excel</button>
-			<button id="searchBtn">검색</button>
-			<button id="initBtn">검색결과 초기화</button>
 	
+	<div id="button-div">
+		<button id="excelBtn">Excel</button>
 		
-	<div class="scrollwrap" id="table">
-		<table class="scrollcontent" id="list">
+		<div id="page">
+			<form name="itemLimit">
+				<select name="rowPerPage" id="limit">
+					<option value="20" <c:if test="${orderItem.rowPerPage == 20 }">selected="selected"</c:if> >
+						20개씩보기
+					</option>
+					<option value="50" <c:if test="${orderItem.rowPerPage == 50 }">selected="selected"</c:if> >
+						50개씩보기
+					</option>
+					<option value="100" <c:if test="${orderItem.rowPerPage == 100 }">selected="selected"</c:if> >
+						100개씩보기
+					</option>
+					<option value="300" <c:if test="${orderItem.rowPerPage == 300 }">selected="selected"</c:if> >
+						300개씩보기
+					</option>
+					<option value="500" <c:if test="${orderItem.rowPerPage == 500 }">selected="selected"</c:if> >
+						500개씩보기
+					</option>
+				</select>
+			</form>
+		</div>
+	</div>
+		
+	<div class="scrollwrap">
+		<table class="scrollcontent">
 			<tr>
 				<th><input type="checkbox" name="checkAll" id="th_checkAll"></th>
-				<th class="fixed">주문일</th>
-				<th class="fixed">주문번호</th>
+				<th class="fixed" id="sortOrderDate">주문일</th>
+				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed">상품코드</th>
 				<th class="fixed">상품명</th>
 				<th class="fixed">주문수량</th>
 				<th class="fixed">판매가</th>
 				<th class="fixed">금액 합계</th>
-				<th class="fixed">영업담당자</th>
-				<th class="fixed">상태</th>
-				<th class="fixed">상태변경일</th>
+				<th class="fixed" id="sortEmployeeCd">영업담당자</th>
+				<th class="fixed" id="sortStatus">상태</th>
+				<th class="fixed" id="sortStatusDate">상태변경일</th>
 				<th class="fixed">승인자</th>
 				<th class="fixed">납품요청일</th>
-				<th class="fixed">고객코드</th>
+				<th class="fixed" id="sortBuyerCd">고객코드</th>
 				<th class="fixed">고객명</th>
 				<th class="fixed">고객담당자</th>
 				<th class="fixed">고객연락처</th>
@@ -185,16 +172,13 @@
 				<td>${item.amount }</td>
 				<td>${item.ename }</td>
 				<td>${item.status }</td>
-				<td>${item.statusdate }</td>
-			<%-- 	<td>${item.signempCd }</td> --%>
-				 		<c:if test="${item.signempCd==null }">
-				 			<td>예정</td>
-				 		</c:if>
-				 	<c:forEach var="emp" items="${empList}">
-						<c:if test="${item.signempCd ==emp.employeeCd}">
-							<td>${emp.ename }</td>
-						</c:if>
-					</c:forEach>
+				<td>${item.hstatusdate }</td>
+		 		<c:if test="${item.auth==null }">
+		 			<td>예정</td>
+		 		</c:if>
+		 		<c:if test="${item.auth!=null }">
+		 			<td>${item.auth }</td>
+		 		</c:if>
 				<td>${item.requestdate }</td>
 				<td>${item.buyerCd }</td>
 				<td>${item.bname }</td>
@@ -208,7 +192,17 @@
 	</div>
 	<p class="scroll"></p>
 
-
+<div id="pageBtn">
+		<form name="paging">
+			<c:if test="${orderItem.currentPage != 1}">
+				<div id="prev" class="paging-btn">◀</div>
+			</c:if>
+		 	<input type="number" name="currentPage" value="${orderItem.currentPage }" id="currentPage"> / ${orderItem.totalPage }
+			<c:if test="${orderItem.currentPage != orderItem.totalPage}">
+				<div id="next" class="paging-btn">▶</div>
+			</c:if>
+		</form>
+	</div>
 </div>
 </body>
 
@@ -237,18 +231,24 @@
 		const keyword = {
 			orderNo : searchBoxx.orderNo.value,	
 			buyerCd : searchBoxx.buyerCd.value,	
-			bname : searchBoxx.bname.value,
 			productCd : searchBoxx.productCd.value,	
-			pname : searchBoxx.pname.value,	
 			employeeCd : searchBoxx.employeeCd.value,
-		/* 	ename : searchBoxx.ename.value, */
-			/* signempCd : searchBoxx.signempCd.value, */
 			orderFromDate : searchBoxx.orderFromDate.value,	
 			orderToDate : searchBoxx.orderToDate.value,	
 			requestFromDate : searchBoxx.requestFromDate.value,
 			requestToDate : searchBoxx.requestToDate.value,
 			status : searchBoxx.status.value,
-			countryCd : searchBoxx.countryCd.value
+			countryCd : searchBoxx.countryCd.value,
+			
+			sortOrderNo : searchBoxx.sortOrderNo.value,
+			sortBuyerCd : searchBoxx.sortBuyerCd.value,
+			sortOrderDate : searchBoxx.sortOrderDate.value,
+			sortEmployeeCd : searchBoxx.sortEmployeeCd.value,
+			sortStatus : searchBoxx.sortStatus.value,
+			sortStatusDate : searchBoxx.sortStatusDate.value,
+			
+			rowPerPage : itemLimit.rowPerPage.value,
+			currentPage : paging.currentPage.value,
 			
 		}
 		console.log(keyword);
@@ -354,4 +354,132 @@
 	
 	
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.sumoBuy')[0].sumo.selectItem("${orderHead.buyerCd }");
+	
+	$('select.sumoEmp')[0].sumo.selectItem("${orderHead.employeeCd }");
+	
+	$('select.sumoProd')[0].sumo.selectItem("${orderHead.productCd }");
+	
+});
+
+</script>
+
+<!-- 정렬 -->
+<script type="text/javascript">
+	function initSort() {
+		searchBoxx.sortOrderNo.value = 0;
+		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortOrderDate.value = 0;
+		searchBoxx.sortEmployeeCd.value = 0;
+		searchBoxx.sortStatus.value = 0;
+		searchBoxx.sortStatusDate.value = 0;
+	}
+
+	$('#sortOrderNo').on('click', function() {
+		if (searchBoxx.sortOrderNo.value == 0 || searchBoxx.sortOrderNo.value == 2) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 1;			
+		} else if (searchBoxx.sortOrderNo.value == 1) {
+			initSort();
+			searchBoxx.sortOrderNo.value = 2;
+		}		
+		search();
+	});
+	$('#sortBuyerCd').on('click', function() {
+		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 1;			
+		} else if (searchBoxx.sortBuyerCd.value == 1) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortOrderDate').on('click', function() {
+		if (searchBoxx.sortOrderDate.value == 0 || searchBoxx.sortOrderDate.value == 2) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 1;		
+		} else if (searchBoxx.sortOrderDate.value == 1) {
+			initSort();
+			searchBoxx.sortOrderDate.value = 2;
+		}		
+		search();
+	});
+	$('#sortEmployeeCd').on('click', function() {
+		if (searchBoxx.sortEmployeeCd.value == 0 || searchBoxx.sortEmployeeCd.value == 2) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 1;			
+		} else if (searchBoxx.sortEmployeeCd.value == 1) {
+			initSort();
+			searchBoxx.sortEmployeeCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatus').on('click', function() {
+		if (searchBoxx.sortStatus.value == 0 || searchBoxx.sortStatus.value == 2) {
+			initSort();
+			searchBoxx.sortStatus.value = 1;			
+		} else if (searchBoxx.sortStatus.value == 1) {
+			initSort();
+			searchBoxx.sortStatus.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatusDate').on('click', function() {
+		if (searchBoxx.sortStatusDate.value == 0 || searchBoxx.sortStatusDate.value == 2) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;			
+		} else if (searchBoxx.sortStatusDate.value == 1) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 2;
+		}		
+		search();
+	});
+</script>
+
+<!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${orderItem.totalPage }') {
+			paging.currentPage.value = ${orderItem.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	$('#currentPage').keydown(function(key) {
+		/* 입력받은게 13(enter)면 원래 예정된 form action 실행하지마 */
+		if(key.keyCode == 13) {
+			key.preventDefault();			
+			
+			if (paging.currentPage.value < 1) {
+				paging.currentPage.value = 1;
+			}
+			
+			if (paging.currentPage.value > '${orderItem.totalPage }') {
+				paging.currentPage.value = ${orderItem.totalPage };
+			}
+			
+			search();
+		}
+	});
+</script>
+
 </html>

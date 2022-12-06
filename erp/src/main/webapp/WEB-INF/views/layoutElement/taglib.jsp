@@ -10,6 +10,6 @@
 <c:set var="path" value="${pageContext.request.contextPath }"></c:set>
 <script type="text/javascript" src="${path }/resources/javaScript/jquery.js"></script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script type="text/javascript" src="${path }/resources/javaScript/sumoselect/jquery.sumoselect.min.js"></script>
 <link href="${path }/resources/javaScript/sumoselect/sumoselect.min.css" rel="stylesheet" />
