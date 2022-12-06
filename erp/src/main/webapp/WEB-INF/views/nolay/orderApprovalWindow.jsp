@@ -22,7 +22,7 @@
 	    resize: both;
 	    box-shadow: 2px -1px 4px #b1b1b1;
 	    /* overflow-y: scroll; */
-	    height: 280px;
+	    height: 260px;
 	}
 	.itemList {
 		margin: 4px 10px 0 10px;
@@ -33,6 +33,10 @@
 	.hideApprovalBtn {
 		display: none;
 	}
+	#button-div {
+    /* margin-bottom: 15px; common */
+    padding-bottom: 25px;
+}
 </style>
 
 </head>
