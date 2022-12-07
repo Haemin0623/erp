@@ -151,7 +151,7 @@
     				order_item oi, 
     				m_product mp
     		where	oi.product_cd = mp.product_cd
-        		and h.orderdate between '2022.06.01' and '2022.06.30'
+        		and h.orderdate between '2022.12.01' and '2022.12.31'
         		and mp.product_cd = #{productCd}
         </select>
     	

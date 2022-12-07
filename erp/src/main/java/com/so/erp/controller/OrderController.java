@@ -341,7 +341,6 @@ public class OrderController {
 			orderHead.setPageNum("1");
 		}
 		
-		System.out.println("pP"+orderHead.getPageNum());
 		
 		orderHead.setDel("N");		
 		orderHead.setSortOrderNo(0);
@@ -352,9 +351,7 @@ public class OrderController {
 		orderHead.setSortStatusDate(0);
 		
 		int currentPage = Integer.parseInt(orderHead.getPageNum());
-		System.out.println("cP"+currentPage);
 		int total = is.getTotal(orderHead);
-		System.out.println("tt"+total);
 		orderHead.pagingBean(currentPage, rowPerPage, total);
 		
 		

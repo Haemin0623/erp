@@ -156,4 +156,19 @@ insert into m_pricing values('FOD003', 'DR0002', '2022-06-16', '2023-05-27', 110
 
 
 
+-- 그래프 영업 사원 별 12월 매출 실적 용
+insert into order_head values('221201FOD001001', 'FOD001', '221201', 'SAL001', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_item values('221201FOD001001', 'RA0001', 3500, '221201', 856, 3500*856, null);
+
+insert into order_head values('221201CVS002001', 'CVS002', '221201', 'SAL002', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_item values('221201CVS002001', 'RA0002', 1500, '221201', 1003, 1500*1003, null);
+
+insert into order_head values('221201MAT001001', 'MAT001', '221201', 'SAL003', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_item values('221201MAT001001', 'SN0006', 1300, '221201', 555, 1300*555, null);
+
+insert into order_head values('221201CVS003001', 'CVS003', '221201', 'SAL004', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_item values('221201CVS003001', 'SN0005', 2000, '221201', 1278, 2000*1278, null);
+
+insert into order_head values('221201CVS004001', 'CVS004', '221201', 'SAL005', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_item values('221201CVS004001', 'SN0003', 1700, '221201', 856, 1700*856, null);
 
