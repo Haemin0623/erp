@@ -156,6 +156,6 @@
         </select>
     	
     	<select id="listForExcel" parameterType="product" resultType="product">
-    		select * from m_product where product_cd = ${productCd}
+    		select * from m_product where product_cd = #{productCd}
     	</select>
     </mapper>

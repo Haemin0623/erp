@@ -680,7 +680,7 @@ function excel() {
 		 
 		  
 		 const item = {
-					productCd : thisRow.find('td:eq(0)').find('input').val();
+					productCd : thisRow.find('td:eq(0)').find('input').val()
 				}
 		 
 		 checkRow.push(item);
