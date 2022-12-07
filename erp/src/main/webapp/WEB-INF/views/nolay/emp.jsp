@@ -56,10 +56,10 @@
 						</select>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">삭제 여부</div>
+						<div class="search-item-text">활성상태</div>
 						<select name="del" class="search">
-							<option value="N">삭제 X</option>
-							<option value="Y" <c:if test="${employee.del == 'Y'}">selected="selected"</c:if> >삭제 </option>
+							<option value="N">활성</option>
+							<option value="Y" <c:if test="${employee.del == 'Y'}">selected="selected"</c:if> >비활성 </option>
 							<option value="All" <c:if test="${employee.del == 'All'}"> selected="selected" </c:if>>모두</option>
 						</select>
 					</div>

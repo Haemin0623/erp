@@ -73,7 +73,7 @@
 							-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">상태</div>
+						<div class="search-item-text">승인상태</div>
 						<div class="boxx">
 							<select name="status">
 								<option value="null">모두</option>		

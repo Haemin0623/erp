@@ -46,7 +46,7 @@
 						~<input type="date" name="orderToDate" value="${orderHead.orderToDate }">
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">상태</div>
+						<div class="search-item-text">승인상태</div>
 						<div class="boxx">
 							<select name="status" class="search">
 								<option value="null">모두</option>		
@@ -83,11 +83,11 @@
 						~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">삭제</div>
+						<div class="search-item-text">활성상태</div>
 						<div class="boxx">
 							<select name="del" class="search">
-								<option value="N">X</option>
-								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >O </option>
+								<option value="N">비활성</option>
+								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >활성 </option>
 								<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
 							</select>
 						</div>

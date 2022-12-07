@@ -98,14 +98,14 @@ function changeContent(data) {
 							</select>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">삭제</div>
+						<div class="search-item-text">활성상태</div>
 							<select name="del">
-								<option value="N">X</option>
+								<option value="N">비활성</option>
 								<c:if test="${pricing.del == 'Y'}">
-									<option value="Y" selected="selected">O</option>
+									<option value="Y" selected="selected">활성</option>
 								</c:if>
 								<c:if test="${pricing.del != 'Y'}">
-									<option value="Y">O</option>
+									<option value="Y">활성</option>
 								</c:if>
 								<c:if test="${pricing.del == 'All'}">
 									<option value="All" selected="selected">모두</option>

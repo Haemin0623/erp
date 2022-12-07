@@ -60,7 +60,7 @@
 					</div>
 					<div class="search-sub-div">
 						<div class="search-item-div">
-							<div class="search-item-text">삭제여부 </div>
+							<div class="search-item-text">활성상태 </div>
 								<select name="del" >
 									<c:if test="${product.del == null }">
 										<option value="null" selected="selected">모두
@@ -69,16 +69,16 @@
 										<option value="null">모두
 									</c:if>
 									<c:if test="${product.del == 'N' }">
-										<option value="N" selected="selected">O
+										<option value="N" selected="selected">활성
 									</c:if>
 									<c:if test="${product.del != 'N' }">
-										<option value="N">O
+										<option value="N">활성
 									</c:if>
 									<c:if test="${product.del == 'Y' }">
-										<option value="Y" selected="selected">X
+										<option value="Y" selected="selected">비활성
 									</c:if>
 									<c:if test="${product.del != 'Y' }">
-										<option value="Y">X
+										<option value="Y">비활성
 									</c:if>
 								</select>
 							</div>
