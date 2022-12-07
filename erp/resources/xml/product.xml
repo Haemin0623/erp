@@ -96,14 +96,17 @@
 					<if test="product.volume!=null and product.volume!=''">
 							and volume like '%' || #{product.volume} || '%'
 					</if>
-<!-- 					<if test="product.unit!=null and product.unit!=''"> -->
-<!-- 							and unit like '%' || #{product.unit} || '%' -->
-<!-- 					</if> -->
 					<if test="product.category!=null and product.category!=''">
 							and category like '%' || #{product.category} || '%'
 					</if>
-					<if test="product.adddate!=null and product.adddate!=''and product.adddate2!=null and product.adddate2!=''" >
+					<if test="product.adddate!=null and product.adddate2!=null " >
 							and adddate between #{product.adddate} and #{product.adddate2} 
+					</if>
+					<if test='product.del=="N"'>
+							and del='N'	
+					</if>
+					<if test='product.del=="Y"'>
+							and del='Y'							
 					</if>
 				</where>
 		</select>

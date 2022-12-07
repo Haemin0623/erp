@@ -177,13 +177,11 @@ public class ProductController {
 				Date date = Date.valueOf(adddate);
 				product.setAdddate(date);
 			}
-				System.out.println(product.getAdddate());
 			
 			String adddate2 = (String) keywordObj.get("adddate2");
 			if (adddate2 != null && !adddate2.equals("") ) {
 				Date date = Date.valueOf(adddate2);
 				product.setAdddate2(date);
-				System.out.println(product.getAdddate2());
 			}
 			
 			

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ include file="../layoutElement/taglib.jsp"%>
     
     
     
@@ -9,193 +10,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-   
-
-
-<style type="text/css">
-
-	#container {
-		margin-left: 50px;
-	}
-	
-	#searchBox {
- 		height: 150px;
- 		width: 120vh;
-		background: #5b6996;
-		margin-top: 50px;
-		color: white;
-	}
-	#productList{
-		margin-left: 80%
-	}
-		margin-left: 72%
-	}
-	
-	table {
-		width: 100%;
-		border: black;
-		position: absolute;
-		    width: inherit;
-	}
-	tr th {
-		background: #5b6996;
-		color: white;
-	}
-	#table{
-		 
-		overflow: auto;
-		height: 40vh;
-		width: 120vh;
-	}
-	
-	#list {
-		width: 100%;
-		border: 1px solid;
-		
-	}
-	
-	#productList{
-		width: 70%;
-	}
-	
-	
-	.background {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100vh;
-	  background-color: rgba(0, 0, 0, 0.3);
-	  z-index: 1000;
-	  
-	  /* 숨기기 */
-	  z-index: -1;
-	  opacity: 0;
-	}
-	
-	.window {
-	  position: relative;
-	  width: 100%;
-	  height: 100%;
-	}
-	
-	.popup {
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  transform: translate(-50%, -50%);
-	  background-color: #ffffff;
-	  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-	  
-	  /* 임시 지정 */
-	  width: 500px;
-	  height: 500px;
-	  
-	  /* 초기에 약간 아래에 배치 */
-	  transform: translate(-50%, -40%);
-	}
-	
-	.fixed{
-	 position: sticky;
-	 top:0;
-	}
-	.show {
-	  opacity: 1;
-	  z-index: 1000;
-	  transition: all .5s;
-	}
-	
-	.show .popup {
-	  transform: translate(-50%, -50%);
-	  transition: all .5s;
-	}
-	.list {
- 		background: silver;
-	}
-	
-	.sumo {
-		color : black;
-	}
-	li.opt {
-		color : black;
-	}
-</style>
-
 
 </head>
 <body>
 <div id="container">
 	<h1 class="menuName">상품관리</h1>
 	<div id="searchBox">
-		<form id="searchBoxx">
-			<input type="hidden" name="sortProductCd" value="${product.sortProductCd }">
-			<input type="hidden" name="sortPname" value="${product.sortPname }">
-			<input type="hidden" name="sortVolume" value="${product.sortVolume }" >
-			<input type="hidden" name="sortUnit" value="${product.sortUnit }">
-			<input type="hidden" name="sortCategory" value="${product.sortCategory }">
-			<input type="hidden" name="sortAddDate" value="${product.sortAddDate }">
-			<input type="hidden" name="sortStatusDate" value="${product.sortStatusDate }">
-			<input type="hidden" name="sortDel" value="${product.sortDel }">
-				<span style="margin-right: 5px; ">상품코드
-					<select name="productCd" class="productCd sumo">
-						<option value=""></option>
-						<c:forEach var="item" items="${allList }">
-							<option value="${item.productCd }">${item.productCd }</option>
-						</c:forEach>
-					</select>
-				</span>
-				<span style="margin-right: 5px; ">상품명
-					<select name="pname" class="pname sumo">
-						<option value=""></option>
-						<c:forEach var="item" items="${allList }">
-							<option value="${item.pname }">${item.pname }</option>
-						</c:forEach>
-					</select>
-				</span>
-				<span style="margin-right: 5px; ">용량
-					<select name="volume" class="volume sumo">
-						<option value=""></option>
-						<c:forEach var="item" items="${allList }">
-							<option value="${item.volume }">${item.volume }</option>
-						</c:forEach>
-					</select>
-				</span>
-				<span style="margin-right: 5px; ">상품카테고리
-					<select name="category" class="category sumo">
-						<option value=""></option>
-						<c:forEach var="item" items="${allList }">
-							<option value="${item.category }">${item.category }</option>
-						</c:forEach>
-					</select>
-				</span>
-				<span>
-					등록일<input type="date" name="adddate"> ~ <input type="date" name="adddate2">
-				</span>
-				<span style="margin-left: 600px; ">
-				상태 <select name="del" >
-						<c:if test="${product.del == null }">
-							<option value="null" selected="selected">모두보기
-						</c:if>
-						<c:if test="${product.del != null }">
-							<option value="null">모두보기
-						</c:if>
-						<c:if test="${product.del == 'N' }">
-							<option value="N" selected="selected">등록중
-						</c:if>
-						<c:if test="${product.del != 'N' }">
-							<option value="N">등록중
-						</c:if>
-						<c:if test="${product.del == 'Y' }">
-							<option value="Y" selected="selected">삭제완료
-						</c:if>
-						<c:if test="${product.del != 'Y' }">
-							<option value="Y">삭제완료
-						</c:if>
-						
-					</select>
-				</span>
-		</form>
-		<button id="searchBtn" style="margin-left: 1000px; margin-top: 50px;">검색</button>
+		<div class="searchInBox">
+			<form id="searchBoxx">
+				<input type="hidden" name="sortProductCd" value="${product.sortProductCd }">
+				<input type="hidden" name="sortPname" value="${product.sortPname }">
+				<input type="hidden" name="sortVolume" value="${product.sortVolume }" >
+				<input type="hidden" name="sortUnit" value="${product.sortUnit }">
+				<input type="hidden" name="sortCategory" value="${product.sortCategory }">
+				<input type="hidden" name="sortAddDate" value="${product.sortAddDate }">
+				<input type="hidden" name="sortStatusDate" value="${product.sortStatusDate }">
+				<input type="hidden" name="sortDel" value="${product.sortDel }">
+				
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">상품코드</div>
+						<select name="productCd" class="productCd sumo">
+							<option value=""></option>
+							<c:forEach var="item" items="${allList }">
+								<option value="${item.productCd }">${item.productCd }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">상품명</div>
+						<select name="pname" class="pname sumo">
+							<option value=""></option>
+							<c:forEach var="item" items="${allList }">
+								<option value="${item.pname }">${item.pname }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">용량</div>
+						<select name="volume" class="volume sumo">
+							<option value=""></option>
+							<c:forEach var="item" items="${allList }">
+								<option value="${item.volume }">${item.volume }</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+					<div class="search-sub-div">
+						<div class="search-item-div">상품카테고리</div>
+						<select name="category" class="category sumo">
+							<option value=""></option>
+							<c:forEach var="item" items="${allList }">
+								<option value="${item.category }">${item.category }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">			
+						<div class="search-item-text">
+							등록일<input type="date" name="adddate" value="${product.adddate }"> ~ <input type="date" name="adddate2" value="${product.adddate2 }">
+						</div>
+					</div>
+					<div class="search-sub-div">
+						<div class="search-item-div">
+							<div class="search-item-text">상태 </div>
+							<select name="del" >
+								<c:if test="${product.del == null }">
+									<option value="null" selected="selected">모두보기
+								</c:if>
+								<c:if test="${product.del != null }">
+									<option value="null">모두보기
+								</c:if>
+								<c:if test="${product.del == 'N' }">
+									<option value="N" selected="selected">등록중
+								</c:if>
+								<c:if test="${product.del != 'N' }">
+									<option value="N">등록중
+								</c:if>
+								<c:if test="${product.del == 'Y' }">
+									<option value="Y" selected="selected">삭제완료
+								</c:if>
+								<c:if test="${product.del != 'Y' }">
+									<option value="Y">삭제완료
+								</c:if>
+							</select>
+						</div>
+					</div>
+			</form>
+			</div>
+		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
+		<div class="search-btn" id="initBtn" tabIndex="0"><button>초기화</button></div>
 	</div>
 	
 
@@ -204,8 +107,8 @@
 		<button type="button" onclick="deleteAction()">삭제</button>
 <!-- 		<button>엑셀 대량등록</button> -->
 	</span>	
-	<div id="productList" style="width: 100px; margin-left: 90%;">
-	<form name="page" style="width: 100px;">
+	<div id="productList">
+	<form name="page" >
 		<span>
 			<select id="listview">
 			<c:if test="${rowPerPage ==10}">
@@ -246,9 +149,9 @@
 		</span>
 	</form>
 	</div>
-	<div id="table">
+	<div class="table">
 	<form action="">
-		<table id="list">
+		<table class="list">
 			<tr class="haeder">
 				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll" ></th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
@@ -284,34 +187,45 @@
 	</form>
 	</div>
 	
-	<div id="pageBtn" style="margin-left: 80%">
-		<c:if test="${pb.currentPage != 1}">
-			<h6 id="prev">이전</h6>
-		</c:if>
+	<div id="pageBtn" >
 		<form name="paging">
+			<c:if test="${pb.currentPage != 1}">
+				<div id="prev" class="paging-btn">◀</div>
+			</c:if>
 		 	<input type="number" name="currentPage" value="${pb.currentPage }" id="currentPage"> / ${pb.totalPage }
+			<c:if test="${pb.currentPage != pb.totalPage}">
+				<div id="next" class="paging-btn">▶</div>
+			</c:if>
 		</form>
-		<c:if test="${pb.currentPage != pb.totalPage}">
-			<h6 id="next">다음</h6>
-		</c:if>
 	</div>
 </div>
 	<div class="background">
 		<div class="window">
 			<div class="popup">
 				<form action="" name="frm">
-				<p>상품등록</p>
-					카테고리<select name="category" id="codeMix" autofocus="autofocus">
-						<option value="">선택</option>
-						<option value="라면">라면</option>
-						<option value="스낵">스낵</option>
-						<option value="음료">음료</option>
-					</select><br>
-					상품코드<input type="text" name="productCd" readonly="readonly"><br>
-					상품명<input type="text" name="pname" required="required"><br>
-					용량<input type="text" name="volume" required="required"><br>
-					단위<input type="text" name="unit" required="required"><br>
-					
+					<table id="insert-form">
+						
+							<tr>
+								<td>카테고리<select name="category" id="codeMix" autofocus="autofocus">
+									<option value="">선택</option>
+									<option value="라면">라면</option>
+									<option value="스낵">스낵</option>
+									<option value="음료">음료</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
+							</tr>
+							<tr>
+								<td>상품명<input type="text" name="pname" required="required"></td>
+								</tr>
+							<tr>
+								<td>용량<input type="text" name="volume" required="required"></td>
+							</tr>
+							<tr>
+								<td>단위<input type="text" name="unit" required="required"></td>
+							</tr>
+					</table>
 				</form>
 				<button id="addItem">추가</button>
 				<button id="close">닫기</button>
@@ -446,7 +360,8 @@
    	  			category : searchBoxx.category.value,	
    	  			adddate : searchBoxx.adddate.value,	
    	  			adddate2 : searchBoxx.adddate2.value,	
-	   	  		del : searchBoxx.del.value,
+   	 	 		del : searchBoxx.del.value,
+	   	  		currentPage : paging.currentPage.value,
 	   	  		
 	   	  		sortProductCd : searchBoxx.sortProductCd.value,
 				sortPname : searchBoxx.sortPname.value,
@@ -473,6 +388,28 @@
   	   	});
     }
     	
+</script>
+
+<script type="text/javascript">
+	function callView(request) {
+		var addr = request;
+	
+		var ajaxOption = {
+			url : request,
+			async : true,
+			type : "POST",
+			dataType : "html",
+			cache : false
+		};
+	
+		$.ajax(ajaxOption).done(function(data) {
+			$('#content').children().remove();
+			$('#content').html(data);
+		});
+	}
+	
+	// 	검색초기화
+	document.querySelector("#initBtn").addEventListener("click",  function(){callView('productList.do')});
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
