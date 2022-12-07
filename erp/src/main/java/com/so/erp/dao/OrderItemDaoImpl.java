@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
 import com.so.erp.model.OrderItem;
 
@@ -44,5 +45,40 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	@Override
 	public int getTotal(OrderHead orderHead) {
 		return sst.selectOne("itemns.getTotal", orderHead);
+	}
+
+	@Override
+	public int monthAmount7() {
+		return sst.selectOne("itemns.monthAmount7");
+	}
+	@Override
+	public int monthAmount8() {
+		return sst.selectOne("itemns.monthAmount8");
+	}
+	@Override
+	public int monthAmount9() {
+		return sst.selectOne("itemns.monthAmount9");
+	}
+	@Override
+	public int monthAmount10() {
+		return sst.selectOne("itemns.monthAmount10");
+	}
+	@Override
+	public int monthAmount11() {
+		return sst.selectOne("itemns.monthAmount11");
+	}
+	@Override
+	public int monthAmount12() {
+		return sst.selectOne("itemns.monthAmount12");
+	}
+
+	@Override
+	public List<Employee> listOfSales() {
+		return sst.selectList("itemns.listOfSales");
+	}
+
+	@Override
+	public int amountByEmp(String empCd) {
+		return sst.selectOne("itemns.amountByEmp", empCd);
 	}
 }

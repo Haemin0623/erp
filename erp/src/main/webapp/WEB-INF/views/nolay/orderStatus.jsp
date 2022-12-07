@@ -13,13 +13,24 @@
 	.scrollwrap {position: relative; display: block; width: 100%; overflow-x: auto; overflow-y: scroll;  height: 600px;}
 	.scrollcontent {width: 3000px;}
 
+	.graph1{
+	    position: relative;
+	    width: 400px;
+	    height: 500px;
+	    float: left;
+	    padding: 20px;
+	    
+	}
+	#allGraph{
+	    display: inline-block;
+	}
 </style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script type="text/javascript">
-	var J300 =  $.noConflict(true);	
-</script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script> -->
 </head>
 <body>
 <div id = "container">
@@ -115,6 +126,180 @@
 			<div class="search-btn" id="initBtn" tabIndex="0"><button>검색결과 초기화</button></div>
 	</div>	
 	
+<!-- 월 별 매출 합계 / 우선 처음에 보여지고 검색결과 나오면 숨겨지도록 -->
+	<div id=allGraph>
+		<div class="graph1">
+			<canvas id="amountGraph"></canvas>
+		</div>
+		<div class="graph1">
+			<canvas id="amountBySalespersonGraph"></canvas>
+		</div>
+		<div class="graph1">
+			<canvas id="amountByProductGraph"></canvas>
+		</div>
+	</div>
+<script>
+	$(document).ready(function(){
+		// graph1 - amountGraph 월 별 매출
+		$.ajax({
+			url: 'monthAmount.do',
+			type : "POST",
+			async : true,
+			traditional: true,
+			dataType : "json",
+			cache : false,
+	        success: function (data) {
+	        	var labels = ['7월', '8월', '9월', '10월', '11월', '12월'];
+	        	var datas = [];
+	        	for(var i=0 in data) {
+	        		datas[i] = data[i];
+	        		//console.log(data[i]);
+	        		//console.log(datas[i]);
+	        	}
+	        	new Chart(document.getElementById("amountGraph"), {
+	        		type: 'line',
+        		    data: {
+        		      labels: labels,
+        		      datasets: [
+        		        {
+        		          label: "월 별 매출",
+        		          borderColor: 'rgba(75, 192, 192, 1)',
+        	              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        		          data: datas
+        		        }
+        		      ]
+        		    },
+        		    options: {
+        		      legend: { display: false },
+        		      title: {
+        		        display: true,
+        		        text: '월 별 매출'
+        		      }
+	        		}
+	        	})
+			
+	        }//success 닫기
+	        
+		}); //월 별 매출 ajax 닫기
+		
+		// graph2 - amountBySalespersonGraph 당월 영업사원별 매출
+		$.ajax({
+			
+		    url: 'amountBySalesperson.do',
+			type : "POST",
+			async : true,
+			traditional: true,
+			dataType : "json",
+			cache : false,
+	        success: function (data) {
+	        	var labels = [];
+	        	//console.log(data.emp);
+	        	for(var i=0 in data.emp) {
+	        		labels[i] = data.emp[i].ename;
+	        		//console.log(data.emp[i].ename);
+	        	}
+	        	//console.log(labels);
+	        	
+        		var datas = [];
+        		for(var i=0 in data.amount) {
+        			datas[i] = data.amount[i];
+	        		//console.log(data.amount[i]);
+	        	}
+        		//console.log(datas);
+        		
+        		new Chart(document.getElementById("amountBySalespersonGraph"), {
+        		    type: 'bar',
+        		    data: {
+        		      labels: labels,
+        		      datasets: [
+        		        {
+        		          label: "영업사원 별 매출",
+        		          backgroundColor: [
+                              'rgba(54, 162, 235, 0.5)',
+                              'rgba(255, 206, 86, 0.5)',
+                              'rgba(75, 192, 192, 0.5)',
+                              'rgba(153, 102, 255, 0.5)',
+                              'rgba(255, 159, 64, 0.5)'],
+                          borderColor: [
+                              'rgba(54, 162, 235, 1.5)',
+                              'rgba(255, 206, 86, 1.5)',
+                              'rgba(75, 192, 192, 1.5)',
+                              'rgba(153, 102, 255, 1.5)',
+                              'rgba(255, 159, 64, 1.5)'],
+        		          data: datas
+        		        }
+        		      ]
+        		    },
+        		    options: {
+        		      legend: { display: true },
+        		      title: {
+        		        display: true,
+        		        text: '당월 영업사원별 매출'
+        		      }
+        		    }
+        		});
+	        }//success 닫기
+		
+		}); //당월 영업사원별 매출 닫기
+		
+		// graph3 - amountByProductGraph 당월 영업사원별 매출
+		$.ajax({
+
+		    url: 'amountByProduct.do',
+			type : "POST",
+			async : true,
+			traditional: true,
+			dataType : "json",
+			cache : false,
+	        success: function (data) {
+	        	var labels = [];
+	        	for(var i=0 in data.product) {
+	        		labels[i] = data.product[i].pname;
+	        	}
+	        	
+        		var datas = [];
+        		for(var i=0 in data.amount) {
+        			datas[i] = data.amount[i];
+	        	}
+        		
+        		let pieChartData = {
+        			    labels: labels,
+        			    datasets: [{
+        			        data: datas,
+        			        backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 
+        			        	'rgb(153, 102, 255)', 'rgba(54, 162, 235, 0.5)',
+                                'rgba(255, 206, 86, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(153, 102, 255, 0.5)']
+        			    }] 
+        		};
+        		
+        		new Chart(document.getElementById("amountByProductGraph"), {
+        		    type: 'pie',
+        		    data: pieChartData,
+        		    options: {
+        	            responsive: false,
+        	            legend: {
+        	                display: false
+        	            },
+        	            legendCallback: customLegend
+        	        }
+        		});
+	        } //success 닫기
+		}); // 당월 상품별 판매량 
+		
+		let customLegend = function (chart) {
+		    let ul = document.createElement('ul');
+		    let color = chart.data.datasets[0].backgroundColor;
+
+		    chart.data.labels.forEach(function (label, index) {
+		        ul.innerHTML += `<li><span style="background-color: ${color[index]}"></span>${label}</li>`;
+		    });
+		};
+		
+	});	//function닫기
+</script>
+
 	<div id="button-div">
 		<button id="excelBtn">Excel</button>
 		
@@ -358,7 +543,7 @@
 	
 	
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
 	$('.sumo').SumoSelect({
 		search: true,
@@ -372,80 +557,8 @@ $(document).ready(function() {
 	
 });
 
-</script>
+</script> -->
 
-<!-- 정렬 -->
-<script type="text/javascript">
-	function initSort() {
-		searchBoxx.sortOrderNo.value = 0;
-		searchBoxx.sortBuyerCd.value = 0;
-		searchBoxx.sortOrderDate.value = 0;
-		searchBoxx.sortEmployeeCd.value = 0;
-		searchBoxx.sortStatus.value = 0;
-		searchBoxx.sortStatusDate.value = 0;
-	}
-
-	$('#sortOrderNo').on('click', function() {
-		if (searchBoxx.sortOrderNo.value == 0 || searchBoxx.sortOrderNo.value == 2) {
-			initSort();
-			searchBoxx.sortOrderNo.value = 1;			
-		} else if (searchBoxx.sortOrderNo.value == 1) {
-			initSort();
-			searchBoxx.sortOrderNo.value = 2;
-		}		
-		search();
-	});
-	$('#sortBuyerCd').on('click', function() {
-		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
-			initSort();
-			searchBoxx.sortBuyerCd.value = 1;			
-		} else if (searchBoxx.sortBuyerCd.value == 1) {
-			initSort();
-			searchBoxx.sortBuyerCd.value = 2;
-		}		
-		search();
-	});
-	$('#sortOrderDate').on('click', function() {
-		if (searchBoxx.sortOrderDate.value == 0 || searchBoxx.sortOrderDate.value == 2) {
-			initSort();
-			searchBoxx.sortOrderDate.value = 1;		
-		} else if (searchBoxx.sortOrderDate.value == 1) {
-			initSort();
-			searchBoxx.sortOrderDate.value = 2;
-		}		
-		search();
-	});
-	$('#sortEmployeeCd').on('click', function() {
-		if (searchBoxx.sortEmployeeCd.value == 0 || searchBoxx.sortEmployeeCd.value == 2) {
-			initSort();
-			searchBoxx.sortEmployeeCd.value = 1;			
-		} else if (searchBoxx.sortEmployeeCd.value == 1) {
-			initSort();
-			searchBoxx.sortEmployeeCd.value = 2;
-		}		
-		search();
-	});
-	$('#sortStatus').on('click', function() {
-		if (searchBoxx.sortStatus.value == 0 || searchBoxx.sortStatus.value == 2) {
-			initSort();
-			searchBoxx.sortStatus.value = 1;			
-		} else if (searchBoxx.sortStatus.value == 1) {
-			initSort();
-			searchBoxx.sortStatus.value = 2;
-		}		
-		search();
-	});
-	$('#sortStatusDate').on('click', function() {
-		if (searchBoxx.sortStatusDate.value == 0 || searchBoxx.sortStatusDate.value == 2) {
-			initSort();
-			searchBoxx.sortStatusDate.value = 1;			
-		} else if (searchBoxx.sortStatusDate.value == 1) {
-			initSort();
-			searchBoxx.sortStatusDate.value = 2;
-		}		
-		search();
-	});
-</script>
 
 <!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
 <script type="text/javascript">

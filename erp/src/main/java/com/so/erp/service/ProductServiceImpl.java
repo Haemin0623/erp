@@ -60,5 +60,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.allList();
 	}
 
+	@Override
+	public int amountByProduct(String productCd) {
+		return pds.amountByProduct(productCd);
+	}
+
 
 }

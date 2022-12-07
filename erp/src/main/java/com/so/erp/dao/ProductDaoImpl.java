@@ -68,5 +68,10 @@ public class ProductDaoImpl implements ProductDao {
 		return sst.selectList("productns.allList");
 	}
 
+	@Override
+	public int amountByProduct(String productCd) {
+		return sst.selectOne("productns.amountByProduct", productCd);
+	}
+
 
 }

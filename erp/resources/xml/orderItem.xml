@@ -180,5 +180,66 @@
 	           ) a
 	   where   signCd = sign.employee_cd(+)
 	 order by	a.orderdate desc , a.order_no asc
+	</select> 
+	<select id="monthAmount7" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.07.01' and '2022.07.30'
+	</select>
+	<select id="monthAmount8" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.08.01' and '2022.08.31'
+	</select>
+	<select id="monthAmount9" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.09.01' and '2022.09.30'
+	</select>
+	<select id="monthAmount10" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.10.01' and '2022.10.31'
+	</select>
+	<select id="monthAmount11" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.11.01' and '2022.11.30'
+	</select>
+	<select id="monthAmount12" resultType="integer">
+		select	nvl(sum(amount),0)
+		from	order_head h, order_item i, m_product mp
+    	where	i.product_cd = mp.product_cd
+       		and h.order_no = i.order_no
+       		and h.status = '승인'
+       		and h.orderdate between '2022.12.01' and '2022.12.31'
+	</select>
+	<select id="listOfSales" resultType="Employee">
+		select	*
+		from	m_employee 
+		where	department='영업'
+	</select>
+	<select id="amountByEmp" parameterType="String" resultType="integer">
+		select nvl(sum(amount),0) from order_head h, order_item i, m_employee me
+   		where h.employee_cd = me.employee_cd
+        	and h.order_no = i.order_no
+        	and h.status = '승인'
+       		and h.orderdate between '2022.06.01' and '2022.06.30'
+       		and me.employee_cd = #{empCd}
 	</select>
 </mapper>

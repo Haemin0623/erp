@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -377,9 +378,72 @@ public class OrderController {
 		exData(model);
 		model.addAttribute("orderStatusList", orderStatusList);
 		model.addAttribute("orderItem", orderHead);
-		
+
 		return "nolay/orderStatus";
 	}
+	@RequestMapping("monthAmount")
+	@ResponseBody
+	public List<Integer> monthAmount() {
+		// 월별 매출 그래프 데이터 7,8,9,10,11,12
+		List<Integer> monthAmount = new ArrayList<Integer>();
+		
+		int mA7 = is.monthAmount7();
+		monthAmount.add(mA7);
+		int mA8 = is.monthAmount8();
+		monthAmount.add(mA8);
+		int mA9 = is.monthAmount9();
+		monthAmount.add(mA9);
+		int mA10 = is.monthAmount10();
+		monthAmount.add(mA10);
+		int mA11 = is.monthAmount11();
+		monthAmount.add(mA11);
+		int mA12 = is.monthAmount12();
+		monthAmount.add(mA12);
+		
+		
+		return monthAmount;
+	}
+	@RequestMapping("amountBySalesperson")
+	@ResponseBody
+	public HashMap<String, Object> salesPersonAmount() {
+		
+		List<Employee> emp = is.listOfSales();
+		
+		List<Integer> amountByEmp = new ArrayList<Integer>();
+		int amount = 0;
+		for (Employee e:emp) {
+			amount = is.amountByEmp(e.getEmployeeCd());
+			amountByEmp.add(amount);
+		}
+		System.out.println(amountByEmp);
+		System.out.println("!");
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("emp", emp);
+		map.put("amount", amountByEmp);
+		
+		return map;
+	}
+	
+	@RequestMapping("amountByProduct")
+	@ResponseBody
+	public HashMap<String, Object> amountByProductGraph() {
+		
+		List<Product> product = ps.list();
+		List<Integer> amountByProduct = new ArrayList<Integer>();
+		int amount = 0;
+		for (Product p:product) {
+			amount = ps.amountByProduct(p.getProductCd());
+			amountByProduct.add(amount);
+		}
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("product", product);
+		map.put("amount", amountByProduct);
+		
+		return map;
+	}
+	
 	
 	@RequestMapping("orderApprovalWindow")
 	public String orderApprovalWindow(Model model, OrderHead orderHead, OrderItem orderItem) {
@@ -581,12 +645,27 @@ public class OrderController {
 			
 			DecimalFormat dc = new DecimalFormat("###,###,###,###");	// price 천단위 
 			
+			
+			
 			for (OrderHead oh : orderStatusList) {
 				System.out.println(oh.toString());
+				// 수량, 합계에 천단위 표시
 				oh.setUnitedAmount(dc.format(oh.getAmount()));
 				oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
+				
+			
+				
 			}
 			System.out.println(orderHead.getAuth());
+			
+			// 그래프
+			int totalAmount = 0;
+			// 그래프 월별 합계용 
+			//totalAmount += oh.getAmount();
+			
+			
+			
+			
 			
 			model.addAttribute("orderStatusList", orderStatusList);
 			model.addAttribute("orderItem", orderHead);
@@ -709,11 +788,6 @@ public class OrderController {
 			oh.setUnitedAmount(dc.format(oh.getAmount()));
 			oh.setUnitedrequestqty(dc.format(oh.getRequestqty()));
 		}
-
-		
-		
-			
-		
 		
 		// 워크북 생성
 		Workbook wb = new XSSFWorkbook();
@@ -828,7 +902,7 @@ public class OrderController {
 	        cell = row.createCell(0);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getOrderdate());
-	        System.out.println(li.getOrderdate());
+	        System.out.println(li.getOrderdate().toString());
 	        
 		    cell = row.createCell(1);
 		    cell.setCellStyle(bodyStyle);
@@ -871,7 +945,7 @@ public class OrderController {
 		    
 		    cell = row.createCell(9);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getStatusdate());
+		    cell.setCellValue(li.getStatusdate().toString());
 		    
 		    cell = row.createCell(10);
 		    cell.setCellStyle(bodyStyle);
@@ -879,7 +953,7 @@ public class OrderController {
 		    
 		    cell = row.createCell(11);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getRequestdate());
+		    cell.setCellValue(li.getRequestdate().toString());
 		    
 		    cell = row.createCell(12);
 		    cell.setCellStyle(bodyStyle);
@@ -905,21 +979,16 @@ public class OrderController {
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getRemark());
 		    System.out.println(li.getRemark());
-
 	    }
-	
 	    // 컨텐츠 타입과 파일명 지정
 	    response.setContentType("ms-vnd/excel");
 	    response.setHeader("Content-Disposition", "attachment;filename=order.xlsx");
-	    
 	    // 엑셀 출력
 	    try {
             wb.write(response.getOutputStream());
         } finally {
             wb.close();
         }
-	    
-	    
 	}
 	
 	@RequestMapping("orderExcelDown")

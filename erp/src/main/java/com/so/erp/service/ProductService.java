@@ -25,5 +25,7 @@ public interface ProductService {
 
 	List<Product> allList();
 
+	int amountByProduct(String productCd);
+
 
 }

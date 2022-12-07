@@ -25,5 +25,7 @@ public interface ProductDao {
 
 	List<Product> allList();
 
+	int amountByProduct(String productCd);
+
 
 }
