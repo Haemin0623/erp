@@ -76,6 +76,18 @@
 						<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
 						~<input type="date" name="orderToDate" value="${orderHead.orderToDate }">
 					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">상태</div>
+						<div class="boxx">
+							<select name="status">
+								<option value="null">모두</option>		
+								<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+								<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+								<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
+								<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-div">
@@ -101,35 +113,22 @@
 						<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 						~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 					</div>
-				</div>
-				<div class="search-sub-div">
 					<div class="search-item-div">
-						<div class="search-item-text">상태</div>
-						<div class="boxx">
-							<select name="status">
-								<option value="null">모두</option>		
-								<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
-								<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
-								<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
-								<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
+						<div class="search-item-text">삭제 여부</div>
+							<select name="del">
+								<option value="N">삭제 X</option>
+								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >삭제 </option>
+								<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
 							</select>
-						</div>
-					</div>
-					<div class="search-item-div">
-					<div class="search-item-text">삭제 여부</div>
-						<select name="del">
-							<option value="N">삭제 X</option>
-							<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >삭제 </option>
-							<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
-						</select>
 					</div>
 				</div>
+			
 				<p>
 				
 			</form>
 		</div>
-		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
-		<div class="search-btn" id="initBtn" tabIndex="0"><button>초기화</button></div>
+		<button id="searchBtn">검색</button>
+		<button id="initBtn">초기화</button>
 	</div>
 	
 	

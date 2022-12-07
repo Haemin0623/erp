@@ -72,6 +72,18 @@
 							<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
 							-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
 					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">상태</div>
+						<div class="boxx">
+							<select name="status">
+								<option value="null">모두</option>		
+								<option value="승인대기" <c:if test="${orderItem.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+								<option value="승인요청" <c:if test="${orderItem.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+								<option value="승인" <c:if test="${orderItem.status == '승인' }">selected="selected"</c:if>>승인</option>
+								<option value="반려" <c:if test="${orderItem.status == '반려' }">selected="selected"</c:if>>반려</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-div">
@@ -96,23 +108,7 @@
 					<div class="search-item-div">
 						<div class="search-item-text">납품요청일</div>
 						<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
-						~<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
-					</div>
-					
-				</div>
-				<div class="search-sub-div">
-					
-					<div class="search-item-div">
-						<div class="search-item-text">상태</div>
-						<div class="boxx">
-							<select name="status">
-								<option value="null">모두</option>		
-								<option value="승인대기" <c:if test="${orderItem.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
-								<option value="승인요청" <c:if test="${orderItem.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
-								<option value="승인" <c:if test="${orderItem.status == '승인' }">selected="selected"</c:if>>승인</option>
-								<option value="반려" <c:if test="${orderItem.status == '반려' }">selected="selected"</c:if>>반려</option>
-							</select>
-						</div>
+						-<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">국가코드</div>
@@ -128,8 +124,8 @@
 				<p>
 			</form>
 		</div>
-			<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
-			<div class="search-btn" id="initBtn" tabIndex="0"><button>검색결과 초기화</button></div>
+		<button id="searchBtn">검색</button>
+		<button id="initBtn">초기화</button>
 	</div>	
 	
 <!-- 월 별 매출 합계 / 우선 처음에 보여지고 검색결과 나오면 숨겨지도록 -->
