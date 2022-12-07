@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-
-
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -77,7 +76,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping("order")
-	public String order(Model model, OrderHead orderHead, OrderItem orderItem) {
+	public String order(Model model, OrderHead orderHead, OrderItem orderItem, HttpSession session) {
 		
 		int rowPerPage = 10 ;
 		
@@ -95,6 +94,9 @@ public class OrderController {
 		orderHead.setSortEmployeeCd(0);
 		orderHead.setSortStatus(0);
 		orderHead.setSortStatusDate(0);
+		
+		String employeeCd = (String) session.getAttribute("employeeCd");
+		orderHead.setEmployeeCd(employeeCd);
 		
 		int currentPage = Integer.parseInt(orderHead.getPageNum());
 		int total = hs.getTotal(orderHead);
@@ -244,7 +246,8 @@ public class OrderController {
 	
 	@RequestMapping("orderInsert")
 	@ResponseBody
-	public boolean orderInsert(Model model, @RequestParam(name="head")String head, @RequestParam(name="items")String items) throws ParseException {		
+	public boolean orderInsert(Model model, @RequestParam(name="head")String head, 
+			@RequestParam(name="items")String items, HttpSession session) throws ParseException {		
 		
 		boolean result = true;
 		
@@ -267,8 +270,9 @@ public class OrderController {
 			orderHead.setBuyerCd(buyerCd);
 			orderHead.setOrderdate(orderdate);
 			
+			String employeeCd = (String) session.getAttribute("employeeCd");
 			//세션에서 직원 아이디 받아와야 할듯.
-			orderHead.setEmployeeCd("SAL005");
+			orderHead.setEmployeeCd(employeeCd);
 			
 			System.out.println("헤드 삽입");
 			hs.insert(orderHead);

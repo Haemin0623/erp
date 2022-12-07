@@ -22,7 +22,7 @@ public class ErpController {
 		return "page/logIn";
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping("main")
 	public String main() {
 		
 		return "page/main";
@@ -49,12 +49,18 @@ public class ErpController {
 		return "page/loginResult";
 	}
 	
-	@RequestMapping("logout.do")
+	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		
 		session.invalidate();
 		
 		return "page/logIn";
+	}
+	
+	@RequestMapping("check")
+	public String check(HttpSession session) {
+		
+		return "page/check";
 	}
 	
 }

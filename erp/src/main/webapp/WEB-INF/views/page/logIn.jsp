@@ -77,7 +77,7 @@
 		<div class="window">
 			<div class="popup">
 				<div class="login-form">
-					<form action="login.do">
+					<form action="login.do" method="post">
 						<table>
 							<tr>
 								<th>사번</th>

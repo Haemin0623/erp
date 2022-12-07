@@ -39,6 +39,8 @@
 	<context:component-scan base-package="com.so.erp" />
 	
 	<beans:bean id="sc" class="com.so.erp.service.SessionChk"></beans:bean>
+	<beans:bean id="ac" class="com.so.erp.service.AuthorityChk"></beans:bean>
+	
 	<interceptors>
 		<interceptor>
 			<!-- BuyerController -->
@@ -91,6 +93,12 @@
 			<mapping path="/productSearch.do"/>
 
 			<beans:ref bean="sc"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/orderApprovalWindow.do"/>
+			
+			<beans:ref bean="ac"/>
 		</interceptor>
 	</interceptors>
 	
