@@ -141,10 +141,8 @@ public class PricingController {
 			
 			
 			List<Pricing> searchList = prs.search(pricing);
-			System.out.println(searchList.size());
 			
 			for (Pricing pricing1 : searchList) {
-				System.out.println(pricing1.toString());
 			}
 			
 			for (Pricing pricing1 : searchList) {
@@ -174,7 +172,6 @@ public class PricingController {
 				
 				Date startdate = Date.valueOf(a[2]);
 				Date enddate = Date.valueOf(a[3]);
-				System.out.println(enddate);
 				
 				pricing.setBuyerCd(buyerCd);
 				pricing.setProductCd(productCd);
@@ -200,7 +197,6 @@ public class PricingController {
 				
 				Date startdate = Date.valueOf(a[2]);
 				Date enddate = Date.valueOf(a[3]);
-				System.out.println(enddate);
 				
 				pricing.setBuyerCd(buyerCd);
 				pricing.setProductCd(productCd);
@@ -261,20 +257,29 @@ public class PricingController {
 		return result;
 	}
 	
+	@RequestMapping("overlapCheck")
+	@ResponseBody
+	public int overlapCheck(Pricing pricing) {
+		int result = 0;
+		result = prs.overlapCheck(pricing);
+
+		return result;
+	}
+	
 	@RequestMapping("pricingUpdate")
 	@ResponseBody
-	public int pricingUpdate(Pricing pricing) {
+	public int pricingUpdate(Pricing pricing, @RequestParam(name="startdate")String startdate, @RequestParam(name="enddate")String enddate) {
+		
 		int result = 0;
+		
 		result = prs.pricingUpdate(pricing);
+		
 		return result;
 	}
 	
 	@RequestMapping("getPrice")
 	@ResponseBody
 	public int getPrice(String buyerCd, String productCd) {
-		
-		System.out.println(buyerCd);
-		System.out.println(productCd);
 		
 		Pricing pricing = new Pricing();
 		pricing.setBuyerCd(buyerCd);

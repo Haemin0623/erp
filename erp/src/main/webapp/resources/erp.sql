@@ -110,6 +110,16 @@ create table order_item(
 );
 
 
+select	count(*)
+		from 	m_pricing
+		where	buyer_cd = 'FOD002'
+			and product_cd = 'DR0002'
+			and ((startdate between '2022-10-10' and '2022-12-15')
+			or	(enddate between '2022-10-10' and '2022-12-15'));
+
+
+
+
 select * from ORDER_ITEM;
 select * from ORDER_HEAD;
 select * from BUYER;

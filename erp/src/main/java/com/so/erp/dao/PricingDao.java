@@ -26,5 +26,7 @@ public interface PricingDao {
 
 	int pricingRestore(Pricing pricing);
 
+	int overlapCheck(Pricing pricing);
+
 
 }

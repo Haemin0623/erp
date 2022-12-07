@@ -60,4 +60,9 @@ public class PricingServiceImpl implements PricingService {
 		return prd.pricingRestore(pricing);
 	}
 
+	@Override
+	public int overlapCheck(Pricing pricing) {
+		return prd.overlapCheck(pricing);
+	}
+
 }

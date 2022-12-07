@@ -26,5 +26,7 @@ public interface PricingService {
 
 	int pricingRestore(Pricing pricing);
 
+	int overlapCheck(Pricing pricing);
+
 
 }

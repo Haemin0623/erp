@@ -10,11 +10,8 @@
 <style type="text/css">
 
 	.pricingPage {
-		margin-left: 5%;
-		margin-right: 5%;
-	}
-	.menuName {
-/* 		align-content: center; */
+		margin-left: 2%;
+		margin-right: 2%;
 	}
 
 	.searchBox {
@@ -46,7 +43,7 @@
 	}
 	
 	.listBox {
-		height: 320px;
+		height: 350px;
 		margin-top: 10px;
 		overflow:auto;
 		width: 100%;
@@ -167,6 +164,13 @@
 		display: flex;
 	    align-items: baseline;
 	    justify-content: flex-end;
+	    
+	}
+	#prev {
+		cursor: pointer;
+	}
+	#next {
+		cursor: pointer;
 	}
 	#currentPage {
 		width: 30px;
@@ -348,11 +352,11 @@ function changeContent(data) {
 						<td>${status.count }</td>
 						<td>${pricing.buyerCd }</td>
 						<td>${pricing.productCd }</td>
-						<td class="editable">${pricing.price }</td>
-						<td class="editable">${pricing.startdate }</td>
-						<td class="editable">${pricing.enddate }</td>
+						<td class="editable"><fmt:formatNumber value="${pricing.price }" pattern="#,###.##"/></td>
+						<td>${pricing.startdate }</td>
+						<td>${pricing.enddate }</td>
 						<td class="editable">${pricing.discountrate }</td>
-						<td>${pricing.finalPrice }</td>
+						<td><fmt:formatNumber value="${pricing.finalPrice }" pattern="#,###"/></td>
 						<td class="editable">${pricing.currency }</td>
 						<td>${pricing.adddate }</td>
 						<td>${pricing.statusdate }</td>
@@ -428,9 +432,11 @@ function changeContent(data) {
 		<c:if test="${pricing.currentPage != 1}">
 			<h5 id="prev">이전</h5>
 		</c:if>
+		&nbsp;&nbsp;
 		<form name="paging">
 		 	<input type="number" name="currentPage" value="${pricing.currentPage }" id="currentPage"> / ${pricing.totalPage }
 		</form>
+		&nbsp;&nbsp;
 		<c:if test="${pricing.currentPage != pricing.totalPage}">
 			<h5 id="next">다음</h5>
 		</c:if>
@@ -471,11 +477,6 @@ function changeContent(data) {
 		});
 	}
 	
-	
-	
-	
-	
-	
 	// 등록창에 판매가리스트 추가
 	function changeTable() {
 		const buyerCd = pricing.buyerCd.value;
@@ -486,42 +487,106 @@ function changeContent(data) {
 		const discountrate = pricing.discountrate.value;
 		const currency = pricing.currency.value;
 		
+		
 		if (buyerCd == '' || productCd == '' || price == '' || 
 				startdate == '' || enddate == '' || discountrate == '' 
 				|| currency == ''){
 			alert('값을 채워넣어주세요'); 
-		} else {
-			
-			$('#addItemTable').append(
-					"<tr>" +
-						"<td>" + buyerCd + "</td>" +
-						"<td>" + productCd + "</td>" +
-						"<td>" + price + "</td>" +
-						"<td>" + startdate + "</td>" +
-						"<td>" + enddate + "</td>" +
-						"<td>" + discountrate + "</td>" +
-						"<td>" + currency + "</td>" +
-						"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
-					"</tr>"
-			);
-			pricing.buyerCd.value = '';
-			pricing.productCd.value = '';
-			pricing.price.value = '';
-			pricing.startdate.value = '';
-			pricing.enddate.value = '';
-			pricing.discountrate.value = '';
-			pricing.currency.value = '';
-			
 		}
-		
+		else {
+			$.ajax({
+			     method: 'post',
+			     url: 'overlapCheck.do',
+			     traditional: true,
+			     data: {
+			    	 buyerCd: buyerCd,
+			    	 productCd: productCd,
+			    	 startdate: startdate,
+			    	 enddate: enddate
+			     },
+			     dataType: 'json',
+			     success: function (result) {
+			        if (result == 0) {
+						$('#addItemTable').append(
+								"<tr>" +
+									"<td>" + buyerCd + "</td>" +
+									"<td>" + productCd + "</td>" +
+									"<td>" + price + "</td>" +
+									"<td>" + startdate + "</td>" +
+									"<td>" + enddate + "</td>" +
+									"<td>" + discountrate + "</td>" +
+									"<td>" + currency + "</td>" +
+									"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
+								"</tr>"
+						);
+						pricing.buyerCd.value = '';
+						pricing.productCd.value = '';
+						pricing.price.value = '';
+						pricing.startdate.value = '';
+						pricing.enddate.value = '';
+						pricing.discountrate.value = '';
+						pricing.currency.value = '';
+			        } else {
+			        	alert("계약일이 중복되었습니다");
+			        }
+				}
+		   });
+		}
 	}
-	
 	document.querySelector("#addItem").addEventListener("click", changeTable);
 	
 	//등록창 리스트에서 삭제
 	function deleteItem(e) {
 		e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 	}
+	
+	//등록창 리스트 전체 등록
+	function pricingInsert() {
+		const table = document.querySelector('#addItemTable');
+		const rows = table.getElementsByTagName("tr");
+		const tableLength = table.rows.length-1;
+		console.log(rows);
+		
+		const items = new Array(tableLength);
+		
+		for (let i = 0; i < tableLength; i++) {
+			let cells = rows[i+1].getElementsByTagName("td");
+			
+			items[i] = { 
+				buyerCd: cells[0].firstChild.data,
+				productCd: cells[1].firstChild.data,
+				price: cells[2].firstChild.data,
+				startdate: cells[3].firstChild.data,
+				enddate: cells[4].firstChild.data,
+				discountrate: cells[5].firstChild.data,
+				currency: cells[6].firstChild.data
+			};
+			console.log('성공');
+			console.log(items[i]);
+		};
+		
+		console.log(items);
+		
+		$.ajax({
+		     method: 'post',
+		     url: 'pricingInsert.do',
+		     traditional: true,
+		     data: {
+		    	 items: JSON.stringify(items)
+		     },
+		     dataType: 'json',
+		     success: function (result) {
+		        if (result) {
+					callView('pricing.do');
+					alert("등록 성공");
+		        } else {
+		        	alert("실패");
+		        }
+			}
+	   });
+	}
+	
+	document.querySelector("#pricingInsert").addEventListener("click", pricingInsert);
 	</script>
 	
 <c:if test="${pricing.del =='N' or pricing.del == 'All' }">
@@ -619,53 +684,6 @@ function changeContent(data) {
 	
 	
 	<script type="text/javascript">
-	//등록창 리스트 전체 등록
-	function pricingInsert() {
-		const table = document.querySelector('#addItemTable');
-		const rows = table.getElementsByTagName("tr");
-		const tableLength = table.rows.length-1;
-		console.log(rows);
-		
-		const items = new Array(tableLength);
-		
-		for (let i = 0; i < tableLength; i++) {
-			let cells = rows[i+1].getElementsByTagName("td");
-			
-			items[i] = { 
-				buyerCd: cells[0].firstChild.data,
-				productCd: cells[1].firstChild.data,
-				price: cells[2].firstChild.data,
-				startdate: cells[3].firstChild.data,
-				enddate: cells[4].firstChild.data,
-				discountrate: cells[5].firstChild.data,
-				currency: cells[6].firstChild.data
-			};
-			console.log('성공');
-			console.log(items[i]);
-		};
-		
-		console.log(items);
-		
-		$.ajax({
-		     method: 'post',
-		     url: 'pricingInsert.do',
-		     traditional: true,
-		     data: {
-		    	 items: JSON.stringify(items)
-		     },
-		     dataType: 'json',
-		     success: function (result) {
-		        if (result) {
-					callView('pricing.do');
-					alert("등록 성공");
-		        } else {
-		        	alert("실패");
-		        }
-			}
-	   });
-	}
-	
-	document.querySelector("#pricingInsert").addEventListener("click", pricingInsert);
 	
 	
 	

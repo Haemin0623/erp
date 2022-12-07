@@ -74,8 +74,6 @@
 	<update id="update" parameterType="pricing">
 		update m_pricing set 
 			price = #{price}, 
-			startdate = #{startdate}, 
-			enddate = #{enddate}, 
 			discountrate = #{discountrate}, 
 			currency = #{currency},
 			statusdate = sysdate
@@ -208,6 +206,14 @@
 		where rn between #{startRow} and #{endRow} 
 	</select>
 	
+	<select id="overlapCheck" parameterType="pricing" resultType="Integer">
+		select	count(*)
+		from 	m_pricing
+		where	buyer_cd = #{buyerCd} 
+			and product_cd = #{productCd} 
+			and ((startdate between #{startdate} and #{enddate})
+			or	(enddate between #{startdate} and #{enddate}))
+	</select>
 	
 	
 	

@@ -60,4 +60,9 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.update("pricingns.restore", pricing);
 	}
 
+	@Override
+	public int overlapCheck(Pricing pricing) {
+		return sst.selectOne("pricingns.overlapCheck", pricing);
+	}
+
 }
