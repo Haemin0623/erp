@@ -71,14 +71,31 @@ public class BuyerController {
 		
 	}
 	
-	//아이디 중복검사
+	//고객코드 중복검사
 	@RequestMapping(value = "dupChk", produces = "text/html;charset=utf-8")
 	@ResponseBody //jsp로 가지말고 바로 본문을 전달
 	public String dupChk(String buyerCd, Model model) {
 		String msg = "";
 		Buyer buyer = bs.select(buyerCd);
-		if(buyer == null) msg = "사용 가능";
-		else msg = "이미 사용중입니다";
+		if(buyer == null) {
+			msg = "※사용 가능";
+		}else {
+			msg = "※이미 사용중인 고객코드";
+		}
+		return msg;
+	}
+	
+	//고객코드 중복검사
+	@RequestMapping(value = "dupChk2", produces = "text/html;charset=utf-8")
+	@ResponseBody
+	public String dupChk2(String bname, Model model) {
+		String msg = "";
+		Buyer buyer = bs.select(bname);
+		if(buyer == null) {
+			msg = "※사용 가능";
+		}else {
+			msg = "※이미 사용중인 고객명";
+		}
 		return msg;
 	}
 	

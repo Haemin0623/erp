@@ -8,167 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<style type="text/css">
-
-/* #container { */
-/* 	margin-left: 50px; */
-/* } */
-
-/* #searchBox { */
-/* 	height: 150px; */
-/* 	width: 120vh; */
-/* 	background: #5b6996; */
-/* 	margin-top: 50px; */
-/* 	color: white; */
-/* } */
-
-/* #table { */
-/* 	overflow: auto; */
-/* 	height: 40vh; */
-/* 	width: 120vh; */
-/* } */
-
-/* .fixed { */
-/* 	position: sticky; */
-/* 	top: 0; */
-/* } */
-
-/* tr th { */
-/* 	background: #5b6996; */
-/* 	color: white; */
-/* } */
-
-
-/* #list { */
-/* 	width: 100%; */
-/* 	border: 1px solid; */
-/* } */
-
-/* /* 검색 조건 */ */
-/* .keyword { */
-/* 	margin-top: 30px; */
-/* 	margin-left: 10px; */
-/* 	height: 27px; */
-/* } */
-
-/* /* 이메일 input 길이 */ */
-/* .long1 { */
-/* 	width: 250px; */
-/* } */
-
-/* /* 주소 input 길이 */ */
-/* .long2 { */
-/* 	width: 400px; */
-/* } */
-
-/* /* 검색버튼 */ */
-/* #searchBtn { */
-/* 	background: #d9dbe1; */
-/* 	color: black; */
-/* 	cursor: pointer; */
-/* 	float: right; */
-/* 	margin-right: 50px; */
-/* 	margin-top: 15px */
-/* } */
-
-/* /* 신규등록 버튼 */ */
-/* #addBuyerBtn { */
-/* 	margin-top: 200px; */
-/* } */
-
-/* #tableBtn { */
-/* 	margin-top: 50px; */
-/* 	text-align: left; */
-/* } */
-
-/* .header th { */
-/* 	background: #5b6996; */
-/* 	color: white; */
-/* } */
-
-/* /* 마우스 오버(마우스 올렸을때) */ */
-/* tr { */
-/* 	color: black; */
-/* } */
-
-/* tr:hover { */
-/* 	background-color: #f4f4f4; */
-/* 	cursor: pointer; */
-/* } */
-/* /* 마우스 클릭하고있을때 */ */
-/* tr:active { */
-/* 	background-color: #B9E2FA; */
-/* } */
-
-/* .clickColor { */
-/* 	background-color: #B9E2FA; */
-/* } */
-
-/* .background { */
-/* 	position: fixed; */
-/* 	top: 0; */
-/* 	left: 0; */
-/* 	width: 100%; */
-/* 	height: 100vh; */
-/* 	background-color: rgba(0, 0, 0, 0.3); */
-/* 	z-index: 1000; */
-/* 	/* 숨기기 */ */
-/* 	z-index: -1; */
-/* 	opacity: 0; */
-/* } */
-
-/* .window { */
-/* 	position: relative; */
-/* 	width: 100%; */
-/* 	height: 100%; */
-/* } */
-
-/* .popup { */
-/* 	position: absolute; */
-/* 	top: 50%; */
-/* 	left: 50%; */
-/* 	transform: translate(-50%, -50%); */
-/* 	background-color: #ffffff; */
-/* 	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3); */
-/* 	/* 임시 지정 */ */
-/* 	width: 500px; */
-/* 	height: 500px; */
-/* 	/* 초기에 약간 아래에 배치 */ */
-/* 	transform: translate(-50%, -40%); */
-/* } */
-
-/* .show { */
-/* 	opacity: 1; */
-/* 	z-index: 1000; */
-/* 	transition: all .5s; */
-/* } */
-
-/* .show .popup { */
-/* 	transform: translate(-50%, -50%); */
-/* 	transition: all .5s; */
-/* } */
-
-/* #item { */
-/* 	border: 1px solid; */
-/* } */
-
-/* .list { */
-/* 	background: silver; */
-/* } */
-
-/* .sumo { */
-/* 	color: black; */
-/* } */
-
-/* li.opt { */
-/* 	color: black; */
-/* } */
-/* 	.fixed { */
-/* 		position: sticky; */
-/* 		top: 0; */
-/* 	} */
-
-</style>
 <script type="text/javascript">
 	function dupChk() {
 		if(!frm.buyerCd.value) {
@@ -184,6 +23,22 @@
 	$('#dupChk').on('click', function(event){ //dupChk 아이디 클릭시 form 태그 기능 못하게 
 		event.preventDefault();
 		dupChk();
+	});
+	
+	function dupChk2() {
+		if(!frm.bname.value) {
+			alert("입력한 후에 체크하시오");
+			frm.bname.focus(); 
+			return false;
+		}
+		$.post('dupChk2.do', "bname="+frm.bname.value, function(data) {
+			$('#buyerCdChk-msg').html(data);  
+		});
+	}
+	
+	$('#dupChk2').on('click', function(event){ //dupChk 아이디 클릭시 form 태그 기능 못하게 
+		event.preventDefault();
+		dupChk2();
 	});
 
 </script>
@@ -293,6 +148,7 @@
 	
 	
 		<div id="button-div">
+			<button id="excelBtn">Excel</button>
 			<button id="show">등록</button>
 			<c:if test="${buyer.del != 'Y'}">
 				<button id="delBuyer">삭제</button>
@@ -397,11 +253,12 @@
 					<tr>
 						<th>고객코드</th>
 						<td><input type="text" name="buyerCd"><button id="dupChk">중복체크</button></td>
-						<th><div id="buyerCdChk-msg"></div><th>
+						<div id="buyerCdChk-msg"></div>
 					</tr>
 					<tr>
 						<th>고객명</th>
 						<td><input type="text" name="bname"><button id="dupChk2">중복체크</button></td>
+						<div id="buyerCdChk-msg"></div>
 					</tr>
 					<tr>
 						<th>담당자</th>
