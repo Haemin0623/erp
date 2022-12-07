@@ -66,8 +66,10 @@
 				</div>
 			</form>
 		</div>
-		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
-		<div class="search-btn" id="initBtn" tabIndex="0"><button>초기화</button></div>
+		<div class="search-btn">
+			<button id="searchBtn">검색</button>
+			<button id="initBtn">초기화</button>
+		</div>
 	</div>
 	
 	<div id="button-div">
