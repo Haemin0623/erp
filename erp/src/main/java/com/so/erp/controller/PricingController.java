@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.PagingBean;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
 import com.so.erp.service.PricingService;
@@ -142,8 +141,6 @@ public class PricingController {
 			
 			List<Pricing> searchList = prs.search(pricing);
 			
-			for (Pricing pricing1 : searchList) {
-			}
 			
 			for (Pricing pricing1 : searchList) {
 				pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
@@ -156,7 +153,7 @@ public class PricingController {
 		}
 		return "nolay/pricing";
 		
-		
+		 
 	}
 	
 	
@@ -214,8 +211,8 @@ public class PricingController {
 	@ResponseBody
 	public boolean pricingInsert(Model model, @RequestParam(name="items")String items) throws ParseException {		
 		
-		boolean result = true;
-		System.out.println(11);
+		boolean result = false;
+		
 		try {
 			System.out.println(12);
 			JSONParser p = new JSONParser();
@@ -249,7 +246,7 @@ public class PricingController {
 				
 				System.out.println("전");
 				prs.pricingInsert(pricing);
-				System.out.println("후");
+				result = true;
 			}
 		
 		} catch (Exception e) {

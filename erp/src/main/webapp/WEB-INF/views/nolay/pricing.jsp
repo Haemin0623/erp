@@ -5,178 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-<style type="text/css">
-
-	.pricingPage {
-		margin-left: 2%;
-		margin-right: 2%;
-	}
-
-	.searchBox {
- 		height: 160px;
-		background: #5b6996;
-		margin-top: 30px;
-		color: white;
-		width: 100%;
-	}
-	
-	.searchBoxxx {
-		position: absolute;
-		margin-top: 10px;
-		margin-left: 10px;
-		margin-right: 10px;
-		margin-bottom: 10px;
-	}
-	
-	#searchList {
-	margin-left: 20px;
-	}
-	
-	.btn {
- 	margin-top: 50px;
-	}
-	
-	#page {
-		float: right;
-	}
-	
-	.listBox {
-		height: 350px;
-		margin-top: 10px;
-		overflow:auto;
-		width: 100%;
-	}
-	
-	.tableList {
-		width: 100%;
-	}
-	
-	.keyword {
-	}
-	.price {
-		width: 90px;
-	}
-	.SumoSelect {
-		width: 135px;
-	}
-	#initBtn {
-		background: navy;
-		color: white;
-		cursor: pointer;
-		float: right;
-	}
-	#searchBtn {
-		background: navy;
-		color: white;
-		cursor: pointer;
-		float: right;
-		margin-right: 5px;
-	}
-	
-	table {
-
-	}
-	
-	.header th {
-		background: #5b6996;
-		color: white;
-	}
-	
-	.list {
- 		background: #e5ebff;
-	}
-	
-	
-	/* 팝업 추가창 start*/
-	.background {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100vh;
-	  background-color: rgba(0, 0, 0, 0.5);
-	  z-index: 1000;
-	  
-	  /* 숨기기 */
-	  z-index: -1;
-	  opacity: 0;
-	}
-	
-	.window {
-	  position: relative;
-	  width: 100%;
-	  height: 100%;
-	}
-	
-	.popup {
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  transform: translate(-50%, -50%);
-	  background-color: #ffffff;
-	  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-	  
-	  /* 임시 지정 */
-	  width: 750px;
-	  height: 600px;
-	  
-	  /* 초기에 약간 아래에 배치 */
-	  transform: translate(-50%, -40%);
-	}
-	
-	.show {
-	  opacity: 1;
-	  z-index: 1000;
-	  transition: all .5s;
-	}
-	
-	.show .popup {
-	  transform: translate(-50%, -50%);
-	  transition: all .5s;
-	}
-	
-	#close {
-		float: right;
-		font-size: x-large;
-	}
-	
-	.writeForm {
-		margin-left: 50px;
-		margin-top: 50px;
-	}
-	/* 팝업 추가창 end*/
-	
-	.sumo {
-		color: black;
-	}
-	li.opt {
-		color : black;
-	}
-	
-	.fixed {
-		position: sticky;
-		top: 0;
-	}
-	
-	#pageBtn {
-		display: flex;
-	    align-items: baseline;
-	    justify-content: flex-end;
-	    
-	}
-	#prev {
-		cursor: pointer;
-	}
-	#next {
-		cursor: pointer;
-	}
-	#currentPage {
-		width: 30px;
-	}
-</style>
-
+<title>판매가</title>
 <script type="text/javascript">
 
 function changeContent(data) {
@@ -207,77 +36,97 @@ function changeContent(data) {
 	<h1 class="menuName">판매가 관리</h1>
 	
 	<!-- 검색 박스 -->
-	<div class="searchBox">
-	<div class="searchBoxxx">
-		<form name="searchBoxx">
-		
-		<!-- 정렬용 -->
-			<input type="hidden" name="sortBuyerCd" value="${pricing.sortBuyerCd }">
-			<input type="hidden" name="sortProductCd" value="${pricing.sortProductCd }">
-			<input type="hidden" name="sortPrice" value="${pricing.sortPrice }">
-			<input type="hidden" name="sortStartdate" value="${pricing.sortStartdate }">
-			<input type="hidden" name="sortEnddate" value="${pricing.sortEnddate }">
-			<input type="hidden" name="sortDiscountrate" value="${pricing.sortDiscountrate }">
-			<input type="hidden" name="sortFinalPrice" value="${pricing.sortFinalPrice }">
-			<input type="hidden" name="sortCurrency" value="${pricing.sortCurrency }">
-			<input type="hidden" name="sortAdddate" value="${pricing.sortAdddate }">
-			<input type="hidden" name="sortStatusdate" value="${pricing.sortStatusdate }">
-		
-			고객코드
-			<select name="buyerCd" class="keyword sumo sumoBuy">
-				<option value="All"></option>
-				<c:forEach var="pricing" items="${pricingList }">
-					<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
-				</c:forEach>
-			</select>
-			상품코드
-			<select name="productCd" class="keyword sumo sumoProd">
-				<option value="All"></option>
-				<c:forEach var="pricing" items="${pricingList }">
-					<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
-				</c:forEach>
-			</select>
-			판매가
-			<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword price">
-			~
-			<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword price"><p>
-			기준일
-			<input type="date" name="validDate" value="${pricing.validDate }" class="keyword validDate">
-			할인율
-			<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword discountrate">
-			통화단위
-				<select name="currency" class="keyword">
-					<option value="All" <c:if test="${pricing.currency == 'All'}">selected="selected"</c:if>>선택</option>
-					<option value="원(₩)" <c:if test="${pricing.currency == '원(₩)'}">selected="selected"</c:if>>원(₩)</option>
-					<option value="달러($)" <c:if test="${pricing.currency == '달러($)'}">selected="selected"</c:if>>달러($)</option>
-					<option value="앤(¥)" <c:if test="${pricing.currency == '앤(¥)'}">selected="selected"</c:if>>앤(¥)</option>
-					<option value="위안(元)" <c:if test="${pricing.currency == '위안(元)'}">selected="selected"</c:if>>위안(元)</option>
-				</select>
-			삭제 보기
-			<select name="del">
-				<option value="N">삭제 안된것</option>
-				<c:if test="${pricing.del == 'Y'}">
-					<option value="Y" selected="selected">삭제 된것</option>
-				</c:if>
-				<c:if test="${pricing.del != 'Y'}">
-					<option value="Y">삭제 된것</option>
-				</c:if>
-				<c:if test="${pricing.del == 'All'}">
-					<option value="All" selected="selected">모두</option>
-				</c:if>
-				<c:if test="${pricing.del != 'All'}">
-					<option value="All">모두</option>
-				</c:if>
-			</select>
-		</form>
-		<button id="initBtn">검색결과 초기화</button>
-		<button id="searchBtn">검색</button>
-	</div>
+	<div id="searchBox">
+		<div class="searchInBox">
+			<form name="searchBoxx">
+			
+			<!-- 정렬용 -->
+				<input type="hidden" name="sortBuyerCd" value="${pricing.sortBuyerCd }">
+				<input type="hidden" name="sortProductCd" value="${pricing.sortProductCd }">
+				<input type="hidden" name="sortPrice" value="${pricing.sortPrice }">
+				<input type="hidden" name="sortStartdate" value="${pricing.sortStartdate }">
+				<input type="hidden" name="sortEnddate" value="${pricing.sortEnddate }">
+				<input type="hidden" name="sortDiscountrate" value="${pricing.sortDiscountrate }">
+				<input type="hidden" name="sortFinalPrice" value="${pricing.sortFinalPrice }">
+				<input type="hidden" name="sortCurrency" value="${pricing.sortCurrency }">
+				<input type="hidden" name="sortAdddate" value="${pricing.sortAdddate }">
+				<input type="hidden" name="sortStatusdate" value="${pricing.sortStatusdate }">
+			
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">고객코드</div>
+							<select name="buyerCd" class="keyword sumo sumoBuy">
+								<option value="All"></option>
+								<c:forEach var="pricing" items="${pricingList }">
+									<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+								</c:forEach>
+							</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">상품코드</div>
+							<select name="productCd" class="keyword sumo sumoProd">
+								<option value="All"></option>
+								<c:forEach var="pricing" items="${pricingList }">
+									<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+								</c:forEach>
+							</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">판매가</div>
+							<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword price">
+							~
+							<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword price"><p>
+					</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">기준일</div>
+							<input type="date" name="validDate" value="${pricing.validDate }" class="keyword validDate">
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">할인율</div>
+							<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword discountrate">
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">통화단위</div>
+							<select name="currency" class="keyword">
+								<option value="All" <c:if test="${pricing.currency == 'All'}">selected="selected"</c:if>>선택</option>
+								<option value="원(₩)" <c:if test="${pricing.currency == '원(₩)'}">selected="selected"</c:if>>원(₩)</option>
+								<option value="달러($)" <c:if test="${pricing.currency == '달러($)'}">selected="selected"</c:if>>달러($)</option>
+								<option value="앤(¥)" <c:if test="${pricing.currency == '앤(¥)'}">selected="selected"</c:if>>앤(¥)</option>
+								<option value="위안(元)" <c:if test="${pricing.currency == '위안(元)'}">selected="selected"</c:if>>위안(元)</option>
+							</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">삭제</div>
+							<select name="del">
+								<option value="N">X</option>
+								<c:if test="${pricing.del == 'Y'}">
+									<option value="Y" selected="selected">O</option>
+								</c:if>
+								<c:if test="${pricing.del != 'Y'}">
+									<option value="Y">O</option>
+								</c:if>
+								<c:if test="${pricing.del == 'All'}">
+									<option value="All" selected="selected">모두</option>
+								</c:if>
+								<c:if test="${pricing.del != 'All'}">
+									<option value="All">모두</option>
+								</c:if>
+							</select>
+					</div>
+				</div>
+			</form>
+		</div>
+			<div class="search-btn">
+			<button id="searchBtn">검색</button>
+			<button id="initBtn">초기화</button>
+			</div>
 	</div>
 	
 	
 	<!-- 판매가 등록 -->
-	<div class="btn">
+	<div id="button-div">
 		<button id="show">등록</button>
 		<c:if test="${pricing.del != 'Y'}">
 			<button type="button" onclick="deleteAction()">삭제</button>
@@ -310,9 +159,9 @@ function changeContent(data) {
 	</div>
 	
 	<!-- 리스트 박스 -->
-	<div class="listBox">
-		<table class="tableList">
-			<tr class="header">
+	<div class="table">
+		<table class="list">
+			<tr>
 				<th class="fixed">
 					<c:if test="${pricing.del == 'Y'}">
 						<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
@@ -338,7 +187,7 @@ function changeContent(data) {
 			</c:if>
 			<c:if test="${not empty pricingList}">
 				<c:forEach var="pricing" items="${pricingList}" varStatus="status">
-					<tr class="list">
+					<tr class="itemRow">
 						<td>
 							<c:if test="${pricing.del == 'Y'}">
 								<input type="checkbox" name="deletedRow" 
@@ -402,10 +251,12 @@ function changeContent(data) {
 						<option value="위안(元)">위안(元)</option>
 					</select><br><br>
 				</form>
-				<button id="addItem">추가</button>
-				<div id="addItemDiv">
+				<div class="insert-btn">
+					<button id="addItem">추가</button>
+				</div>
+				<div id="addItemDiv" class="table" style="height: 200px;">
 				
-					<table id="addItemTable">
+					<table id="addItemTable" class="list">
 						<tr>
 							<th>고객코드</th>
 							<th>상품코드</th>
@@ -418,9 +269,11 @@ function changeContent(data) {
 						</tr>
 					</table>
 					<br><br><br><br><br><br><br>
-					<button id=pricingInsert>등록</button>
 					
 				</div>
+					<div class="insert-btn">
+						<button id=pricingInsert>등록</button>
+					</div>
 				
 				</div>
 			</div>
@@ -430,7 +283,7 @@ function changeContent(data) {
 	<!-- 페이징 -->
 	<div id="pageBtn">
 		<c:if test="${pricing.currentPage != 1}">
-			<h5 id="prev">이전</h5>
+			<h5 id="prev">◀</h5>
 		</c:if>
 		&nbsp;&nbsp;
 		<form name="paging">
@@ -438,7 +291,7 @@ function changeContent(data) {
 		</form>
 		&nbsp;&nbsp;
 		<c:if test="${pricing.currentPage != pricing.totalPage}">
-			<h5 id="next">다음</h5>
+			<h5 id="next">▶</h5>
 		</c:if>
 	</div>
 </div>
@@ -580,7 +433,7 @@ function changeContent(data) {
 					callView('pricing.do');
 					alert("등록 성공");
 		        } else {
-		        	alert("실패");
+		        	alert("데이터를 추가해 주세요");
 		        }
 			}
 	   });

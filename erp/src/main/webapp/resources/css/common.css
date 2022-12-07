@@ -10,6 +10,11 @@
 		height: 30px;
 	}
 	
+	input[type="number"] {
+	    width: 100px;
+		height: 30px;
+	}
+	
 	select.search {
 		width: 180.64px;
 		height: 30px;
@@ -59,7 +64,7 @@
 	}
 	
 	.search-item-div{
-	    width: 280px;
+	    width: 260px;
 	    display: flex;
 	    align-items: center;
 	    margin-left: 10px;
@@ -67,7 +72,7 @@
 	}
 	
 	.search-item-text{
-   		width: 120px;
+   		width: 80px;
 	}
 	
 	.search-item-div>input{
@@ -80,13 +85,25 @@
 	.search-btn{
 /* 	    width: 106px; */
 	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    background-color: #242d49;
-	    font-size: 15px;
-	    font-weight: 400;
+/* 	    align-items: center; */
+/* 	    justify-content: center; */
+/* 	    background-color: #242d49; */
+/* 	    font-size: 15px; */
+/* 	    font-weight: 400; */
 	    cursor: pointer;
-	    border-color: white;
+/* 	    border-color: white; */
+	}
+	#searchBtn {
+		width: 70px;
+		background: #879971;
+	    color: white;
+	    border-color: #c3d4ae;
+	}
+	#initBtn {
+		width: 30px;
+		background: #879971;
+	    color: white;
+	    border-color: #c3d4ae;
 	}
 	
 	#button-div {
@@ -150,8 +167,16 @@
 	}
 	
 	#pageBtn {
-		display: inline;
-		text-align: right;
+		display: flex;
+	    text-align: right;
+	    justify-content: flex-end;
+	    align-items: baseline;
+	}
+	#next {
+		cursor: pointer;
+	}
+	#prev {
+		cursor: pointer;
 	}
 	
 	#currentPage {
@@ -186,7 +211,7 @@
 	}
 	
 
-	
+	/* 팝업 추가창 */
 	.background {
 	  position: fixed;
 	  top: 0;
@@ -232,6 +257,11 @@
 	.show .popup {
 	  transform: translate(-50%, -50%);
 	  transition: all .5s;
+	}
+	
+	#close {
+		float: right;
+		font-size: x-large;
 	}
 	
 	#item {
