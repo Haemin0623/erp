@@ -560,7 +560,7 @@ function changeContent(data) {
                     td.addClass("editable");
                 
                     // 테이블의 Row 클릭시 값 가져오기
-    	            $(".tableList tr").keypress(function(){    
+    	            $(".list tr").keypress(function(){    
     	
     		            const str = ""
     		            const tdArr = new Array(); // 배열 선언

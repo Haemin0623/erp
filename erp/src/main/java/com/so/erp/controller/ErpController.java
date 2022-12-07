@@ -1,6 +1,10 @@
 package com.so.erp.controller;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,10 @@ import com.so.erp.service.BuyerService;
 import com.so.erp.service.EmployeeService;
 import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
+import com.so.erp.model.Pricing;
+import com.so.erp.service.EmployeeService;
+import com.so.erp.service.OrderHeadService;
+import com.so.erp.service.PricingService;
 
 @Controller
 public class ErpController {
@@ -27,6 +35,7 @@ public class ErpController {
 	@Autowired
 	private BuyerService bs;
 
+	private PricingService prs;
 	
 	@RequestMapping("hello")
 	public String hello() {
@@ -149,6 +158,55 @@ public class ErpController {
 			bs.insert(buyer);
 			
 		}
+		
+		
+		Pricing pricing = new Pricing();
+		String[] buyerCd = {"FOD001","FOD002","FOD003","FOD004","FOD005",
+							"MAT001","MAT002","FOD006","FOD007","FOD008",
+							"CVS001","CVS002","CVS003","CVS004","CVS005"};
+		String[] productCd = {"SN0001","SN0002","SN0003","SN0004","SN0005",
+							  "RA0001","RA0002", "DR0001","DR0002"};
+		String[] currency = {"원(₩)", "달러($)", "앤(¥)", "위안"};
+		int[] yyyy = {2021, 2022, 2023};
+		
+		for (int i = 1; i < 1000; i++) {
+			int num = (int)(Math.random()*15);
+			int num2 = (int)((Math.random()*100+1)*100);
+			int num3 = (int)(Math.random()*3);
+			int num4 = (int)(Math.random()*11);
+			int num5 = (int)(Math.random()*4);
+			int num6 = (int)(Math.random()*9);
+			
+			String ydate = String.valueOf(yyyy[num3]);
+			String mdate = String.valueOf((int)(Math.random()*12+1));
+			String ddate = String.valueOf((int)(Math.random()*28+1));
+			String sdate = ydate+"-"+mdate+"-"+ddate;
+			System.out.println(sdate);
+			Date start = Date.valueOf(sdate);
+			
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = start;
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DATE, 1);
+			String edate = df.format(cal.getTime());
+			
+			Date end = Date.valueOf(edate);
+			
+			pricing.setBuyerCd(buyerCd[num]);
+			pricing.setProductCd(productCd[num6]);
+			pricing.setPrice(num2);
+			pricing.setStartdate(start);
+			pricing.setEnddate(end);
+			pricing.setDiscountrate(num4);
+			pricing.setCurrency(currency[num5]);
+			pricing.setAdddate(start);
+			pricing.setDel("N");
+			pricing.setStatusdate(date);
+			
+			prs.pricingInsert(pricing);
+		}
+		
 		
 		return "page/logIn";
 	}

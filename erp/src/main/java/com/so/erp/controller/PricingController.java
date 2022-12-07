@@ -269,13 +269,12 @@ public class PricingController {
 	
 	@RequestMapping("pricingUpdate")
 	@ResponseBody
-	public int pricingUpdate(Pricing pricing, @RequestParam(name="startdate")String startdate, @RequestParam(name="enddate")String enddate) {
-
-		
+	public int pricingUpdate(Pricing pricing) {
+		System.out.println(pricing);
 		int result = 0;
 		
 		result = prs.pricingUpdate(pricing);
-		
+		System.out.println(result);
 		return result;
 	}
 	
