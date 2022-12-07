@@ -204,7 +204,7 @@
 			<div class="popup">
 				<form action="" name="frm">
 					<table id="insert-form">
-						
+						<caption>상품 등록</caption>
 							<tr>
 								<td>카테고리<select name="category" id="codeMix" autofocus="autofocus">
 									<option value="">선택</option>
@@ -212,14 +212,11 @@
 									<option value="스낵">스낵</option>
 									<option value="음료">음료</option>
 								</select></td>
-							</tr>
-							<tr>
+							
 								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td>상품명<input type="text" name="pname" required="required"></td>
-								</tr>
-							<tr>
 								<td>용량<input type="text" name="volume" required="required"></td>
 							</tr>
 							<tr>
