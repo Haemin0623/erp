@@ -122,7 +122,7 @@
 				<th class="fixed" id="sortDepartment">부서</th>
 				<th class="fixed" id="sortAdddate">등록일</th>
 				<th class="fixed" id="sortAuthority">승인권한</th>
-				<th class="fixed">상태변경일</th>
+				<th class="fixed">최종수정일</th>
 			</tr>
 			<c:forEach var="emp" items="${empList }">			
 				<tr class="itemRow">

@@ -180,7 +180,7 @@ function changeContent(data) {
 				<th class="fixed" id="sortFinalPrice">최종판매가</th>
 				<th class="fixed" id="sortCurrency">통화단위</th>
 				<th class="fixed" id="sortAdddate">등록일</th>
-				<th class="fixed" id="sortStatusdate">상태변경일</th>
+				<th class="fixed" id="sortStatusdate">최종수정일</th>
 			</tr>
 			<c:if test="${empty pricingList}">
 				검색 결과가 없습니다

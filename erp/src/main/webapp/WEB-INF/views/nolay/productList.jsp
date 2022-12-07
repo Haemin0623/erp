@@ -732,7 +732,7 @@ function excel() {
                 var url = window.URL || window.webkitURL;
                 link = url.createObjectURL(blob);
                 var a = $("<a />");
-                a.attr("download", "test.xlsx");
+                a.attr("download", "product.xlsx");
                 a.attr("href", link);
                 $("body").append(a);
                 a[0].click();
