@@ -1,6 +1,10 @@
 package com.so.erp.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
+import com.so.erp.model.Employee;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -78,7 +84,7 @@ public class BuyerController {
 		String msg = "";
 		Buyer buyer = bs.select(buyerCd);
 		if(buyer == null) {
-			msg = "※사용 가능";
+			msg = "※사용 가능한 고객코드";
 		}else {
 			msg = "※이미 사용중인 고객코드";
 		}
@@ -92,7 +98,7 @@ public class BuyerController {
 		String msg = "";
 		Buyer buyer = bs.select(bname);
 		if(buyer == null) {
-			msg = "※사용 가능";
+			msg = "※사용 가능한 고객명";
 		}else {
 			msg = "※이미 사용중인 고객명";
 		}
@@ -246,5 +252,44 @@ public class BuyerController {
 			}			
 		}
 		return result;
+	}
+	
+	@RequestMapping("buyerExcelDown")
+	@ResponseBody
+	public void orderExcelDown(HttpServletResponse response, @RequestParam(name = "items") String items)
+			throws IOException {
+		List<Buyer> list = new ArrayList<>();
+		System.out.println(items);
+		
+		Buyer buyerRow = new Buyer();
+
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+
+			System.out.println("1");
+			
+			Buyer item = new Buyer();
+
+			for (int i = 0; i < arr.size(); i++) {
+
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				String buyerCd = (String) itemObj.get("buyerCd");
+				System.out.println(buyerCd);
+
+				item.setBuyerCd(buyerCd);
+
+				System.out.println("sql전");
+				buyerRow = bs.listForExcel(item);
+				System.out.println("sql후");
+				list.add(buyerRow);
+			}
+
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("size" + list.size());
 	}
 }

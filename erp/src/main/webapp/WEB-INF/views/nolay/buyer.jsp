@@ -148,7 +148,6 @@
 	
 	
 		<div id="button-div">
-			<button id="excelBtn">Excel</button>
 			<button id="show">등록</button>
 			<c:if test="${buyer.del != 'Y'}">
 				<button id="delBuyer">삭제</button>
@@ -156,6 +155,8 @@
 			<c:if test="${buyer.del == 'Y'}">
 				<button type="button" onclick="restoreAction()">복원</button>
 			</c:if>
+			<button id="excelBtn">Excel</button>
+			
 			<div id="page">
 				<form name="itemLimit">
 					<select name="rowPerPage" id="limit">
@@ -409,7 +410,73 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
 	document.querySelector("#addBuyerBtn").addEventListener("click", addBuyer); 
 	
+	//엑셀 다운로드
+	function excel() {
+			
+			let checkRow = new Array();
+			
+			$( "input[name='checkRow']:checked" ).each (function (){
+				 let thisRow = $(this).closest('tr');
+				 		  
+				 const item = {
+						 	buyerCd : thisRow.find('td:eq(0)').find('input').val(),
+						}
 	
+				 checkRow.push(item);
+			
+			});
+			
+			  
+			 console.log(checkRow);
+			 
+			 J300.ajax({
+				  url : 'buyerExcelDown.do',
+				  method : 'post',
+				  traditional : true,
+				  data : {
+					  items : JSON.stringify(checkRow)
+				  },
+				  xhr: function () {
+	                  var xhr = new XMLHttpRequest();
+	                  xhr.onreadystatechange = function () {
+	                      if (xhr.readyState == 2) {
+	                          if (xhr.status == 200) {
+	                              xhr.responseType = "blob";
+	                          } else {
+	                              xhr.responseType = "text";
+	                          }
+	                      }
+	                  };
+	                  return xhr;
+				    },
+				  success : function(data) {
+					  console.log(data);
+					//alert("엑셀다운완료?");
+					//Convert the Byte Data to BLOB object.
+	                var blob = new Blob([data], { type: "application/octetstream" });
+	
+	                //Check the Browser type and download the File.
+	                var isIE = false || !!document.documentMode;
+	                if (isIE) {
+	                    window.navigator.msSaveBlob(blob, fileName);
+	                } else {
+	                    var url = window.URL || window.webkitURL;
+	                    link = url.createObjectURL(blob);
+	                    var a = $("<a />");
+	                    a.attr("download", "test.xlsx");
+	                    a.attr("href", link);
+	                    $("body").append(a);
+	                    a[0].click();
+	                    $("body").remove(a);
+	                }
+				}, error: function (xhr, status, error) {
+					console.log("error");
+				} 
+			 });
+			  
+		}
+		
+		document.querySelector("#excelBtn").addEventListener("click", excel);
 	
 	
 	// 	 테이블 수정가능하게 editable

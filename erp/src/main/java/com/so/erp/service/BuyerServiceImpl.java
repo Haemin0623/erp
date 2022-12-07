@@ -63,4 +63,9 @@ public class BuyerServiceImpl implements BuyerService {
 		bd.buyerRestore(buyerCd);
 	}
 
+	@Override
+	public Buyer listForExcel(Buyer item) {
+		return bd.listForExcel(item);
+	}
+
 }

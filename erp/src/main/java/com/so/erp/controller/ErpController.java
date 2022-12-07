@@ -9,9 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.so.erp.model.Buyer;
 import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
+<<<<<<< HEAD
 import com.so.erp.model.OrderItem;
+=======
+import com.so.erp.service.BuyerService;
+>>>>>>> a4ff91c (고객마스터 엑셀기능 추가)
 import com.so.erp.service.EmployeeService;
 import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
@@ -25,6 +30,9 @@ public class ErpController {
 	private OrderHeadService hs;
 	@Autowired
 	private OrderItemService is;
+	@Autowired
+	private BuyerService bs;
+
 	
 	@RequestMapping("hello")
 	public String hello() {
@@ -127,9 +135,30 @@ public class ErpController {
 		}
 
 		
+		Buyer buyer = new Buyer();		
+		for (int i = 1; i < 1000; i++) {
+			String number = String.format("%03d", i);
+			buyer.setBuyerCd("CVS001" + number);
+			buyer.setCountryCd("KR");
+			buyer.setBname("더미" + number);
+			buyer.setManager("더미" + number);
+			buyer.setAddress("서울시 강남구 테헤란로"+number);
+			buyer.setTel("010-1111-2222");
+			buyer.setEmail("test@test.com");
+			
+			String adddate = "2020-12-01";
+			Date date = Date.valueOf(adddate);
+			buyer.setAdddate(date);
+			buyer.setDel("N");
+			buyer.setStatusdate(date);
+			
+			bs.insert(buyer);
+			
+		}
 		
 		return "page/logIn";
 	}
+
 	
 	@RequestMapping("check")
 	public String check(HttpSession session) {

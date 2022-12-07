@@ -62,4 +62,9 @@ public class BuyerDaoImpl implements BuyerDao {
 	public void buyerRestore(String buyerCd) {
 		sst.update("buyerns.buyerRestore", buyerCd);
 	}
+
+	@Override
+	public Buyer listForExcel(Buyer item) {
+		return sst.selectOne("buyerns.listForExcel", item);
+	}
 }

@@ -26,4 +26,6 @@ public interface BuyerService {
 
 	void buyerRestore(String buyerCd);
 
+	Buyer listForExcel(Buyer item);
+
 }

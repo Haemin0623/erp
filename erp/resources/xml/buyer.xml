@@ -182,13 +182,17 @@
 		from 	m_buyer 
 		where 	buyer_cd = #{buyerCd}
 	</select>
-	
 	<update id="buyerRestore" parameterType="String">
 		update	m_buyer
 		set		del = 'N',
 				statusdate = sysdate
 		where	buyer_cd = #{buyerCd}
 	</update>
+	<select id="listForExcel" parameterType="buyer" resultType="buyer">
+		select	*
+		from	m_buyer
+		where	buyer_cd = #{buyerCd}
+	</select>
 	
 	
 </mapper>
