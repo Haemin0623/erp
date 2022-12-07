@@ -424,8 +424,8 @@ public class OrderController {
 	public HashMap<String, Object> amountByProductGraph() {
 		
 		List<Product> product = ps.list();
-		List<Integer> amountByProduct = new ArrayList<Integer>();
-		int amount = 0;
+		List<Long> amountByProduct = new ArrayList<Long>();
+		long amount = 0;
 		for (Product p:product) {
 			amount = ps.amountByProduct(p.getProductCd());
 			amountByProduct.add(amount);
@@ -895,7 +895,7 @@ public class OrderController {
 
 	        cell = row.createCell(0);
 	        cell.setCellStyle(bodyStyle);
-	        cell.setCellValue(li.getOrderdate());
+	        cell.setCellValue(li.getOrderdate().toString());
 	        System.out.println(li.getOrderdate().toString());
 	        
 		    cell = row.createCell(1);
