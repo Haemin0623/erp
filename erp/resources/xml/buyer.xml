@@ -41,7 +41,111 @@
 		where  buyer_cd=#{buyerCd}
 	</update>
 	<select id="search" parameterType="buyer" resultType="buyer">
+		select	*
+		from	(select a.*,
+						rowNum rn
+				from	(select 	* 
+						from 	m_buyer
+						<where>
+							<if test="buyerCd != null and buyerCd != ''">
+								buyer_cd like '%' || #{buyerCd} || '%'
+							</if>
+							<if test="bname != null and bname != ''">
+								and bname like '%' || #{bname} || '%'
+							</if>
+							<if test="manager != null and manager != 'null'">
+								and manager like '%' || #{manager} || '%'
+							</if>
+							<if test="countryCd != null and countryCd != 'null'">
+								and country_Cd like '%' || #{countryCd} || '%'
+							</if>
+							<if test="tel != null and tel != 'null'">
+								and tel like '%' || #{tel} || '%'
+							</if>
+							<if test="email != null and email != 'null'">
+								and email like '%' || #{email} || '%'
+							</if>
+							<if test="address != null and address != 'null'">
+								and address like '%' || #{address} || '%'
+							</if>
+							<if test="del != 'All'">
+								and del = #{del}
+							</if>
+						</where>
+						order by
+							<if test="sortBuyerCd == 1">
+								buyer_cd desc
+							</if>
+							<if test="sortBuyerCd == 2">
+								buyer_cd asc
+							</if>		
+							<if test="sortBname == 1">
+								bname desc
+							</if>
+							<if test="sortBname == 2">
+								bname asc
+							</if>		
+							<if test="sortManager == 1">
+								manager desc
+							</if>
+							<if test="sortManager == 2">
+								manager asc
+							</if>		
+							<if test="sortTel == 1">
+								tel desc
+							</if>
+							<if test="sortTel == 2">
+								tel asc
+							</if>		
+							<if test="sortEmail == 1">
+								email desc
+							</if>
+							<if test="sortEmail == 2">
+								email asc
+							</if>		
+							<if test="sortAddress == 1">
+								address desc
+							</if>
+							<if test="sortAddress == 2">
+								address asc
+							</if>		
+							<if test="sortCountryCd == 1">
+								country_cd desc
+							</if>
+							<if test="sortCountryCd == 2">
+								country_cd asc
+							</if>		
+							<if test="sortAdddate == 1">
+								adddate desc
+							</if>
+							<if test="sortAdddate == 2">
+								adddate asc
+							</if>		
+							<if test="sortStatusDate == 1">
+								statusdate desc
+							</if>
+							<if test="sortStatusDate == 2">
+								statusdate asc
+							</if>
+						) a
+				)
+		where	rn between #{startRow} and #{endRow}		
+	</select>
+	
+	<select id="ndlist" resultType="buyer">
+		select  * 
+		from  m_buyer 
+		where  del='N' 
+		order by adddate desc
+	</select>
+	<select id="select" parameterType="String" resultType="buyer">
 		select 	* 
+		from 	m_buyer 
+		where 	buyer_cd = #{buyerCd}
+	</select>
+	
+	<select id="getTotal" parameterType="buyer" resultType="integer">
+		select 	count(*) 
 		from 	m_buyer
 		<where>
 			<if test="buyerCd != null and buyerCd != ''">
@@ -65,8 +169,12 @@
 			<if test="address != null and address != 'null'">
 				and address like '%' || #{address} || '%'
 			</if>
+			<if test="del != 'All'">
+				and del = #{del}
+			</if>
 		</where>
 	</select>
+
 	<select id="ndlist" resultType="buyer">
 		select  * 
 		from  m_buyer 
@@ -84,6 +192,13 @@
 		from 	m_buyer 
 		where 	buyer_cd = #{buyerCd}
 	</select>
+	
+	<update id="buyerRestore" parameterType="String">
+		update	m_buyer
+		set		del = 'N',
+				statusdate = sysdate
+		where	buyer_cd = #{buyerCd}
+	</update>
 	
 	
 </mapper>

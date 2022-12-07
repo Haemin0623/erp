@@ -28,7 +28,40 @@ public class BuyerController {
 
 	
 	@RequestMapping("buyer")
-	public String buyer(Model model) {
+	public String buyer(Model model, Buyer buyer) {
+		
+		int rowPerPage = 20 ;
+		
+		if (buyer.getRowPerPage() != 0) {
+			rowPerPage = buyer.getRowPerPage();
+		} 
+		if (buyer.getPageNum() == null || buyer.getPageNum().equals("")) {
+			buyer.setPageNum("1");
+		}
+		
+		buyer.setDel("N");
+		
+		int currentPage = Integer.parseInt(buyer.getPageNum());
+		int total = bs.getTotal(buyer);
+		
+		buyer.pagingBean(currentPage, rowPerPage, total);
+		int startRow = (currentPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		buyer.setStartRow(startRow);
+		buyer.setEndRow(endRow);
+		
+		buyer.setSortBuyerCd(0);
+		buyer.setSortBname(0);
+		buyer.setSortManager(0);
+		buyer.setSortTel(0);
+		buyer.setSortEmail(0);
+		buyer.setSortAddress(0);
+		buyer.setSortCountryCd(0);
+		buyer.setSortAdddate(1);
+		buyer.setSortStatusDate(0);
+		
+		
+		
 		List<Buyer> buyerList = bs.list();
 		List<Country> countryCdList = cs.list();
 		model.addAttribute("buyerList", buyerList);
@@ -124,7 +157,43 @@ public class BuyerController {
 			String address = (String) keywordObj.get("address"); //주소
 			buyer.setAddress(address);
 			
+			String del = (String) keywordObj.get("del");
+			buyer.setDel(del);
+			System.out.println(buyer.getDel());
+			
 			System.out.println("전화번호, 이메일, 주소 왔다");
+			
+			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
+			buyer.setSortBuyerCd(sortBuyerCd);
+			int sortBname = Integer.valueOf((String) keywordObj.get("sortBname"));
+			buyer.setSortBname(sortBname);
+			int sortManager = Integer.valueOf((String) keywordObj.get("sortManager"));
+			buyer.setSortManager(sortManager);
+			int sortTel = Integer.valueOf((String) keywordObj.get("sortTel"));
+			buyer.setSortTel(sortTel);
+			int sortEmail = Integer.valueOf((String) keywordObj.get("sortEmail"));
+			buyer.setSortEmail(sortEmail);
+			int sortAddress = Integer.valueOf((String) keywordObj.get("sortAddress"));
+			buyer.setSortAddress(sortAddress);
+			int sortCountryCd = Integer.valueOf((String) keywordObj.get("sortCountryCd"));
+			buyer.setSortCountryCd(sortCountryCd);
+			int sortAdddate = Integer.valueOf((String) keywordObj.get("sortAdddate"));
+			buyer.setSortAdddate(sortAdddate);
+			int sortStatusDate = Integer.valueOf((String) keywordObj.get("sortStatusDate"));
+			buyer.setSortStatusDate(sortStatusDate);
+			
+			
+			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			int total = bs.getTotal(buyer);
+			
+			buyer.pagingBean(currentPage, rowPerPage, total);
+			
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			buyer.setStartRow(startRow);
+			buyer.setEndRow(endRow);
+			
 
 			// buyer객체를 넣어서 search 결과를 bsearchList 에 담음
 			// buyer 페이지로 가므로 buyer.do의 buyerList 를 갖고 페이지로 넘어가게됨.
@@ -144,5 +213,21 @@ public class BuyerController {
 			System.out.println(e.getMessage());
 		}
 		return "nolay/buyer";
+	}
+	
+	@RequestMapping("buyerRestore")
+	@ResponseBody
+	public boolean buyerRestore(String[] checkRows) {
+		boolean result = true;
+		
+		for (String buyerCd: checkRows){
+			try {
+				bs.buyerRestore(buyerCd);
+			} catch (Exception e) {
+				System.out.println("실패 : " + buyerCd);
+				result = false;
+			}			
+		}
+		return result;
 	}
 }

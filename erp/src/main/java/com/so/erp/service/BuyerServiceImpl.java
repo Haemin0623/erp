@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.so.erp.dao.BuyerDao;
-import com.so.erp.model.Buyer;
+import com.so.erp.model.Buyer;import oracle.net.aso.b;
 
 @Service
 public class BuyerServiceImpl implements BuyerService {
@@ -52,6 +52,15 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public List<Buyer> dlist() {
 		return bd.dlist();
+	}
+	
+	public int getTotal(Buyer buyer) {
+		return bd.getTotal(buyer);
+	}
+
+	@Override
+	public void buyerRestore(String buyerCd) {
+		bd.buyerRestore(buyerCd);
 	}
 
 }

@@ -273,6 +273,7 @@ public class PricingController {
 	@RequestMapping("pricingUpdate")
 	@ResponseBody
 	public int pricingUpdate(Pricing pricing, @RequestParam(name="startdate")String startdate, @RequestParam(name="enddate")String enddate) {
+
 		
 		int result = 0;
 		

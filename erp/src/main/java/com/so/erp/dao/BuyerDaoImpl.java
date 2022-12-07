@@ -53,4 +53,13 @@ public class BuyerDaoImpl implements BuyerDao {
 	public List<Buyer> dlist() { //삭제안한것 리스트업
 		return sst.selectList("buyerns.dlist");
 	}
+	
+	public int getTotal(Buyer buyer) {
+		return sst.selectOne("buyerns.getTotal", buyer);
+	}
+
+	@Override
+	public void buyerRestore(String buyerCd) {
+		sst.update("buyerns.buyerRestore", buyerCd);
+	}
 }

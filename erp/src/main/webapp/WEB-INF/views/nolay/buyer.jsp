@@ -10,163 +10,163 @@
 
 <style type="text/css">
 
-#container {
-	margin-left: 50px;
-}
+/* #container { */
+/* 	margin-left: 50px; */
+/* } */
 
-#searchBox {
-	height: 150px;
-	width: 120vh;
-	background: #5b6996;
-	margin-top: 50px;
-	color: white;
-}
+/* #searchBox { */
+/* 	height: 150px; */
+/* 	width: 120vh; */
+/* 	background: #5b6996; */
+/* 	margin-top: 50px; */
+/* 	color: white; */
+/* } */
 
-#table {
-	overflow: auto;
-	height: 40vh;
-	width: 120vh;
-}
+/* #table { */
+/* 	overflow: auto; */
+/* 	height: 40vh; */
+/* 	width: 120vh; */
+/* } */
 
-.fixed {
-	position: sticky;
-	top: 0;
-}
+/* .fixed { */
+/* 	position: sticky; */
+/* 	top: 0; */
+/* } */
 
-tr th {
-	background: #5b6996;
-	color: white;
-}
+/* tr th { */
+/* 	background: #5b6996; */
+/* 	color: white; */
+/* } */
 
 
-#list {
-	width: 100%;
-	border: 1px solid;
-}
+/* #list { */
+/* 	width: 100%; */
+/* 	border: 1px solid; */
+/* } */
 
-/* 검색 조건 */
-.keyword {
-	margin-top: 30px;
-	margin-left: 10px;
-	height: 27px;
-}
+/* /* 검색 조건 */ */
+/* .keyword { */
+/* 	margin-top: 30px; */
+/* 	margin-left: 10px; */
+/* 	height: 27px; */
+/* } */
 
-/* 이메일 input 길이 */
-.long1 {
-	width: 250px;
-}
+/* /* 이메일 input 길이 */ */
+/* .long1 { */
+/* 	width: 250px; */
+/* } */
 
-/* 주소 input 길이 */
-.long2 {
-	width: 400px;
-}
+/* /* 주소 input 길이 */ */
+/* .long2 { */
+/* 	width: 400px; */
+/* } */
 
-/* 검색버튼 */
-#searchBtn {
-	background: #d9dbe1;
-	color: black;
-	cursor: pointer;
-	float: right;
-	margin-right: 50px;
-	margin-top: 15px
-}
+/* /* 검색버튼 */ */
+/* #searchBtn { */
+/* 	background: #d9dbe1; */
+/* 	color: black; */
+/* 	cursor: pointer; */
+/* 	float: right; */
+/* 	margin-right: 50px; */
+/* 	margin-top: 15px */
+/* } */
 
-/* 신규등록 버튼 */
-#addBuyerBtn {
-	margin-top: 200px;
-}
+/* /* 신규등록 버튼 */ */
+/* #addBuyerBtn { */
+/* 	margin-top: 200px; */
+/* } */
 
-#tableBtn {
-	margin-top: 50px;
-	text-align: left;
-}
+/* #tableBtn { */
+/* 	margin-top: 50px; */
+/* 	text-align: left; */
+/* } */
 
-.header th {
-	background: #5b6996;
-	color: white;
-}
+/* .header th { */
+/* 	background: #5b6996; */
+/* 	color: white; */
+/* } */
 
-/* 마우스 오버(마우스 올렸을때) */
-tr {
-	color: black;
-}
+/* /* 마우스 오버(마우스 올렸을때) */ */
+/* tr { */
+/* 	color: black; */
+/* } */
 
-tr:hover {
-	background-color: #f4f4f4;
-	cursor: pointer;
-}
-/* 마우스 클릭하고있을때 */
-tr:active {
-	background-color: #B9E2FA;
-}
+/* tr:hover { */
+/* 	background-color: #f4f4f4; */
+/* 	cursor: pointer; */
+/* } */
+/* /* 마우스 클릭하고있을때 */ */
+/* tr:active { */
+/* 	background-color: #B9E2FA; */
+/* } */
 
-.clickColor {
-	background-color: #B9E2FA;
-}
+/* .clickColor { */
+/* 	background-color: #B9E2FA; */
+/* } */
 
-.background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.3);
-	z-index: 1000;
-	/* 숨기기 */
-	z-index: -1;
-	opacity: 0;
-}
+/* .background { */
+/* 	position: fixed; */
+/* 	top: 0; */
+/* 	left: 0; */
+/* 	width: 100%; */
+/* 	height: 100vh; */
+/* 	background-color: rgba(0, 0, 0, 0.3); */
+/* 	z-index: 1000; */
+/* 	/* 숨기기 */ */
+/* 	z-index: -1; */
+/* 	opacity: 0; */
+/* } */
 
-.window {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
+/* .window { */
+/* 	position: relative; */
+/* 	width: 100%; */
+/* 	height: 100%; */
+/* } */
 
-.popup {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #ffffff;
-	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-	/* 임시 지정 */
-	width: 500px;
-	height: 500px;
-	/* 초기에 약간 아래에 배치 */
-	transform: translate(-50%, -40%);
-}
+/* .popup { */
+/* 	position: absolute; */
+/* 	top: 50%; */
+/* 	left: 50%; */
+/* 	transform: translate(-50%, -50%); */
+/* 	background-color: #ffffff; */
+/* 	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3); */
+/* 	/* 임시 지정 */ */
+/* 	width: 500px; */
+/* 	height: 500px; */
+/* 	/* 초기에 약간 아래에 배치 */ */
+/* 	transform: translate(-50%, -40%); */
+/* } */
 
-.show {
-	opacity: 1;
-	z-index: 1000;
-	transition: all .5s;
-}
+/* .show { */
+/* 	opacity: 1; */
+/* 	z-index: 1000; */
+/* 	transition: all .5s; */
+/* } */
 
-.show .popup {
-	transform: translate(-50%, -50%);
-	transition: all .5s;
-}
+/* .show .popup { */
+/* 	transform: translate(-50%, -50%); */
+/* 	transition: all .5s; */
+/* } */
 
-#item {
-	border: 1px solid;
-}
+/* #item { */
+/* 	border: 1px solid; */
+/* } */
 
-.list {
-	background: silver;
-}
+/* .list { */
+/* 	background: silver; */
+/* } */
 
-.sumo {
-	color: black;
-}
+/* .sumo { */
+/* 	color: black; */
+/* } */
 
-li.opt {
-	color: black;
-}
-	.fixed {
-		position: sticky;
-		top: 0;
-	}
+/* li.opt { */
+/* 	color: black; */
+/* } */
+/* 	.fixed { */
+/* 		position: sticky; */
+/* 		top: 0; */
+/* 	} */
 
 </style>
 <script type="text/javascript">
@@ -192,126 +192,199 @@ li.opt {
 <body>
 	<div id="container">
 	<!-- 검색박스 -->
-	<div class="top-content" align="center">
 		<h1> 고객 관리</h1>
 		<div id="searchBox">
-			<form name ="searchBoxx">
-			
-			고객코드
-				<select name="buyerCd" class="buyerCd sumo">
-					<option value=""></option>
-					<c:forEach var="buyer" items="${buyerList}">
-						<option>${buyer.buyerCd}</option>
-					</c:forEach>
-				</select>
-			고객명 
-				<select name="bname" class="bname sumo">
-					<option value=""></option>
-					<c:forEach var="buyer" items="${buyerList}">
-						<option>${buyer.bname}</option>
-					</c:forEach>
-				</select>
-			
-			담당자 
-				<select name="manager" class="manager sumo">
-					<option value=""></option>
-					<c:forEach var="buyer" items="${buyerList}">
-						<option>${buyer.manager}</option>
-					</c:forEach>
-				</select>
-			
-			국가코드
-				<select name="countryCd" class="countryCd sumo">
-					<option value=""></option>
-					<c:forEach var="countryCd" items="${countryCdList}">
-						<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
-					</c:forEach>
-				</select><p>
+			<div class="searchInBox">
+				<form name ="searchBoxx">
+				<input type="hidden" name="sortBuyerCd" value="${buyer.sortBuyerCd }">
+				<input type="hidden" name="sortBname" value="${buyer.sortBname }">
+				<input type="hidden" name="sortManager" value="${buyer.sortManager }">
+				<input type="hidden" name="sortTel" value="${buyer.sortTel }">
+				<input type="hidden" name="sortEmail" value="${buyer.sortEmail }">
+				<input type="hidden" name="sortAddress" value="${buyer.sortAddress }">
+				<input type="hidden" name="sortCountryCd" value="${buyer.sortCountryCd }">
+				<input type="hidden" name="sortAdddate" value="${buyer.sortAdddate }">
+				<input type="hidden" name="sortStatusDate" value="${buyer.sortStatusDate }">
 				
-			전화번호
-				<select name="tel" class="tel sumo">
-					<option value=""></option>
-					<c:forEach var="buyer" items="${buyerList}">
-						<option>${buyer.tel}</option>
-					</c:forEach>
-				</select>
-			
-			
-			이메일 
-				<select name="email" class="email sumo">
-					<option value=""></option>
-					<c:forEach var="buyer" items="${buyerList}">
-						<option>${buyer.email}</option>
-					</c:forEach>
-				</select>
-			
-			주소 
-<!-- 				<select name="address" class="address sumo long2"> -->
-<!-- 					<option value="All"></option> -->
-<%-- 					<c:forEach var="buyer" items="${buyerList}" > --%>
-<%-- 						<option class="long2">${buyer.address}</option> --%>
-<%-- 					</c:forEach> --%>
-<!-- 				</select> -->
-				<input type="text" name="address" class="keyword long2" value="${buyer.address}"> 
-			
-			삭제여부
-				<select name="del" class="del sumo">
-					<option value=""></option>
-<%-- 					<c:forEach items="${ }" --%>
-				</select>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">고객코드</div>
+						<select name="buyerCd" class="buyerCd sumo">
+							<option value=""></option>
+							<c:forEach var="buyerItem" items="${buyerList}">
+								<option>${buyerItem.buyerCd}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">고객명</div>
+						<select name="bname" class="bname sumo">
+							<option value=""></option>
+							<c:forEach var="buyerItem" items="${buyerList}">
+								<option>${buyerItem.bname}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">담당자</div> 
+						<select name="manager" class="manager sumo">
+							<option value=""></option>
+							<c:forEach var="buyerItem" items="${buyerList}">
+								<option>${buyerItem.manager}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">주소</div>
+		<!-- 				<select name="address" class="address sumo long2"> -->
+		<!-- 					<option value="All"></option> -->
+		<%-- 					<c:forEach var="buyer" items="${buyerList}" > --%>
+		<%-- 						<option class="long2">${buyer.address}</option> --%>
+		<%-- 					</c:forEach> --%>
+		<!-- 				</select> -->
+						<input type="text" name="address" class="keyword long2" value="${buyer.address}"> 
+					</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">국가코드</div>
+						<select name="countryCd" class="countryCd sumo">
+							<option value=""></option>
+							<c:forEach var="countryCd" items="${countryCdList}">
+								<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">	
+						<div class="search-item-text">전화번호</div>
+						<select name="tel" class="tel sumo">
+							<option value=""></option>
+							<c:forEach var="buyerItem" items="${buyerList}">
+								<option>${buyerItem.tel}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">이메일</div>
+						<select name="email" class="email sumo">
+							<option value=""></option>
+							<c:forEach var="buyerItem" items="${buyerList}">
+								<option>${buyerItem.email}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">삭제</div>
+						<div class="boxx">
+							<select name="del" class="search">
+								<option value="N">X</option>
+								<option value="Y" <c:if test="${buyer.del == 'Y'}">selected="selected"</c:if> >O </option>
+								<option value="All" <c:if test="${buyer.del == 'All'}"> selected="selected" </c:if>>모두</option>
+							</select>
+						</div>
+					</div>
+				</div>
 				
-			
-			</form>	
+				</form>
+			</div>	
 				<button id="searchBtn">검색</button>
 				<button id="initBtn"> 검색결과 초기화 </button>
 		</div>
+	
+	
+		<div id="button-div">
+			<button id="show">등록</button>
+			<c:if test="${buyer.del != 'Y'}">
+				<button id="delBuyer">삭제</button>
+			</c:if>
+			<c:if test="${buyer.del == 'Y'}">
+				<button type="button" onclick="restoreAction()">복원</button>
+			</c:if>
+			<div id="page">
+				<form name="itemLimit">
+					<select name="rowPerPage" id="limit">
+						<option value="20" <c:if test="${buyer.rowPerPage == 20 }">selected="selected"</c:if> >
+							20개씩보기
+						</option>
+						<option value="50" <c:if test="${buyer.rowPerPage == 50 }">selected="selected"</c:if> >
+							50개씩보기
+						</option>
+						<option value="100" <c:if test="${buyer.rowPerPage == 100 }">selected="selected"</c:if> >
+							100개씩보기
+						</option>
+						<option value="300" <c:if test="${buyer.rowPerPage == 300 }">selected="selected"</c:if> >
+							300개씩보기
+						</option>
+						<option value="500" <c:if test="${buyer.rowPerPage == 500 }">selected="selected"</c:if> >
+							500개씩보기
+						</option>
+					</select>
+				</form>
+			</div>
+		</div>
+		
+		<!-- 고객리스트 & 수정가능한 테이블 -->
+		<div class="table">
+	<!-- 	<form action="" name="bt"> -->
+			<table class="list" >
+				<tr>
+					<th class="fixed">
+						<c:if test="${buyer.del =='Y'}">
+							<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
+						</c:if>
+						<c:if test="${buyer.del =='N' or buyer.del == 'All' }">
+							<input type="checkbox" name="checkAll" id="th_checkAll" class="red-check">
+						</c:if>	
+					</th>
+					<th class="fixed" id="sortBuyerCd">고객코드</th>
+					<th class="fixed" id="sortBname">고객명</th>
+					<th class="fixed" id="sortManager">담당자</th>
+					<th class="fixed" id="sortTel">전화번호</th>
+					<th class="fixed" id="sortEmail">이메일</th>
+					<th class="fixed" id="sortAddress">주소</th>
+					<th class="fixed" id="sortCountryCd">국가코드</th>
+					<th class="fixed" id="sortAdddate">등록일</th>
+					<th class="fixed" id="sortStatusDate">상태변경일</th>
+				</tr>
+				<c:forEach var="buyerItem" items="${buyerList }">
+					<tr class="itemRow">
+						<td>
+							<c:if test="${buyerItem.del =='Y' and buyer.del == 'Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
+								<input type="checkbox" name="deletedRow" value="${buyerItem.buyerCd}">
+							</c:if>
+							<c:if test="${buyerItem.del =='N'}">
+								<input type="checkbox" name="checkRow" value="${buyerItem.buyerCd}" class="red-check">
+							</c:if>
+						</td>
+						<td>${buyerItem.buyerCd }</td>
+						<td class="editable">${buyerItem.bname }</td>
+						<td class="editable">${buyerItem.manager}</td>
+						<td class="editable">${buyerItem.tel}</td>
+						<td class="editable">${buyerItem.email}</td>
+						<td class="editable">${buyerItem.address}</td>
+						<td>${buyerItem.countryCd}</td>
+						<td>${buyerItem.adddate}</td>
+						<td>${buyerItem.statusdate}</td>
+					</tr>
+				</c:forEach>
+			</table>
+	<!-- 	</form> -->
+		</div>
+	
+		<div id="pageBtn">
+			<form name="paging">
+				<c:if test="${buyer.currentPage != 1}">
+					<div id="prev" class="paging-btn">◀</div>
+				</c:if>
+			 	<input type="number" name="currentPage" value="${buyer.currentPage }" id="currentPage"> / ${buyer.totalPage }
+				<c:if test="${buyer.currentPage != buyer.totalPage}">
+					<div id="next" class="paging-btn">▶</div>
+				</c:if>
+			</form>
+		</div>
+	
 	</div>
 	
-	<div id="tableBtn">
-		<button id="show">신규등록</button>
-		<button id="delBuyer">삭제</button>
-	</div>
-		
-	<!-- 고객리스트 & 수정가능한 테이블 -->
-	<div id="table">
-<!-- 	<form action="" name="bt"> -->
-		<table id="list" >
-			<tr class="header fixed">
-				<th>선택</th>
-				<th>고객코드</th>
-				<th>고객명</th>
-				<th>담당자</th>
-				<th>전화번호</th>
-				<th>이메일</th>
-				<th>주소</th>
-				<th>국가코드</th>
-				<th>등록일</th>
-				<th>최종수정일</th>
-			</tr>
-			<c:forEach var="buyer" items="${buyerList }">
-				<tr class="itemRow">
-					<td>
-						<c:if test="${buyer.del =='Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
-							<input type="checkbox" name="del" value="${buyer.buyerCd}" disabled="disabled">
-						</c:if>
-						<c:if test="${buyer.del =='N'}">
-							<input type="checkbox" name="del" value="${buyer.buyerCd}">
-						</c:if>
-					</td>
-					<td>${buyer.buyerCd }</td>
-					<td class="editable">${buyer.bname }</td>
-					<td class="editable">${buyer.manager}</td>
-					<td class="editable">${buyer.tel}</td>
-					<td class="editable">${buyer.email}</td>
-					<td class="editable">${buyer.address}</td>
-					<td>${buyer.countryCd}</td>
-					<td>${buyer.adddate}</td>
-					<td>${buyer.statusdate}</td>
-				</tr>
-			</c:forEach>
-		</table>
-<!-- 	</form> -->
-	</div>
 	
 	<!-- 	등록 창 팝업 -->
 	<div class="background">
@@ -366,7 +439,6 @@ li.opt {
 		</div>
 	</div>
 	
-	</div>
 </body>
 
 
@@ -402,7 +474,22 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 			countryCd : searchBoxx.countryCd.value,	
 			tel : searchBoxx.tel.value,	
 			email : searchBoxx.email.value,	
-			address : searchBoxx.address.value,	
+			address : searchBoxx.address.value,
+			del : searchBoxx.del.value,
+			
+			sortBuyerCd : searchBoxx.sortBuyerCd.value,
+			sortBname : searchBoxx.sortBname.value,
+			sortManager : searchBoxx.sortManager.value,
+			sortTel : searchBoxx.sortTel.value,
+			sortEmail : searchBoxx.sortEmail.value,
+			sortAddress : searchBoxx.sortAddress.value,
+			sortCountryCd : searchBoxx.sortCountryCd.value,
+			sortAdddate : searchBoxx.sortAdddate.value,
+			sortStatusDate : searchBoxx.sortStatusDate.value,
+			
+			rowPerPage : itemLimit.rowPerPage.value,
+			
+			currentPage : paging.currentPage.value
 		}
 		console.log(keyword);
 		
@@ -465,42 +552,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
 	document.querySelector("#addBuyerBtn").addEventListener("click", addBuyer); 
 	
-	function delBuyer() {
-		var cdArr = new Array(); //del 체크가 여러개일수도 있기에 배열로 받음
-		$("input[name='del']:checked").each(function() { //input태그의 이름이 del인 것이 check되면 아래 함수 실행
-			cdArr.push($(this).val()); //value는 buyerCd
-		});
-		console.log(cdArr);
-		
-		if(cdArr=='') {
-			alert("삭제할 고객을 선택하세요");
-			return false;
-		}
-		
-		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-		     method: 'post', 
-		     url: 'buyerDelete.do', 
-		     traditional: true,
-		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-		    	delBuyers : cdArr
-			 },
-		     success: function (result) { //성공했을떄 호출할 콜백을 지정
-		        if (result > 0) {
-		        	document.location.reload(); // 삭제성공시, 페이지 새로고침
-					alert("삭제완료");
-		        } else {
-		        	alert("삭제실패");
-		        	console.log(result);
-		        }
-			},
-			 error: function(a) {
-				 console.log(a);
 	
-			 }
-	   });
-	};
-	
-	document.querySelector("#delBuyer").addEventListener("click", delBuyer);
 	
 	
 	// 	 테이블 수정가능하게 editable
@@ -603,17 +655,15 @@ $(document).ready(function() {
 	});
 	$('select.buyerCd')[0].sumo.selectItem("${buyer.buyerCd }");
 	
-	$('select.bname')[0].sumo.selectItem("${product.bname }");
+	$('select.bname')[0].sumo.selectItem("${buyer.bname }");
 	
-	$('select.manager')[0].sumo.selectItem("${product.manager }");
+	$('select.manager')[0].sumo.selectItem("${buyer.manager }");
 	
-	$('select.countryCd')[0].sumo.selectItem("${product.countryCd }");
+	$('select.countryCd')[0].sumo.selectItem("${buyer.countryCd }");
 	
-	$('select.tel')[0].sumo.selectItem("${product.tel }");
+	$('select.tel')[0].sumo.selectItem("${buyer.tel }");
 
-	$('select.email')[0].sumo.selectItem("${product.email }");
-	
-	$('select.address')[0].sumo.selectItem("${product.address }");
+	$('select.email')[0].sumo.selectItem("${buyer.email }");
 
 	
 });
@@ -631,6 +681,251 @@ $(document).ready(function() {
 		$('select#countryCd')[0].sumo.unSelectAll();		
 		
 	});
+</script>
+
+<!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
+<script type="text/javascript">
+	$('#prev').on('click', function() {
+		paging.currentPage.value--;
+		if (paging.currentPage.value < 1) {
+			paging.currentPage.value = 1;
+		}
+		search();
+	});
+	$('#next').on('click', function() {
+		paging.currentPage.value++;
+		
+		if (paging.currentPage.value > '${buyer.totalPage }') {
+			paging.currentPage.value = ${buyer.totalPage };
+		}
+		search();
+	});
+	
+	$('#limit').on('change', function() {
+		search();
+	});
+	
+	$('#currentPage').keydown(function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();			
+			
+			if (paging.currentPage.value < 1) {
+				paging.currentPage.value = 1;
+			}
+			
+			if (paging.currentPage.value > '${buyer.totalPage }') {
+				paging.currentPage.value = ${buyer.totalPage };
+			}
+			
+			search();
+		}
+	});
+</script>
+
+<!-- 정렬 -->
+<script type="text/javascript">
+	function initSort() {
+		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortBname.value = 0;
+		searchBoxx.sortManager.value = 0;
+		searchBoxx.sortTel.value = 0;
+		searchBoxx.sortEmail.value = 0;
+		searchBoxx.sortAddress.value = 0;
+		searchBoxx.sortCountryCd.value = 0;
+		searchBoxx.sortAdddate.value = 0;
+		searchBoxx.sortStatusDate.value = 0;
+	}
+
+	$('#sortBuyerCd').on('click', function() {
+		if (searchBoxx.sortBuyerCd.value == 0 || searchBoxx.sortBuyerCd.value == 2) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 1;			
+		} else if (searchBoxx.sortBuyerCd.value == 1) {
+			initSort();
+			searchBoxx.sortBuyerCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortBname').on('click', function() {
+		if (searchBoxx.sortBname.value == 0 || searchBoxx.sortBname.value == 2) {
+			initSort();
+			searchBoxx.sortBname.value = 1;			
+		} else if (searchBoxx.sortBname.value == 1) {
+			initSort();
+			searchBoxx.sortBname.value = 2;
+		}		
+		search();
+	});
+	$('#sortManager').on('click', function() {
+		if (searchBoxx.sortManager.value == 0 || searchBoxx.sortManager.value == 2) {
+			initSort();
+			searchBoxx.sortManager.value = 1;		
+		} else if (searchBoxx.sortManager.value == 1) {
+			initSort();
+			searchBoxx.sortManager.value = 2;
+		}		
+		search();
+	});
+	$('#sortTel').on('click', function() {
+		if (searchBoxx.sortTel.value == 0 || searchBoxx.sortTel.value == 2) {
+			initSort();
+			searchBoxx.sortTel.value = 1;			
+		} else if (searchBoxx.sortTel.value == 1) {
+			initSort();
+			searchBoxx.sortTel.value = 2;
+		}		
+		search();
+	});
+	$('#sortEmail').on('click', function() {
+		if (searchBoxx.sortEmail.value == 0 || searchBoxx.sortEmail.value == 2) {
+			initSort();
+			searchBoxx.sortEmail.value = 1;			
+		} else if (searchBoxx.sortEmail.value == 1) {
+			initSort();
+			searchBoxx.sortEmail.value = 2;
+		}		
+		search();
+	});
+	$('#sortAddress').on('click', function() {
+		if (searchBoxx.sortAddress.value == 0 || searchBoxx.sortAddress.value == 2) {
+			initSort();
+			searchBoxx.sortAddress.value = 1;			
+		} else if (searchBoxx.sortAddress.value == 1) {
+			initSort();
+			searchBoxx.sortAddress.value = 2;
+		}		
+		search();
+	});
+	$('#sortCountryCd').on('click', function() {
+		if (searchBoxx.sortCountryCd.value == 0 || searchBoxx.sortCountryCd.value == 2) {
+			initSort();
+			searchBoxx.sortCountryCd.value = 1;			
+		} else if (searchBoxx.sortCountryCd.value == 1) {
+			initSort();
+			searchBoxx.sortCountryCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortAdddate').on('click', function() {
+		if (searchBoxx.sortAdddate.value == 0 || searchBoxx.sortAdddate.value == 2) {
+			initSort();
+			searchBoxx.sortAdddate.value = 1;			
+		} else if (searchBoxx.sortAdddate.value == 1) {
+			initSort();
+			searchBoxx.sortAdddate.value = 2;
+		}		
+		search();
+	});
+	$('#sortStatusDate').on('click', function() {
+		if (searchBoxx.sortStatusDate.value == 0 || searchBoxx.sortStatusDate.value == 2) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 1;			
+		} else if (searchBoxx.sortStatusDate.value == 1) {
+			initSort();
+			searchBoxx.sortStatusDate.value = 2;
+		}		
+		search();
+	});
+</script>
+
+<!-- 전체 선택 / 삭제  -->
+<c:if test="${buyer.del =='N' or buyer.del == 'All' }">
+	<script type="text/javascript">
+		function checkAll(){
+		    if( $("#th_checkAll").is(':checked') ){
+		      $("input[name=checkRow]").prop("checked", true);
+		    }else{
+		      $("input[name=checkRow]").prop("checked", false);
+		    }
+		}
+		
+		document.querySelector("#th_checkAll").addEventListener("click", checkAll);
+	</script>
+</c:if>
+<script type="text/javascript">
+	
+function delBuyer() {
+	var cdArr = new Array(); //del 체크가 여러개일수도 있기에 배열로 받음
+	$("input[name='checkRow']:checked").each(function() { //input태그의 이름이 del인 것이 check되면 아래 함수 실행
+		cdArr.push($(this).val()); //value는 buyerCd
+	});
+	console.log(cdArr);
+	
+	if(cdArr=='') {
+		alert("삭제할 고객을 선택하세요");
+		return false;
+	}
+	
+	$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+	     method: 'post', 
+	     url: 'buyerDelete.do', 
+	     traditional: true,
+	     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+	    	delBuyers : cdArr
+		 },
+	     success: function (result) { //성공했을떄 호출할 콜백을 지정
+	        if (result > 0) {
+				alert("삭제완료");
+				search();
+	        } else {
+	        	alert("삭제실패");
+	        	console.log(result);
+	        }
+		},
+		 error: function(a) {
+			 console.log(a);
+
+		 }
+   });
+};
+
+document.querySelector("#delBuyer").addEventListener("click", delBuyer);
+	
+</script>
+
+<!-- 삭제 항목 복원  -->
+<c:if test="${buyer.del =='Y'}">
+	<script type="text/javascript">
+		function delCheckAll(){
+		    if( $("#th_deletedCheckAll").is(':checked') ){
+		      $("input[name=deletedRow]").prop("checked", true);
+		    }else{
+		      $("input[name=deletedRow]").prop("checked", false);
+		    }
+		}
+	
+		document.querySelector("#th_deletedCheckAll").addEventListener("click", delCheckAll);
+	</script>
+</c:if>
+<script type="text/javascript">
+
+
+function restoreAction(){
+	  var checkRow = new Array();
+	  $( "input[name='deletedRow']:checked" ).each (function (){
+	    checkRow.push($(this).val());
+	  });
+	  
+	  if(checkRow == ''){
+	    alert("복원할 대상을 선택하세요.");
+	    return false;
+	  }
+	  $.ajax({
+		    url : "buyerRestore.do",
+		    type : "post",
+		    traditional : true,
+		    data : { checkRows : checkRow },
+		    
+		    success : function(result){
+		    	if(result ==1){
+		    		alert("복원완료");
+		    		search();
+		    		
+		    	}else
+		    		alert("복원실패");
+		    }
+	  });
+};
 </script>
 
 </html>

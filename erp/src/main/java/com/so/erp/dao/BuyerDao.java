@@ -22,4 +22,9 @@ public interface BuyerDao {
 
 	List<Buyer> dlist();
 
+	int getTotal(Buyer buyer);
+
+	void buyerRestore(String buyerCd);
+
+
 }

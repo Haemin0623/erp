@@ -22,5 +22,8 @@ public interface BuyerService {
 
 	List<Buyer> dlist();
 
+	int getTotal(Buyer buyer);
+
+	void buyerRestore(String buyerCd);
 
 }
