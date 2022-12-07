@@ -922,4 +922,159 @@ public class OrderController {
 	    
 	}
 	
+	@RequestMapping("orderExcelDown")
+	@ResponseBody
+	public void orderExcelDown(HttpServletResponse response, @RequestParam(name="items")String items) throws IOException {
+		System.out.println("시작");
+		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
+		// 출력할 주문리스트
+		List<OrderHead> list = new ArrayList<>();
+		
+		OrderHead orderRow = new OrderHead();
+
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			System.out.println("1");
+			
+			OrderHead item = new OrderHead();
+			
+			for (int i = 0; i < arr.size(); i++) {
+				
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				String orderNo = (String) itemObj.get("orderNo");
+				System.out.println(orderNo);
+				
+				item.setOrderNo(orderNo);
+				
+				System.out.println("sql전");
+				orderRow = hs.listForExcel(item);
+				System.out.println("sql후");
+				list.add(orderRow);
+			}
+			
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		System.out.println("size"+list.size());
+
+		
+		
+			
+		
+		
+		// 워크북 생성
+		Workbook wb = new XSSFWorkbook();
+		Sheet sheet = wb.createSheet("주문 현황");
+		Row row = null;
+		Cell cell = null;
+		int rowNo = 0;
+		
+		// 테이블 헤더용 스타일
+		CellStyle headStyle = wb.createCellStyle();
+		
+		// 가는 경계선
+		headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+
+	    // 배경색 노란색
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    
+	    // 데이터 가운데 정렬
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+	    // 데이터용 경계 스타일 테두리만 지정
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++);
+	    
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("주문번호");
+	    
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객코드");
+	    
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("신청일");
+	    
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("신청인");
+	    
+	    cell = row.createCell(4);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상태");
+	    
+	    cell = row.createCell(5);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상태변경일");
+	    
+	    
+	 // 데이터 부분 생성
+	    for(OrderHead li : list) {
+
+	        row = sheet.createRow(rowNo++);
+
+	        cell = row.createCell(0);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getOrderNo());
+	        System.out.println(li.getOrderNo());
+	        
+		    cell = row.createCell(1);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getBuyerCd());
+		    System.out.println(li.getBuyerCd());
+		    
+		    cell = row.createCell(2);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getAdddate());
+		    System.out.println(li.getAdddate());
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getEmployeeCd());
+		    System.out.println(li.getEmployeeCd());
+		    
+		    cell = row.createCell(4);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStatus());
+		    System.out.println(li.getStatus());
+		    
+		    cell = row.createCell(5);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStatusdate().toString());
+		    System.out.println(li.getStatusdate().toString());
+
+	    }
+	
+	    // 컨텐츠 타입과 파일명 지정
+	    response.setContentType("ms-vnd/excel");
+	    response.setHeader("Content-Disposition", "attachment;filename=order.xlsx");
+	    
+	    // 엑셀 출력
+	    try {
+            wb.write(response.getOutputStream());
+        } finally {
+            wb.close();
+        }
+	    
+	    
+	}
+	
 }

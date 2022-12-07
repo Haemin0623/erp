@@ -30,4 +30,6 @@ public interface OrderHeadDao {
 
 	int getTotal(OrderHead orderHead);
 
+	OrderHead listForExcel(OrderHead item);
+
 }

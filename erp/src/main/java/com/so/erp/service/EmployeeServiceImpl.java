@@ -61,4 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return ed.getSALCount(department);
 	}
 
+	@Override
+	public Employee listForExcel(Employee item) {
+		return ed.listForExcel(item);
+	}
+
 }

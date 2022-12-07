@@ -75,4 +75,9 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	public int getTotal(OrderHead orderHead) {
 		return sst.selectOne("headns.getTotal", orderHead);
 	}
+
+	@Override
+	public OrderHead listForExcel(OrderHead item) {
+		return sst.selectOne("headns.listForExcel", item);
+	}
 }

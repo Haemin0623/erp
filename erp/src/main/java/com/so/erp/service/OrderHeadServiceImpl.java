@@ -76,4 +76,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public int getTotal(OrderHead orderHead) {
 		return head.getTotal(orderHead);
 	}
+
+	@Override
+	public OrderHead listForExcel(OrderHead item) {
+		return head.listForExcel(item);
+	}
 }

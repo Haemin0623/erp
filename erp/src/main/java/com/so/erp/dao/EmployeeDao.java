@@ -24,4 +24,6 @@ public interface EmployeeDao {
 
 	int getSALCount(String department);
 
+	Employee listForExcel(Employee item);
+
 }

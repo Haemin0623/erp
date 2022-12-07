@@ -171,4 +171,10 @@
 		from	m_employee
 		where	department = #{department}
 	</select>
+	
+	<select id="listForExcel" parameterType="employee" resultType="employee">
+		select	*
+		from	m_employee
+		where	employee_cd = #{employeeCd}
+	</select>
 </mapper>

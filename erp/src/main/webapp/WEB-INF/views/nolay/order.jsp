@@ -109,6 +109,7 @@
 		<c:if test="${orderHead.del == 'Y'}">
 			<button type="button" onclick="restoreAction()">복원</button>
 		</c:if>
+		<button id="excelBtn">Excel</button>
 		
 		<div id="page">
 			<form name="itemLimit">
@@ -156,10 +157,10 @@
 				<tr class="itemRow" <c:if test="${head.del =='Y'}">style="background-color: silver;"</c:if> >
 					<td>
 						<c:if test="${head.del =='Y' and orderHead.del == 'Y'}">
-							<input type="checkbox" name="deletedRow" value="${head.orderNo }" >
+							<input type="checkbox" name="deletedRow" class="excel" value="${head.orderNo }" >
 						</c:if>
 						<c:if test="${head.del =='N' and head.status == '승인대기'}">
-							<input type="checkbox" name="checkRow" value="${head.orderNo }"  class="red-check">
+							<input type="checkbox" name="checkRow" value="${head.orderNo }"  class="excel red-check">
 						</c:if>
 					</td>
 					<td>${head.orderNo }<input type="hidden" value="${head.orderNo }"> </td>
@@ -518,10 +519,10 @@
 							"<td>" + x + "</td>" +
 							"<td>" + data[i].productCd + "</td>" +
 							"<td>" + data[i].pname + "</td>" +
-							"<td>" + data[i].requestqty + "</td>" +
+							"<td>" + String(data[i].requestqty).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td>" +
 							"<td>" + reqDate + "</td>" +
-							"<td>" + data[i].price + "</td>" +
-							"<td>" + data[i].amount + "</td>" +
+							"<td>" + String(data[i].price).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td>" +
+							"<td>" + String(data[i].amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td>" +
 							"<td>" + data[i].remark + "</td>" +
 						"</tr>"
 					);					
@@ -963,6 +964,80 @@ $(document).ready(function() {
 			search();
 		}
 	});
+</script>
+
+<script>
+	function excel() {
+		
+		let checkRow = new Array();
+		
+		$( ".excel:checked" ).each (function (){
+			 let thisRow = $(this).closest('tr');
+			 
+//			orderNo = thisRow.find('td:eq(2)').find('input').val();
+//			productCD = thisRow.find('td:eq(3)').find('input').val();
+			  
+			 const item = {
+				orderNo : thisRow.find('td:eq(1)').find('input').val()
+			 }
+
+			 checkRow.push(item);
+		
+		});
+		
+		  
+		 console.log(checkRow);
+		 
+		 J300.ajax({
+			  url : 'orderExcelDown.do',
+			  method : 'post',
+			  traditional : true,
+			  data : {
+				  items : JSON.stringify(checkRow)
+			  },
+			  xhr: function () {
+                  var xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange = function () {
+                      if (xhr.readyState == 2) {
+                          if (xhr.status == 200) {
+                              xhr.responseType = "blob";
+                          } else {
+                              xhr.responseType = "text";
+                          }
+                      }
+                  };
+                  return xhr;
+			    },
+			  success : function(data) {
+				  console.log(data);
+				//alert("엑셀다운완료?");
+				//Convert the Byte Data to BLOB object.
+                var blob = new Blob([data], { type: "application/octetstream" });
+
+                //Check the Browser type and download the File.
+                var isIE = false || !!document.documentMode;
+                if (isIE) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL || window.webkitURL;
+                    link = url.createObjectURL(blob);
+                    var a = $("<a />");
+                    a.attr("download", "test.xlsx");
+                    a.attr("href", link);
+                    $("body").append(a);
+                    a[0].click();
+                    $("body").remove(a);
+                }
+			}, error: function (xhr, status, error) {
+				console.log("error");
+			} 
+		 });
+		  
+	}
+	
+	document.querySelector("#excelBtn").addEventListener("click", excel);
+	
+	
 </script>
 
 

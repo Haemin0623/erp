@@ -61,4 +61,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return sst.selectOne("employeens.getSALCount", department);
 	}
 
+	@Override
+	public Employee listForExcel(Employee item) {
+		return sst.selectOne("employeens.listForExcel", item);
+	}
+
 }

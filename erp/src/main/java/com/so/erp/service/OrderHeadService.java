@@ -30,4 +30,6 @@ public interface OrderHeadService {
 
 	int getTotal(OrderHead orderHead);
 
+	OrderHead listForExcel(OrderHead item);
+
 }

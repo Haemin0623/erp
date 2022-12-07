@@ -24,4 +24,6 @@ public interface EmployeeService {
 
 	int getSALCount(String department);
 
+	Employee listForExcel(Employee item);
+
 }
