@@ -489,7 +489,7 @@ function changeContent(data) {
 		if (buyerCd == '' || productCd == '' || price == '' || 
 				startdate == '' || enddate == '' || discountrate == '' 
 				|| currency == ''){
-			alert('값을 채워넣어주세요');
+			alert('값을 채워넣어주세요'); 
 		} else {
 			
 			$('#addItemTable').append(
@@ -572,7 +572,7 @@ function changeContent(data) {
 	</script>
 	
 	
-	<!-- 삭제 항목 복원  -->
+<!-- 	삭제 항목 복원 -->
 	<c:if test="${pricing.del =='Y'}">
 		<script type="text/javascript">
 			function delCheckAll(){
@@ -674,7 +674,7 @@ function changeContent(data) {
 		let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
         	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
+            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus' style='width: 88px;'>";
             $(this).removeClass("editable")
             $(this).html(input);
             $('#focus').focus();

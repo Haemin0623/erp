@@ -114,3 +114,4 @@ select * from ORDER_ITEM;
 select * from ORDER_HEAD;
 select * from BUYER;
 select * from M_BUYER;
+select * from m_employee;
