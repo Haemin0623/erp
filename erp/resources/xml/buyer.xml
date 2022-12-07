@@ -138,11 +138,6 @@
 		where  del='N' 
 		order by adddate desc
 	</select>
-	<select id="select" parameterType="String" resultType="buyer">
-		select 	* 
-		from 	m_buyer 
-		where 	buyer_cd = #{buyerCd}
-	</select>
 	
 	<select id="getTotal" parameterType="buyer" resultType="integer">
 		select 	count(*) 
@@ -175,12 +170,7 @@
 		</where>
 	</select>
 
-	<select id="ndlist" resultType="buyer">
-		select  * 
-		from  m_buyer 
-		where  del='N' 
-		order by adddate desc
-	</select>
+
 	<select id="dlist" resultType="buyer">
 		select	* 
 		from 	m_buyer 
