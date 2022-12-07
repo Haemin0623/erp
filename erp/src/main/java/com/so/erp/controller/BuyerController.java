@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
 import com.so.erp.service.BuyerService;
@@ -130,12 +129,16 @@ public class BuyerController {
 			// buyer객체를 넣어서 search 결과를 bsearchList 에 담음
 			// buyer 페이지로 가므로 buyer.do의 buyerList 를 갖고 페이지로 넘어가게됨.
 			// 따라서 아래 bsearchList 값의  key를 buyerList로 바꿔서 페이지로 넘어가야 값을 갖고갈수있음
-			List<Buyer> bsearchList = bs.search(buyer); 
+			List<Buyer> bsearchList = bs.search(buyer);
+			List <Buyer> notDelList = bs.ndlist();
+			List <Buyer> delList = bs.dlist();
 			
 			System.out.println("조회성공");
 			
 			model.addAttribute("buyerList", bsearchList); // bsearchList를 buyerList 이름으로 보내줘
 			model.addAttribute("buyer", buyer);
+			model.addAttribute("notDelList", notDelList);
+			model.addAttribute("delList", delList);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());

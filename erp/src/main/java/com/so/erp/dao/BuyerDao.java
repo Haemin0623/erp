@@ -20,4 +20,6 @@ public interface BuyerDao {
 
 	Buyer select(String buyerCd);
 
+	List<Buyer> dlist();
+
 }

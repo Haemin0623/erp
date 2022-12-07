@@ -49,4 +49,9 @@ public class BuyerServiceImpl implements BuyerService {
 		return bd.select(buyerCd);
 	}
 
+	@Override
+	public List<Buyer> dlist() {
+		return bd.dlist();
+	}
+
 }

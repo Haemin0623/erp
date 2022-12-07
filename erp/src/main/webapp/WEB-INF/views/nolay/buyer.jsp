@@ -170,20 +170,21 @@ li.opt {
 
 </style>
 <script type="text/javascript">
-function dupChk() {
-	if(!frm.buyerCd.value) {
-		alert("입력한 후에 체크하시오");
-		frm.buyerCd.focus(); return false;
+	function dupChk() {
+		if(!frm.buyerCd.value) {
+			alert("입력한 후에 체크하시오");
+			frm.buyerCd.focus(); 
+			return false;
+		}
+		$.post('dupChk.do', "buyerCd="+frm.buyerCd.value, function(data) {
+			$('#buyerCdChk-msg').html(data);  
+		});
 	}
-	$.post('dupChk.do', "buyerCd="+frm.buyerCd.value, function(data) {
-		$('#buyerCdChk-msg').html(data);  
+	
+	$('#dupChk').on('click', function(event){ //dupChk 아이디 클릭시 form 태그 기능 못하게 
+		event.preventDefault();
+		dupChk();
 	});
-}
-
-$('#dupChk').on('click', function(event){
-	event.preventDefault();
-	dupChk();
-});
 
 </script>
 
@@ -252,6 +253,12 @@ $('#dupChk').on('click', function(event){
 <%-- 					</c:forEach> --%>
 <!-- 				</select> -->
 				<input type="text" name="address" class="keyword long2" value="${buyer.address}"> 
+			
+			삭제여부
+				<select name="del" class="del sumo">
+					<option value=""></option>
+<%-- 					<c:forEach items="${ }" --%>
+				</select>
 				
 			
 			</form>	
@@ -321,7 +328,7 @@ $('#dupChk').on('click', function(event){
 					</tr>
 					<tr>
 						<th>고객명</th>
-						<td><input type="text" name="bname"></td>
+						<td><input type="text" name="bname"><button id="dupChk2">중복체크</button></td>
 					</tr>
 					<tr>
 						<th>담당자</th>

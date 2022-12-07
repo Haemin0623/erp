@@ -40,12 +40,17 @@ public class BuyerDaoImpl implements BuyerDao {
 	}
 
 	@Override
-	public List<Buyer> ndlist() { //삭제후 리스트업
+	public List<Buyer> ndlist() { //삭제한것 리스트업
 		return sst.selectList("buyerns.ndlist");
 	}
 
 	@Override
 	public Buyer select(String buyerCd) {
 		return sst.selectOne("buyerns.select",buyerCd);
+	}
+
+	@Override
+	public List<Buyer> dlist() { //삭제안한것 리스트업
+		return sst.selectList("buyerns.dlist");
 	}
 }

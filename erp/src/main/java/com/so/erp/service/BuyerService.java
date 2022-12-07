@@ -20,4 +20,7 @@ public interface BuyerService {
 
 	Buyer select(String buyerCd); //고객 신규등록시 중복체크
 
+	List<Buyer> dlist();
+
+
 }
