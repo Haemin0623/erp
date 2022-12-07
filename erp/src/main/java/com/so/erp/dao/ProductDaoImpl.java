@@ -78,5 +78,10 @@ public class ProductDaoImpl implements ProductDao {
 		return sst.selectOne("productns.listForExcel",item);
 	}
 
+	@Override
+	public Product updateselect(Product product) {
+		return sst.selectOne("productns.updateselect",product);
+	}
+
 
 }

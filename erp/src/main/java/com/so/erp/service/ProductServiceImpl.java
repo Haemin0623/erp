@@ -70,5 +70,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.listForExcel(item);
 	}
 
+	@Override
+	public Product updateselect(Product product) {
+		return pds.updateselect(product);
+	}
+
 
 }

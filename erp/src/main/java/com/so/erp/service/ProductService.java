@@ -30,5 +30,7 @@ public interface ProductService {
 
 	Product listForExcel(Product item);
 
+	Product updateselect(Product product);
+
 
 }

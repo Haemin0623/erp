@@ -10,10 +10,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script type="text/javascript">
-	var J300 =  $.noConflict(true);	
-</script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--  	var J300 =  $.noConflict(true);	 -->
+<!-- </script> -->
 </head>
 <body>
 <div id="container">
@@ -60,25 +60,25 @@
 					</div>
 					<div class="search-sub-div">
 						<div class="search-item-div">
-							<div class="search-item-text">상태 </div>
+							<div class="search-item-text">삭제여부 </div>
 								<select name="del" >
 									<c:if test="${product.del == null }">
-										<option value="null" selected="selected">모두보기
+										<option value="null" selected="selected">모두
 									</c:if>
 									<c:if test="${product.del != null }">
-										<option value="null">모두보기
+										<option value="null">모두
 									</c:if>
 									<c:if test="${product.del == 'N' }">
-										<option value="N" selected="selected">등록중
+										<option value="N" selected="selected">O
 									</c:if>
 									<c:if test="${product.del != 'N' }">
-										<option value="N">등록중
+										<option value="N">O
 									</c:if>
 									<c:if test="${product.del == 'Y' }">
-										<option value="Y" selected="selected">삭제완료
+										<option value="Y" selected="selected">X
 									</c:if>
 									<c:if test="${product.del != 'Y' }">
-										<option value="Y">삭제완료
+										<option value="Y">X
 									</c:if>
 								</select>
 							</div>
@@ -99,8 +99,10 @@
 				</div>
 			</form>
 			</div>
-		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
-		<div class="search-btn" id="initBtn" tabIndex="0"><button>초기화</button></div>
+			<div class="search-btn">
+				<button id="searchBtn">검색</button>
+				<button id="initBtn">초기화</button>
+			</div>
 	</div>
 	
 
@@ -175,7 +177,7 @@
 					<input type="checkbox" name="checkRow" value="${productList.productCd }" >
 				</c:if>
 				</td>
-				<td>${productList.productCd }</td>
+				<td >${productList.productCd }</td>
 				<td class="editable">${productList.pname}</td>
 				<td class="editable">${productList.volume}</td>
 				<td class="editable">${productList.unit}</td>
@@ -403,6 +405,8 @@
 	// 	검색초기화
 	document.querySelector("#initBtn").addEventListener("click",  function(){callView('productList.do')});
 </script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var initvalue = "";
@@ -413,7 +417,7 @@
 	        $(this).removeClass("editable")
 	        $(this).html(input);
 	        $('#focus').focus();
-	        
+	       	
 	        $(".input-data").keypress(function(e) { //위의 해당 input-data 클래스의 키눌렀을떄 함수 실행
 	            var key=e.which;
 	            if(key==13) { //13은 enter키를 의미.테이블이 click을 받아 active 상태가 됐을때 enter눌러주면 그 값을 가지고 td로 
@@ -421,9 +425,9 @@
 	                var td=$(this).parent("td");
 	                td.html(value);
 	                td.addClass("editable");
-	            
+	               
 	                // 테이블의 Row 클릭시 값 가져오기
-		            $("#list tr").keypress(function(){    
+		            $(".list tr").keypress(function(){    
 		
 			            const str = ""
 			            const tdArr = new Array(); // 배열 선언
@@ -437,15 +441,17 @@
 			             tdd.each(function(i){
 	    		             tdArr.push(tdd.eq(i).text());
 			             });
+			             console.log(tdArr);
 			             
 			             
 			             // td.eq(index)를 통해 값을 가져올 수도 있다.
-			             productCd = tdd.eq(1).text();
-			             pname = tdd.eq(2).text();
-			             volume = tdd.eq(3).text();
-			             unit = tdd.eq(4).text();
-			             category = tdd.eq(5).text();
+			              productCd = tdd.eq(1).text();
+			              pname = tdd.eq(2).text();
+			              volume = tdd.eq(3).text();
+			              unit = tdd.eq(4).text();
+			              category = tdd.eq(5).text();
 		             
+			             
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
 		    			     url: 'productUpdate.do', 
@@ -456,13 +462,15 @@
 		    			    	volume: volume,
 		    			    	unit: unit,
 		    			    	category: category
+		    			    	
 		    			     },
 		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
 		    			    	 console.log(result);
-		    			        if (result) {
+		    			        if (result == -1) {
+		    			        	alert("중복된 상품이 있습니다.")
+		    			        } else {
 		    			        	search();
 		    			        	alert("수정완료")
-		    			        } else {
 		    			        }
 		    				}
 		    		   	});

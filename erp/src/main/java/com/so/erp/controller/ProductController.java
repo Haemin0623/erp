@@ -2,7 +2,6 @@ package com.so.erp.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,10 +145,17 @@ public class ProductController {
 	@ResponseBody
 	public int productUpdate(Product product) {
 		int result = 0;
-		result = pds.update(product);
-		
-		return result;
+		Product product2 = pds.updateselect(product);
+		if (product2 != null) {
+			result = -1;
+			return result;
+		} else {
+
+			result = pds.update(product);
+			return result;
+		}
 	}
+	
 	
 	
 	@RequestMapping("productSearch")

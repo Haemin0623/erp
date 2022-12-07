@@ -30,5 +30,7 @@ public interface ProductDao {
 	
 	Product listForExcel(Product item);
 
+	Product updateselect(Product product);
+
 
 }
