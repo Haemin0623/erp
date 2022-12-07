@@ -1,22 +1,16 @@
 package com.so.erp.controller;
 
 import java.sql.Date;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Employee;
 import com.so.erp.model.OrderHead;
-<<<<<<< HEAD
 import com.so.erp.model.OrderItem;
-=======
 import com.so.erp.service.BuyerService;
->>>>>>> a4ff91c (고객마스터 엑셀기능 추가)
 import com.so.erp.service.EmployeeService;
 import com.so.erp.service.OrderHeadService;
 import com.so.erp.service.OrderItemService;
