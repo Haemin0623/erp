@@ -415,8 +415,6 @@ public class OrderController {
 			amount = is.amountByEmp(e.getEmployeeCd());
 			amountByEmp.add(amount);
 		}
-		System.out.println(amountByEmp);
-		System.out.println("!");
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put("emp", emp);

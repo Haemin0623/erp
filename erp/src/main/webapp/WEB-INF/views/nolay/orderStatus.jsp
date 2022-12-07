@@ -15,20 +15,26 @@
 
 	.graph1{
 	    position: relative;
+	    
 	    width: 400px;
-	    height: 500px;
+/* 	    height: 500px; */
 	    float: left;
-	    padding: 20px;
+	    padding: 40px;
+	    
 	    
 	}
 	#allGraph{
+	    padding-top: 30px;
 	    display: inline-block;
+	    
 	}
+
 </style>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script> -->
 </head>
@@ -136,10 +142,13 @@
 		</div>
 		<div class="graph1">
 			<canvas id="amountByProductGraph"></canvas>
+			 <div id='legend-div' class="legend-div"></div>
 		</div>
 	</div>
 <script>
-	$(document).ready(function(){
+$(document).ready(function(){
+	
+	setTimeout(function(){
 		// graph1 - amountGraph 월 별 매출
 		$.ajax({
 			url: 'monthAmount.do',
@@ -171,7 +180,7 @@
         		    },
         		    options: {
         		      legend: { display: false },
-        		      title: {
+        		      subtitle: {
         		        display: true,
         		        text: '월 별 매출'
         		      }
@@ -213,7 +222,7 @@
         		      labels: labels,
         		      datasets: [
         		        {
-        		          label: "영업사원 별 매출",
+        		          label: "12월 영업사원 별 매출",
         		          backgroundColor: [
                               'rgba(54, 162, 235, 0.5)',
                               'rgba(255, 206, 86, 0.5)',
@@ -278,6 +287,13 @@
         		    type: 'pie',
         		    data: pieChartData,
         		    options: {
+        		    	plugins: {
+	        		    	title:{
+	        		    		display: true,
+	             	            text: '12월 상품 별 매출'
+	        		    	 }	
+             	        },
+        		    	
         	            responsive: false,
         	            legend: {
         	                display: false
@@ -295,9 +311,11 @@
 		    chart.data.labels.forEach(function (label, index) {
 		        ul.innerHTML += `<li><span style="background-color: ${color[index]}"></span>${label}</li>`;
 		    });
+		    return ul.outerHTML;
 		};
 		
-	});	//function닫기
+	},100);
+});	//function닫기
 </script>
 
 	<div id="button-div">
@@ -417,6 +435,8 @@
 	
 	
 	function search() {
+		
+		
 		const keyword = {
 			orderNo : searchBoxx.orderNo.value,	
 			buyerCd : searchBoxx.buyerCd.value,	
@@ -452,8 +472,10 @@
 		     success: function (result) {
 		    	 $('#content').children().remove();
 				 $('#content').html(result);
+				 $('#allGraph').hide();
 			 }
 	   });
+	
 	}
 	
 	document.querySelector("#searchBtn").addEventListener("click", search);
@@ -543,7 +565,7 @@
 	
 	
 </script>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
 	$('.sumo').SumoSelect({
 		search: true,
@@ -557,7 +579,7 @@ $(document).ready(function() {
 	
 });
 
-</script> -->
+</script>
 
 
 <!-- 페이지 버튼 / 페이지 당 요소 갯수 -->

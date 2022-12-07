@@ -30,13 +30,15 @@
 		font-size: 12px;
  		width: 100%;
 	}
-	.hideApprovalBtn {
+	.hiding {
 		display: none;
 	}
 	#button-div {
     /* margin-bottom: 15px; common */
     padding-bottom: 25px;
-}
+	}
+
+
 </style>
 
 </head>
@@ -291,8 +293,9 @@
 	   });
 	}
 	document.querySelector("#searchBtn").addEventListener("click", search);
+	
 	/* 행 색상 */
-	$("#table tr").on( "click", function() {
+	$(".table tr").on( "click", function() {
 		$(".itemRow").removeClass('clickColor');
 	    $(this).addClass('clickColor');
 	});
@@ -350,32 +353,41 @@
 						
 						$('#area').append(
 							"<tr>" +
-							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' style='width:99%; resize: none; text-align: center;'></textarea></td>"+
+							"<td colspan='8'>comment</td>" +
+							"</tr>" +
+							"<tr>" +
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' style='width:99%; resize: none; text-align: center;'></textarea></td>"+
 							"</tr>"
 						);
-						$(".orderApprovalBtnBox").removeClass('hideApprovalBtn');
+						$(".orderApprovalBtnBox").removeClass('hiding');
 	
 					} else if (status == "승인" || status == "반려" ) {
 						if (reason != "") {
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
+								"<td colspan='8'>comment</td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
 								"</tr>"
 							);
 							$('#textarea').val(reason);
-							$(".orderApprovalBtnBox").addClass('hideApprovalBtn');
+							$(".orderApprovalBtnBox").addClass('hiding');
 						}
 					} else if (status == "승인대기" ) {
 						if (reason == "") {
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
+								"<td colspan='8'>comment</td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
 								"</tr>"
 							);
 							$('#textarea').val("승인 대기 중");
-							$(".orderApprovalBtnBox").addClass('hideApprovalBtn');
+							$(".orderApprovalBtnBox").addClass('hiding');
 						}
 					
 					}
@@ -400,28 +412,31 @@
 		console.log("2");
 		console.log(reason);
 		console.log("3");
-		
-		let btnValue = $('button[name=btn]').val();
-		console.log(btnValue);
+		var btn = $(this).val();
+		console.log(btn);
 		console.log("4");
 		
-		$.ajax({
-			method: 'post',
-			url: 'orderApproval.do',
-			data: {
-				"orderNo":orderNo,
-				"reason":writeReason,
-				"btnValue":btnValue
-				},
-				
-			success: function(data) {
-				console.log("된듯");
-				callView('orderApprovalWindow.do');
-				
-			}, error: function (xhr, status, error) {
-				console.log("error");
-			}
-		});
+		var cf = confirm("정말 "+btn+"하시겠습니까?");
+		
+		if (cf == true) {
+			$.ajax({
+				method: 'post',
+				url: 'orderApproval.do',
+				data: {
+					"orderNo":orderNo,
+					"reason":writeReason,
+					"btnValue":btn
+					},
+					
+				success: function(data) {
+					console.log("된듯");
+					callView('orderApprovalWindow.do');
+					
+				}, error: function (xhr, status, error) {
+					console.log("error");
+				}
+			});
+		} 
 	
 	});
 </script>
