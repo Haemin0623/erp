@@ -215,17 +215,17 @@ public class PricingController {
 	public boolean pricingInsert(Model model, @RequestParam(name="items")String items) throws ParseException {		
 		
 		boolean result = true;
-		
+		System.out.println(11);
 		try {
-			
+			System.out.println(12);
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(items);
 			JSONArray arr = JSONArray.fromObject(obj);
 			
 			Pricing pricing = new Pricing(); 
-			
+			System.out.println(222);
 			for (int i = 0; i < arr.size(); i++) {
-				
+				System.out.println(333);
 				JSONObject itemObj = (JSONObject) arr.get(i);
 
 				String buyerCd = (String) itemObj.get("buyerCd");
@@ -246,14 +246,18 @@ public class PricingController {
 				pricing.setCurrency(currency);
 				pricing.setDiscountrate(discountrate);
 				
+				
+				System.out.println("전");
 				prs.pricingInsert(pricing);
+				System.out.println("후");
 			}
 		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			System.out.println(13);
 			result = false;
 		}
-		
+		System.out.println(14);
 		return result;
 	}
 	
