@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.so.erp.dao.ProductDao;
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 
@@ -63,6 +64,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int amountByProduct(String productCd) {
 		return pds.amountByProduct(productCd);
+	}
+	@Override
+	public Product listForExcel(Product item) {
+		return pds.listForExcel(item);
 	}
 
 

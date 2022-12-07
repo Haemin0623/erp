@@ -10,7 +10,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var J300 =  $.noConflict(true);	
+</script>
 </head>
 <body>
 <div id="container">
@@ -55,46 +58,45 @@
 							</c:forEach>
 						</select>
 					</div>
-				</div>
-					<div class="search-sub-div">
-						<div class="search-item-div">상품카테고리</div>
-						<select name="category" class="category sumo">
-							<option value=""></option>
-							<c:forEach var="item" items="${allList }">
-								<option value="${item.category }">${item.category }</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="search-item-div">			
-						<div class="search-item-text">
-							등록일<input type="date" name="adddate" value="${product.adddate }"> ~ <input type="date" name="adddate2" value="${product.adddate2 }">
-						</div>
-					</div>
 					<div class="search-sub-div">
 						<div class="search-item-div">
 							<div class="search-item-text">상태 </div>
-							<select name="del" >
-								<c:if test="${product.del == null }">
-									<option value="null" selected="selected">모두보기
-								</c:if>
-								<c:if test="${product.del != null }">
-									<option value="null">모두보기
-								</c:if>
-								<c:if test="${product.del == 'N' }">
-									<option value="N" selected="selected">등록중
-								</c:if>
-								<c:if test="${product.del != 'N' }">
-									<option value="N">등록중
-								</c:if>
-								<c:if test="${product.del == 'Y' }">
-									<option value="Y" selected="selected">삭제완료
-								</c:if>
-								<c:if test="${product.del != 'Y' }">
-									<option value="Y">삭제완료
-								</c:if>
-							</select>
+								<select name="del" >
+									<c:if test="${product.del == null }">
+										<option value="null" selected="selected">모두보기
+									</c:if>
+									<c:if test="${product.del != null }">
+										<option value="null">모두보기
+									</c:if>
+									<c:if test="${product.del == 'N' }">
+										<option value="N" selected="selected">등록중
+									</c:if>
+									<c:if test="${product.del != 'N' }">
+										<option value="N">등록중
+									</c:if>
+									<c:if test="${product.del == 'Y' }">
+										<option value="Y" selected="selected">삭제완료
+									</c:if>
+									<c:if test="${product.del != 'Y' }">
+										<option value="Y">삭제완료
+									</c:if>
+								</select>
+							</div>
 						</div>
 					</div>
+					<div class="search-sub-div">
+						<div class="search-item-text">상품카테고리</div>
+						<select name="category" class="category sumo">
+							<option value=""></option>
+								<option value="스낵">스낵</option>
+								<option value="라면">라면</option>
+								<option value="음료">음료</option>
+						</select>
+					<div class="search-item-div" >			
+						<div class="search-item-text" >등록일</div>
+							<input type="date" name="adddate" value="${product.adddate }"> ~ <input type="date" name="adddate2" value="${product.adddate2 }">
+						</div>
+				</div>
 			</form>
 			</div>
 		<div class="search-btn" id="searchBtn" tabIndex="0"><button>검색</button></div>
@@ -105,49 +107,49 @@
 	<span id="CCD">
 		<button id="show">상품등록  </button>
 		<button type="button" onclick="deleteAction()">삭제</button>
-<!-- 		<button>엑셀 대량등록</button> -->
+		<button id="excelBtn">Excel</button>
 	</span>	
 	<div id="productList">
-	<form name="page" >
-		<span>
-			<select id="listview">
-			<c:if test="${rowPerPage ==10}">
-				<option value="10" selected="selected">10개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=10}">
-				<option value="10">10개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==50}">
-				<option value="50" selected="selected">50개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=50}">
-				<option value="50">50개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==100}">
-				<option value="100" selected="selected">100개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=100}">
-				<option value="100">100개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==300}">
-				<option value="300" selected="selected">300개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=300}">
-				<option value="300">300개씩보기</option>
-			</c:if>
-			
-			<c:if test="${rowPerPage ==500}">
-				<option value="500" selected="selected">500개씩보기</option>
-			</c:if>
-			<c:if test="${rowPerPage !=500}">
-				<option value="500">500개씩보기</option>
-			</c:if>
-			</select>
-		</span>
-	</form>
+		<form name="page" >
+			<span>
+				<select id="listview">
+				<c:if test="${rowPerPage ==10}">
+					<option value="10" selected="selected">10개씩보기</option>
+				</c:if>
+				<c:if test="${rowPerPage !=10}">
+					<option value="10">10개씩보기</option>
+				</c:if>
+				
+				<c:if test="${rowPerPage ==50}">
+					<option value="50" selected="selected">50개씩보기</option>
+				</c:if>
+				<c:if test="${rowPerPage !=50}">
+					<option value="50">50개씩보기</option>
+				</c:if>
+				
+				<c:if test="${rowPerPage ==100}">
+					<option value="100" selected="selected">100개씩보기</option>
+				</c:if>
+				<c:if test="${rowPerPage !=100}">
+					<option value="100">100개씩보기</option>
+				</c:if>
+				
+				<c:if test="${rowPerPage ==300}">
+					<option value="300" selected="selected">300개씩보기</option>
+				</c:if>
+				<c:if test="${rowPerPage !=300}">
+					<option value="300">300개씩보기</option>
+				</c:if>
+				
+				<c:if test="${rowPerPage ==500}">
+					<option value="500" selected="selected">500개씩보기</option>
+				</c:if>
+				<c:if test="${rowPerPage !=500}">
+					<option value="500">500개씩보기</option>
+				</c:if>
+				</select>
+			</span>
+		</form>
 	</div>
 	<div class="table">
 	<form action="">
@@ -307,10 +309,6 @@
 	  	});
 	};
 	
-	
-	
-	
-	
 	document.querySelector("#addItem").addEventListener("click", insert);
 	  
 	function insert() {
@@ -341,9 +339,6 @@
 		    }
 	  	});
 	}
-	
-	
-	
 	
        document.querySelector("#listview").addEventListener("change", listview);
    	
@@ -466,6 +461,7 @@
 		    			    	 console.log(result);
 		    			        if (result) {
 		    			        	search();
+		    			        	alert("수정완료")
 		    			        } else {
 		    			        }
 		    				}
@@ -669,6 +665,82 @@ $(document).ready(function() {
 		}
 	});
 </script>
+<script type="text/javascript">
+function excel() {
+// 	var checkRow = new Array();
+// 	  $( "input[name='checkRow']:checked" ).each (function (){
+// 	    checkRow.push($(this).val()) ;
+// 	  });
+	  
+// 	  console.log(checkRow);
+	let checkRow = new Array();
+	
+	$( "input[name='checkRow']:checked" ).each (function (){
+		 let thisRow = $(this).closest('tr');
+		 
+		  
+		 const item = {
+					productCd : thisRow.find('td:eq(0)').find('input').val();
+				}
+		 
+		 checkRow.push(item);
+	
+	});
+	
+	  
+	 console.log(checkRow);
+	 
+	 J300.ajax({
+		  url : 'productExcelDown.do',
+		  method : 'post',
+		  traditional : true,
+		  data : {
+			  items : JSON.stringify(checkRow)
+		  },
+		  xhr: function () {
+              var xhr = new XMLHttpRequest();
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState == 2) {
+                      if (xhr.status == 200) {
+                          xhr.responseType = "blob";
+                      } else {
+                          xhr.responseType = "text";
+                      }
+                  }
+              };
+              return xhr;
+		    },
+		  success : function(data) {
+			  console.log(data);
+			//alert("엑셀다운완료?");
+			//Convert the Byte Data to BLOB object.
+            var blob = new Blob([data], { type: "application/octetstream" });
+
+            //Check the Browser type and download the File.
+            var isIE = false || !!document.documentMode;
+            if (isIE) {
+                window.navigator.msSaveBlob(blob, fileName);
+            } else {
+                var url = window.URL || window.webkitURL;
+                link = url.createObjectURL(blob);
+                var a = $("<a />");
+                a.attr("download", "test.xlsx");
+                a.attr("href", link);
+                $("body").append(a);
+                a[0].click();
+                $("body").remove(a);
+            }
+		}, error: function (xhr, status, error) {
+			console.log("error");
+		} 
+	 });
+	  
+}
+
+document.querySelector("#excelBtn").addEventListener("click", excel);
+
+</script>
+
 
 </body>
 </html>

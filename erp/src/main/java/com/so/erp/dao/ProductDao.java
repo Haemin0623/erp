@@ -2,6 +2,7 @@ package com.so.erp.dao;
 
 import java.util.List;
 
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 
@@ -26,6 +27,8 @@ public interface ProductDao {
 	List<Product> allList();
 
 	int amountByProduct(String productCd);
+	
+	Product listForExcel(Product item);
 
 
 }

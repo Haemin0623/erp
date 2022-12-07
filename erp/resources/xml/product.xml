@@ -106,7 +106,7 @@
 							and del='N'	
 					</if>
 					<if test='product.del=="Y"'>
-							and del='Y'							
+							and del='Y'	
 					</if>
 				</where>
 		</select>
@@ -153,5 +153,9 @@
     		where	oi.product_cd = mp.product_cd
         		and h.orderdate between '2022.06.01' and '2022.06.30'
         		and mp.product_cd = #{productCd}
+        </select>
+    	
+    	<select id="listForExcel" parameterType="product" resultType="product">
+    		select * from m_product where product_cd = ${productCd}
     	</select>
-	</mapper>
+    </mapper>

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 
@@ -71,6 +72,10 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int amountByProduct(String productCd) {
 		return sst.selectOne("productns.amountByProduct", productCd);
+	}
+	
+	public Product listForExcel(Product item) {
+		return sst.selectOne("productns.listForExcel",item);
 	}
 
 

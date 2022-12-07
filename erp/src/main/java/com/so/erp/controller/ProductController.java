@@ -1,8 +1,23 @@
 package com.so.erp.controller;
 
+import java.io.IOException;
 import java.sql.Date;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +32,7 @@ import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 import com.so.erp.service.ProductService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -217,4 +233,158 @@ public class ProductController {
 		}
 			return "nolay/productList";
 	}
+	
+	@RequestMapping("productExcelDown")
+	@ResponseBody
+	public void excelDown( HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
+		
+		List<Product> list = new ArrayList<>();
+		System.out.println("items"+items);
+		Product product = new Product();
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			System.out.println("1");
+			
+			Product item = new Product();
+			
+			for (int i = 0; i < arr.size(); i++) {
+				
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				String productCd = (String) itemObj.get("productCd");
+				System.out.println(productCd);
+				
+				item.setProductCd(productCd);
+				
+				product = pds.listForExcel(item);
+				System.out.println(product.getAdddate());
+				product.getAdddate();
+				list.add(product);
+			}
+			
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+			System.out.println("size"+list.size());
+			
+			Workbook wb = new XSSFWorkbook();
+			Sheet sheet = wb.createSheet("주문 현황");
+			Row row = null;
+			Cell cell = null;
+			int rowNo = 0;
+			
+			// 테이블 헤더용 스타일
+			CellStyle headStyle = wb.createCellStyle();
+			
+			// 가는 경계선
+			headStyle.setBorderTop(BorderStyle.THIN);
+		    headStyle.setBorderBottom(BorderStyle.THIN);
+		    headStyle.setBorderLeft(BorderStyle.THIN);
+		    headStyle.setBorderRight(BorderStyle.THIN);
+
+		    // 배경색 노란색
+		    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+		    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		    
+		    // 데이터 가운데 정렬
+		    headStyle.setAlignment(HorizontalAlignment.CENTER);
+		    
+		    // 데이터용 경계 스타일 테두리만 지정
+		    CellStyle bodyStyle = wb.createCellStyle();
+		    bodyStyle.setBorderTop(BorderStyle.THIN);
+		    bodyStyle.setBorderBottom(BorderStyle.THIN);
+		    bodyStyle.setBorderLeft(BorderStyle.THIN);
+		    bodyStyle.setBorderRight(BorderStyle.THIN);
+		    
+		    row = sheet.createRow(rowNo++);
+		    
+		    cell = row.createCell(0);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("상품코드");
+		    
+		    cell = row.createCell(1);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("상품명");
+		    
+		    cell = row.createCell(2);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("용량");
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("단위");
+		    
+		    cell = row.createCell(4);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("상품카테고리");
+		    
+		    cell = row.createCell(5);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("등록일");
+		    
+		    cell = row.createCell(6);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("최종수정일");
+		    
+		    cell = row.createCell(7);
+		    cell.setCellStyle(headStyle);
+		    cell.setCellValue("삭제여부");
+		    
+		    for(Product li : list) {
+		    	row = sheet.createRow(rowNo++);
+
+		        cell = row.createCell(0);
+		        cell.setCellStyle(bodyStyle);
+		        cell.setCellValue(li.getProductCd());
+		        System.out.println(li.getProductCd());
+		        
+			    cell = row.createCell(1);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getPname());
+			    System.out.println(li.getPname());
+			    
+			    cell = row.createCell(2);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getVolume());
+			    System.out.println(li.getVolume());
+			    
+			    cell = row.createCell(3);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getUnit());
+			    System.out.println(li.getUnit());
+			    
+			    cell = row.createCell(4);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getCategory());
+			    System.out.println(li.getCategory());
+			    
+			    cell = row.createCell(5);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getAdddate());
+			    System.out.println(li.getAdddate());
+			    
+			    
+			    cell = row.createCell(6);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getStatusdate());
+			    System.out.println(li.getStatusdate());
+			    
+			    cell = row.createCell(7);
+			    cell.setCellStyle(bodyStyle);
+			    cell.setCellValue(li.getDel());
+		    }
+		    response.setContentType("ms-vnd/excel");
+		    response.setHeader("Content-Disposition", "attachment;filename=order.xlsx");
+		    
+		    // 엑셀 출력
+		    try {
+	            wb.write(response.getOutputStream());
+	        } finally {
+	            wb.close();
+	        }
+	}
+	
 }
