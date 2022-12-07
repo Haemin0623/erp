@@ -16,6 +16,7 @@
 
 body {
 	margin: 0;
+    background-color: #fcfaee;	
 }
 
 #menu {
@@ -26,7 +27,7 @@ body {
 /* 	float: left; */
 /* 	width: 250px; */
 /* 	height: 100vh; */
-	background-color: #5b6996;
+    background-color: #c3d4ae;
 }
 
 #content {
