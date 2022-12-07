@@ -16,4 +16,12 @@ public interface EmployeeDao {
 
 	Employee select(String employeeCd);
 
+	int getTotal(Employee employee);
+
+	void employeeDelete(String employeeCd);
+
+	void employeeRestore(String employeeCd);
+
+	int getSALCount(String department);
+
 }

@@ -28,9 +28,36 @@ public class EmployeeController {
 	private EmployeeService es;
 
 	@RequestMapping("emp")
-	public String emp(Model model) {
+	public String emp(Model model, Employee employee) {
 		
-		List<Employee> empList = es.list();
+		int rowPerPage = 20 ;
+		
+		if (employee.getRowPerPage() != 0) {
+			rowPerPage = employee.getRowPerPage();
+		} 
+		if (employee.getPageNum() == null || employee.getPageNum().equals("")) {
+			employee.setPageNum("1");
+		}
+		
+		employee.setDel("N");
+		
+		int currentPage = Integer.parseInt(employee.getPageNum());
+		int total = es.getTotal(employee);
+		
+		employee.pagingBean(currentPage, rowPerPage, total);
+		int startRow = (currentPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		employee.setStartRow(startRow);
+		employee.setEndRow(endRow);
+		
+		employee.setSortEmployeeCd(0);
+		employee.setSortEname(0);
+		employee.setSortAdddate(1);
+		employee.setSortJob(0);
+		employee.setSortDepartment(0);
+		employee.setSortAuthority(0);
+		
+		List<Employee> empList = es.search(employee);
 		
 		model.addAttribute("empList", empList);
 		
@@ -92,6 +119,32 @@ public class EmployeeController {
 			String authority = (String) keywordObj.get("authority");
 			employee.setAuthority(authority);
 			
+			String del = (String) keywordObj.get("del");
+			employee.setDel(del);
+			
+			int sortEmployeeCd = Integer.valueOf((String) keywordObj.get("sortEmployeeCd"));
+			employee.setSortEmployeeCd(sortEmployeeCd);
+			int sortEname = Integer.valueOf((String) keywordObj.get("sortEname"));
+			employee.setSortEname(sortEname);
+			int sortJob = Integer.valueOf((String) keywordObj.get("sortJob"));
+			employee.setSortJob(sortJob);
+			int sortDepartment = Integer.valueOf((String) keywordObj.get("sortDepartment"));
+			employee.setSortDepartment(sortDepartment);
+			int sortAdddate = Integer.valueOf((String) keywordObj.get("sortAdddate"));
+			employee.setSortAdddate(sortAdddate);
+			int sortAuthority = Integer.valueOf((String) keywordObj.get("sortAuthority"));
+			employee.setSortAuthority(sortAuthority);			
+			
+			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
+			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
+			int total = es.getTotal(employee);
+			
+			employee.pagingBean(currentPage, rowPerPage, total);
+			
+			int startRow = (currentPage - 1) * rowPerPage + 1;
+			int endRow = startRow + rowPerPage - 1;
+			employee.setStartRow(startRow);
+			employee.setEndRow(endRow);
 			
 			List<Employee> empList = es.search(employee);
 			System.out.println(empList.size());
@@ -124,6 +177,50 @@ public class EmployeeController {
 		}
 		
 		return result;
+	}
+	
+	@RequestMapping("employeeDelete")
+	@ResponseBody
+	public boolean employeeDelete(String[] checkRows) {
+		boolean result = true;
+		
+		for (String employeeCd : checkRows){
+			try {
+				es.employeeDelete(employeeCd);
+			} catch (Exception e) {
+				System.out.println("실패 : " + employeeCd);
+				result = false;
+			}			
+		}
+		return result;
+	}
+	
+	
+	@RequestMapping("employeeRestore")
+	@ResponseBody
+	public boolean employeeRestore(String[] checkRows) {
+		boolean result = true;
+		
+		for (String employeeCd : checkRows){
+			try {
+				es.employeeRestore(employeeCd);
+			} catch (Exception e) {
+				System.out.println("실패 : " + employeeCd);
+				result = false;
+			}			
+		}
+		return result;
+	}
+	
+	@RequestMapping("getSALCount")
+	@ResponseBody
+	public String getSALCount(String department) {
+		int count = es.getSALCount(department);
+		String number = String.format("%03d", count);
+		
+		System.out.println(number);
+		
+		return number;
 	}
 	
 }

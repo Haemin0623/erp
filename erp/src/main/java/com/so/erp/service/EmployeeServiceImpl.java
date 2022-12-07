@@ -40,4 +40,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return ed.select(employeeCd);
 	}
 
+	@Override
+	public int getTotal(Employee employee) {
+		return ed.getTotal(employee);
+	}
+
+	@Override
+	public void employeeDelete(String employeeCd) {
+		ed.employeeDelete(employeeCd);
+	}
+
+	@Override
+	public void employeeRestore(String employeeCd) {
+		ed.employeeRestore(employeeCd);
+		
+	}
+
+	@Override
+	public int getSALCount(String department) {
+		return ed.getSALCount(department);
+	}
+
 }

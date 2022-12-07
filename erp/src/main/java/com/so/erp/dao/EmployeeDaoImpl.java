@@ -40,4 +40,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return sst.selectOne("employeens.select",employeeCd);
 	}
 
+	@Override
+	public int getTotal(Employee employee) {
+		return sst.selectOne("employeens.getTotal", employee);
+	}
+
+	@Override
+	public void employeeDelete(String employeeCd) {
+		sst.update("employeens.employeeDelete", employeeCd);
+		
+	}
+
+	@Override
+	public void employeeRestore(String employeeCd) {
+		sst.update("employeens.employeeRestore", employeeCd);
+		
+	}
+	@Override
+	public int getSALCount(String department) {
+		return sst.selectOne("employeens.getSALCount", department);
+	}
+
 }

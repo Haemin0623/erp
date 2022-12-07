@@ -8,23 +8,6 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-
-	
-	
-	#insert-form{
-		boder: 1px solid black;
-	}
-	
-	#new-order-no {
-		background-color: silver;
-	}
-	
-	.insert-btn {
-		margin-bottom: 20px;
-	    margin-top: 10px;
-	    text-align: center;
-	}
-	
 	
 </style>
 
@@ -62,6 +45,18 @@
 						<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
 						~<input type="date" name="orderToDate" value="${orderHead.orderToDate }">
 					</div>
+					<div class="search-item-div">
+						<div class="search-item-text">상태</div>
+						<div class="boxx">
+							<select name="status" class="search">
+								<option value="null">모두</option>		
+								<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
+								<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
+								<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
+								<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-div">
@@ -83,34 +78,21 @@
 						</select>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">납품요청일</div>
+						<div class="search-item-text">요청일</div>
 						<input type="date" name="requestFromDate" value="${orderHead.requestFromDate }">
 						~<input type="date" name="requestToDate" value="${orderHead.requestToDate }">
 					</div>
-				</div>
-				<div class="search-sub-div">
 					<div class="search-item-div">
-						<div class="search-item-text">상태</div>
+						<div class="search-item-text">삭제</div>
 						<div class="boxx">
-							<select name="status">
-								<option value="null">모두</option>		
-								<option value="승인대기" <c:if test="${orderHead.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
-								<option value="승인요청" <c:if test="${orderHead.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
-								<option value="승인" <c:if test="${orderHead.status == '승인' }">selected="selected"</c:if>>승인</option>
-								<option value="반려" <c:if test="${orderHead.status == '반려' }">selected="selected"</c:if>>반려</option>
+							<select name="del" class="search">
+								<option value="N">X</option>
+								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >O </option>
+								<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
 							</select>
 						</div>
 					</div>
-					<div class="search-item-div">
-					<div class="search-item-text">삭제 여부</div>
-						<select name="del">
-							<option value="N">삭제 X</option>
-							<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >삭제 </option>
-							<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
-						</select>
-					</div>
 				</div>
-				<p>
 				
 			</form>
 		</div>
@@ -159,7 +141,7 @@
 						<input type="checkbox" name="deletedCheckAll" id="th_deletedCheckAll">
 					</c:if>
 					<c:if test="${orderHead.del =='N' or orderHead.del == 'All' }">
-						<input type="checkbox" name="checkAll" id="th_checkAll">
+						<input type="checkbox" name="checkAll" id="th_checkAll" class="red-check">
 					</c:if>
 				</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
@@ -171,13 +153,13 @@
 				<th class="fixed">버튼</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
-				<tr class="itemRow">
+				<tr class="itemRow" <c:if test="${head.del =='Y'}">style="background-color: silver;"</c:if> >
 					<td>
-						<c:if test="${head.del =='Y'}">
+						<c:if test="${head.del =='Y' and orderHead.del == 'Y'}">
 							<input type="checkbox" name="deletedRow" value="${head.orderNo }" >
 						</c:if>
 						<c:if test="${head.del =='N' and head.status == '승인대기'}">
-							<input type="checkbox" name="checkRow" value="${head.orderNo }" >
+							<input type="checkbox" name="checkRow" value="${head.orderNo }"  class="red-check">
 						</c:if>
 					</td>
 					<td>${head.orderNo }<input type="hidden" value="${head.orderNo }"> </td>
@@ -187,18 +169,19 @@
 					<td ><input type="hidden" value="${head.status }">${head.status }</td>
 					<td><input type="hidden" value="${head.reason }">${head.statusdate }</td>
 					<td>
-						<c:if test="${head.status == '승인대기'}">
-							<button onclick="approvalRequest('${head.orderNo }')">요청</button>
+						<c:if test="${sessionScope.employeeCd == head.employeeCd  and head.del != 'Y'}">
+							<c:if test="${head.status == '승인대기'}">
+								<button onclick="approvalRequest('${head.orderNo }')">요청</button>
+							</c:if>
+							<c:if test="${head.status == '승인요청'}">
+								<button onclick="approvalCancel('${head.orderNo }')">취소</button>
+							</c:if>
+							<c:if test="${head.status == '승인'}">
+							</c:if>
+							<c:if test="${head.status == '반려'}">
+								<button onclick="approvalRequest('${head.orderNo }')">재요청</button>
+							</c:if>
 						</c:if>
-						<c:if test="${head.status == '승인요청'}">
-							<button onclick="approvalCancel('${head.orderNo }')">취소</button>
-						</c:if>
-						<c:if test="${head.status == '승인'}">
-						</c:if>
-						<c:if test="${head.status == '반려'}">
-							<button onclick="approvalRequest('${head.orderNo }')">재요청</button>
-						</c:if>
-					
 					</td>
 				</tr>
 			</c:forEach>
@@ -246,7 +229,7 @@
 				<form action="" name="frm">
 					<table id="insert-form">
 						<tr>
-							<td>주문번호<input type="text" name="orderNo" id="new-order-no" readonly="readonly"></td>
+							<td>주문번호<input type="text" name="orderNo" class="readonly" readonly="readonly"></td>
 							<td>발주일<input type="date" id="orderdate" name="orderdate"></td>
 						</tr>
 						<tr>
@@ -549,10 +532,10 @@
 							
 						$('#area').append(
 							"<tr>" +
-							"<td colspan='1'>사유</td>" +
+							"<th colspan='2'>사유</th>" +
 							"</tr>" +
 							"<tr>" +
-							"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' readonly style='background-color:silver;'></textarea></td>"+
+							"<td colspan='8'><textarea rows='5' cols='50' name='reason' id='reason' readonly></textarea></td>"+
 							"</tr>"
 						);
 						$('#reason').val(reason);
@@ -601,7 +584,7 @@
 		    	 orderNo: orderNo
 		     },
 		     success: function (result) {
-		    	 if(result){
+		    	 if(result > 0){
 			    	 search();
 		    	 } else {
 		    		 alert('실패');

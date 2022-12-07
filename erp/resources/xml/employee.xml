@@ -24,28 +24,81 @@
 	
 	<select id="search" parameterType="employee" resultType="employee">
 		select	*
-		from	m_employee
-		<where>
-			<if test="employeeCd != null and employeeCd != ''">
-				and employee_cd like '%' || #{employeeCd} || '%'
-			</if>
-			<if test="ename != null and ename != ''">
-				and ename like '%' || #{ename} || '%'
-			</if>
-			<if test="addFromDate != null and addToDate != null">
-				and adddate between #{addFromDate} and #{addToDate}
-			</if>
-			<if test="job != null and job != 'null'">
-				and job like '%' || #{job} || '%'
-			</if>
-			<if test="department != null and department != 'null'">
-				and department like '%' || #{department} || '%'
-			</if>
-			<if test="authority != null and authority != 'null'">
-				and authority like '%' || #{authority} || '%'
-			</if>		
-		</where>
-		order by adddate desc
+		from	(select a.*,
+						rowNum rn
+				from	(select	*
+						from	m_employee
+						<where>
+							<if test="employeeCd != null and employeeCd != ''">
+								and employee_cd like '%' || #{employeeCd} || '%'
+							</if>
+							<if test="ename != null and ename != ''">
+								and ename like '%' || #{ename} || '%'
+							</if>
+							<if test="addFromDate != null or addToDate != null">
+								<if test="addFromDate == null">
+									and adddate between '0001-01-01' and #{addToDate}
+								</if>
+								<if test="addToDate == null">
+									and adddate between #{addFromDate} and '9999-12-31'
+								</if>
+								<if test="addFromDate != null and addToDate != null">
+									and adddate between #{addFromDate} and #{addToDate}
+								</if>
+							</if>
+							<if test="job != null and job != 'null'">
+								and job like '%' || #{job} || '%'
+							</if>
+							<if test="department != null and department != 'null'">
+								and department like '%' || #{department} || '%'
+							</if>
+							<if test="authority != null and authority != 'null'">
+								and authority like '%' || #{authority} || '%'
+							</if>
+							<if test="del != 'All'">
+								and del = #{del}
+							</if>
+						</where>
+						order by 
+							<if test="sortEmployeeCd == 1">
+								employee_cd desc
+							</if>
+							<if test="sortEmployeeCd == 2">
+								employee_cd asc
+							</if>
+							<if test="sortEname == 1">
+								ename desc
+							</if>
+							<if test="sortEname == 2">
+								ename asc
+							</if>
+							<if test="sortJob == 1">
+								job desc
+							</if>
+							<if test="sortJob == 2">
+								job asc
+							</if>
+							<if test="sortDepartment == 1">
+								department desc
+							</if>
+							<if test="sortDepartment == 2">
+								department asc
+							</if>
+							<if test="sortAdddate == 1">
+								adddate desc
+							</if>
+							<if test="sortAdddate == 2">
+								adddate asc
+							</if>
+							<if test="sortAuthority == 1">
+								authority desc
+							</if>
+							<if test="sortAuthority == 2">
+								authority asc
+							</if>
+						) a
+				)
+		where	rn between #{startRow} and #{endRow}
 	</select>
 	
 	<update id="update" parameterType="employee">
@@ -60,5 +113,62 @@
 	
 	<select id="select" parameterType="string" resultType="employee">
 		select * from m_employee where employee_cd = #{employeeCd}
+	</select>
+	
+	<select id="getTotal" parameterType="employee" resultType="integer">
+		select	count(*)
+		from	m_employee
+		<where>
+			<if test="employeeCd != null and employeeCd != ''">
+				and employee_cd like '%' || #{employeeCd} || '%'
+			</if>
+			<if test="ename != null and ename != ''">
+				and ename like '%' || #{ename} || '%'
+			</if>
+			<if test="addFromDate != null or addToDate != null">
+				<if test="addFromDate == null">
+					and adddate between '0001-01-01' and #{addToDate}
+				</if>
+				<if test="addToDate == null">
+					and adddate between #{addFromDate} and '9999-12-31'
+				</if>
+				<if test="addFromDate != null and addToDate != null">
+					and adddate between #{addFromDate} and #{addToDate}
+				</if>
+			</if>
+			<if test="job != null and job != 'null'">
+				and job like '%' || #{job} || '%'
+			</if>
+			<if test="department != null and department != 'null'">
+				and department like '%' || #{department} || '%'
+			</if>
+			<if test="authority != null and authority != 'null'">
+				and authority like '%' || #{authority} || '%'
+			</if>
+			<if test="del != 'All'">
+				and del = #{del}
+			</if>
+		</where>
+		order by adddate desc
+	</select>
+	
+	<update id="employeeDelete" parameterType="String">
+		update	m_employee
+		set		del = 'Y',
+				statusdate = sysdate
+		where	employee_cd = #{employeeCd}
+	</update>
+	
+	<update id="employeeRestore" parameterType="String">
+		update	m_employee
+		set		del = 'N',
+				statusdate = sysdate
+		where	employee_cd = #{employeeCd}
+	</update>
+	
+	<select id="getSALCount" parameterType="String" resultType="integer">
+		select	count(*) + 1
+		from	m_employee
+		where	department = #{department}
 	</select>
 </mapper>
