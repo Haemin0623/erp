@@ -129,7 +129,7 @@
 						</select>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">삭제</div>
+						<div class="search-item-text">활성상태</div>
 						<div class="boxx">
 							<select name="del" class="search">
 								<option value="N">X</option>
@@ -201,7 +201,7 @@
 					<th class="fixed" id="sortAddress">주소</th>
 					<th class="fixed" id="sortCountryCd">국가코드</th>
 					<th class="fixed" id="sortAdddate">등록일</th>
-					<th class="fixed" id="sortStatusDate">상태변경일</th>
+					<th class="fixed" id="sortStatusDate">최종수정일</th>
 				</tr>
 				<c:forEach var="buyerItem" items="${buyerList }">
 					<tr class="itemRow">
@@ -463,7 +463,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	                    var url = window.URL || window.webkitURL;
 	                    link = url.createObjectURL(blob);
 	                    var a = $("<a />");
-	                    a.attr("download", "test.xlsx");
+	                    a.attr("download", "buyer.xlsx");
 	                    a.attr("href", link);
 	                    $("body").append(a);
 	                    a[0].click();
