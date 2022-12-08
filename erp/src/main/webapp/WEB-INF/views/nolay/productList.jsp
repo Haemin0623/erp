@@ -119,11 +119,11 @@
 		<form name="page" >
 			<span>
 				<select id="listview">
-				<c:if test="${rowPerPage ==10}">
-					<option value="10" selected="selected">10개씩보기</option>
+				<c:if test="${rowPerPage ==20}">
+					<option value="20" selected="selected">20개씩보기</option>
 				</c:if>
-				<c:if test="${rowPerPage !=10}">
-					<option value="10">10개씩보기</option>
+				<c:if test="${rowPerPage !=20}">
+					<option value="20">20개씩보기</option>
 				</c:if>
 				
 				<c:if test="${rowPerPage ==50}">
@@ -232,7 +232,7 @@
 							</tr>
 					</table>
 				</form>
-				<button id="addItem">추가</button>
+				<button id="addItem">등록</button>
 				<button id="close">닫기</button>
 			</div>
 		</div>

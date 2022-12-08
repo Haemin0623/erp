@@ -43,9 +43,9 @@ public class ProductController {
 	
 	@RequestMapping("productList")
 	public String productList(Model model, PagingBean pagingBean, String pageNum, Product product, String page) {
-		int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+		int rowPerPage = 20 ; // 한 화면에 보여주는 갯수
 		if (page == null || page == "") {
-			rowPerPage = 10;
+			rowPerPage = 20;
 		}else rowPerPage = Integer.parseInt(page);
 		if (pageNum == null || pageNum.equals("")) pageNum = "1";
 		int currentPage = Integer.parseInt(pageNum);
@@ -212,9 +212,9 @@ public class ProductController {
 			
 			// item 검색
 			
-			int rowPerPage = 10 ; // 한 화면에 보여주는 갯수
+			int rowPerPage = 20 ; // 한 화면에 보여주는 갯수
 			if (page == null || page == "") {
-				rowPerPage = 10;
+				rowPerPage = 20;
 			}else rowPerPage = Integer.parseInt(page);
 			if (pageNum == null || pageNum.equals("")) pageNum = "1";
 			int total = pds.getTotal(pagingBean,product);
