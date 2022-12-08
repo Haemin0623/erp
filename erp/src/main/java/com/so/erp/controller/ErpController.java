@@ -216,13 +216,13 @@ public class ErpController {
 			
 			for (int j = 0; j < 400; j++) {
 				item.setProductCd(prod[j]);
-				int num = (int)(Math.random()*300)+1;
+				int num = (int)(Math.random()*100)+1;
 				item.setRequestqty(num);
 				String orderdate = "2022-12-12";
 				Date date = Date.valueOf(orderdate);
 				item.setRequestdate(date);
-				item.setPrice(500);
-				item.setAmount(500 * num);
+				item.setPrice(100);
+				item.setAmount(100 * num);
 				item.setRemark("테스트");
 				
 				is.insert(item);
@@ -230,11 +230,7 @@ public class ErpController {
 		}
 
 		
-		
-		
-		
-		
-		
+
 		
 		
 		return "nolay/logIn";

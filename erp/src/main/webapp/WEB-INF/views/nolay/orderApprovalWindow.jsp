@@ -228,7 +228,10 @@
 
 		
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$('.orderApprovalBtnBox').hide();
+	
+});
 	function callView(request) {
 		var addr = request;
 	
@@ -359,6 +362,7 @@
 							"</tr>"
 						);
 						$(".orderApprovalBtnBox").removeClass('hiding');
+						$(".orderApprovalBtnBox").show();
 	
 					} else if (status == "승인" || status == "반려" ) {
 						if (reason != "") {

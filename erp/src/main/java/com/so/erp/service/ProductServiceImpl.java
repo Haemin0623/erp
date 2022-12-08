@@ -75,5 +75,10 @@ public class ProductServiceImpl implements ProductService {
 		return pds.updateselect(product);
 	}
 
+	@Override
+	public List<Product> activeList() {
+		return pds.activeList();
+	}
+
 
 }

@@ -423,12 +423,17 @@ public class OrderController {
 	@ResponseBody
 	public HashMap<String, Object> amountByProductGraph() {
 		
-		List<Product> product = ps.list();
-		List<Long> amountByProduct = new ArrayList<Long>();
-		long amount = 0;
+		List<Product> product = ps.activeList();
+		List<Integer> amountByProduct = new ArrayList<Integer>();
+		int amount = 0;
 		for (Product p:product) {
-			amount = ps.amountByProduct(p.getProductCd());
-			amountByProduct.add(amount);
+			try {
+				amount = ps.amountByProduct(p.getProductCd());
+				amountByProduct.add(amount);
+				
+			} catch (Exception e) {
+				System.out.println("오류"  + p.getProductCd());
+			}
 		}
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -484,8 +489,6 @@ public class OrderController {
 	
 	@RequestMapping("orderItemList")
 	public @ResponseBody List<OrderItem> orderItemList(Model model, @RequestParam(name="orderNo")String orderNo) {
-		System.out.println(orderNo);
-		System.out.println("넘어오나~");
 		
 		List<OrderItem> itemList = is.itemList(orderNo);
 		
@@ -505,7 +508,6 @@ public class OrderController {
 	@ResponseBody
 	public boolean orderApproval(Model model, @RequestParam(name="orderNo")String orderNo, 
 			@RequestParam(name="reason")String reason, @RequestParam(name="btnValue")String btnValue) {
-		System.out.println("orderApproval controller");
 		
 		boolean result = true;
 		
@@ -514,13 +516,8 @@ public class OrderController {
 		orderHead.setReason(reason);
 		orderHead.setStatus(btnValue);	// 승인버튼 누르면 승인으로, 반려버튼 누르면 반려로
 		
-		System.out.println("orderNo"+orderHead.getOrderNo());
-		System.out.println("raseon"+orderHead.getReason());
-		System.out.println("btnValue"+orderHead.getStatus());
-		
 		try {
 			hs.orderApproval(orderHead);
-			System.out.println("되나요");
 			result = true;
 		} catch (Exception e) {
 			System.out.println("에러"+e.getMessage());
@@ -651,12 +648,6 @@ public class OrderController {
 				
 			}
 			System.out.println(orderHead.getAuth());
-			
-			// 그래프
-			int totalAmount = 0;
-			// 그래프 월별 합계용 
-			//totalAmount += oh.getAmount();
-			
 			
 			
 			

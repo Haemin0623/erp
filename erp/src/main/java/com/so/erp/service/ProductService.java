@@ -32,5 +32,7 @@ public interface ProductService {
 
 	Product updateselect(Product product);
 
+	List<Product> activeList();
+
 
 }

@@ -32,5 +32,7 @@ public interface ProductDao {
 
 	Product updateselect(Product product);
 
+	List<Product> activeList();
+
 
 }

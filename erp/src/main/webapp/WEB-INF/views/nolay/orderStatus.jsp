@@ -167,7 +167,7 @@ $(document).ready(function(){
         		      labels: labels,
         		      datasets: [
         		        {
-        		          label: "월 별 매출",
+        		          label: "월별 매출",
         		          borderColor: 'rgba(75, 192, 192, 1)',
         	              backgroundColor: 'rgba(75, 192, 192, 0.2)',
         		          data: datas
@@ -175,11 +175,13 @@ $(document).ready(function(){
         		      ]
         		    },
         		    options: {
-        		      legend: { display: false },
-        		      subtitle: {
-        		        display: true,
-        		        text: '월 별 매출'
-        		      }
+        		    	plugins: {
+  	        		      legend: { display: false },
+  		        		      title: {
+  		        		        display: true,
+  		        		        text: '월별 매출'
+  		        		      }
+  	        		   	}
 	        		}
 	        	})
 			
@@ -218,7 +220,7 @@ $(document).ready(function(){
         		      labels: labels,
         		      datasets: [
         		        {
-        		          label: "12월 영업사원 별 매출",
+        		          label: "매출",
         		          backgroundColor: [
                               'rgba(54, 162, 235, 0.5)',
                               'rgba(255, 206, 86, 0.5)',
@@ -236,11 +238,13 @@ $(document).ready(function(){
         		      ]
         		    },
         		    options: {
-        		      legend: { display: true },
-        		      title: {
-        		        display: true,
-        		        text: '당월 영업사원별 매출'
-        		      }
+        		    	plugins: {
+	        		      legend: { display: false },
+		        		      title: {
+		        		        display: true,
+		        		        text: '12월 영업사원별 매출'
+		        		      }
+	        		   	}
         		    }
         		});
 	        }//success 닫기
@@ -270,8 +274,10 @@ $(document).ready(function(){
         		let pieChartData = {
         			    labels: labels,
         			    datasets: [{
+        			    	label : '상품별 매출',
         			        data: datas,
-        			        backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 
+        			        backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 
+        			        	'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 
         			        	'rgb(153, 102, 255)', 'rgba(54, 162, 235, 0.5)',
                                 'rgba(255, 206, 86, 0.5)',
                                 'rgba(75, 192, 192, 0.5)',

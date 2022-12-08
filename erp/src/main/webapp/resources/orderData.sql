@@ -159,34 +159,35 @@ insert into m_pricing values('FOD003', 'DR0002', '2022-06-16', '2023-05-27', 110
 insert into order_head values('221203FOD001001', 'FOD001', '221203', 'SAL001', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
 insert into order_item values('221203FOD001001', 'RA0001', 3500, '221203', 856, 3500*856, null);
 
-insert into order_head values('221204CVS002001', 'CVS002', '221204', 'SAL002', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_head values('221204CVS002001', 'CVS002', '221204', 'SAL002', null, '승인', '221203', 'MNG002', 'N');
 insert into order_item values('221204CVS002001', 'RA0002', 1500, '221204', 1003, 1500*1003, null);
 
-insert into order_head values('221204MAT001001', 'MAT001', '221204', 'SAL003', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_head values('221204MAT001001', 'MAT001', '221204', 'SAL003', '승인', '승인', '221203', 'MNG002', 'N');
 insert into order_item values('221204MAT001001', 'SN0006', 1300, '221204', 555, 1300*555, null);
 
-insert into order_head values('221206CVS003001', 'CVS003', '221206', 'SAL004', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_head values('221206CVS003001', 'CVS003', '221206', 'SAL004', null, '승인', '221203', 'MNG002', 'N');
 insert into order_item values('221206CVS003001', 'SN0005', 2000, '221206', 1278, 2000*1278, null);
 
-insert into order_head values('221205CVS004001', 'CVS004', '221205', 'SAL005', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221203', 'MNG002', 'N');
+insert into order_head values('221205CVS004001', 'CVS004', '221205', 'SAL005', '검수 확실히', '승인', '221203', 'MNG002', 'N');
 insert into order_item values('221205CVS004001', 'SN0003', 1700, '221205', 856, 1700*856, null);
 
 
 
 insert into order_head values('221101FOD001001', 'FOD001', '221101', 'SAL001', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221101', 'MNG002', 'N');
 insert into order_item values('221101FOD001001', 'RA0001', 13500, '221101', 856, 13500*856, null);
+insert into order_item values('221101FOD001001', 'SN0001', 23500, '221101', 856, 9000000, null);
 
 insert into order_head values('221001CVS002001', 'CVS002', '221001', 'SAL002', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '221001', 'MNG002', 'N');
-insert into order_item values('221001CVS002001', 'RA0002', 11500, '221101', 1003, 11500*1003, null);
+insert into order_item values('221001CVS002001', 'RA0001', 11500, '221101', 1003, 10000000, null);
 
 insert into order_head values('220901MAT001001', 'MAT001', '220901', 'SAL003', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '220901', 'MNG002', 'N');
-insert into order_item values('220901MAT001001', 'SN0006', 11300, '221101', 555, 11300*555, null);
+insert into order_item values('220901MAT001001', 'SN0002', 11300, '221101', 555, 10000000, null);
 
 insert into order_head values('220801CVS003001', 'CVS003', '220801', 'SAL004', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '220801', 'MNG002', 'N');
-insert into order_item values('220801CVS003001', 'SN0005', 12000, '220801', 1278, 12000*1278, null);
+insert into order_item values('220801CVS003001', 'SN0003', 12000, '220801', 1278, 1680000, null);
 
 insert into order_head values('220701CVS004001', 'CVS004', '220701', 'SAL005', '기간 안에 납품 가능, 납품일 조율 요망', '승인', '220701', 'MNG002', 'N');
-insert into order_item values('220701CVS004001', 'SN0003', 11700, '220701', 856, 11700*856, null);
+insert into order_item values('220701CVS004001', 'SN0004', 11700, '220701', 856, 10000000, null);
 
 
 commit;
