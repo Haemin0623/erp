@@ -230,8 +230,6 @@ public class ErpController {
 			prs.pricingInsert(pricing);
 		}
 		
-
-		
 		
 		return "nolay/logIn";
 	}

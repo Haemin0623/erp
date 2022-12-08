@@ -245,7 +245,6 @@ public class ProductController {
 	public void excelDown( HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
 		
 		List<Product> list = new ArrayList<>();
-		System.out.println("items"+items);
 		Product product = new Product();
 		try {
 			JSONParser p = new JSONParser();
@@ -260,12 +259,10 @@ public class ProductController {
 				
 				JSONObject itemObj = (JSONObject) arr.get(i);
 				String productCd = (String) itemObj.get("productCd");
-				System.out.println(productCd);
 				
 				item.setProductCd(productCd);
 				
 				product = pds.listForExcel(item);
-				System.out.println(product.getAdddate());
 				product.getAdddate();
 				list.add(product);
 			}
@@ -274,7 +271,6 @@ public class ProductController {
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
-			System.out.println("size"+list.size());
 			
 			Workbook wb = new XSSFWorkbook();
 			Sheet sheet = wb.createSheet("주문 현황");
@@ -345,46 +341,44 @@ public class ProductController {
 		        cell = row.createCell(0);
 		        cell.setCellStyle(bodyStyle);
 		        cell.setCellValue(li.getProductCd());
-		        System.out.println(li.getProductCd());
 		        
 			    cell = row.createCell(1);
 			    cell.setCellStyle(bodyStyle);
 			    cell.setCellValue(li.getPname());
-			    System.out.println(li.getPname());
 			    
 			    cell = row.createCell(2);
 			    cell.setCellStyle(bodyStyle);
 			    cell.setCellValue(li.getVolume());
-			    System.out.println(li.getVolume());
 			    
 			    cell = row.createCell(3);
 			    cell.setCellStyle(bodyStyle);
 			    cell.setCellValue(li.getUnit());
-			    System.out.println(li.getUnit());
 			    
 			    cell = row.createCell(4);
 			    cell.setCellStyle(bodyStyle);
 			    cell.setCellValue(li.getCategory());
-			    System.out.println(li.getCategory());
 			    
 			    cell = row.createCell(5);
 			    cell.setCellStyle(bodyStyle);
-			    cell.setCellValue(li.getAdddate());
-			    System.out.println(li.getAdddate());
+			    cell.setCellValue(li.getAdddate().toString());
 			    
 			    
 			    cell = row.createCell(6);
 			    cell.setCellStyle(bodyStyle);
-			    cell.setCellValue(li.getStatusdate());
-			    System.out.println(li.getStatusdate());
-			    
+			    cell.setCellStyle(bodyStyle);
+				if (li.getStatusdate() != null) {
+					cell.setCellValue(li.getStatusdate().toString());
+				}else {
+					cell.setCellValue(li.getStatusdate());
+					
+				}
 			    cell = row.createCell(7);
 			    cell.setCellStyle(bodyStyle);
 			    cell.setCellValue(li.getDel());
 		    }
 		    response.setContentType("ms-vnd/excel");
 		    response.setHeader("Content-Disposition", "attachment;filename=order.xlsx");
-		    
+		     
 		    // 엑셀 출력
 		    try {
 	            wb.write(response.getOutputStream());

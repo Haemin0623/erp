@@ -2,21 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ include file="../layoutElement/taglib.jsp"%>
-    
-    
-    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
-<!-- <script type="text/javascript"> -->
-<!--  	var J300 =  $.noConflict(true);	 -->
-<!-- </script> -->
-
-
 </head>
 <body>
 <div id="container">
@@ -88,7 +78,7 @@
 						</div>
 					</div>
 					<div class="search-sub-div">
-						<div class="search-item-text">상품카테고리</div>
+						<div class="search-item-text">카테고리</div>
 						<select name="category" class="category sumo">
 							<option value=""></option>
 								<option value="스낵">스낵</option>
@@ -106,15 +96,14 @@
 				<button id="searchBtn">검색</button>
 				<button id="initBtn">초기화</button>
 			</div>
-	</div>
-	
+		</div>
 
-	<span id="CCD">
-		<button id="show" class="btn">등록</button>
-		<button type="button" onclick="deleteAction()" class="btn">삭제</button>
-		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
-	</span>	
-	<div id="productList">
+	<div id="button-div">
+		<button id="show">상품등록  </button>
+		<button type="button" onclick="deleteAction()">삭제</button>
+		<button id="excelBtn">Excel</button>
+	
+	<div id="page">
 		<form name="page" >
 			<span>
 				<select id="listview">
@@ -156,10 +145,10 @@
 			</span>
 		</form>
 	</div>
+	</div>
 	<div class="table">
-	<form action="">
 		<table class="list">
-			<tr class="haeder">
+			<tr >
 				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll" ></th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
 				<th class="fixed" id="sortPname">상품명</th>
@@ -191,7 +180,6 @@
 			</tr>
 			</c:forEach> 
 		</table>
-	</form>
 	</div>
 	
 	<div id="pageBtn" >
@@ -215,11 +203,12 @@
 						<caption>상품 등록</caption>
 							<tr>
 								<td>카테고리<select name="category" class="sumo" id="codeMix" autofocus="autofocus">
-									<option value=""></option>
-									<option value="라면">라면</option>
-									<option value="스낵">스낵</option>
-									<option value="음료">음료</option>
-								</select></td>
+										<option value="">선택</option>
+										<option value="라면">라면</option>
+										<option value="스낵">스낵</option>
+										<option value="음료">음료</option>
+									</select>
+								</td>
 								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
@@ -231,8 +220,10 @@
 							</tr>
 					</table>
 				</form>
-				<button id="addItem">등록</button>
-
+				<div class="insert-btn">
+					<button id="addItem">등록</button>
+					<button id="close">닫기</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -310,7 +301,6 @@
 		    success : function(data){
 		    	console.log(data);
 		    	frm.productCd.value=data;
-		    	frm.th_volume.value=data;
 		    }
 	  	});
 	};
