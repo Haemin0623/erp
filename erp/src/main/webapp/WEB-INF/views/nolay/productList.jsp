@@ -42,56 +42,54 @@
 							</c:forEach>
 						</select>
 					</div>
-					<div class="search-item-div">
-						<div class="search-item-text">용량</div>
-						<select name="volume" class="volume sumo">
-							<option value=""></option>
-							<c:forEach var="item" items="${allList }">
-								<option value="${item.volume }">${item.volume }</option>
-							</c:forEach>
-						</select>
+					<div class="search-item-div" >			
+						<div class="search-item-text" >등록일</div>
+							<input type="date" name="adddate" value="${product.adddate }"> ~ <input type="date" name="adddate2" value="${product.adddate2 }">
 					</div>
-					<div class="search-sub-div">
-						<div class="search-item-div">
-							<div class="search-item-text">활성상태 </div>
-								<select name="del" >
-									<c:if test="${product.del == null }">
-										<option value="null" selected="selected">모두
-									</c:if>
-									<c:if test="${product.del != null }">
-										<option value="null">모두
-									</c:if>
-									<c:if test="${product.del == 'N' }">
-										<option value="N" selected="selected">활성
-									</c:if>
-									<c:if test="${product.del != 'N' }">
-										<option value="N">활성
-									</c:if>
-									<c:if test="${product.del == 'Y' }">
-										<option value="Y" selected="selected">비활성
-									</c:if>
-									<c:if test="${product.del != 'Y' }">
-										<option value="Y">비활성
-									</c:if>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="search-sub-div">
-						<div class="search-item-text">카테고리</div>
+				</div>
+				<div class="search-sub-div">
+					<div class="search-item-text">카테고리</div>
 						<select name="category" class="category sumo">
 							<option value=""></option>
 								<option value="스낵">스낵</option>
 								<option value="라면">라면</option>
 								<option value="음료">음료</option>
 						</select>
-					<div class="search-item-div" >			
-						<div class="search-item-text" >등록일</div>
-							<input type="date" name="adddate" value="${product.adddate }"> ~ <input type="date" name="adddate2" value="${product.adddate2 }">
+						<div class="search-item-div">
+							<div class="search-item-text">용량</div>
+							<select name="volume" class="volume sumo">
+								<option value=""></option>
+								<c:forEach var="item" items="${allList }">
+									<option value="${item.volume }">${item.volume }</option>
+								</c:forEach>
+							</select>
 						</div>
+					<div class="search-item-div">
+						<div class="search-item-text" >활성상태 </div>
+							<select name="del" class="sumo" >
+								<c:if test="${product.del == null }">
+									<option value="null" selected="selected">모두
+								</c:if>
+								<c:if test="${product.del != null }">
+									<option value="null">모두
+								</c:if>
+								<c:if test="${product.del == 'N' }">
+									<option value="N" selected="selected">활성
+								</c:if>
+								<c:if test="${product.del != 'N' }">
+									<option value="N">활성
+								</c:if>
+								<c:if test="${product.del == 'Y' }">
+									<option value="Y" selected="selected">비활성
+								</c:if>
+								<c:if test="${product.del != 'Y' }">
+									<option value="Y">비활성
+								</c:if>
+							</select>
+						</div>
+					
+					</form></div>
 				</div>
-			</form>
-			</div>
 			<div class="search-btn">
 				<button id="searchBtn">검색</button>
 				<button id="initBtn">초기화</button>
@@ -99,9 +97,9 @@
 		</div>
 
 	<div id="button-div">
-		<button id="show">상품등록  </button>
-		<button type="button" onclick="deleteAction()">삭제</button>
-		<button id="excelBtn">Excel</button>
+		<button id="show" class="btn">상품등록  </button>
+		<button type="button" onclick="deleteAction()" class="btn">삭제</button>
+		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 	
 	<div id="page">
 		<form name="page" >
@@ -222,7 +220,6 @@
 				</form>
 				<div class="insert-btn">
 					<button id="addItem">등록</button>
-					<button id="close">닫기</button>
 				</div>
 			</div>
 		</div>

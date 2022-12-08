@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.OrderHead;
 import com.so.erp.model.PagingBean;
 import com.so.erp.model.Product;
 import com.so.erp.service.ProductService;
@@ -49,13 +48,13 @@ public class ProductController {
 		}else rowPerPage = Integer.parseInt(page);
 		if (pageNum == null || pageNum.equals("")) pageNum = "1";
 		int currentPage = Integer.parseInt(pageNum);
+		product.setDel("N");
 		int total = pds.getTotal(pagingBean,product);
 		int startRow = (currentPage - 1) * rowPerPage + 1;
 		int endRow = startRow + rowPerPage - 1;
 		int num = total - startRow + 1;
 		pagingBean.setStartRow(startRow);
 		pagingBean.setEndRow(endRow);
-		
 		product.setSortAddDate(1);
 		product.setSortCategory(0);
 		product.setSortDel(0);
@@ -64,7 +63,7 @@ public class ProductController {
 		product.setSortUnit(0);
 		product.setSortStatusDate(0);
 		product.setSortVolume(0);
-		product.setDel("N");
+		
 		List<Product> productList = pds.productList(pagingBean,product);
 		List<Product> allList = pds.allList();
 		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);
