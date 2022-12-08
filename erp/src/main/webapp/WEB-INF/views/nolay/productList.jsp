@@ -64,7 +64,6 @@
 								</c:forEach>
 							</select>
 						</div>
-						
 					<div class="search-item-div">
 						<div class="search-item-text" >활성상태 </div>
 							<select name="del" class="sumo" >
@@ -101,7 +100,6 @@
 		<button id="show" class="btn">상품등록  </button>
 		<button type="button" onclick="deleteAction()" class="btn">삭제</button>
 		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
-	
 	<div id="page">
 		<form name="page" >
 			<span>
