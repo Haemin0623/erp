@@ -159,7 +159,7 @@
     		select * from m_product where product_cd = #{productCd}
     	</select>
     	
-    	<select id="updateselect" parameterType="product" resultType="integer">
+    	<select id="updateselect" parameterType="product" resultType="product">
     		select * from m_product where pname= #{pname} and volume = #{volume} and unit = #{unit} and category = #{category}
     	</select>
     </mapper>

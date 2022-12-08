@@ -40,7 +40,7 @@ public class ErpController {
 	@RequestMapping("hello")
 	public String hello() {
 		
-		return "page/logIn";
+		return "nolay/logIn";
 	}
 	
 	@RequestMapping("main")
@@ -209,7 +209,7 @@ public class ErpController {
 		}
 		
 		
-		return "page/logIn";
+		return "nolay/logIn";
 	}
 
 	
