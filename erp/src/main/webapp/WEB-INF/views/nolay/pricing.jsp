@@ -134,7 +134,7 @@ function changeContent(data) {
 		<c:if test="${pricing.del == 'Y'}">
 			<button type="button" onclick="restoreAction()">복원</button>
 		</c:if>
-		<button id="excelBtn">Excel</button>
+		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 	
 		<div id="page">
 			<form name="itemLimit">

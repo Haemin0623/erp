@@ -34,7 +34,7 @@ public class ErpController {
 	private OrderItemService is;
 	@Autowired
 	private BuyerService bs;
-
+	@Autowired
 	private PricingService prs;
 	
 	@RequestMapping("hello")
