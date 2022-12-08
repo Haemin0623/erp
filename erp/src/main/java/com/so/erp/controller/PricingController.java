@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.so.erp.model.OrderHead;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
 import com.so.erp.service.PricingService;
@@ -228,15 +227,12 @@ public class PricingController {
 		boolean result = false;
 		
 		try {
-			System.out.println(12);
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(items);
 			JSONArray arr = JSONArray.fromObject(obj);
 			
 			Pricing pricing = new Pricing(); 
-			System.out.println(222);
 			for (int i = 0; i < arr.size(); i++) {
-				System.out.println(333);
 				JSONObject itemObj = (JSONObject) arr.get(i);
 
 				String buyerCd = (String) itemObj.get("buyerCd");
@@ -258,17 +254,14 @@ public class PricingController {
 				pricing.setDiscountrate(discountrate);
 				
 				
-				System.out.println("전");
 				prs.pricingInsert(pricing);
 				result = true;
 			}
 		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			System.out.println(13);
 			result = false;
 		}
-		System.out.println(14);
 		return result;
 	}
 	
@@ -284,11 +277,9 @@ public class PricingController {
 	@RequestMapping("pricingUpdate")
 	@ResponseBody
 	public int pricingUpdate(Pricing pricing) {
-		System.out.println(pricing);
 		int result = 0;
 		
 		result = prs.pricingUpdate(pricing);
-		System.out.println(result);
 		return result;
 	}
 	
@@ -315,7 +306,6 @@ public class PricingController {
 	@RequestMapping("getPricingProductList")
 	@ResponseBody
 	public String[] getPricingProductList(String buyerCd) {
-		System.out.println(buyerCd);
 		
 		List<Product> list = prs.getProductList(buyerCd);
 		String[] productList = new String[list.size()];
@@ -327,10 +317,6 @@ public class PricingController {
 			productList[i] = code;
 			i++;
 		}
-		
-		System.out.println(Arrays.toString(productList));
-		
-		
 		return productList;
 	}
 	
@@ -339,7 +325,6 @@ public class PricingController {
 		@RequestMapping("pricingExcelDown")
 		@ResponseBody
 		public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="pricings")String pricings) throws IOException {
-		System.out.println("시작");
 		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
 		// 출력할 주문리스트
 		List<Pricing> list = new ArrayList<>();
@@ -351,8 +336,6 @@ public class PricingController {
 			Object obj = p.parse(pricings);
 			JSONArray arr = JSONArray.fromObject(obj);
 			
-			System.out.println("1");
-			
 			Pricing pricing = new Pricing();
 			
 			for (int i = 0; i < arr.size(); i++) {
@@ -362,9 +345,7 @@ public class PricingController {
 				String productCd = (String) itemObj.get("productCd");
 				
 				String start = (String) itemObj.get("startdate");
-				System.out.println(start);
 				Date sdate = Date.valueOf(start);
-				System.out.println(sdate);
 				String end = (String) itemObj.get("enddate");
 				Date edate = Date.valueOf(end);
 				
@@ -373,9 +354,7 @@ public class PricingController {
 				pricing.setStartdate(sdate);
 				pricing.setEnddate(edate);
 				
-				System.out.println("sql전");
 				pricingRow = prs.listForExcel(pricing);
-				System.out.println("sql후");
 				list.add(pricingRow);
 			}
 			
@@ -383,13 +362,6 @@ public class PricingController {
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
-		System.out.println("size"+list.size());
-	
-		
-		
-			
 		
 		
 		// 워크북 생성
@@ -475,47 +447,38 @@ public class PricingController {
 	        cell = row.createCell(0);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getBuyerCd());
-	        System.out.println(li.getBuyerCd());
 	
 	        cell = row.createCell(1);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getProductCd());
-	        System.out.println(li.getProductCd());
 		    
 		    cell = row.createCell(2);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getPrice());
-		    System.out.println(li.getPrice());
 		    
 		    cell = row.createCell(3);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getStartdate().toString());
-		    System.out.println(li.getStartdate().toString());
 		    
 		    cell = row.createCell(4);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getEnddate().toString());
-		    System.out.println(li.getEnddate().toString());
 		    
 		    cell = row.createCell(5);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getDiscountrate());
-		    System.out.println(li.getDiscountrate());
 		    
 		    cell = row.createCell(6);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getPrice() * (1 - (li.getDiscountrate()/100)));
-		    System.out.println(li.getPrice() * (1 - (li.getDiscountrate()/100)));
 		    
 		    cell = row.createCell(7);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getCurrency());
-		    System.out.println(li.getCurrency());
 		    
 		    cell = row.createCell(8);
 		    cell.setCellStyle(bodyStyle);
 		    cell.setCellValue(li.getAdddate().toString());
-		    System.out.println(li.getAdddate().toString());
 		    
 		    cell = row.createCell(9);
 		    cell.setCellStyle(bodyStyle);
