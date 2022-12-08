@@ -161,28 +161,38 @@
 	<!-- 등록 창 팝업 -->
 	<div class="background">
 		<div class="window">
-			<div class="popup">
-			
+			<div class="popup" align="center">
 				<button id="close">X</button>
-				
 				<form action="" name="frm">
+				<br><h1> 직원등록 </h1><br>
 					<table id="insert-form">
 						<tr>
-							<td>직원코드<input type="text" name="employeeCd" class="readonly" readonly="readonly"></td>
-							<td>암호<input type="password" name="password"></td>
+							<th>직원코드</th>
+							<td><input type="text" name="employeeCd" class="readonly" readonly="readonly"></td>
 						</tr>
 						<tr>
-							<td>직원명<input type="text" name="ename"></td>
-							<td>승인권한
-								<select name="authority">
+							<th>암호</th>
+							<td><input type="password" name="password"></td>
+						</tr>
+						<tr>
+							<th>직원명</th>
+							<td><input type="text" name="ename"></td>
+						</tr>
+						<tr>
+							<th>승인권한</th>
+							<td>
+								<select name="authority" class="sumo">
+									<option value=""></option>
 									<option value="N">없음</option>
 									<option value="Y">있음</option>
 								</select>
 							</td>
 						</tr>
 						<tr>
-							<td>직책
-								<select name="job">
+							<th>직책</th>
+							<td>
+								<select name="job" class="sumo">
+									<option value=""></option>
 									<option>사원
 									<option>대리									
 									<option>과장									
@@ -190,8 +200,12 @@
 									<option>부장									
 								</select>
 							</td>
-							<td>부서
-								<select name="department" id="department">
+						</tr>
+						<tr>
+							<th>부서</th>
+							<td>
+								<select name="department" class="sumo" id="department">
+									<option value=""></option>
 									<option value="영업">영업</option>
 									<option value="관리">관리									
 								</select>
@@ -707,6 +721,24 @@ function restoreAction(){
 	document.querySelector("#excelBtn").addEventListener("click", excel);
 	
 	
+</script>
+
+<!-- 스모셀렉트 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sumo').SumoSelect({
+		search: true,
+		searchText: '검색어 입력',
+	});
+	$('select.authority')[0].sumo.selectItem("${buyer.authority }");
+	
+	$('select.job')[0].sumo.selectItem("${buyer.job }");
+	
+	$('select.department')[0].sumo.selectItem("${buyer.department }");
+	
+
+	
+});
 </script>
 
 </html>

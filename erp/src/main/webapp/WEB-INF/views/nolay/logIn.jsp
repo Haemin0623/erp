@@ -166,7 +166,7 @@
 	
 	<div class="background show">
 		<div class="window">
-			<div class="popup">
+			<div class="popup" align="center">
 				<div class="login-form">
 					<form action="login.do" method="post">
 						<table>

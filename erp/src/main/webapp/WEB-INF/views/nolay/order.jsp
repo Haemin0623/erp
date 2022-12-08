@@ -225,18 +225,20 @@
 	<!-- 등록 창 팝업 -->
 	<div class="background">
 		<div class="window">
-			<div class="popup">
-			
+			<div class="popup" align="center">
 				<button id="close">X</button>
-				
 				<form action="" name="frm">
+				<br><h1> 주문등록 </h1><br>
 					<table id="insert-form">
 						<tr>
-							<td>주문번호<input type="text" name="orderNo" class="readonly" readonly="readonly"></td>
-							<td>발주일<input type="date" id="orderdate" name="orderdate"></td>
+							<th>주문번호</th>
+							<td><input type="text" name="orderNo" class="readonly" readonly="readonly"></td>
+							<th>발주일</th>
+							<td><input type="date" id="orderdate" name="orderdate"></td>
 						</tr>
 						<tr>
-							<td>고객코드
+							<th>고객코드</th>
+							<td>
 								<select name="buyerCd" class="sumo" id="buyerCd">
 									<option value=""></option>
 									<c:forEach var="buyer" items="${buyerEx }">
@@ -244,21 +246,26 @@
 									</c:forEach>
 								</select>
 							</td>
-							<td>상품코드
+							<th>상품코드</th>
+							<td>
 								<select name="productCd" class="sumo" id="productCd">
 									<option value=""></option>
 								</select>
 							</td>
 						</tr>
 						<tr>
-							<td>수량<input type="number" name="requestqty"></td>
-							<td>판매가<input type="number" name="price"></td>
+							<th>수량</th>
+							<td><input type="number" name="requestqty"></td>
+							<th>판매가</th>
+							<td><input type="number" name="price"></td>
 						</tr>
 						<tr>
-							<td colspan="2">납품요청일<input type="date" name="requestdate"></td>
+							<th>납품요청일</th>
+							<td colspan="3"><input type="date" name="requestdate"></td>
 						</tr>
 						<tr>
-							<td colspan="2">비고<textarea rows="5" cols="40" name="remark"></textarea></td>
+							<th>비고</th>
+							<td colspan="3"><textarea rows="5" cols="40" name="remark"></textarea></td>
 						</tr>
 					</table>
 				</form>

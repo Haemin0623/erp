@@ -220,38 +220,59 @@ function changeContent(data) {
 	<!-- 등록 창 팝업 -->
 	<div class="background">
 		<div class="window">
-			<div class="popup">
+			<div class="popup" align="center">
 				<button id="close">X</button>
 				<div class="writeForm">
-				
 				<form action="" name="pricing">
-					고객코드
-					<select name="buyerCd" class="keyword sumo sumoBuy">
-						<option value="All"></option>
-						<c:forEach var="pricing" items="${pricingList }">
-							<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
-						</c:forEach>
-					</select><br><br>
-					상품코드
-					<select name="productCd" class="keyword sumo sumoProd">
-						<option value="All"></option>
-						<c:forEach var="pricing" items="${pricingList }">
-							<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
-						</c:forEach>
-					</select><br><br>
-					판매가<input type="number" name="price"><br><br>
-					할인율<input type="number" name="discountrate"><br><br>
-					계약시작일<input type="date" name="startdate">
-					계약종료일<input type="date" name="enddate"><br><br>
-					통화단위
-					<select name="currency">
-						<option>선택</option>
-						<option value="원(₩)">원(₩)</option>
-						<option value="달러($)">달러($)</option>
-						<option value="앤(¥)">앤(¥)</option>
-						<option value="위안(元)">위안(元)</option>
-					</select><br><br>
+				<br><h1> 판매가 등록 </h1><br>
+				<table>
+					<tr>
+						<th>고객코드</th>
+						<td>	
+							<select name="buyerCd" class="keyword sumo sumoBuy">
+								<option value="All"></option>
+								<c:forEach var="pricing" items="${pricingList }">
+									<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+								</c:forEach>
+							</select>
+						</td>
+						<th>상품코드</th>
+						<td>
+							<select name="productCd" class="keyword sumo sumoProd">
+								<option value="All"></option>
+								<c:forEach var="pricing" items="${pricingList }">
+									<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>판매가</th>
+						<td><input type="number" name="price"></td>
+						<th>할인율</th>
+						<td><input type="number" name="discountrate"></td>
+					</tr>
+					<tr>
+						<th>계약시작일</th>
+						<td><input type="date" name="startdate"></td>
+						<th>계약종료일</th>
+						<td><input type="date" name="enddate"></td>
+					</tr>
+					<tr>
+						<th>통화단위</th>
+						<td colspan="3">
+							<select name="currency" class="sumo">
+								<option value=""></option>
+								<option value="원(₩)">원(₩)</option>
+								<option value="달러($)">달러($)</option>
+								<option value="앤(¥)">앤(¥)</option>
+								<option value="위안(元)">위안(元)</option>
+							</select>
+						</td>
+					</tr>
+				</table>	
 				</form>
+				
 				<div class="insert-btn">
 					<button id="addItem">추가</button>
 				</div>

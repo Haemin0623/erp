@@ -194,27 +194,37 @@
 
 	<div class="background">
 		<div class="window">
-			<div class="popup">
+			<div class="popup" align="center">
 				<button id="close">X</button>
 				<form action="" name="frm">
+					
+					<br><h1>상품등록</h1><br>
 					<table id="insert-form">
-						<caption>상품 등록</caption>
 							<tr>
-								<td>카테고리<select name="category" class="sumo" id="codeMix" autofocus="autofocus">
-										<option value="">선택</option>
+								<th>카테고리</th>
+								<td>
+									<select name="category" class="sumo" id="codeMix" autofocus="autofocus">
+										<option value=""></option>
 										<option value="라면">라면</option>
 										<option value="스낵">스낵</option>
 										<option value="음료">음료</option>
 									</select>
 								</td>
-								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
+							<tr>
+								<th>상품코드</th>
+								<td><input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
-								<td>상품명<input type="text" name="pname" required="required"></td>
-								<td>용량<input type="text" name="volume" required="required"></td>
+								<th>상품명</th>
+								<td><input type="text" name="pname" required="required"></td>
 							</tr>
 							<tr>
-								<td>단위<input type="text" name="unit" required="required"></td>
+								<th>용량</th>
+								<td><input type="text" name="volume" required="required"></td>
+							</tr>
+							<tr>
+								<th>단위</th>
+								<td><input type="text" name="unit" required="required"></td>
 							</tr>
 					</table>
 				</form>

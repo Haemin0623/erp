@@ -251,7 +251,7 @@
 			<div class="popup" align="center">
 				<button id="close">X</button>	
 				<form action="" name="frm">
-				<h1> 고객등록 </h1>
+				<br><h1> 고객등록 </h1><br>
 				<table> 
 					<tr> 
 						<th>고객카테고리</th>
