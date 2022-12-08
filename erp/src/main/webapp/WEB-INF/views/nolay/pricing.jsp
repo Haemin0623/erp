@@ -200,11 +200,11 @@ function changeContent(data) {
 							</c:if>
 						</td>
 						<td>${status.count }</td>
-						<td>${pricing.buyerCd }</td>
-						<td>${pricing.productCd }</td>
+						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }</td>
+						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }</td>
 						<td class="editable"><fmt:formatNumber value="${pricing.price }" pattern="#,###.##"/></td>
-						<td>${pricing.startdate }</td>
-						<td>${pricing.enddate }</td>
+						<td><input type="hidden" value="${pricing.startdate }">${pricing.startdate }</td>
+						<td><input type="hidden" value="${pricing.enddate }">${pricing.enddate }</td>
 						<td class="editable">${pricing.discountrate }</td>
 						<td><fmt:formatNumber value="${pricing.finalPrice }" pattern="#,###"/></td>
 						<td class="editable">${pricing.currency }</td>
@@ -840,14 +840,14 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 		
 		let checkRow = new Array();
 		
-		$( ".excel:checked" ).each (function (){
+		$( "input[name='checkRow']:checked" ).each (function (){
 			 let thisRow = $(this).closest('tr');
 			  
 			 const pricing = {
-				buyerCd : thisRow.find('td:eq(1)').find('input').val(),
-				productCd : thisRow.find('td:eq(2)').find('input').val(),
-				startdate : thisRow.find('td:eq(4)').find('input').val(),
-				enddate : thisRow.find('td:eq(5)').find('input').val()
+				buyerCd : thisRow.find('td:eq(2)').find('input').val(),
+				productCd : thisRow.find('td:eq(3)').find('input').val(),
+				startdate : thisRow.find('td:eq(5)').find('input').val(),
+				enddate : thisRow.find('td:eq(6)').find('input').val()
 			 }
 
 			 checkRow.push(pricing);
@@ -862,7 +862,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 			  method : 'post',
 			  traditional : true,
 			  data : {
-				  items : JSON.stringify(checkRow)
+				  pricings : JSON.stringify(checkRow)
 			  },
 			  xhr: function () {
                   var xhr = new XMLHttpRequest();

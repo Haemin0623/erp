@@ -338,7 +338,7 @@ public class PricingController {
 	
 		@RequestMapping("pricingExcelDown")
 		@ResponseBody
-		public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="items")String items) throws IOException {
+		public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="pricings")String pricings) throws IOException {
 		System.out.println("시작");
 		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
 		// 출력할 주문리스트
@@ -348,7 +348,7 @@ public class PricingController {
 	
 		try {
 			JSONParser p = new JSONParser();
-			Object obj = p.parse(items);
+			Object obj = p.parse(pricings);
 			JSONArray arr = JSONArray.fromObject(obj);
 			
 			System.out.println("1");
@@ -360,15 +360,18 @@ public class PricingController {
 				JSONObject itemObj = (JSONObject) arr.get(i);
 				String buyerCd = (String) itemObj.get("buyerCd");
 				String productCd = (String) itemObj.get("productCd");
+				
 				String start = (String) itemObj.get("startdate");
-				Date startdate = Date.valueOf(start);
+				System.out.println(start);
+				Date sdate = Date.valueOf(start);
+				System.out.println(sdate);
 				String end = (String) itemObj.get("enddate");
-				Date enddate = Date.valueOf(end);
+				Date edate = Date.valueOf(end);
 				
 				pricing.setBuyerCd(buyerCd);
 				pricing.setProductCd(productCd);
-				pricing.setStartdate(startdate);
-				pricing.setEnddate(enddate);
+				pricing.setStartdate(sdate);
+				pricing.setEnddate(edate);
 				
 				System.out.println("sql전");
 				pricingRow = prs.listForExcel(pricing);
@@ -501,8 +504,8 @@ public class PricingController {
 		    
 		    cell = row.createCell(6);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getPrice() * (1 - ((double)li.getDiscountrate()/100)));
-		    System.out.println(li.getPrice() * (1 - ((double)li.getDiscountrate()/100)));
+		    cell.setCellValue(li.getPrice() * (1 - (li.getDiscountrate()/100)));
+		    System.out.println(li.getPrice() * (1 - (li.getDiscountrate()/100)));
 		    
 		    cell = row.createCell(7);
 		    cell.setCellStyle(bodyStyle);
@@ -516,8 +519,11 @@ public class PricingController {
 		    
 		    cell = row.createCell(9);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getStatusdate().toString());
-		    System.out.println(li.getStatusdate().toString());
+		    if (li.getStatusdate() != null) {
+		    	cell.setCellValue(li.getStatusdate().toString());
+			}else {
+				cell.setCellValue(li.getStatusdate());
+			}
 	
 	    }
 	
