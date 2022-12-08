@@ -181,8 +181,8 @@
 		</div>
 		
 		<!-- 고객리스트 & 수정가능한 테이블 -->
-		<div class="table">
-	<!-- 	<form action="" name="bt"> -->
+		<div class="table" style="height: 600px;">
+		<form action="" name="bt">
 			<table class="list" >
 				<tr>
 					<th class="fixed">
@@ -225,7 +225,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-	<!-- 	</form> -->
+		</form>
 		</div>
 	
 		<div id="pageBtn">
@@ -246,19 +246,32 @@
 	<!-- 	등록 창 팝업 -->
 	<div class="background">
 		<div class="window">
-			<div class="popup">
-				<button id="close">취소</button>	
+			<div class="popup" align="center">
+				<button id="close">X</button>	
 				<form action="" name="frm">
 				<h1> 고객등록 </h1>
 				<table> 
+					<tr> 
+						<th>고객카테고리</th>
+						<td>
+							<select name="buyerCategory" class="sumo" id="autoCompleteCd" autofocus="autofocus">
+								<option value=""></option>
+								<option value="FOD">식품회사</option>
+								<option value="MAT">마트</option>
+								<option value="CVS">편의점</option>
+								<option value="ETC">기타</option>
+							</select>
+						</td>
 					<tr>
 						<th>고객코드</th>
-						<td><input type="text" name="buyerCd"><button id="dupChk">중복체크</button></td>
-						<div id="buyerCdChk-msg"></div>
+						<td><input type="text" disabled="disabled" name="buyerCd"><!-- <button id="dupChk">중복체크</button> --></td>
+<!-- 						<div id="buyerCdChk-msg"></div> -->
 					</tr>
 					<tr>
 						<th>고객명</th>
-						<td><input type="text" name="bname"><button id="dupChk2">중복체크</button></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" name="bname"><button id="dupChk2">중복체크</button>
+						</td>
 						<div id="buyerCdChk-msg"></div>
 					</tr>
 					<tr>
@@ -267,7 +280,7 @@
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td><input type="text" name="tel"></td>
+						<td><input type="text" placeholder="010-****-****" name="tel"></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
@@ -377,6 +390,8 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
 	function close() {
 		document.querySelector(".background").className = "background";
+		search();
+// 		document.location.reload();
 	}
 	document.querySelector("#close").addEventListener("click", close);
 	
@@ -400,9 +415,9 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 		    	console.log(result);
 		        if (result) {
 		        	document.location.reload();
-					alert("입력성공");
+					alert("신규고객 등록완료");
 		        } else {
-		        	alert("실패");
+		        	alert("등록실패");
 		        }
 			}
 	   });
@@ -410,7 +425,30 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
 	document.querySelector("#addBuyerBtn").addEventListener("click", addBuyer); 
 	
-	//엑셀 다운로드
+	function autoCompleteCd() {
+		const categorys = frm.buyerCategory.value;
+		
+		console.log(categorys);
+		
+		$.ajax({
+			url : "autoCompleteCd.do",
+			type : "post",
+			traditional : true,
+			data : {
+				category: categorys
+			},
+			
+			success : function (data) {
+				console.log(data);
+				frm.buyerCd.value = data;
+			}
+		});
+	};
+	
+	document.querySelector("#autoCompleteCd").addEventListener("change",autoCompleteCd);
+	
+	
+	//체크한 리스트만 엑셀 다운로드
 	function excel() {
 			
 			let checkRow = new Array();
@@ -423,10 +461,8 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 						}
 	
 				 checkRow.push(item);
-			
 			});
 			
-			  
 			 console.log(checkRow);
 			 
 			 J300.ajax({
@@ -473,9 +509,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 					console.log("error");
 				} 
 			 });
-			  
 		}
-		
 		document.querySelector("#excelBtn").addEventListener("click", excel);
 	
 	
@@ -501,7 +535,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
                     td.addClass("editable");
                 
                     // 테이블의 Row 클릭시 값 가져오기
-    	            $("#list tr").keypress(function(){    
+    	            $(".list tr").keypress(function(){    
     	
     		            const str = ""
     		            const tdArr = new Array(); // 배열 선언

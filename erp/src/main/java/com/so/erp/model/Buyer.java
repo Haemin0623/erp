@@ -38,6 +38,7 @@ public class Buyer {
 	private int startRow;
 	private int endRow;
 	private String pageNum;
+	private String buyerCategory;
 	
 	public void pagingBean(int currentPage, int rowPerPage, int total) {
 		

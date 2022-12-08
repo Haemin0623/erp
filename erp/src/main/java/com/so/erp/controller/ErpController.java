@@ -230,7 +230,30 @@ public class ErpController {
 		}
 
 		
+<<<<<<< HEAD
 
+=======
+		Buyer buyer = new Buyer();		
+		for (int i = 1; i < 1000; i++) {
+			String number = String.format("%03d", i);
+			buyer.setBuyerCd("TST" + number);
+			buyer.setCountryCd("KR");
+			buyer.setBname("더미" + number);
+			buyer.setManager("더미" + number);
+			buyer.setAddress("서울시 강남구 테헤란로"+number);
+			buyer.setTel("010-1111-2222");
+			buyer.setEmail("test@test.com");
+			
+			String adddate = "2020-12-01";
+			Date date = Date.valueOf(adddate);
+			buyer.setAdddate(date);
+			buyer.setDel("N");
+			buyer.setStatusdate(date);
+			
+			bs.insert(buyer);
+			
+		}
+>>>>>>> cfd9b27 (고객마스터 수정, 등록폼, 자동완성기능)
 		
 		
 		return "nolay/logIn";

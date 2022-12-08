@@ -28,4 +28,6 @@ public interface BuyerService {
 
 	Buyer listForExcel(Buyer item);
 
+	String selectCode(String autoCompleteCd);
+
 }

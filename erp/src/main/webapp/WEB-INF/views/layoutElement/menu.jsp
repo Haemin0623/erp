@@ -91,7 +91,7 @@
 	<h6 class="text-member">
 		<c:if test="${sessionScope.employeeCd != null }">
 			${sessionScope.employeeCd }(${sessionScope.ename })
-			<a href="logout.do">로그 아웃</a>
+			<a href="logout.do">로그아웃</a>
 		</c:if>
 	</h6>
 	<hr class="line">

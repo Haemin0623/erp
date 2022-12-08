@@ -67,4 +67,9 @@ public class BuyerDaoImpl implements BuyerDao {
 	public Buyer listForExcel(Buyer item) {
 		return sst.selectOne("buyerns.listForExcel", item);
 	}
+
+	@Override
+	public String selectCode(String autoCompleteCd) {
+		return sst.selectOne("buyerns.selectCode",autoCompleteCd);
+	}
 }

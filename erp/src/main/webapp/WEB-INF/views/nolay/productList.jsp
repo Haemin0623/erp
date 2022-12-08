@@ -10,14 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<<<<<<< HEAD
-=======
+
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
 <!-- <script type="text/javascript"> -->
 <!--  	var J300 =  $.noConflict(true);	 -->
 <!-- </script> -->
 
->>>>>>> 5e080b3 (css 수정)
+
 </head>
 <body>
 <div id="container">
@@ -210,10 +209,12 @@
 	<div class="background">
 		<div class="window">
 			<div class="popup">
+				<button id="close">X</button>
 				<form action="" name="frm">
 					<table id="insert-form">
 						<caption>상품 등록</caption>
 							<tr>
+<<<<<<< HEAD
 								<td>카테고리<select name="category" id="codeMix" autofocus="autofocus">
 										<option value="">선택</option>
 										<option value="라면">라면</option>
@@ -221,6 +222,15 @@
 										<option value="음료">음료</option>
 									</select>
 								</td>
+=======
+								<td>카테고리<select name="category" class="sumo" id="codeMix" autofocus="autofocus">
+									<option value=""></option>
+									<option value="라면">라면</option>
+									<option value="스낵">스낵</option>
+									<option value="음료">음료</option>
+								</select></td>
+							
+>>>>>>> cfd9b27 (고객마스터 수정, 등록폼, 자동완성기능)
 								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
@@ -232,8 +242,12 @@
 							</tr>
 					</table>
 				</form>
+<<<<<<< HEAD
 				<button id="addItem">등록</button>
 				<button id="close">닫기</button>
+=======
+				<button id="addItem">추가</button>
+>>>>>>> cfd9b27 (고객마스터 수정, 등록폼, 자동완성기능)
 			</div>
 		</div>
 	</div>

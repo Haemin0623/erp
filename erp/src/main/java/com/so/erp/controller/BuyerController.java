@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
-import com.so.erp.model.OrderHead;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
 
@@ -87,19 +86,19 @@ public class BuyerController {
 		
 	}
 	
-	//고객코드 중복검사
-	@RequestMapping(value = "dupChk", produces = "text/html;charset=utf-8")
-	@ResponseBody //jsp로 가지말고 바로 본문을 전달
-	public String dupChk(String buyerCd, Model model) {
-		String msg = "";
-		Buyer buyer = bs.select(buyerCd);
-		if(buyer == null) {
-			msg = "※사용 가능한 고객코드";
-		}else {
-			msg = "※이미 사용중인 고객코드";
-		}
-		return msg;
-	}
+//	//고객코드 중복검사
+//	@RequestMapping(value = "dupChk", produces = "text/html;charset=utf-8")
+//	@ResponseBody //jsp로 가지말고 바로 본문을 전달
+//	public String dupChk(String buyerCd, Model model) {
+//		String msg = "";
+//		Buyer buyer = bs.select(buyerCd);
+//		if(buyer == null) {
+//			msg = "※ 사용 가능한 고객코드";
+//		}else {
+//			msg = "※ 이미 사용중인 고객코드";
+//		}
+//		return msg;
+//	}
 	
 	//고객코드 중복검사
 	@RequestMapping(value = "dupChk2", produces = "text/html;charset=utf-8")
@@ -108,9 +107,9 @@ public class BuyerController {
 		String msg = "";
 		Buyer buyer = bs.select(bname);
 		if(buyer == null) {
-			msg = "※사용 가능한 고객명";
+			msg = "※ 사용 가능한 고객명";
 		}else {
-			msg = "※이미 사용중인 고객명";
+			msg = "※ 이미 사용중인 고객명";
 		}
 		return msg;
 	}
@@ -130,12 +129,35 @@ public class BuyerController {
 			check=false;
 		}
 		return check;
-		
 	}
+	
+	@RequestMapping("autoCompleteCd")
+	@ResponseBody
+	//보내준 category라는 파라미터 값을 autoCompleteCd 라고 전달받아줘(파라미터 맵핑)
+	public String autoCompleteCd(@RequestParam(name="category") String autoCompleteCd) throws ParseException {
+		String code1 = "";
+		String code2 = "";
+		if(autoCompleteCd.equals("FOD")) {
+			code1 = "FOD";
+			code2 = bs.selectCode(autoCompleteCd);
+		} else if(autoCompleteCd.equals("MAT")) {
+			code1 = "MAT";
+			code2 = bs.selectCode(autoCompleteCd);
+		} else if(autoCompleteCd.equals("CVS")) {
+			code1 = "CVS";
+			code2 = bs.selectCode(autoCompleteCd);
+		} else {
+			code1 = "ETC";
+			code2 = bs.selectCode(autoCompleteCd);
+		}
+		return code1+code2;
+	}
+	
+	
 	
 	@RequestMapping("buyerDelete")
 	@ResponseBody
-	//보내준 delBuyers라는 파라미터 값을 delBuyers라고 전달받아줘(파라미터 맵핑)
+	//보내준 delBuyer(앞)s라는 파라미터 값을 delBuyers(리스트)라고 전달받아줘(파라미터 맵핑)
 	public int buyerDelete(Model model, @RequestParam(name="delBuyers") List<String> delBuyers) { 
 		int result=0;
 		for(String buyerCd:delBuyers) {
@@ -419,7 +441,7 @@ public class BuyerController {
 
 			cell = row.createCell(8);
 			cell.setCellStyle(bodyStyle);
-			if (getStatusdate() != null) {
+			if (bl.getStatusdate() != null) {
 				cell.setCellValue(bl.getStatusdate().toString());
 			}else {
 				cell.setCellValue(bl.getStatusdate());
@@ -437,9 +459,6 @@ public class BuyerController {
 		}
 	}
 
-	private Object getStatusdate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
 

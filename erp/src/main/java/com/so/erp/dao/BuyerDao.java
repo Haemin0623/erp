@@ -28,5 +28,7 @@ public interface BuyerDao {
 
 	Buyer listForExcel(Buyer item);
 
+	String selectCode(String autoCompleteCd);
+
 
 }

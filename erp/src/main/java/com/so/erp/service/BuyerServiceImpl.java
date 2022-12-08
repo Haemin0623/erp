@@ -68,4 +68,9 @@ public class BuyerServiceImpl implements BuyerService {
 		return bd.listForExcel(item);
 	}
 
+	@Override
+	public String selectCode(String autoCompleteCd) {
+		return bd.selectCode(autoCompleteCd);
+	}
+
 }

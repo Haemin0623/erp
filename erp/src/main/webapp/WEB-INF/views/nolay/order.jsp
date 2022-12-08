@@ -227,7 +227,7 @@
 		<div class="window">
 			<div class="popup">
 			
-				<button id="close">팝업닫기</button>
+				<button id="close">X</button>
 				
 				<form action="" name="frm">
 					<table id="insert-form">

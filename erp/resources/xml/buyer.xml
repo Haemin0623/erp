@@ -193,6 +193,14 @@
 		from	m_buyer
 		where	buyer_cd = #{buyerCd}
 	</select>
+	<!-- LPAD(들어갈 값, 총자릿수(3자리), 나머지는 0으로 채운다) -->
+<!-- 	buyer_Cd에 autoCompleteCd 값을 포함하고 있으면(앞뒤로 어떤값이 들어가도 조회되게) -->
+	<select id="selectCode" parameterType="String" resultType="String"> 
+		select 	LPAD(count(*)+1,3,0) 
+		from 	m_buyer 
+		where 	buyer_Cd 
+		like 	'%' || #{autoCompleteCd} || '%'
+	</select>
 	
 	
 </mapper>
