@@ -86,8 +86,8 @@
 						<div class="search-item-text">활성상태</div>
 						<div class="boxx">
 							<select name="del" class="search">
-								<option value="N">비활성</option>
-								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >활성 </option>
+								<option value="N">활성</option>
+								<option value="Y" <c:if test="${orderHead.del == 'Y'}">selected="selected"</c:if> >비활성 </option>
 								<option value="All" <c:if test="${orderHead.del == 'All'}"> selected="selected" </c:if>>모두</option>
 							</select>
 						</div>
@@ -182,7 +182,7 @@
 							<c:if test="${head.status == '승인'}">
 							</c:if>
 							<c:if test="${head.status == '반려'}">
-								<button onclick="approvalRequest('${head.orderNo }')">재요청</button>
+								<button onclick="location.href='re_Request.do?orderNo=${head.orderNo }'">재요청</button>
 							</c:if>
 						</c:if>
 					</td>

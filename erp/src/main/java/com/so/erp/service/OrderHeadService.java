@@ -32,4 +32,6 @@ public interface OrderHeadService {
 
 	OrderHead listForExcel(OrderHead item);
 
+	OrderHead select(String orderNo);
+
 }

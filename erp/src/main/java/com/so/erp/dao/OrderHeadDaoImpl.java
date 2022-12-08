@@ -80,4 +80,9 @@ public class OrderHeadDaoImpl implements OrderHeadDao {
 	public OrderHead listForExcel(OrderHead item) {
 		return sst.selectOne("headns.listForExcel", item);
 	}
+
+	@Override
+	public OrderHead select(String orderNo) {
+		return sst.selectOne("headns.select", orderNo);
+	}
 }

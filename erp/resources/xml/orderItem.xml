@@ -242,4 +242,27 @@
        		and h.orderdate between '2022.12.01' and '2022.12.31'
        		and me.employee_cd = #{empCd}
 	</select>
+	
+	<select id="select" parameterType="String" resultType="orderItem">
+		select	*
+		from	order_item
+		where	order_no = #{orderNo}
+	</select>
+	
+	<update id="update" parameterType="orderItem">
+		update	order_item
+		set		requestqty = #{requestqty},
+				price = #{price},
+				amount = #{amount},
+				requestdate = #{requestdate},
+				remark = #{remark}
+		where	order_no = #{orderNo}
+			and product_cd = #{productCd}		
+	</update>
+	
+	<delete id="delete" parameterType="orderItem">
+		delete from	order_item
+		where		order_no = #{orderNo}
+			and		product_cd = #{productCd}
+	</delete>
 </mapper>

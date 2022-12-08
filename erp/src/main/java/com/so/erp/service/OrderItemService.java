@@ -31,4 +31,10 @@ public interface OrderItemService {
 
 	int amountByEmp(String empCd);
 
+	List<OrderItem> select(String orderNo);
+
+	void update(OrderItem orderItem);
+
+	void delete(OrderItem orderItem);
+
 }

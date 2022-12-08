@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
 import com.so.erp.model.Employee;
@@ -1129,6 +1130,90 @@ public class OrderController {
         }
 	    
 	    
+	}
+	
+	@RequestMapping("re_Request")
+	public String re_Request(String orderNo, Model model) {
+		
+		OrderHead head = hs.select(orderNo);
+		List<OrderItem> itemList = is.select(orderNo);
+		
+		model.addAttribute("head", head);
+		model.addAttribute("itemList", itemList);
+		
+		return "nolay/updateOrder";
+	}
+	
+	@RequestMapping("requestAgain.do")
+	@ResponseBody
+	public boolean requestAgain(String item) {
+		boolean result = true;
+		
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(item);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			OrderItem orderItem = new OrderItem();
+			
+			for (int i = 0; i < arr.size(); i++) {
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				
+				String orderNo = (String) itemObj.get("orderNo");				
+				orderItem.setOrderNo(orderNo);
+				String productCd = (String) itemObj.get("productCd");				
+				orderItem.setProductCd(productCd);
+				int requestqty = Integer.valueOf((String)(itemObj.get("requestqty")));				
+				orderItem.setRequestqty(requestqty);
+				int price = Integer.valueOf((String)itemObj.get("price"));				
+				orderItem.setPrice(price);
+				String requestdate = (String) itemObj.get("requestdate");
+				Date date = Date.valueOf(requestdate);
+				orderItem.setRequestdate(date);
+				String remark = (String) itemObj.get("remark");				
+				orderItem.setRemark(remark);
+				
+				orderItem.setAmount(price * requestqty);
+				
+				is.update(orderItem);
+				if(i == 0) {
+					hs.approvalRequest(orderNo);
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			result = false;
+		}
+		
+		
+		return result;
+	}
+	
+	@RequestMapping("deleteItem")
+	@ResponseBody
+	public boolean deleteItem(String code) {
+		
+		boolean result = true;
+		
+		try {
+			String[] split = code.split("&");
+			
+			String orderNo = split[0];
+			String productCd = split[1];
+			
+			OrderItem orderItem = new OrderItem();
+			orderItem.setOrderNo(orderNo);
+			orderItem.setProductCd(productCd);
+			
+			is.delete(orderItem);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			result = false;
+		}
+		
+		
+		return result;
 	}
 	
 }

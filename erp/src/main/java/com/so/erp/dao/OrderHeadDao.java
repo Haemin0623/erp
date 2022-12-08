@@ -32,4 +32,6 @@ public interface OrderHeadDao {
 
 	OrderHead listForExcel(OrderHead item);
 
+	OrderHead select(String orderNo);
+
 }

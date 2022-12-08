@@ -81,4 +81,9 @@ public class OrderHeadServiceImpl implements OrderHeadService {
 	public OrderHead listForExcel(OrderHead item) {
 		return head.listForExcel(item);
 	}
+
+	@Override
+	public OrderHead select(String orderNo) {
+		return head.select(orderNo);
+	}
 }

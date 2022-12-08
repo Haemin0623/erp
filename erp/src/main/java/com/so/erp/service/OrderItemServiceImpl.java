@@ -81,4 +81,20 @@ public class OrderItemServiceImpl implements OrderItemService {
 	public int amountByEmp(String empCd) {
 		return id.amountByEmp(empCd);
 	}
+
+	@Override
+	public List<OrderItem> select(String orderNo) {
+		return id.select(orderNo);
+	}
+
+	@Override
+	public void update(OrderItem orderItem) {
+		id.update(orderItem);
+	}
+
+	@Override
+	public void delete(OrderItem orderItem) {
+		id.delete(orderItem);
+		
+	}
 }

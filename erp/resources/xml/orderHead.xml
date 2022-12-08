@@ -319,4 +319,10 @@
 		from	order_head
 		where	order_no = #{orderNo}
 	</select>
+	
+	<select id="select" parameterType="String" resultType="orderHead">
+		select	*
+		from	order_head
+		where	order_no = #{orderNo}
+	</select>
 </mapper>

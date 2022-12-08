@@ -81,4 +81,21 @@ public class OrderItemDaoImpl implements OrderItemDao {
 	public int amountByEmp(String empCd) {
 		return sst.selectOne("itemns.amountByEmp", empCd);
 	}
+
+	@Override
+	public List<OrderItem> select(String orderNo) {
+		return sst.selectList("itemns.select", orderNo);
+	}
+
+	@Override
+	public void update(OrderItem orderItem) {
+		sst.update("itemns.update", orderItem);
+		
+	}
+
+	@Override
+	public void delete(OrderItem orderItem) {
+		sst.delete("itemns.delete", orderItem);
+		
+	}
 }
