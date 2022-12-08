@@ -623,7 +623,6 @@ function restoreAction(){
 
 <script type="text/javascript">
 	$('#department').on("change", function() {
-		alert('!');
 		let count = 0;
 		$.ajax({
 		     method: 'post', 

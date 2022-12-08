@@ -57,8 +57,8 @@ function changeContent(data) {
 						<div class="search-item-text">고객코드</div>
 							<select name="buyerCd" class="keyword sumo sumoBuy">
 								<option value="All"></option>
-								<c:forEach var="pricing" items="${pricingList }">
-									<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+								<c:forEach var="pricing" items="${buyerList }">
+									<option value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname })</option>
 								</c:forEach>
 							</select>
 					</div>
@@ -66,8 +66,8 @@ function changeContent(data) {
 						<div class="search-item-text">상품코드</div>
 							<select name="productCd" class="keyword sumo sumoProd">
 								<option value="All"></option>
-								<c:forEach var="pricing" items="${pricingList }">
-									<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+								<c:forEach var="pricing" items="${productList }">
+									<option value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</option>
 								</c:forEach>
 							</select>
 					</div>
@@ -231,8 +231,8 @@ function changeContent(data) {
 						<td>	
 							<select name="buyerCd" class="keyword sumo sumoBuy">
 								<option value="All"></option>
-								<c:forEach var="pricing" items="${pricingList }">
-									<option value="${pricing.buyerCd }">${pricing.buyerCd }<%-- (${pricing.bname }) --%></option>
+								<c:forEach var="pricing" items="${buyerList }">
+									<option value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname })</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -240,8 +240,8 @@ function changeContent(data) {
 						<td>
 							<select name="productCd" class="keyword sumo sumoProd">
 								<option value="All"></option>
-								<c:forEach var="pricing" items="${pricingList }">
-									<option value="${pricing.productCd }">${pricing.productCd }<%-- (${pricing.pname }) --%></option>
+								<c:forEach var="pricing" items="${productList }">
+									<option value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -395,13 +395,10 @@ function changeContent(data) {
 									"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
 								"</tr>"
 						);
-						pricing.buyerCd.value = '';
-						pricing.productCd.value = '';
 						pricing.price.value = '';
 						pricing.startdate.value = '';
 						pricing.enddate.value = '';
 						pricing.discountrate.value = '';
-						pricing.currency.value = '';
 			        } else {
 			        	alert("계약일이 중복되었습니다");
 			        }

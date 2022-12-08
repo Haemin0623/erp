@@ -27,9 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.so.erp.model.Buyer;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
+import com.so.erp.service.BuyerService;
 import com.so.erp.service.PricingService;
+import com.so.erp.service.ProductService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -39,6 +42,10 @@ public class PricingController {
 
 	@Autowired
 	private PricingService prs;
+	@Autowired
+	private BuyerService bs;
+	@Autowired
+	private ProductService pds;
 	
 	@RequestMapping("pricing")
 	public String pricing(Model model, Pricing pricing) {
@@ -79,7 +86,12 @@ public class PricingController {
 			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
 		}
 		
+		List<Buyer> buyerList = bs.ndlist();
+		List<Product> productList = pds.allList();
+		
 		model.addAttribute("pricingList", pricingList);
+		model.addAttribute("buyerList", buyerList);
+		model.addAttribute("productList", productList);
 		return "nolay/pricing";
 	}
 	
