@@ -1,10 +1,23 @@
 package com.so.erp.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.so.erp.model.OrderHead;
 import com.so.erp.model.Pricing;
 import com.so.erp.model.Product;
 import com.so.erp.service.PricingService;
@@ -318,6 +332,207 @@ public class PricingController {
 		
 		
 		return productList;
+	}
+	
+	
+	
+		@RequestMapping("pricingExcelDown")
+		@ResponseBody
+		public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="items")String items) throws IOException {
+		System.out.println("시작");
+		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
+		// 출력할 주문리스트
+		List<Pricing> list = new ArrayList<>();
+		
+		Pricing pricingRow = new Pricing();
+	
+		try {
+			JSONParser p = new JSONParser();
+			Object obj = p.parse(items);
+			JSONArray arr = JSONArray.fromObject(obj);
+			
+			System.out.println("1");
+			
+			Pricing pricing = new Pricing();
+			
+			for (int i = 0; i < arr.size(); i++) {
+				
+				JSONObject itemObj = (JSONObject) arr.get(i);
+				String buyerCd = (String) itemObj.get("buyerCd");
+				String productCd = (String) itemObj.get("productCd");
+				String start = (String) itemObj.get("startdate");
+				Date startdate = Date.valueOf(start);
+				String end = (String) itemObj.get("enddate");
+				Date enddate = Date.valueOf(end);
+				
+				pricing.setBuyerCd(buyerCd);
+				pricing.setProductCd(productCd);
+				pricing.setStartdate(startdate);
+				pricing.setEnddate(enddate);
+				
+				System.out.println("sql전");
+				pricingRow = prs.listForExcel(pricing);
+				System.out.println("sql후");
+				list.add(pricingRow);
+			}
+			
+			
+		} catch (ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		System.out.println("size"+list.size());
+	
+		
+		
+			
+		
+		
+		// 워크북 생성
+		Workbook wb = new XSSFWorkbook();
+		Sheet sheet = wb.createSheet("판매가 리스트");
+		Row row = null;
+		Cell cell = null;
+		int rowNo = 0;
+		
+		// 테이블 헤더용 스타일
+		CellStyle headStyle = wb.createCellStyle();
+		
+		// 가는 경계선
+		headStyle.setBorderTop(BorderStyle.THIN);
+	    headStyle.setBorderBottom(BorderStyle.THIN);
+	    headStyle.setBorderLeft(BorderStyle.THIN);
+	    headStyle.setBorderRight(BorderStyle.THIN);
+	
+	    // 배경색 노란색
+	    headStyle.setFillForegroundColor(HSSFColorPredefined.YELLOW.getIndex());
+	    headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    
+	    // 데이터 가운데 정렬
+	    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	    
+	    // 데이터용 경계 스타일 테두리만 지정
+	    CellStyle bodyStyle = wb.createCellStyle();
+	    bodyStyle.setBorderTop(BorderStyle.THIN);
+	    bodyStyle.setBorderBottom(BorderStyle.THIN);
+	    bodyStyle.setBorderLeft(BorderStyle.THIN);
+	    bodyStyle.setBorderRight(BorderStyle.THIN);
+	    
+	    // 헤더 생성
+	    row = sheet.createRow(rowNo++);
+	    
+	    cell = row.createCell(0);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("고객코드");
+	    
+	    cell = row.createCell(1);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상품코드");
+	    
+	    cell = row.createCell(2);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("판매가");
+	    
+	    cell = row.createCell(3);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("계약시작일");
+	    
+	    cell = row.createCell(4);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("계약종료일");
+	
+	    cell = row.createCell(5);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("할인율");
+	    
+	    cell = row.createCell(6);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("최종판매가");
+	    
+	    cell = row.createCell(7);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("통화단위");
+	    
+	    cell = row.createCell(8);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("등록일");
+	    
+	    cell = row.createCell(9);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("상태변경일");
+	    
+	    
+	    
+	 // 데이터 부분 생성
+	    for(Pricing li : list) {
+	
+	        row = sheet.createRow(rowNo++);
+	
+	        cell = row.createCell(0);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getBuyerCd());
+	        System.out.println(li.getBuyerCd());
+	
+	        cell = row.createCell(1);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getProductCd());
+	        System.out.println(li.getProductCd());
+		    
+		    cell = row.createCell(2);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getPrice());
+		    System.out.println(li.getPrice());
+		    
+		    cell = row.createCell(3);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStartdate().toString());
+		    System.out.println(li.getStartdate().toString());
+		    
+		    cell = row.createCell(4);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getEnddate().toString());
+		    System.out.println(li.getEnddate().toString());
+		    
+		    cell = row.createCell(5);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getDiscountrate());
+		    System.out.println(li.getDiscountrate());
+		    
+		    cell = row.createCell(6);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getPrice() * (1 - ((double)li.getDiscountrate()/100)));
+		    System.out.println(li.getPrice() * (1 - ((double)li.getDiscountrate()/100)));
+		    
+		    cell = row.createCell(7);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getCurrency());
+		    System.out.println(li.getCurrency());
+		    
+		    cell = row.createCell(8);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getAdddate().toString());
+		    System.out.println(li.getAdddate().toString());
+		    
+		    cell = row.createCell(9);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getStatusdate().toString());
+		    System.out.println(li.getStatusdate().toString());
+	
+	    }
+	
+	    // 컨텐츠 타입과 파일명 지정
+	    response.setContentType("ms-vnd/excel");
+	    response.setHeader("Content-Disposition", "attachment;filename=pricing.xlsx");
+	    
+	    // 엑셀 출력
+	    try {
+	        wb.write(response.getOutputStream());
+	    } finally {
+	        wb.close();
+	    }
+	    
+	    
 	}
 	
 }

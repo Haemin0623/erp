@@ -72,12 +72,15 @@
 	
 	
 	<update id="update" parameterType="pricing">
-		update m_pricing set 
-			price = #{price}, 
-			discountrate = #{discountrate}, 
-			currency = #{currency},
-			statusdate = sysdate
-		where buyer_cd = #{buyerCd} and product_cd = #{productCd} and startdate = #{startdate} and enddate = #{enddate}
+		update	m_pricing
+		set		price = #{price}, 
+				discountrate = #{discountrate}, 
+				currency = #{currency},
+				statusdate = sysdate
+		where	buyer_cd = #{buyerCd}
+		and 	product_cd = #{productCd}
+		and		startdate = #{startdate}
+		and 	enddate = #{enddate}
 	</update>
 	
 	
@@ -213,6 +216,15 @@
 			and product_cd = #{productCd} 
 			and ((startdate between #{startdate} and #{enddate})
 			or	(enddate between #{startdate} and #{enddate}))
+	</select>
+	
+	<select id="listForExcel" parameterType="pricing" resultType="pricing">
+		select	*
+		from	m_pricing
+		where	buyer_cd = #{buyerCd}
+			and product_cd = #{productCd}
+			and	startdate = #{startdate}
+			and enddate = #{enddate}
 	</select>
 	
 	

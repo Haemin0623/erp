@@ -134,6 +134,7 @@ function changeContent(data) {
 		<c:if test="${pricing.del == 'Y'}">
 			<button type="button" onclick="restoreAction()">복원</button>
 		</c:if>
+		<button id="excelBtn">Excel</button>
 	
 		<div id="page">
 			<form name="itemLimit">
@@ -832,6 +833,78 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 				search();
 			}
 		});
+		
+		
+// 		엑셀 입출력
+	function excel() {
+		
+		let checkRow = new Array();
+		
+		$( ".excel:checked" ).each (function (){
+			 let thisRow = $(this).closest('tr');
+			  
+			 const pricing = {
+				buyerCd : thisRow.find('td:eq(1)').find('input').val(),
+				productCd : thisRow.find('td:eq(2)').find('input').val(),
+				startdate : thisRow.find('td:eq(4)').find('input').val(),
+				enddate : thisRow.find('td:eq(5)').find('input').val()
+			 }
+
+			 checkRow.push(pricing);
+		
+		});
+		
+		  
+		 console.log(checkRow);
+		 
+		 J300.ajax({
+			  url : 'pricingExcelDown.do',
+			  method : 'post',
+			  traditional : true,
+			  data : {
+				  items : JSON.stringify(checkRow)
+			  },
+			  xhr: function () {
+                  var xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange = function () {
+                      if (xhr.readyState == 2) {
+                          if (xhr.status == 200) {
+                              xhr.responseType = "blob";
+                          } else {
+                              xhr.responseType = "text";
+                          }
+                      }
+                  };
+                  return xhr;
+			    },
+			  success : function(data) {
+				  console.log(data);
+				//alert("엑셀다운완료?");
+				//Convert the Byte Data to BLOB object.
+                var blob = new Blob([data], { type: "application/octetstream" });
+
+                //Check the Browser type and download the File.
+                var isIE = false || !!document.documentMode;
+                if (isIE) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL || window.webkitURL;
+                    link = url.createObjectURL(blob);
+                    var a = $("<a />");
+                    a.attr("download", "test.xlsx");
+                    a.attr("href", link);
+                    $("body").append(a);
+                    a[0].click();
+                    $("body").remove(a);
+                }
+			}, error: function (xhr, status, error) {
+				console.log("error");
+			} 
+		 });
+		  
+	}
+	
+	document.querySelector("#excelBtn").addEventListener("click", excel);
 </script>
 
 </html>

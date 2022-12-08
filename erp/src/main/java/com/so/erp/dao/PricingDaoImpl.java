@@ -65,4 +65,9 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.selectOne("pricingns.overlapCheck", pricing);
 	}
 
+	@Override
+	public Pricing listForExcel(Pricing pricing) {
+		return sst.selectOne("pricingns.listForExcel", pricing);
+	}
+
 }

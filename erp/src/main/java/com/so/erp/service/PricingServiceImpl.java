@@ -65,4 +65,9 @@ public class PricingServiceImpl implements PricingService {
 		return prd.overlapCheck(pricing);
 	}
 
+	@Override
+	public Pricing listForExcel(Pricing pricing) {
+		return prd.listForExcel(pricing);
+	}
+
 }

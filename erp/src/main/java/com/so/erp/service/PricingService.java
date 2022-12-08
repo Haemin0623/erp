@@ -28,5 +28,7 @@ public interface PricingService {
 
 	int overlapCheck(Pricing pricing);
 
+	Pricing listForExcel(Pricing pricing);
+
 
 }

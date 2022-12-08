@@ -28,5 +28,7 @@ public interface PricingDao {
 
 	int overlapCheck(Pricing pricing);
 
+	Pricing listForExcel(Pricing pricing);
+
 
 }
