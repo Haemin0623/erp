@@ -10,6 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
+=======
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--  	var J300 =  $.noConflict(true);	 -->
+<!-- </script> -->
+
+>>>>>>> 5e080b3 (css 수정)
 </head>
 <body>
 <div id="container">
@@ -103,9 +111,9 @@
 	
 
 	<span id="CCD">
-		<button id="show">상품등록  </button>
-		<button type="button" onclick="deleteAction()">삭제</button>
-		<button id="excelBtn">Excel</button>
+		<button id="show" class="btn">등록</button>
+		<button type="button" onclick="deleteAction()" class="btn">삭제</button>
+		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 	</span>	
 	<div id="productList">
 		<form name="page" >

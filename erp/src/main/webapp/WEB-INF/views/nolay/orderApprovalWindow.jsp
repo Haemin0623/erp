@@ -44,7 +44,7 @@
 </head>
 <body>
 <div id="container">
-	<h1>주문 승인</h1>
+	<h1 class="menuName">주문 승인</h1>
 	
 	<div id="searchBox">
 		<div class="searchInBox">

@@ -100,12 +100,12 @@ function changeContent(data) {
 					<div class="search-item-div">
 						<div class="search-item-text">활성상태</div>
 							<select name="del">
-								<option value="N">비활성</option>
+								<option value="N">활성</option>
 								<c:if test="${pricing.del == 'Y'}">
-									<option value="Y" selected="selected">활성</option>
+									<option value="Y" selected="selected">비활성</option>
 								</c:if>
 								<c:if test="${pricing.del != 'Y'}">
-									<option value="Y">활성</option>
+									<option value="Y">비활성</option>
 								</c:if>
 								<c:if test="${pricing.del == 'All'}">
 									<option value="All" selected="selected">모두</option>
@@ -127,12 +127,12 @@ function changeContent(data) {
 	
 	<!-- 판매가 등록 -->
 	<div id="button-div">
-		<button id="show">등록</button>
+		<button id="show" class="btn">등록</button>
 		<c:if test="${pricing.del != 'Y'}">
-			<button type="button" onclick="deleteAction()">삭제</button>
+			<button type="button" onclick="deleteAction()" class="btn">삭제</button>
 		</c:if>
 		<c:if test="${pricing.del == 'Y'}">
-			<button type="button" onclick="restoreAction()">복원</button>
+			<button type="button" onclick="restoreAction()" class="btn">복원</button>
 		</c:if>
 		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 	
@@ -288,7 +288,8 @@ function changeContent(data) {
 		</c:if>
 		&nbsp;&nbsp;
 		<form name="paging">
-		 	<input type="number" name="currentPage" value="${pricing.currentPage }" id="currentPage"> / ${pricing.totalPage }
+		 	<input type="number" name="currentPage" value="${pricing.currentPage }" 
+		 		id="currentPage"> / ${pricing.totalPage }
 		</form>
 		&nbsp;&nbsp;
 		<c:if test="${pricing.currentPage != pricing.totalPage}">

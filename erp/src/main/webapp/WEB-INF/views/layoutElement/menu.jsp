@@ -10,6 +10,14 @@
 <style type="text/css">
 
 	.text-primary {
+		font-family: 'KyoboHandwriting2020A';
+		font-size: 50px;
+		margin-left: 30px;
+		color: white;
+	}
+	
+	.text-member {
+		font-size: 11px;
 		margin-left: 30px;
 		color: white;
 	}
@@ -23,6 +31,7 @@
 	}
 
 	.menuList {
+		font-family: 'GmarketSansMedium';
 		margin-right: 10px;
 		margin-top: 40px;		
 		list-style: none;
@@ -33,6 +42,7 @@
 	}
 	
 	.subMenu {
+		font-family: 'BCcardB';
 		margin-top: 5px;
 		margin-right: 10px;
 		list-style: none;
@@ -78,7 +88,7 @@
 <body>
 
 	<h1 class="text-primary">2조</h1>
-	<h6 class="text-primary">
+	<h6 class="text-member">
 		<c:if test="${sessionScope.employeeCd != null }">
 			${sessionScope.employeeCd }(${sessionScope.ename })
 			<a href="logout.do">로그 아웃</a>

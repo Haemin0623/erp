@@ -40,7 +40,7 @@
 </head>
 <body>
 <div id = "container">
-	<h1>주문 현황</h1>
+	<h1 class="menuName">주문 현황</h1>
 
 	<div id="searchBox">
 		<div class="searchInBox">
@@ -321,7 +321,7 @@ $(document).ready(function(){
 </script>
 
 	<div id="button-div">
-		<button id="excelBtn">Excel</button>
+		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 		
 		<div id="page">
 			<form name="itemLimit">

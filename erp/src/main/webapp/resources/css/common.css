@@ -1,5 +1,24 @@
 @charset "UTF-8";
 
+	@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+	@font-face {
+    font-family: 'BCcardB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.1/BCcardB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+	@font-face {
+    font-family: 'KyoboHandwriting2020A';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 	input[type="date"] {
 		width: 180.64px;
 		height: 30px;
@@ -54,6 +73,11 @@
 /* 		border-radius: 10px; */
 	}
 	
+	.menuName {
+	    font-family: 'GmarketSansMedium';
+	    color: #646464;
+	}
+	
 	.searchInBox{
     	margin: 20px;
 	}
@@ -83,27 +107,45 @@
 	}
 	
 	.search-btn{
-/* 	    width: 106px; */
 	    display: flex;
-/* 	    align-items: center; */
-/* 	    justify-content: center; */
-/* 	    background-color: #242d49; */
-/* 	    font-size: 15px; */
-/* 	    font-weight: 400; */
 	    cursor: pointer;
-/* 	    border-color: white; */
 	}
 	#searchBtn {
 		width: 70px;
 		background: #879971;
 	    color: white;
 	    border-color: #c3d4ae;
+	    border-radius: 5px;
+	    cursor: pointer;
 	}
+	#searchBtn:hover {
+		background: #f6ffeb;
+		color: #879971;
+	}
+	
 	#initBtn {
 		width: 30px;
 		background: #879971;
 	    color: white;
 	    border-color: #c3d4ae;
+	    border-radius: 5px;
+	    cursor: pointer;
+	}
+	#initBtn:hover {
+		background: #f6ffeb;
+		color: #879971;
+	}
+	
+	.btn {
+		background: #879971;
+	    color: white;
+	    border-color: #c3d4ae;
+	    border-radius: 5px;
+	    cursor: pointer;
+	}
+	.btn:hover {
+		background: #f6ffeb;
+		color: #879971;
 	}
 	
 	#button-div {

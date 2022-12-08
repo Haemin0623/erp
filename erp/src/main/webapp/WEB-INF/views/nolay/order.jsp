@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="container">	
-	<h1>주문 관리</h1>
+	<h1 class="menuName">주문 관리</h1>
 	<div id="searchBox">
 		<div class="searchInBox">
 			<form name="searchBoxx">	
@@ -104,14 +104,14 @@
 	
 	
 	<div id="button-div">
-		<button id="show">추가 </button>
+		<button id="show" class="btn">등록</button>
 		<c:if test="${orderHead.del != 'Y'}">
-			<button type="button" onclick="deleteAction()">삭제</button>
+			<button type="button" onclick="deleteAction()" class="btn">삭제</button>
 		</c:if>
 		<c:if test="${orderHead.del == 'Y'}">
-			<button type="button" onclick="restoreAction()">복원</button>
+			<button type="button" onclick="restoreAction()" class="btn">복원</button>
 		</c:if>
-		<button id="excelBtn">Excel</button>
+		<button id="excelBtn"><img alt="" src="/erp/resources/image/Excel.png" id="excelImg"></button>
 		
 		<div id="page">
 			<form name="itemLimit">
