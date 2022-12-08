@@ -468,6 +468,7 @@
 		    			    	 console.log(result);
 		    			        if (result == -1) {
 		    			        	alert("중복된 상품이 있습니다.")
+		    			        	search();
 		    			        } else {
 		    			        	search();
 		    			        	alert("수정완료")
