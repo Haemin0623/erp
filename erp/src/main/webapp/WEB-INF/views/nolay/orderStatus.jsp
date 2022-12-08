@@ -167,7 +167,7 @@ $(document).ready(function(){
         		      labels: labels,
         		      datasets: [
         		        {
-        		          label: "월별 매출",
+        		          label: "매출",
         		          borderColor: 'rgba(75, 192, 192, 1)',
         	              backgroundColor: 'rgba(75, 192, 192, 0.2)',
         		          data: datas
@@ -242,7 +242,7 @@ $(document).ready(function(){
 	        		      legend: { display: false },
 		        		      title: {
 		        		        display: true,
-		        		        text: '12월 영업사원별 매출'
+		        		        text: '12월 영업사원별 판매실적'
 		        		      }
 	        		   	}
         		    }
