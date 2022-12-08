@@ -352,7 +352,7 @@ $(document).ready(function(){
 		<table class="scrollcontent">
 			<tr>
 				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll"></th>
-				<th class="fixed" id="sortOrderDate">주문일</th>
+				<th class="fixed" id="sortOrderDate">발주일</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed">상품코드</th>
 				<th class="fixed">상품명</th>

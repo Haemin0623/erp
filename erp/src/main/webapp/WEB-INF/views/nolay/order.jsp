@@ -41,7 +41,7 @@
 						</select>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">신청일</div>
+						<div class="search-item-text">발주일</div>
 						<input type="date" name="orderFromDate" value="${orderHead.orderFromDate }">
 						~<input type="date" name="orderToDate" value="${orderHead.orderToDate }">
 					</div>
@@ -149,7 +149,7 @@
 				</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed" id="sortBuyerCd">고객코드</th>
-				<th class="fixed" id="sortOrderDate">신청일</th>
+				<th class="fixed" id="sortOrderDate">발주일</th>
 				<th class="fixed" id="sortEmployeeCd">신청인</th>
 				<th class="fixed" id="sortStatus">상태</th>
 				<th class="fixed" id="sortStatusDate">상태변경일</th>
