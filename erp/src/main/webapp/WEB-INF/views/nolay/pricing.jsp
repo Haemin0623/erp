@@ -224,7 +224,7 @@ function changeContent(data) {
 				<button id="close">X</button>
 				<div class="writeForm">
 				<form action="" name="pricing">
-				<br><h1> 판매가 등록 </h1><br>
+				<br><h1 class="addSub"> 판매가 등록 </h1><br>
 				<table>
 					<tr>
 						<th>고객코드</th>
@@ -274,7 +274,7 @@ function changeContent(data) {
 				</form>
 				
 				<div class="insert-btn">
-					<button id="addItem">추가</button>
+					<button id="addItem" class="btn">추가</button>
 				</div>
 				<div id="addItemDiv" class="table" style="height: 200px;">
 				
@@ -294,7 +294,7 @@ function changeContent(data) {
 					
 				</div>
 					<div class="insert-btn">
-						<button id=pricingInsert>등록</button>
+						<button id="pricingInsert" class="btn">등록</button>
 					</div>
 				
 				</div>

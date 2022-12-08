@@ -251,7 +251,7 @@
 			<div class="popup" align="center">
 				<button id="close">X</button>	
 				<form action="" name="frm">
-				<br><h1> 고객등록 </h1><br>
+				<br><h1 class="addSub"> 고객등록 </h1><br>
 				<table> 
 					<tr> 
 						<th>고객카테고리</th>
@@ -306,8 +306,8 @@
 				</table>
 
 				</form>
-					<button id="addBuyerBtn">등록</button>
-					<button id="reset">초기화</button>
+					<button id="addBuyerBtn" class="btn">등록</button>
+					<button id="reset" class="btn">초기화</button>
 			</div>
 		</div>
 	</div>

@@ -64,6 +64,7 @@
 								</c:forEach>
 							</select>
 						</div>
+						
 					<div class="search-item-div">
 						<div class="search-item-text" >활성상태 </div>
 							<select name="del" class="sumo" >
@@ -198,7 +199,7 @@
 				<button id="close">X</button>
 				<form action="" name="frm">
 					
-					<br><h1>상품등록</h1><br>
+					<br><h1 class="addSub">상품등록</h1><br>
 					<table id="insert-form">
 							<tr>
 								<th>카테고리</th>
@@ -229,7 +230,7 @@
 					</table>
 				</form>
 				<div class="insert-btn">
-					<button id="addItem">등록</button>
+					<button id="addItem" class="btn">등록</button>
 				</div>
 			</div>
 		</div>

@@ -227,8 +227,8 @@
 		<div class="window">
 			<div class="popup" align="center">
 				<button id="close">X</button>
-				<form action="" name="frm">
-				<br><h1> 주문등록 </h1><br>
+				<form action="" name="frm" style="margin-top: -35px;">
+				<br><h1 class="addSub"> 주문등록 </h1><br>
 					<table id="insert-form">
 						<tr>
 							<th>주문번호</th>
@@ -271,10 +271,10 @@
 				</form>
 				
 				<div class="insert-btn">
-					<button id="addItem">추가</button>
+					<button id="addItem" class="btn">추가</button>
 				</div>				
 				
-				<div id="addItemDiv" class="table"  style="height: 200px;">
+				<div id="addItemDiv" class="table"  style="height: 145px;">
 				
 					<table id="addItemTable" class="list">
 						<thead>
@@ -296,11 +296,11 @@
 					 
 				</div>
 				
-				<div class="insert-btn">
-					<button id="reset">초기화</button>
+				<div class="insert-btn" style="margin-bottom: -6px;">
+					<button id="reset" class="btn">초기화</button>
 				</div>
-				<div class="insert-btn">
-					<button id="insertOrder">등록</button>
+				<div class="insert-btn" style="margin-bottom: -6px;">
+					<button id="insertOrder" class="btn">등록</button>
 				</div>
 			</div>
 		</div>

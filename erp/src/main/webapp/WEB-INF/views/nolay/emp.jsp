@@ -164,7 +164,7 @@
 			<div class="popup" align="center">
 				<button id="close">X</button>
 				<form action="" name="frm">
-				<br><h1> 직원등록 </h1><br>
+				<br><h1 class="addSub"> 직원등록 </h1><br>
 					<table id="insert-form">
 						<tr>
 							<th>직원코드</th>
@@ -214,7 +214,7 @@
 					</table>
 				</form>
 				<div class="insert-btn">
-					<button id="addEmp">등록</button>
+					<button id="addEmp" class="btn">등록</button>
 				</div>
 				
 				
