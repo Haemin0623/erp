@@ -64,7 +64,7 @@ public class ProductController {
 		product.setSortUnit(0);
 		product.setSortStatusDate(0);
 		product.setSortVolume(0);
-		
+		product.setDel("N");
 		List<Product> productList = pds.productList(pagingBean,product);
 		List<Product> allList = pds.allList();
 		PagingBean pb = new PagingBean(currentPage, rowPerPage, total);

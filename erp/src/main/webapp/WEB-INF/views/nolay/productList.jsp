@@ -10,14 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<<<<<<< HEAD
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
-<!-- <script type="text/javascript"> -->
-<!--  	var J300 =  $.noConflict(true);	 -->
-<!-- </script> -->
-=======
-
->>>>>>> 7e83214 (taglib 수정)
 </head>
 <body>
 <div id="container">
@@ -169,7 +161,7 @@
 				<th class="fixed" id="sortCategory">상품 카테고리</th>
 				<th class="fixed" id="sortAddDate">등록일</th>
 				<th class="fixed" id="sortStatusDate">최종수정일</th>
-				<th class="fixed" id="sortDel">삭제여부</th>
+				<th class="fixed" id="sortDel">활성여부</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr class="itemRow">
@@ -206,7 +198,7 @@
 			</c:if>
 		</form>
 	</div>
-</div>
+
 	<div class="background">
 		<div class="window">
 			<div class="popup">
@@ -215,12 +207,12 @@
 						<caption>상품 등록</caption>
 							<tr>
 								<td>카테고리<select name="category" id="codeMix" autofocus="autofocus">
-									<option value="">선택</option>
-									<option value="라면">라면</option>
-									<option value="스낵">스낵</option>
-									<option value="음료">음료</option>
-								</select></td>
-							
+										<option value="">선택</option>
+										<option value="라면">라면</option>
+										<option value="스낵">스낵</option>
+										<option value="음료">음료</option>
+									</select>
+								</td>
 								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
@@ -237,6 +229,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 <script type="text/javascript">
 	// 등록 팝업 열기 닫기
 	function show() {
