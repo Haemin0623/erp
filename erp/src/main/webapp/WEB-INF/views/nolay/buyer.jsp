@@ -142,8 +142,10 @@
 				
 				</form>
 			</div>	
+			<div class="search-btn">
 				<button id="searchBtn">검색</button>
-				<button id="initBtn"> 검색결과 초기화 </button>
+				<button id="initBtn"> 초기화 </button>
+			</div>
 		</div>
 	
 	

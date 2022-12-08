@@ -124,8 +124,10 @@
 				<p>
 			</form>
 		</div>
-		<button id="searchBtn">검색</button>
-		<button id="initBtn">초기화</button>
+		<div class="search-btn">
+			<button id="searchBtn">검색</button>
+			<button id="initBtn">초기화</button>
+		</div>
 	</div>	
 	
 <!-- 월 별 매출 합계 / 우선 처음에 보여지고 검색결과 나오면 숨겨지도록 -->
