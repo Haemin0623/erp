@@ -211,7 +211,7 @@
 								</td>
 							<tr>
 								<th>상품코드</th>
-								<td><input type="text" name="productCd" readonly="readonly"></td>
+								<td><input type="text" name="productCd" readonly="readonly" disabled="disabled"></td>
 							</tr>
 							<tr>
 								<th>상품명</th>

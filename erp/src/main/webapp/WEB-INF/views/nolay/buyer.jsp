@@ -132,8 +132,8 @@
 						<div class="search-item-text">활성상태</div>
 						<div class="boxx">
 							<select name="del" class="search">
-								<option value="N">X</option>
-								<option value="Y" <c:if test="${buyer.del == 'Y'}">selected="selected"</c:if> >O </option>
+								<option value="N">활성</option>
+								<option value="Y" <c:if test="${buyer.del == 'Y'}">selected="selected"</c:if> >비활성 </option>
 								<option value="All" <c:if test="${buyer.del == 'All'}"> selected="selected" </c:if>>모두</option>
 							</select>
 						</div>

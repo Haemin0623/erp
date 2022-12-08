@@ -36,7 +36,7 @@ import net.sf.json.JSONObject;
 @Controller
 public class ProductController {
 
-	@Autowired
+	@Autowired 
 	private ProductService pds;
 	
 	
