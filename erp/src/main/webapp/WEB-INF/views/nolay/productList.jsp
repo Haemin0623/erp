@@ -10,10 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.3/jquery.min.js"></script> -->
 <!-- <script type="text/javascript"> -->
 <!--  	var J300 =  $.noConflict(true);	 -->
 <!-- </script> -->
+=======
+
+>>>>>>> 7e83214 (taglib 수정)
 </head>
 <body>
 <div id="container">
