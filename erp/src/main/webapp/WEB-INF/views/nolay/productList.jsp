@@ -214,23 +214,12 @@
 					<table id="insert-form">
 						<caption>상품 등록</caption>
 							<tr>
-<<<<<<< HEAD
-								<td>카테고리<select name="category" id="codeMix" autofocus="autofocus">
-										<option value="">선택</option>
-										<option value="라면">라면</option>
-										<option value="스낵">스낵</option>
-										<option value="음료">음료</option>
-									</select>
-								</td>
-=======
 								<td>카테고리<select name="category" class="sumo" id="codeMix" autofocus="autofocus">
 									<option value=""></option>
 									<option value="라면">라면</option>
 									<option value="스낵">스낵</option>
 									<option value="음료">음료</option>
 								</select></td>
-							
->>>>>>> cfd9b27 (고객마스터 수정, 등록폼, 자동완성기능)
 								<td>상품코드<input type="text" name="productCd" readonly="readonly"></td>
 							</tr>
 							<tr>
@@ -242,12 +231,8 @@
 							</tr>
 					</table>
 				</form>
-<<<<<<< HEAD
 				<button id="addItem">등록</button>
-				<button id="close">닫기</button>
-=======
-				<button id="addItem">추가</button>
->>>>>>> cfd9b27 (고객마스터 수정, 등록폼, 자동완성기능)
+
 			</div>
 		</div>
 	</div>
