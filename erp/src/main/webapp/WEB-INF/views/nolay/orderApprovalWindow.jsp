@@ -205,14 +205,14 @@
 	<div class="itemTable">
 		<table class="itemList">
 			<tr>
-				<th>No.</th>
-				<th>상품코드</th>
-				<th>상품명</th>
-				<th>주문수량</th>
-				<th>납품요청일</th>
-				<th>가격</th>
-				<th>합계</th>
-				<th>비고</th>
+				<th class="fixed">No.</th>
+				<th class="fixed">상품코드</th>
+				<th class="fixed">상품명</th>
+				<th class="fixed">주문수량</th>
+				<th class="fixed">납품요청일</th>
+				<th class="fixed">가격</th>
+				<th class="fixed">합계</th>
+				<th class="fixed">비고</th>
 			</tr>
 			<tbody id="statusTable"/>
 			<tbody id="area"/>
@@ -355,10 +355,10 @@ $(document).ready(function(){
 						
 						$('#area').append(
 							"<tr>" +
-							"<td colspan='8'>comment</td>" +
+								"<th colspan='8'>사유</th>" +
 							"</tr>" +
 							"<tr>" +
-								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' style='width:99%; resize: none; text-align: center;'></textarea></td>"+
+								"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='reason' style='width:99%; resize: none; text-align: center;' placeholder='사유를 입력해주세요.'></textarea></td>"+
 							"</tr>"
 						);
 						$(".orderApprovalBtnBox").removeClass('hiding');
@@ -369,7 +369,7 @@ $(document).ready(function(){
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'>comment</td>" +
+									"<th colspan='8'>사유</th>" +
 								"</tr>" +
 								"<tr>" +
 									"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
@@ -383,7 +383,7 @@ $(document).ready(function(){
 								
 							$('#area').append(
 								"<tr>" +
-								"<td colspan='8'>comment</td>" +
+									"<th colspan='8'>사유</th>" +
 								"</tr>" +
 								"<tr>" +
 									"<td colspan='8'><textarea rows='5' cols='70' name='reason' id='textarea' readonly style='background-color:silver; width:99%; resize: none; text-align: center;'></textarea></td>"+
