@@ -55,12 +55,13 @@ function changeContent(data) {
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-							<select name="buyerCd" class="keyword sumo sumoBuy">
-								<option value="All"></option>
-								<c:forEach var="pricing" items="${buyerList }">
-									<option value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname })</option>
+							<input type="text" name="buyerCd" value="${pricing.buyerCd }" list="buyerList">
+							<datalist id="buyerList">
+								<c:forEach var="pricing" items="${buyerEx }">
+								
 								</c:forEach>
-							</select>
+							</datalist>
+					
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">상품코드</div>
@@ -200,13 +201,13 @@ function changeContent(data) {
 							</c:if>
 						</td>
 						<td>${status.count }</td>
-						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }</td>
-						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }</td>
+						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname})</td>
+						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</td>
 						<td class="editable"><fmt:formatNumber value="${pricing.price }" pattern="#,###.##"/></td>
 						<td><input type="hidden" value="${pricing.startdate }">${pricing.startdate }</td>
 						<td><input type="hidden" value="${pricing.enddate }">${pricing.enddate }</td>
 						<td class="editable">${pricing.discountrate }</td>
-						<td><fmt:formatNumber value="${pricing.finalPrice }" pattern="#,###"/></td>
+						<td><fmt:formatNumber value="${pricing.finalPrice }" pattern="#,###.##"/></td>
 						<td class="editable">${pricing.currency }</td>
 						<td>${pricing.adddate }</td>
 						<td>${pricing.statusdate }</td>
@@ -565,7 +566,7 @@ function changeContent(data) {
 		let initValue=""; //초기에 있던 값을 전역변수로 선언(수정하다가 커서가 다른곳 클릭하면 원래값으로 돌아가게)
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
         	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus' style='width: 88px;'>";
+            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus' style='width: 45px;'>";
             $(this).removeClass("editable")
             $(this).html(input);
             $('#focus').focus();
@@ -577,7 +578,7 @@ function changeContent(data) {
                     var value=$(this).val();
                     var td=$(this).parent("td");
                     td.html(value);
-                    td.addClass("editable");
+                    td.addClass("editable"); 
                 
                     // 테이블의 Row 클릭시 값 가져오기
     	            $(".list tr").keypress(function(){    
@@ -696,15 +697,6 @@ function changeContent(data) {
 document.querySelector("#searchBtn").addEventListener("click", search);
 
 
-$(document).ready(function() {
-	$('.sumo').SumoSelect({
-		search: true,
-		searchText: '검색어 입력',
-	});
-	$('select.sumoBuy')[0].sumo.selectItem("${pricing.buyerCd }");
-	
-	$('select.sumoProd')[0].sumo.selectItem("${pricing.productCd }");
-});
 
 //	검색초기화
 document.querySelector("#initBtn").addEventListener("click",  function(){callView('pricing.do')});

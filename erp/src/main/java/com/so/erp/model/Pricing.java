@@ -26,6 +26,9 @@ public class Pricing {
     private Date validDate;
     private int startPrice;
     private int endPrice;
+//  조인용
+    private String bname;
+    private String pname;
 //  정렬용
     private int sortBuyerCd;
     private int sortProductCd;

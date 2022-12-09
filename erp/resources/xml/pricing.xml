@@ -8,12 +8,14 @@
 		select	*
 		from	(select	a.*,
 						rowNum rn
-				from	(select			distinct *
-							from		m_pricing
-							where		del='N'
-							order by 	adddate desc)a
+				from	(select		p.*, b.bname, d.pname
+						 from		m_pricing p, m_buyer b, m_product d
+						 where		p.buyer_cd = b.buyer_cd
+								and	p.product_cd = d.product_cd
+								and	p.del='N'
+						order by 	p.adddate desc)a
 				)	
-		where	rn between #{startRow} and #{endRow} 
+		where	rn between #{startRow} and #{endRow}
 	</select>
 	
 	
@@ -107,14 +109,16 @@
 		select	*
 		from	(select	a.*,
 						rowNum rn
-				 from  (select 	*
-						from	m_pricing
+				 from  (select	p.*, b.bname, d.pname
+						from	m_pricing p, m_buyer b, m_product d
 		<where>
+				p.buyer_cd = b.buyer_cd
+			and	p.product_cd = d.product_cd
 			<if test="buyerCd != null and buyerCd != 'All'">
-				and buyer_cd like '%' || #{buyerCd} || '%'
+				and p.buyer_cd like '%' || #{buyerCd} || '%'
 			</if>
 			<if test="productCd != null and productCd != 'All'">
-				and product_cd like '%' || #{productCd} || '%'
+				and p.product_cd like '%' || #{productCd} || '%'
 			</if>
 			<if test="startPrice != 0 and endPrice != 0">
 				and price between #{startPrice} and #{endPrice}
@@ -132,22 +136,22 @@
 				and currency = #{currency}
 			</if>
 			<if test="del != 'All'">
-				and del = #{del}
+				and p.del = #{del}
 			</if>
 		</where>
 		order by 
 			<if test="sortBuyerCd == 1">
-				buyer_cd desc
+				p.buyer_cd desc
 			</if>
 			<if test="sortBuyerCd == 2">
-				buyer_cd asc
+				p.buyer_cd asc
 			</if>
 			
 			<if test="sortProductCd == 1">
-				product_cd desc
+				p.product_cd desc
 			</if>
 			<if test="sortProductCd == 2">
-				product_cd asc
+				p.product_cd asc
 			</if>
 			
 			<if test="sortPrice == 1">
@@ -193,17 +197,17 @@
 			</if>
 			
 			<if test="sortAdddate == 1">
-				adddate desc
+				p.adddate desc
 			</if>
 			<if test="sortAdddate == 2">
-				adddate asc
+				p.adddate asc
 			</if>
 			
 			<if test="sortStatusdate == 1">
-				statusdate desc
+				p.statusdate desc
 			</if>
 			<if test="sortStatusdate == 2">
-				statusdate asc
+				p.statusdate asc
 			</if>
 		)a
 				)
