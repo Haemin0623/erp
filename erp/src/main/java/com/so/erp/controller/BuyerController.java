@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.so.erp.model.Buyer;
 import com.so.erp.model.Country;
+import com.so.erp.model.Employee;
+import com.so.erp.model.Product;
 import com.so.erp.service.BuyerService;
 import com.so.erp.service.CountryService;
 
@@ -41,6 +43,13 @@ public class BuyerController {
 	@Autowired
 	private CountryService cs;
 
+	public void exData(Model model) {
+		List<Buyer> buyerEx = bs.list();
+		model.addAttribute("buyerEx", buyerEx);
+		
+		List<Country> countryEx = cs.list();
+		model.addAttribute("countryEx", countryEx);
+	}
 	
 	@RequestMapping("buyer")
 	public String buyer(Model model, Buyer buyer) {
@@ -73,14 +82,14 @@ public class BuyerController {
 		buyer.setSortAddress(0);
 		buyer.setSortCountryCd(0);
 		buyer.setSortAdddate(1);
-		buyer.setSortStatusDate(0);
+		buyer.setSortStatusDate(0);		
 		
-		
-		
-		List<Buyer> buyerList = bs.list();
+		List<Buyer> buyerList = bs.search(buyer);
 		List<Country> countryCdList = cs.list();
 		model.addAttribute("buyerList", buyerList);
 		model.addAttribute("countryCdList", countryCdList);
+		
+		exData(model);
 		
 		return "nolay/buyer"; // head가 중복으로 나오는 것 방지
 		
@@ -182,8 +191,8 @@ public class BuyerController {
 	
 	@RequestMapping("buyerSearch")
 	public String buyerSearch(Model model, @RequestParam(name="keyword") String keyword) {
-		System.out.println("값이왔다!");
-		System.out.println(keyword);
+		
+		exData(model);
 		try {
 			
 			JSONParser p = new JSONParser();
@@ -193,17 +202,11 @@ public class BuyerController {
 			Buyer buyer = new Buyer();
 			String buyerCd = (String) keywordObj.get("buyerCd"); //고객코드
 			buyer.setBuyerCd(buyerCd);
-			String bname = (String) keywordObj.get("bname"); //고객명
-			buyer.setBname(bname);
-			
-			System.out.println("고객코드, 고객명 왔다");
 			
 			String manager = (String) keywordObj.get("manager"); //담당자
 			buyer.setManager(manager);
 			String countryCd = (String) keywordObj.get("countryCd"); //국가코드
 			buyer.setCountryCd(countryCd);
-			
-			System.out.println("담당자, 국가코드 왔다");
 			
 			String tel = (String) keywordObj.get("tel"); //전화번호
 			buyer.setTel(tel);
@@ -214,9 +217,6 @@ public class BuyerController {
 			
 			String del = (String) keywordObj.get("del");
 			buyer.setDel(del);
-			System.out.println(buyer.getDel());
-			
-			System.out.println("전화번호, 이메일, 주소 왔다");
 			
 			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
 			buyer.setSortBuyerCd(sortBuyerCd);
@@ -256,8 +256,6 @@ public class BuyerController {
 			List<Buyer> bsearchList = bs.search(buyer);
 			List <Buyer> notDelList = bs.ndlist();
 			List <Buyer> delList = bs.dlist();
-			
-			System.out.println("조회성공");
 			
 			model.addAttribute("buyerList", bsearchList); // bsearchList를 buyerList 이름으로 보내줘
 			model.addAttribute("buyer", buyer);

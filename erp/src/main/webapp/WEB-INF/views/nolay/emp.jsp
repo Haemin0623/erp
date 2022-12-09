@@ -27,10 +27,11 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">직원코드</div>
-						<input type="text" name="employeeCd" value="${employee.employeeCd }">
+						<input type="search" name="employeeCd" value="${employee.employeeCd }">
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">직원명</div><input type="text" name="ename" value="${employee.ename }">
+						<div class="search-item-text">직원명</div>
+						<input type="search" name="ename" value="${employee.ename }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">등록일</div>
@@ -41,11 +42,11 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">직책</div>
-						<input type="text" name="job" value="${employee.job }">
+						<input type="search" name="job" value="${employee.job }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">부서</div>
-						<input type="text" name="department" value="${employee.department }">
+						<input type="search" name="department" value="${employee.department }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">승인권한</div>
@@ -116,6 +117,7 @@
 						<input type="checkbox" name="checkAll" id="th_checkAll" class="red-check">
 					</c:if>
 				</th>
+				<th class="fixed">순번</th>
 				<th class="fixed" id="sortEmployeeCd">직원코드</th>
 				<th class="fixed" id="sortEname">직원명</th>
 				<th class="fixed" id="sortJob">직책</th>
@@ -134,6 +136,7 @@
 							<input type="checkbox" name="checkRow" value="${emp.employeeCd }" class="red-check excel">
 						</c:if>
 					</td>
+					<td>${emp.rn }</td>
 					<td>${emp.employeeCd }</td>
 					<td class="editable">${emp.ename }</td>
 					<td class="editable">${emp.job }</td>
@@ -167,6 +170,16 @@
 				<br><h1 class="addSub"> 직원등록 </h1><br>
 					<table id="insert-form">
 						<tr>
+							<th>부서</th>
+							<td>
+								<select name="department" id="department"  class="search">
+									<option value=""></option>
+									<option value="영업">영업</option>
+									<option value="관리">관리									
+								</select>
+							</td>
+						</tr>
+						<tr>
 							<th>직원코드</th>
 							<td><input type="text" name="employeeCd" class="readonly" readonly="readonly"></td>
 						</tr>
@@ -181,7 +194,7 @@
 						<tr>
 							<th>승인권한</th>
 							<td>
-								<select name="authority" class="sumo">
+								<select name="authority" class="search">
 									<option value=""></option>
 									<option value="N">없음</option>
 									<option value="Y">있음</option>
@@ -191,23 +204,13 @@
 						<tr>
 							<th>직책</th>
 							<td>
-								<select name="job" class="sumo">
+								<select name="job"  class="search">
 									<option value=""></option>
 									<option>사원
 									<option>대리									
 									<option>과장									
 									<option>차장									
 									<option>부장									
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th>부서</th>
-							<td>
-								<select name="department" class="sumo" id="department">
-									<option value=""></option>
-									<option value="영업">영업</option>
-									<option value="관리">관리									
 								</select>
 							</td>
 						</tr>
@@ -262,28 +265,69 @@
 
 <script type="text/javascript">
 	function addEmp() {
-		$.ajax({
-		     method: 'post',
-		     url: 'empInsert.do',
-		     traditional: true,
-		     data: {
-		    	 employeeCd : frm.employeeCd.value,
-		    	 ename : frm.ename.value,
-		    	 password : frm.password.value,
-		    	 job : frm.job.value,
-		    	 department : frm.department.value,
-		    	 authority : frm.authority.value		    	 
-		     },
-		     dataType: 'json',
-		     success: function (result) {
-		        if (result) {
-					callView('emp.do');
-		        } else {
-		        	alert("실패");
-		        }
-			}
-	   });
+		const employeeCd = frm.employeeCd.value;
+		const ename = frm.ename.value;
+		const password = frm.password.value;
+		const job = frm.job.value;
+		const department = frm.department.value;
+ 		const authority = frm.authority.value;
 		
+		if (employeeCd == '' || ename == '' || password == '' || job == '' || 
+				department == '' || authority == ''){
+			alert('값을 채워넣어주세요');
+			if (employeeCd == '') {
+				$("input[name='employeeCd']").addClass('red');
+			} else {
+ 			    $("input[name='employeeCd']").removeClass('red');		
+			}
+			if (ename == '') {
+				$("input[name='ename']").addClass('red');
+			} else {
+ 			    $("input[name='ename']").removeClass('red');		
+			}
+			if (password == '') {
+				$("input[name='password']").addClass('red');
+			} else {
+ 			    $("input[name='password']").removeClass('red');		
+			}
+			if (job == '') {
+				$("select[name='job']").addClass('red');
+			} else {
+ 			    $("select[name='job']").removeClass('red');		
+			}
+			if (department == '') {
+				$("select[name='department']").addClass('red');
+			} else {
+ 			    $("select[name='department']").removeClass('red');		
+			}
+			if (authority == '') {
+				$("select[name='authority']").addClass('red');
+			} else {
+ 			    $("select[name='authority']").removeClass('red');		
+			}
+		} else {
+			$.ajax({
+			     method: 'post',
+			     url: 'empInsert.do',
+			     traditional: true,
+			     data: {
+			    	 employeeCd : frm.employeeCd.value,
+			    	 ename : frm.ename.value,
+			    	 password : frm.password.value,
+			    	 job : frm.job.value,
+			    	 department : frm.department.value,
+			    	 authority : frm.authority.value		    	 
+			     },
+			     dataType: 'json',
+			     success: function (result) {
+			        if (result) {
+						callView('emp.do');
+			        } else {
+			        	alert("실패");
+			        }
+				}
+		   });
+		}	
 	}
 	
 	document.querySelector("#addEmp").addEventListener("click", addEmp);
@@ -342,7 +386,7 @@ $(document).ready(function() {
 	
     $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
      	 initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-         var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
+         var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus' style='width: 45px;'>";
          $(this).removeClass("editable")
          $(this).html(input);
          $('#focus').focus();
@@ -431,13 +475,14 @@ $(document).ready(function() {
 	$('#next').on('click', function() {
 		paging.currentPage.value++;
 		
-		if (paging.currentPage.value > '${employee.totalPage }') {
+		if (paging.currentPage.value > ${employee.totalPage }) {
 			paging.currentPage.value = ${employee.totalPage };
 		}
 		search();
 	});
 	
 	$('#limit').on('change', function() {
+		paging.currentPage.value=1;
 		search();
 	});
 	
@@ -449,7 +494,7 @@ $(document).ready(function() {
 				paging.currentPage.value = 1;
 			}
 			
-			if (paging.currentPage.value > '${employee.totalPage }') {
+			if (paging.currentPage.value > ${employee.totalPage }) {
 				paging.currentPage.value = ${employee.totalPage };
 			}
 			

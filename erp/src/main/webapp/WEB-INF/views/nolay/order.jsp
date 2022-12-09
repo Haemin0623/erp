@@ -29,11 +29,11 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">주문번호</div>
-						<input type="text" name="orderNo" value="${orderHead.orderNo }" list="">
+						<input type="search" name="orderNo" value="${orderHead.orderNo }" class="enter">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-						<input type="text" name="buyerCd" value="${orderHead.buyerCd }" list="buyerList">
+						<input type="search" name="buyerCd" value="${orderHead.buyerCd }" list="buyerList" class="enter">
 						<datalist id="buyerList">
 							<c:forEach var="buyer" items="${buyerEx }">
 								<option value="${buyer.buyerCd }">${buyer.bname }</option>
@@ -61,7 +61,7 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">신청인</div>
-						<input type="text" name="employeeCd" value="${orderHead.employeeCd }" list="employeeList">
+						<input type="search" name="employeeCd" value="${orderHead.employeeCd }" list="employeeList" class="enter">
 						<datalist id="employeeList">
 							<c:forEach var="employee" items="${employeeEx }">
 								<option value="${employee.employeeCd }">${employee.ename }</option>
@@ -70,7 +70,7 @@
 					</div>
 					<div class="search-item-div">			
 						<div class="search-item-text">상품코드</div>
-						<input type="text" name="productCd" value="${orderHead.productCd }" list="productList">
+						<input type="search" name="productCd" value="${orderHead.productCd }" list="productList" class="enter">
 						<datalist id="productList">
 							<c:forEach var="product" items="${productEx }">
 								<option value="${product.productCd }">${product.pname }</option>
@@ -147,6 +147,7 @@
 						<input type="checkbox" name="checkAll" id="th_checkAll" class="red-check">
 					</c:if>
 				</th>
+				<th class="fixed">순번</th>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
 				<th class="fixed" id="sortBuyerCd">고객코드</th>
 				<th class="fixed" id="sortOrderDate">발주일</th>
@@ -165,10 +166,11 @@
 							<input type="checkbox" name="checkRow" value="${head.orderNo }"  class="excel red-check">
 						</c:if>
 					</td>
+					<td>${head.rn }</td>
 					<td>${head.orderNo }<input type="hidden" value="${head.orderNo }"> </td>
-					<td>${head.buyerCd }</td>
+					<td>${head.buyerCd } (${head.bname })</td>
 					<td>${head.orderdate }</td>
-					<td>${head.employeeCd }</td>
+					<td>${head.employeeCd } (${head.ename })</td>
 					<td ><input type="hidden" value="${head.status }">${head.status }</td>
 					<td><input type="hidden" value="${head.reason }">${head.statusdate }</td>
 					<td>
@@ -351,8 +353,34 @@
 		const remark = frm.remark.value;
 		
 		if (orderdate == '' || productCd == '' || requestqty == '' || price == '' || 
-				amount == '' || requestdate == '' || remark == ''){
+				amount == '' || requestdate == ''){
 			alert('값을 채워넣어주세요');
+			
+			if (orderdate == '') {
+				$("input[name='orderdate']").addClass('red');
+			} else {
+ 			    $("input[name='orderdate']").removeClass('red');		
+			}
+			if (productCd == '') {
+				$("input[name='productCd']").addClass('red');
+			} else {
+ 			    $("input[name='productCd']").removeClass('red');		
+			}
+			if (requestqty == '') {
+				$("input[name='requestqty']").addClass('red');
+			} else {
+ 			    $("input[name='requestqty']").removeClass('red');		
+			}
+			if (price == '') {
+				$("input[name='price']").addClass('red');
+			} else {
+ 			    $("input[name='price']").removeClass('red');		
+			}
+			if (requestdate == '') {
+				$("input[name='requestdate']").addClass('red');
+			} else {
+ 			    $("input[name='requestdate']").removeClass('red');		
+			}
 		} else {
 			
 			$('#addItemTable > tbody').append(
@@ -404,6 +432,10 @@
 		for (let i = 0; i < tableLength; i++) {
 			let cells = rows[i+1].getElementsByTagName("td");
 			
+			if (cells[5].firstChild == null) {
+				var remarkk = "";
+			}
+			
 			items[i] = { 
 				orderNo: frm.orderNo.value,
 				productCd: cells[0].firstChild.data,
@@ -411,7 +443,7 @@
 				price: cells[2].firstChild.data,
 				amount: cells[3].firstChild.data,
 				requestdate: cells[4].firstChild.data,
-				remark: cells[5].firstChild.data
+				remark: remarkk
 			};
 		};
 		
@@ -481,6 +513,12 @@
 	   });
 
 	};
+	
+	$('.enter').keydown(function(e) {
+		if(event.keyCode == 13) {
+			search();
+		}
+	})
 
 	document.querySelector("#searchBtn").addEventListener("click", search);
 </script>
@@ -502,9 +540,9 @@
 		$('#area').empty();
 		
 		let thisRow = $(this).closest('tr');
-		let orderNo = thisRow.find('td:eq(1)').find('input').val();
-		let status = thisRow.find('td:eq(5)').find('input').val();
-		let reason = thisRow.find('td:eq(6)').find('input').val();
+		let orderNo = thisRow.find('td:eq(2)').find('input').val();
+		let status = thisRow.find('td:eq(6)').find('input').val();
+		let reason = thisRow.find('td:eq(7)').find('input').val();
 		
 		$.ajax({
 			method: 'post',
@@ -810,7 +848,8 @@ $(document).ready(function() {
 
 <!-- 고객 코드 설정시 계약된(판매가마스터에 존재하는) 상품만 가져오기 -->
 <script type="text/javascript">
-	$('#buyerCd').on("change", function() {
+
+	function getPricingProduct() {
 		const prod = $('select#productCd');
 		
 		console.log("지워져라~");
@@ -825,39 +864,55 @@ $(document).ready(function() {
 		    type : "post",
 		    traditional : true,
 		    data : { 
-		    	buyerCd  : frm.buyerCd.value
+		    	buyerCd  : frm.buyerCd.value,
+		    	orderdate : frm.orderdate.value
 		    },		    
 		    success : function(result){
-		    	console.log("성공?");
-		    	console.log(result);
-		    	console.log(result.length);
-		    	for (var i = 0; i < result.length; i++) {
-		    		const codeName = result[i];
-		    		const code = result[i].split('(')[0];
-		    		console.log(code);
-		    		$('select#productCd')[0].sumo.add(code, result[i]);
+		    	
+		    	if(result.length == 0) {
+		    		alert("헤당일자에 계약된 상품이 없습니다.");
+		    	} else {
+		    		for (var i = 0; i < result.length; i++) {
+			    		const codeName = result[i];
+			    		const code = result[i].split('(')[0];
+			    		console.log(code);
+			    		$('select#productCd')[0].sumo.add(code, result[i]);
+			    	}	
 		    	}
+		    	
 		    	
 		    }
 	  	});
+	}
+
+
+	$('#buyerCd').on("change", function() {
+		if(frm.orderdate.value != ""){
+			getPricingProduct();			
+		}
 	});
+			
+	$('#orderdate').on("change", function() {
+		if(frm.buyerCd.value != ""){
+			getPricingProduct();
+		}
+	});		
 </script>
 
 <!-- 등록창 초기화 -->
 <script type="text/javascript">
 	$('#reset').on('click', function() {
-		frm.orderNo.value = '';
-		frm.orderdate.value = '';
 		document.querySelector('#orderdate').removeAttribute("disabled");
+		frm.orderdate.value = '';
 		$('select#buyerCd')[0].sumo.enable();
-		$('select#buyerCd')[0].sumo.unSelectAll();
+		$('select#buyerCd')[0].sumo.selectItem(0);
 		$('select#productCd')[0].sumo.unSelectAll();		
 		frm.requestqty.value = '';
 		frm.price.value = '';
 		frm.requestdate.value = '';
 		frm.remark.value = '';
+		frm.orderNo.value = '';
 		
-		console.log($('#addItemTable').length);
 		$('#addItemTable > tbody').empty();
 		
 	});
@@ -948,25 +1003,26 @@ $(document).ready(function() {
 	$('#next').on('click', function() {
 		paging.currentPage.value++;
 		
-		if (paging.currentPage.value > '${orderHead.totalPage }') {
+		if (paging.currentPage.value > ${orderHead.totalPage }) {
 			paging.currentPage.value = ${orderHead.totalPage };
 		}
 		search();
 	});
 	
 	$('#limit').on('change', function() {
+		paging.currentPage.value=1;
 		search();
 	});
 	
 	$('#currentPage').keydown(function(key) {
 		if(key.keyCode == 13) {
 			key.preventDefault();			
-			
+				
 			if (paging.currentPage.value < 1) {
 				paging.currentPage.value = 1;
 			}
 			
-			if (paging.currentPage.value > '${orderHead.totalPage }') {
+			if (paging.currentPage.value > ${orderHead.totalPage }) {
 				paging.currentPage.value = ${orderHead.totalPage };
 			}
 			

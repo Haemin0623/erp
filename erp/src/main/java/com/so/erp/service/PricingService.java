@@ -19,8 +19,6 @@ public interface PricingService {
 	int pricingUpdate(Pricing pricing);
 
 	int getPrice(Pricing pricing);
-
-	List<Product> getProductList(String buyerCd);
 	
 	List<Pricing> search(Pricing pricing);
 
@@ -29,6 +27,8 @@ public interface PricingService {
 	int overlapCheck(Pricing pricing);
 
 	Pricing listForExcel(Pricing pricing);
+
+	List<Product> getProductList(Pricing pricing);
 
 
 }

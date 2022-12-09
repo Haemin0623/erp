@@ -93,13 +93,14 @@
 			and sysdate between startdate and enddate
 	</select>
 	
-	<select id="getProductList" parameterType="String" resultType="product">
+	<select id="getProductList" parameterType="pricing" resultType="product">
 		select	pr.product_cd,
 				pname
 		from	m_product pd,
 				m_pricing pr
 		where	pd.product_cd = pr.product_cd
 			and pr.buyer_cd = #{buyerCd}
+			and #{validDate} between startdate and enddate
 	</select>
 	
 	<select id="search" parameterType="pricing" resultType="pricing">

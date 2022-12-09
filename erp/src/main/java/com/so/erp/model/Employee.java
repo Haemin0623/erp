@@ -20,6 +20,8 @@ public class Employee {
     private Date addFromDate;
     private Date addToDate;
     
+    private int rn;
+    
     private int currentPage;
 	private int rowPerPage;
 	private int total;

@@ -47,8 +47,8 @@ public class PricingServiceImpl implements PricingService {
 	}
 
 	@Override
-	public List<Product> getProductList(String buyerCd) {
-		return prd.getProductList(buyerCd);
+	public List<Product> getProductList(Pricing pricing) {
+		return prd.getProductList(pricing);
 	}
 		
 	public List<Pricing> search(Pricing pricing) {
@@ -69,5 +69,6 @@ public class PricingServiceImpl implements PricingService {
 	public Pricing listForExcel(Pricing pricing) {
 		return prd.listForExcel(pricing);
 	}
+	
 
 }

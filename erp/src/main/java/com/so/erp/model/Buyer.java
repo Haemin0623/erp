@@ -17,6 +17,8 @@ public class Buyer {
     private Date adddate;
     private String del;        
     private Date statusdate;
+    
+    private int rn;
 
     private int sortBuyerCd;
     private int sortBname;

@@ -64,21 +64,21 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-						<input type="text" name="buyerCd" value="${buyer.buyerCd }" list="buyerList">
+						<input type="search" name="buyerCd" value="${buyer.buyerCd }" list="buyerList">
 						<datalist id="buyerList">
-							<c:forEach var="buyer" items="${buyerList}">
+							<c:forEach var="buyer" items="${buyerEx}">
 								<option value="${buyer.buyerCd }">${buyer.bname }</option>
 							</c:forEach>
 						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">담당자</div> 
-						<select name="manager" class="manager sumo">
-							<option value=""></option>
-							<c:forEach var="buyerItem" items="${buyerList}">
-								<option>${buyerItem.manager}</option>
+						<input type="search" name="manager" value="${buyer.manager }" list="managerList">
+						<datalist id="managerList">
+							<c:forEach var="buyer" items="${buyerEx}">
+								<option value="${buyer.manager }"></option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">주소</div>
@@ -88,36 +88,36 @@
 		<%-- 						<option class="long2">${buyer.address}</option> --%>
 		<%-- 					</c:forEach> --%>
 		<!-- 				</select> -->
-						<input type="text" name="address" class="keyword long2" value="${buyer.address}"> 
+						<input type="search" name="address" class="keyword long2" value="${buyer.address}"> 
 					</div>
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">국가코드</div>
-						<select name="countryCd" class="countryCd sumo">
-							<option value=""></option>
-							<c:forEach var="countryCd" items="${countryCdList}">
-								<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
+						<input type="search" name="countryCd" value="${buyer.countryCd }" list="countryList">
+						<datalist id="countryList">
+							<c:forEach var="country" items="${countryEx}">
+								<option value="${country.countryCd }">${country.cname }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">	
 						<div class="search-item-text">전화번호</div>
-						<select name="tel" class="tel sumo">
-							<option value=""></option>
-							<c:forEach var="buyerItem" items="${buyerList}">
-								<option>${buyerItem.tel}</option>
+						<input type="search" name="tel" value="${buyer.tel }" list="telList">
+						<datalist id="telList">
+							<c:forEach var="buyer" items="${buyerEx}">
+								<option value="${buyer.tel }"></option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">이메일</div>
-						<select name="email" class="email sumo">
-							<option value=""></option>
-							<c:forEach var="buyerItem" items="${buyerList}">
-								<option>${buyerItem.email}</option>
+						<input type="search" name="email" value="${buyer.tel }" list="emailList">
+						<datalist id="emailList">
+							<c:forEach var="buyer" items="${buyerEx}">
+								<option value="${buyer.email }"></option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">활성상태</div>
@@ -186,6 +186,7 @@
 							<input type="checkbox" name="checkAll" id="th_checkAll" class="red-check">
 						</c:if>	
 					</th>
+					<th class="fixed">순번</th>
 					<th class="fixed" id="sortBuyerCd">고객코드</th>
 					<th class="fixed" id="sortBname">고객명</th>
 					<th class="fixed" id="sortManager">담당자</th>
@@ -206,6 +207,7 @@
 								<input type="checkbox" name="checkRow" value="${buyerItem.buyerCd}" class="red-check">
 							</c:if>
 						</td>
+						<td>${buyerItem.rn }</td>
 						<td>${buyerItem.buyerCd }</td>
 						<td class="editable">${buyerItem.bname }</td>
 						<td class="editable">${buyerItem.manager}</td>
@@ -247,7 +249,7 @@
 					<tr> 
 						<th>고객카테고리</th>
 						<td>
-							<select name="buyerCategory" class="sumo" id="autoCompleteCd" autofocus="autofocus">
+							<select name="buyerCategory" id="autoCompleteCd" class="search" autofocus="autofocus">
 								<option value=""></option>
 								<option value="FOD">식품회사</option>
 								<option value="MAT">마트</option>
@@ -286,7 +288,7 @@
 					<tr>
 						<th>국가코드</th>
 						<td>
-							<select name="countryCd" class="countryCd sumo" id="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
+							<select name="countryCd" class="countryCd search" id="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
 								<option value=""></option>
 								<c:forEach var="countryCd" items="${countryCdList}">
 									<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
@@ -332,8 +334,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	function search() {
 		
 		const keyword = {
-			buyerCd : searchBoxx.buyerCd.value,	
-			bname : searchBoxx.bname.value,	
+			buyerCd : searchBoxx.buyerCd.value,
 			manager : searchBoxx.manager.value,	
 			countryCd : searchBoxx.countryCd.value,	
 			tel : searchBoxx.tel.value,	
@@ -391,29 +392,81 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
 	// 신규등록 팝업 열기
 	function addBuyer() {
-		$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
-		     method: 'post', 
-		     url: 'buyerInsert.do', 
-		     traditional: true,
-		     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
-		    	buyerCd: frm.buyerCd.value,
-				bname: frm.bname.value,
-				manager: frm.manager.value,
-				tel: frm.tel.value,
-				email: frm.email.value,
-				address: frm.address.value,
-				countryCd: frm.countryCd.value
-		     },
-		     success: function (result) { //성공했을떄 호출할 콜백을 지정
-		    	console.log(result);
-		        if (result) {
-		        	document.location.reload();
-					alert("신규고객 등록완료");
-		        } else {
-		        	alert("등록실패");
-		        }
+		const buyerCd = frm.buyerCd.value;
+		const bname = frm.bname.value;
+		const manager = frm.manager.value;
+		const tel = frm.tel.value;
+		const email = frm.email.value;
+		const address = frm.address.value;
+		const countryCd = frm.countryCd.value;
+		
+		if (buyerCd == '' || bname == '' || manager == '' || tel == '' || 
+				email == '' || address == '' || countryCd == ''){
+			
+			alert('값을 채워넣어주세요');
+			
+			if (buyerCd == '') {
+				$("input[name='buyerCd']").addClass('red');
+				$("select[name='buyerCategory']").addClass('red');
+			} else {
+ 			    $("input[name='buyerCd']").removeClass('red');
+ 			    $("select[name='buyerCategory']").removeClass('red');
 			}
-	   });
+			if (bname == '') {
+				$("input[name='bname']").addClass('red');
+			} else {
+ 			    $("input[name='bname']").removeClass('red');		
+			}
+			if (manager == '') {
+				$("input[name='manager']").addClass('red');
+			} else {
+ 			    $("input[name='manager']").removeClass('red');		
+			}
+			if (tel == '') {
+				$("input[name='tel']").addClass('red');
+			} else {
+ 			    $("input[name='tel']").removeClass('red');		
+			}
+			if (email == '') {
+				$("input[name='email']").addClass('red');
+			} else {
+ 			    $("input[name='email']").removeClass('red');		
+			}
+			if (address == '') {
+				$("input[name='address']").addClass('red');
+			} else {
+ 			    $("input[name='address']").removeClass('red');		
+			}
+			if (countryCd == '') {
+				$("select[name='countryCd']").addClass('red');
+			} else {
+ 			    $("select[name='countryCd']").removeClass('red');		
+			}
+		} else {
+			$.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
+			     method: 'post', 
+			     url: 'buyerInsert.do', 
+			     traditional: true,
+			     data: { //서버로 데이터를 전송할때  키와 벨류로 전달. BuyerController로 buyer객체에 담겨서 보내짐
+			    	buyerCd: frm.buyerCd.value,
+					bname: frm.bname.value,
+					manager: frm.manager.value,
+					tel: frm.tel.value,
+					email: frm.email.value,
+					address: frm.address.value,
+					countryCd: frm.countryCd.value
+			     },
+			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+			    	console.log(result);
+			        if (result) {
+			        	callView('buyer.do')
+						alert("신규고객 등록완료");
+			        } else {
+			        	alert("등록실패");
+			        }
+				}
+		   });			
+		}
 	}
 	
 	document.querySelector("#addBuyerBtn").addEventListener("click", addBuyer); 
@@ -513,7 +566,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	
         $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
         	initValue=$(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
-            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus'>";
+            var input="<input type='text' class='input-data' value='"+initValue+"' class='form-control' id='focus' style='width: 45px;'>";
             $(this).removeClass("editable")
             $(this).html(input);
             $('#focus').focus();
@@ -646,13 +699,14 @@ $(document).ready(function() {
 	$('#next').on('click', function() {
 		paging.currentPage.value++;
 		
-		if (paging.currentPage.value > '${buyer.totalPage }') {
+		if (paging.currentPage.value > ${buyer.totalPage }) {
 			paging.currentPage.value = ${buyer.totalPage };
 		}
 		search();
 	});
 	
 	$('#limit').on('change', function() {
+		paging.currentPage.value=1;
 		search();
 	});
 	
@@ -664,7 +718,7 @@ $(document).ready(function() {
 				paging.currentPage.value = 1;
 			}
 			
-			if (paging.currentPage.value > '${buyer.totalPage }') {
+			if (paging.currentPage.value > ${buyer.totalPage }) {
 				paging.currentPage.value = ${buyer.totalPage };
 			}
 			

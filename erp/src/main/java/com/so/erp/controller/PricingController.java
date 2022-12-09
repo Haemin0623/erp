@@ -317,9 +317,15 @@ public class PricingController {
 	
 	@RequestMapping("getPricingProductList")
 	@ResponseBody
-	public String[] getPricingProductList(String buyerCd) {
+	public String[] getPricingProductList(String buyerCd, @RequestParam(name="orderdate") String orderdate) {
 		
-		List<Product> list = prs.getProductList(buyerCd);
+		Date date = Date.valueOf(orderdate);
+		Pricing pricing = new Pricing();
+		
+		pricing.setBuyerCd(buyerCd);
+		pricing.setValidDate(date);
+		
+		List<Product> list = prs.getProductList(pricing);
 		String[] productList = new String[list.size()];
 		int i = 0;
 		

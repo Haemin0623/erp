@@ -49,7 +49,7 @@
 						<where>
 							<if test="buyerCd != null and buyerCd != ''">
 								(buyer_cd like '%' || #{buyerCd} || '%'
-								or bname like '%' || #{bname} || '%')
+								or bname like '%' || #{buyerCd} || '%')
 							</if>
 							<if test="manager != null and manager != 'null'">
 								and manager like '%' || #{manager} || '%'

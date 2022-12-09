@@ -20,7 +20,7 @@ public interface PricingDao {
 
 	int getPrice(Pricing pricing);
 
-	List<Product> getProductList(String buyerCd);
+	List<Product> getProductList(Pricing pricing);
 	
 	List<Pricing> search(Pricing pricing);
 

@@ -45,11 +45,6 @@ public class PricingDaoImpl implements PricingDao {
 	public int getPrice(Pricing pricing) {
 		return sst.selectOne("pricingns.getPrice", pricing);
 	}
-
-	@Override
-	public List<Product> getProductList(String buyerCd) {
-		return sst.selectList("pricingns.getProductList", buyerCd);
-	}
 		
 	public List<Pricing> search(Pricing pricing) {
 		return sst.selectList("pricingns.search", pricing);
@@ -68,6 +63,11 @@ public class PricingDaoImpl implements PricingDao {
 	@Override
 	public Pricing listForExcel(Pricing pricing) {
 		return sst.selectOne("pricingns.listForExcel", pricing);
+	}
+
+	@Override
+	public List<Product> getProductList(Pricing pricing) {
+		return sst.selectList("pricingns.getProductList", pricing);
 	}
 
 }
