@@ -64,21 +64,12 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-						<select name="buyerCd" class="buyerCd sumo">
-							<option value=""></option>
-							<c:forEach var="buyerItem" items="${buyerList}">
-								<option>${buyerItem.buyerCd}</option>
+						<input type="text" name="buyerCd" value="${buyer.buyerCd }" list="buyerList">
+						<datalist id="buyerList">
+							<c:forEach var="buyer" items="${buyerList}">
+								<option value="${buyer.buyerCd }">${buyer.bname }</option>
 							</c:forEach>
-						</select>
-					</div>
-					<div class="search-item-div">
-						<div class="search-item-text">고객명</div>
-						<select name="bname" class="bname sumo">
-							<option value=""></option>
-							<c:forEach var="buyerItem" items="${buyerList}">
-								<option>${buyerItem.bname}</option>
-							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">담당자</div> 

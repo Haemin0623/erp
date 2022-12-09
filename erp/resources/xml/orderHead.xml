@@ -27,17 +27,28 @@
 		select	*
 		from	(select a.*,
 						rowNum rn
-      			 from	(select hi.*, e.ename, e.job, e.department
-      			 		from	(select	distinct h.*
-								from	order_head h left outer join
-										order_item i
-								on		h.order_no = i.order_no
-								<where>
+      			 from	(select hi.*
+      			 		from	(select	distinct h.*,
+      			 						b.bname,
+      			 						p.pname,
+      			 						e.ename,
+      			 						e.job,
+      			 						e.department
+								from	m_buyer b,
+										order_head h,
+										order_item i,
+										m_product p,
+										m_employee e
+								where	h.order_no(+) = i.order_no
+									and	h.buyer_cd = b.buyer_cd
+									and i.product_cd = p.product_cd
+									and h.employee_cd = e.employee_cd
 									<if test="orderNo != null and orderNo != ''">
 										and h.order_no like '%' || #{orderNo} || '%'
 									</if>
-									<if test="buyerCd != null and buyerCd != 'All'">
-										and h.buyer_cd like '%' || #{buyerCd} || '%'
+									<if test="buyerCd != null and buyerCd != ''">
+										and (h.buyer_cd like '%' || #{buyerCd} || '%'
+											or	bname like '%' || #{buyerCd} || '%')
 									</if><if test="orderFromDate != null or orderToDate != null">
 										<if test="orderFromDate == null">
 											and h.orderdate between '0001-01-01' and #{orderToDate}
@@ -48,14 +59,16 @@
 										<if test="orderFromDate != null and orderToDate != null">
 											and h.orderdate between #{orderFromDate} and #{orderToDate}
 										</if>
-									</if><if test="employeeCd != null and employeeCd != 'All'">
-										and h.employee_cd like '%' || #{employeeCd} || '%'
+									</if><if test="employeeCd != null and employeeCd != ''">
+										and (h.employee_cd like '%' || #{employeeCd} || '%'
+											or ename like '%' || #{employeeCd} || '%')
 									</if>
 									<if test="status != null and status != 'null'">
 										and h.status = #{status}
 									</if>
-									<if test="productCd != null and productCd != 'All'">
-										and i.product_cd like '%' || #{productCd} || '%'
+									<if test="productCd != null and productCd != ''">
+										and (i.product_cd like '%' || #{productCd} || '%'
+											or pname like '%' || #{productCd} || '%')
 									</if>
 									<if test="requestFromDate != null or requestToDate != null">				
 										<if test="requestFromDate == null">
@@ -70,8 +83,7 @@
 									</if>
 									<if test="del != 'All'">
 										and h.del = #{del}
-									</if>	
-								</where>
+									</if>
 								order by
 									<if test="sortOrderDate == 1">
 										h.orderdate desc
@@ -109,8 +121,7 @@
 									<if test="sortStatusDate == 2">
 										h.statusdate asc
 									</if>
-									) hi, m_employee e
-                        where hi.employee_cd = e.employee_cd
+									) hi
 						) a
 				)
 		where	rn between #{startRow} and #{endRow}
@@ -267,17 +278,22 @@
 	
 	<select id="getTotal" parameterType="orderHead" resultType="integer">
 		select	count(distinct h.order_no)
-		from	order_head h left outer join
-				order_item i
-		on		h.order_no = i.order_no
-		<where>
+		from	m_buyer b,
+				order_head h,
+				order_item i,
+				m_product p,
+				m_employee e
+		where	h.order_no(+) = i.order_no
+			and	h.buyer_cd = b.buyer_cd
+			and i.product_cd = p.product_cd
+			and h.employee_cd = e.employee_cd
 			<if test="orderNo != null and orderNo != ''">
 				and h.order_no like '%' || #{orderNo} || '%'
 			</if>
-			<if test="buyerCd != null and buyerCd != 'All'">
-				and h.buyer_cd like '%' || #{buyerCd} || '%'
-			</if>
-			<if test="orderFromDate != null or orderToDate != null">
+			<if test="buyerCd != null and buyerCd != ''">
+				and (h.buyer_cd like '%' || #{buyerCd} || '%'
+					or	bname like '%' || #{buyerCd} || '%')
+			</if><if test="orderFromDate != null or orderToDate != null">
 				<if test="orderFromDate == null">
 					and h.orderdate between '0001-01-01' and #{orderToDate}
 				</if>
@@ -287,15 +303,16 @@
 				<if test="orderFromDate != null and orderToDate != null">
 					and h.orderdate between #{orderFromDate} and #{orderToDate}
 				</if>
-			</if>
-			<if test="employeeCd != null and employeeCd != 'All'">
-				and h.employee_cd like '%' || #{employeeCd} || '%'
+			</if><if test="employeeCd != null and employeeCd != ''">
+				and (h.employee_cd like '%' || #{employeeCd} || '%'
+					or ename like '%' || #{employeeCd} || '%')
 			</if>
 			<if test="status != null and status != 'null'">
 				and h.status = #{status}
 			</if>
-			<if test="productCd != null and productCd != 'All'">
-				and i.product_cd like '%' || #{productCd} || '%'
+			<if test="productCd != null and productCd != ''">
+				and (i.product_cd like '%' || #{productCd} || '%'
+					or pname like '%' || #{productCd} || '%')
 			</if>
 			<if test="requestFromDate != null or requestToDate != null">				
 				<if test="requestFromDate == null">
@@ -311,7 +328,6 @@
 			<if test="del != 'All'">
 				and h.del = #{del}
 			</if>
-		</where>
 	</select>
 	
 	<select id="listForExcel" parameterType="orderHead" resultType="orderHead">

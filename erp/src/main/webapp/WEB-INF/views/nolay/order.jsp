@@ -29,16 +29,16 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">주문번호</div>
-						<input type="text" name="orderNo" value="${orderHead.orderNo }">
+						<input type="text" name="orderNo" value="${orderHead.orderNo }" list="">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-						<select name="buyerCd" class="sumoBuy sumo">
-							<option value="All"></option>
+						<input type="text" name="buyerCd" value="${orderHead.buyerCd }" list="buyerList">
+						<datalist id="buyerList">
 							<c:forEach var="buyer" items="${buyerEx }">
-								<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
+								<option value="${buyer.buyerCd }">${buyer.bname }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">발주일</div>
@@ -61,21 +61,21 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">신청인</div>
-						<select name="employeeCd" class="sumoEmp sumo">
-							<option value="All"></option>
+						<input type="text" name="employeeCd" value="${orderHead.employeeCd }" list="employeeList">
+						<datalist id="employeeList">
 							<c:forEach var="employee" items="${employeeEx }">
-								<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
+								<option value="${employee.employeeCd }">${employee.ename }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">			
 						<div class="search-item-text">상품코드</div>
-						<select name="productCd" class="sumoProd sumo">
-							<option value="All"></option>
+						<input type="text" name="productCd" value="${orderHead.productCd }" list="productList">
+						<datalist id="productList">
 							<c:forEach var="product" items="${productEx }">
-								<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
+								<option value="${product.productCd }">${product.pname }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">요청일</div>
