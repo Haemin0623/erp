@@ -3,7 +3,6 @@ package com.so.erp.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -81,6 +80,8 @@ public class PricingController {
 		
 		List<Pricing> pricingList = new ArrayList<Pricing>();
 		pricingList = prs.pricingList(pricing);
+		
+		
 		
 		for (Pricing pricing1 : pricingList) {
 			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
@@ -165,6 +166,8 @@ public class PricingController {
 			
 			
 			List<Pricing> searchList = prs.search(pricing);
+			List<Buyer> buyerList = bs.ndlist();
+			List<Product> productList = pds.allList();
 			
 			
 			for (Pricing pricing1 : searchList) {
@@ -172,6 +175,8 @@ public class PricingController {
 			}
 			
 			model.addAttribute("pricingList", searchList);
+			model.addAttribute("buyerList", buyerList);
+			model.addAttribute("productList", productList);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());

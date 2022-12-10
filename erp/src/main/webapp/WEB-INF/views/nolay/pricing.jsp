@@ -55,28 +55,28 @@ function changeContent(data) {
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-							<input type="text" name="buyerCd" value="${pricing.buyerCd }" list="buyerList">
+							<input type="search" name="buyerCd" value="${pricing.buyerCd }" list="buyerList" class="enter">
 							<datalist id="buyerList">
-								<c:forEach var="pricing" items="${buyerEx }">
-								
+								<c:forEach var="buyer" items="${buyerList }">
+									<option value="${buyer.buyerCd }">${buyer.bname }</option>
 								</c:forEach>
 							</datalist>
 					
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">상품코드</div>
-							<select name="productCd" class="keyword sumo sumoProd">
-								<option value="All"></option>
-								<c:forEach var="pricing" items="${productList }">
-									<option value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</option>
+							<input type="search" name="productCd" value="${pricing.productCd }" list="productList" class="enter">
+							<datalist id="productList">
+								<c:forEach var="product" items="${productList }">
+									<option value="${product.productCd }">${product.pname }</option>
 								</c:forEach>
-							</select>
+							</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">판매가</div>
-							<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword price">
+							<input type="number" name="startPrice" value="${pricing.startPrice }" class="keyword price" class="enter">
 							~
-							<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword price"><p>
+							<input type="number" name="endPrice" value="${pricing.endPrice }" class="keyword price" class="enter"><p>
 					</div>
 				</div>
 				<div class="search-sub-div">
@@ -86,7 +86,7 @@ function changeContent(data) {
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">할인율</div>
-							<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword discountrate">
+							<input type="number" name="discountrate" value="${pricing.discountrate }" class="keyword discountrate" class="enter">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">통화단위</div>
@@ -200,7 +200,7 @@ function changeContent(data) {
 									value="${pricing.buyerCd }&${pricing.productCd }&${pricing.startdate }&${pricing.enddate }">
 							</c:if>
 						</td>
-						<td>${status.count }</td>
+						<td>${pricing.rn }</td>
 						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname})</td>
 						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</td>
 						<td class="editable"><fmt:formatNumber value="${pricing.price }" pattern="#,###.##"/></td>
@@ -230,21 +230,21 @@ function changeContent(data) {
 					<tr>
 						<th>고객코드</th>
 						<td>	
-							<select name="buyerCd" class="keyword sumo sumoBuy">
-								<option value="All"></option>
-								<c:forEach var="pricing" items="${buyerList }">
-									<option value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname })</option>
+							<input type="search" name="buyerCd" value="${pricing.buyerCd }" list="buyerList">
+							<datalist id="buyerList">
+								<c:forEach var="buyer" items="${buyerList }">
+									<option value="${buyer.buyerCd }">${buyer.bname }</option>
 								</c:forEach>
-							</select>
+							</datalist>
 						</td>
 						<th>상품코드</th>
 						<td>
-							<select name="productCd" class="keyword sumo sumoProd">
-								<option value="All"></option>
+							<input type="search" name="productCd" value="${pricing.productCd }" list="productList">
+							<datalist id="productList">
 								<c:forEach var="pricing" items="${productList }">
-									<option value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</option>
+									<option value="${pricing.productCd }">${pricing.pname }</option>
 								</c:forEach>
-							</select>
+							</datalist>
 						</td>
 					</tr>
 					<tr>
@@ -262,7 +262,7 @@ function changeContent(data) {
 					<tr>
 						<th>통화단위</th>
 						<td colspan="3">
-							<select name="currency" class="sumo">
+							<select name="currency">
 								<option value=""></option>
 								<option value="원(₩)">원(₩)</option>
 								<option value="달러($)">달러($)</option>
@@ -828,19 +828,29 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 		$('#next').on('click', function() {
 			paging.currentPage.value++;
 			
-			if (paging.currentPage.value > '${pricing.totalPage }') {
+			if (paging.currentPage.value > ${pricing.totalPage }) {
 				paging.currentPage.value = ${pricing.totalPage };
 			}
 			search();
 		});
 		
 		$('#limit').on('change', function() {
+			paging.currentPage.value = 1;
 			search();
 		});
 		
 		$('#currentPage').keydown(function(key) {
 			if(key.keyCode == 13) {
 				key.preventDefault();
+				
+				if (paging.currentPage.value < 1) {
+					paging.currentPage.value = 1;
+				}
+				
+				if (paging.currentPage.value > ${pricing.totalPage}) {
+					paging.currentPage.value = ${pricing.totalPage};
+				}
+				
 				search();
 			}
 		});
@@ -916,6 +926,13 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 	}
 	
 	document.querySelector("#excelBtn").addEventListener("click", excel);
+	
+// 	enter입력시 검색
+	$('.enter').keydown(function(e) {
+		if(event.keyCode == 13) {
+			search();
+		}
+	})
 </script>
 
 </html>

@@ -51,6 +51,7 @@ public class Pricing {
    	private int startRow;
    	private int endRow;
    	private String pageNum;
+   	private int rn;
    	
    	public void pagingBean(int currentPage, int rowPerPage, int total) {
    		

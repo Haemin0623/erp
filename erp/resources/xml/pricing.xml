@@ -107,18 +107,20 @@
 	
 	<select id="search" parameterType="pricing" resultType="pricing">
 		select	*
-		from	(select	a.*,
+		from	(select a.*,
 						rowNum rn
-				 from  (select	p.*, b.bname, d.pname
+				 from  (select	distinct p.*, b.bname, d.pname
 						from	m_pricing p, m_buyer b, m_product d
 		<where>
 				p.buyer_cd = b.buyer_cd
 			and	p.product_cd = d.product_cd
 			<if test="buyerCd != null and buyerCd != 'All'">
-				and p.buyer_cd like '%' || #{buyerCd} || '%'
+				and (p.buyer_cd like '%' || #{buyerCd} || '%'
+				or	b.bname like '%' || #{buyerCd} || '%')
 			</if>
 			<if test="productCd != null and productCd != 'All'">
-				and p.product_cd like '%' || #{productCd} || '%'
+				and (p.product_cd like '%' || #{productCd} || '%'
+				or d.pname like '%' || #{productCd} || '%')
 			</if>
 			<if test="startPrice != 0 and endPrice != 0">
 				and price between #{startPrice} and #{endPrice}
