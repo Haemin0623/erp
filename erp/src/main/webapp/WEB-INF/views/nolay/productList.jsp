@@ -26,21 +26,21 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">상품코드</div>
-						<select name="productCd" class="productCd sumo">
-							<option value=""></option>
+						<input type="text" name="productCd" value="${product.productCd }" list="productCdList">
+						<datalist id="productCdList">
 							<c:forEach var="item" items="${allList }">
 								<option value="${item.productCd }">${item.productCd }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">상품명</div>
-						<select name="pname" class="pname sumo">
-							<option value=""></option>
+						<input type="text" name="pname" value="${product.pname }" list="pnameList">
+						<datalist id="pnameList">
 							<c:forEach var="item" items="${allList }">
 								<option value="${item.pname }">${item.pname }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div" >			
 						<div class="search-item-text" >등록일</div>
@@ -49,43 +49,35 @@
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-text">카테고리</div>
-						<select name="category" class="category sumo">
-							<option value=""></option>
-								<option value="스낵">스낵</option>
-								<option value="라면">라면</option>
-								<option value="음료">음료</option>
-						</select>
+						<input type="text" name="category" value="${product.category }" list="categoryList">
+						<datalist id="categoryList">
+							<option value="라면">라면</option>
+							<option value="스낵">스낵</option>
+							<option value="음료">음료</option>
+						</datalist>	
 						<div class="search-item-div">
 							<div class="search-item-text">용량</div>
-							<select name="volume" class="volume sumo">
-								<option value=""></option>
+							<input type="text" name="volume" value="${product.volume }" list="volumeList">
+							<datalist id="volumeList">
 								<c:forEach var="item" items="${allList }">
 									<option value="${item.volume }">${item.volume }</option>
 								</c:forEach>
-							</select>
+							</datalist>
 						</div>
 					<div class="search-item-div">
 						<div class="search-item-text" >활성상태 </div>
-							<select name="del" class="sumo" >
+							<input type="text" name="del" list="delList" >
+							<datalist id="delList">
 								<c:if test="${product.del == null }">
-									<option value="null" selected="selected">모두
-								</c:if>
-								<c:if test="${product.del != null }">
 									<option value="null">모두
 								</c:if>
 								<c:if test="${product.del == 'N' }">
-									<option value="N" selected="selected">활성
-								</c:if>
-								<c:if test="${product.del != 'N' }">
-									<option value="N">활성
+									<option value="N"> 활성
 								</c:if>
 								<c:if test="${product.del == 'Y' }">
-									<option value="Y" selected="selected">비활성
+									<option value="Y" >비활성
 								</c:if>
-								<c:if test="${product.del != 'Y' }">
-									<option value="Y">비활성
-								</c:if>
-							</select>
+							</datalist>
 						</div>
 					
 					</form></div>
@@ -154,7 +146,7 @@
 				<th class="fixed" id="sortCategory">상품 카테고리</th>
 				<th class="fixed" id="sortAddDate">등록일</th>
 				<th class="fixed" id="sortStatusDate">최종수정일</th>
-				<th class="fixed" id="sortDel">활성여부</th>
+				<th class="fixed" id="sortDel">활성상태</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
 			<tr class="itemRow">
@@ -173,7 +165,14 @@
 				<td>${productList.category}</td>
 				<td>${productList.adddate}</td>
 				<td>${productList.statusdate}</td>
-				<td>${productList.del}</td>
+				<td>
+					<c:if test="${productList.del=='Y'}">
+					비활성
+					</c:if>
+					<c:if test="${productList.del!='Y'}">
+						활성
+					</c:if>
+				</td>
 			</tr>
 			</c:forEach> 
 		</table>
@@ -215,15 +214,15 @@
 							</tr>
 							<tr>
 								<th>상품명</th>
-								<td><input type="text" name="pname" required="required"></td>
+								<td><input type="text" name="pname" id="pname" required="required"></td>
 							</tr>
 							<tr>
 								<th>용량</th>
-								<td><input type="text" name="volume" required="required"></td>
+								<td><input type="text" name="volume" id="volume" required="required"></td>
 							</tr>
 							<tr>
 								<th>단위</th>
-								<td><input type="text" name="unit" required="required"></td>
+								<td><input type="text" name="unit" id="unit" required="required"></td>
 							</tr>
 					</table>
 				</form>
@@ -336,6 +335,18 @@
 		    		
 		    	}else if(result== -1){
 		    		alert("이미 등록된 상품입니다.");
+		    	}else if(result == -2){
+		    		alert("카테고리를 선택해주세요")
+		    	}else if(result == -3){
+		    		alert("상품명을 입력해주세요")
+		    		 $('#pname').focus();
+		    	}else if(result == -4){
+		    		alert("용량을 입력해주세요")
+		    		 $('#volume').focus();
+		    	}else if(result == -5){
+		    		alert("단위를 입력해주세요")
+		    		 $('#unit').focus();
+		    	
 		    	}else
 		    	alert("등록실패");
 		    }

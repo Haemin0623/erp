@@ -102,9 +102,27 @@ public class ProductController {
 		String pname = (String) productObj.get("pname");
 		String volume = (String) productObj.get("volume");
 		String unit = (String) productObj.get("unit");
+		System.out.println(category);
+		System.out.println(productCd);
+		System.out.println(pname);
+		System.out.println(volume);
+		System.out.println(unit);
+		if(category.equals("") ) {
+			result = -2;
+			return result;
+		}else if(pname.equals("") ){
+			result = -3;
+			return result;
+		}else if(volume.equals("") ) {
+			result = -4;
+			return result;
+		}else if(unit.equals("") ) {
+			result = -5;
+			return result;
+		}
 		
-		product.setProductCd(productCd);
 		product.setCategory(category);
+		product.setProductCd(productCd);
 		product.setPname(pname);
 		product.setVolume(volume);
 		product.setUnit(unit);
