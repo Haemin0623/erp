@@ -30,7 +30,6 @@
       			 from	(select hi.*
       			 		from	(select	distinct h.*,
       			 						b.bname,
-      			 						p.pname,
       			 						e.ename,
       			 						e.job,
       			 						e.department
@@ -39,9 +38,9 @@
 										order_item i,
 										m_product p,
 										m_employee e
-								where	h.order_no(+) = i.order_no
+								where	h.order_no = i.order_no(+)
 									and	h.buyer_cd = b.buyer_cd
-									and i.product_cd = p.product_cd
+									and i.product_cd(+) = p.product_cd
 									and h.employee_cd = e.employee_cd
 									<if test="orderNo != null and orderNo != ''">
 										and h.order_no like '%' || #{orderNo} || '%'

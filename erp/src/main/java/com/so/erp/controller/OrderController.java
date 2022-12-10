@@ -1216,4 +1216,22 @@ public class OrderController {
 		return result;
 	}
 	
+	@RequestMapping("getHead")
+	@ResponseBody
+	public OrderHead getHead(String orderNo) {
+		
+		OrderHead orderhead = hs.select(orderNo);
+		
+		return orderhead;
+	}
+	
+	@RequestMapping("getItem")
+	@ResponseBody
+	public List<OrderItem> getItem(String orderNo) {
+		
+		List<OrderItem> requestItemList = is.itemList(orderNo);
+		
+		return requestItemList;
+	}
+	
 }

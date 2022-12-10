@@ -127,7 +127,9 @@
 				<th class="fixed">최종수정일</th>
 			</tr>
 			<c:forEach var="emp" items="${empList }">			
-				<tr class="itemRow">
+				<tr class="itemRow"
+					<c:if test="${emp.del =='Y'}">style="background-color: #c0c0c052;"</c:if>
+				>
 					<td>
 						<c:if test="${emp.del =='Y'}">
 							<input type="checkbox" name="deletedRow" value="${emp.employeeCd }" class="excel">
@@ -785,4 +787,15 @@ $(document).ready(function() {
 });
 </script>
 
+<!-- 날짜 최소 / 최대 제한 주기 -->
+<script type="text/javascript">
+	$('input[name="addFromDate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="addToDate"]').attr('min',minDate);
+	});
+	$('input[name="addToDate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="addFromDate"]').attr('max',maxDate);
+	});
+</script>
 </html>

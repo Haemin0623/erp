@@ -157,12 +157,17 @@
 				<th class="fixed">버튼</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
-				<tr class="itemRow" <c:if test="${head.del =='Y'}">style="background-color: silver;"</c:if> >
+				<tr class="itemRow"
+					<c:if test="${head.del =='Y'}">style="background-color: #c0c0c052;"</c:if>
+				 	<c:if test="${head.status == '승인요청'}">style="background-color: #9ff2ff73;"</c:if>
+				 	<c:if test="${head.status == '반려'}">style="color: red;"</c:if>
+				 	<c:if test="${head.status == '승인'}">style="color: green;"</c:if>
+				>
 					<td>
 						<c:if test="${head.del =='Y' and orderHead.del == 'Y'}">
 							<input type="checkbox" name="deletedRow" class="excel" value="${head.orderNo }" >
 						</c:if>
-						<c:if test="${head.del =='N' and head.status == '승인대기'}">
+						<c:if test="${head.del =='N' and (head.status == '승인대기' || head.status == '반려')}">
 							<input type="checkbox" name="checkRow" value="${head.orderNo }"  class="excel red-check">
 						</c:if>
 					</td>
@@ -184,7 +189,7 @@
 							<c:if test="${head.status == '승인'}">
 							</c:if>
 							<c:if test="${head.status == '반려'}">
-								<button onclick="location.href='re_Request.do?orderNo=${head.orderNo }'">재요청</button>
+								<button onclick="show2('${head.orderNo }')">재요청</button>
 							</c:if>
 						</c:if>
 					</td>
@@ -307,10 +312,67 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 재요청 -->
+	<div class="background2">
+		<div class="windo2w">
+			<div class="popup2" align="center">
+				<button onclick="close2()" style="float: right;	font-size: x-large;">X</button>
+			
+				<div id="head">
+					<form name="order" style="margin-top: -35px;">
+					<br><h1 class="addSub"> 재요청 </h1><br>
+						<table width="100%">
+							<tr>
+								<th>주문번호</th>
+								<td id="re_orderNo"></td>
+								<th>반려자</th>
+								<td id="re_employeeCd"></td>
+							</tr>
+							<tr>
+								<th>고객코드</th>
+								<td id="re_buyerCd"></td>		
+								<th>발주일</th>
+								<td id="re_orderdate"></td>			
+							</tr>
+							<tr>
+								<td colspan="4">
+									<textarea rows="5" cols="80" readonly="readonly" id="re_reason"></textarea>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div id="head-item" class="table" style="height:250px;">
+					<table id="items" width="100%">
+						<thead>
+							<tr>
+								<th>상품코드</th>
+								<th>수량</th>
+								<th>판매가</th>
+								<th>납품요청일</th>
+								<th>비고</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>			
+						</tbody>
+					</table>					
+				</div>
+				<div class="insert-btn" style="margin-bottom: -6px;">
+					<button onclick="request()" class="btn">재요청</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 </div>
 </body>
 
 <script type="text/javascript">
+	
 	// 등록 팝업 열기 닫기
 	function show() {
 		document.querySelector(".background").className = "background show";
@@ -428,12 +490,14 @@
 		const items = new Array(tableLength);
 		
 		
-		
+		var remarkk = "";
 		for (let i = 0; i < tableLength; i++) {
 			let cells = rows[i+1].getElementsByTagName("td");
 			
 			if (cells[5].firstChild == null) {
-				var remarkk = "";
+				remarkk = "";
+			} else {
+				remarkk = cells[5].firstChild.data;
 			}
 			
 			items[i] = { 
@@ -1105,6 +1169,172 @@ $(document).ready(function() {
 	
 </script>
 
+<!-- 날짜 최소 / 최대 제한 주기 -->
+<script type="text/javascript">
+	$('input[name="orderFromDate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="orderToDate"]').attr('min',minDate);
+	});
+	$('input[name="orderToDate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="orderFromDate"]').attr('max',maxDate);
+	});
+	
+	$('input[name="requestFromDate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="requestToDate"]').attr('min',minDate);
+	});
+	$('input[name="requestToDate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="requestFromDate"]').attr('max',maxDate);
+	});
+	
+	// 등록창 발주일 - 납품 요청일
+	$('input[name="orderdate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="requestdate"]').attr('min',minDate);
+	});
+	$('input[name="requestdate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="orderdate"]').attr('max',maxDate);
+	});
+</script>
+
+<script type="text/javascript">
+	//재요청
+	function show2(orderNo) {
+		
+		$.ajax({
+			url : 'getHead.do',
+			method : 'post',
+			traditional : true,
+			data : {
+				orderNo : orderNo
+			},
+			success: function (orderhead) {
+				console.log(orderhead);
+				const date = new Date(orderhead.orderdate);
+				const year = date.getFullYear();
+				const month = ('0' + (date.getMonth() + 1)).slice(-2);
+				const day = ('0' + date.getDate()).slice(-2);
+				const dateString = year + '-' + month  + '-' + day;
+				
+				$('#re_orderNo').text(orderhead.orderNo);
+				$('#re_employeeCd').text(orderhead.employeeCd);
+				$('#re_buyerCd').text(orderhead.buyerCd);				
+				$('#re_orderdate').text(dateString);
+				$('#re_reason').text(orderhead.reason);
+				
+				$.ajax({
+					url : 'getItem.do',
+					method : 'post',
+					traditional : true,
+					data : {
+						orderNo : orderNo
+					},
+					success: function (requestItemList) {
+						console.log(requestItemList);
+						
+						for(var i  = 0; i < requestItemList.length; i++){
+							const date2 = new Date(requestItemList[i].requestdate);
+							const year2 = date2.getFullYear();
+							const month2 = ('0' + (date2.getMonth() + 1)).slice(-2);
+							const day2 = ('0' + date2.getDate()).slice(-2);
+							const dateString2 = year2 + '-' + month2  + '-' + day2;
+							
+							$('#items > tbody').append(
+									"<tr class='row'>" +
+										"<td>" + requestItemList[i].productCd + "</td>" +
+										"<td><input type='number' name='requestqty' value=" + requestItemList[i].requestqty + "></td>" +
+										"<td><input type='number' name='price' value=" + requestItemList[i].price + "></td>" +
+										"<td><input type='date' name='requestdate' value=" + dateString2 + " min=" + dateString + "></td>" +
+										"<td><input type='text' name='text' value=" + requestItemList[i].remark + "></td>" +
+										"<td><button onclick='re_deleteItem(this)' value="+ requestItemList[i].orderNo +"&"+ requestItemList[i].productCd + ">삭제</button></td>" +
+									"</tr>"
+							);
+						}
+					}
+				});
+				
+				
+			}
+		});
+		
+		document.querySelector(".background2").className = "background2 show2";
+	}
+	
+	function close2() {
+		
+		$('#items > tbody').empty();
+		
+		document.querySelector(".background2").className = "background2";
+	}	
+	
+	function re_deleteItem(e) {
+		const check = confirm("정말로 해당 주문을 삭제 할까요?");
+		
+		if(check){
+			e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+			
+			$.ajax({
+				url : 'deleteItem.do',
+				method : 'post',
+				traditional : true,
+				data : {
+					code : e.value
+				},
+				success: function (result) {
+					if(result){
+					} else{
+						alert("실패");
+					}
+				}
+			});
+		}
+		
+		
+	}
+	
+	function request() {
+		let items = new Array();
+		
+		$(".row").each (function() {
+			let thisRow = $(this);
+			
+			console.log(thisRow);
+			
+			const item = {
+				orderNo: $('#re_orderNo').text(),
+				productCd: thisRow.find('td:eq(0)').text(),
+				requestqty: thisRow.find('td:eq(1)').find('input').val(),
+				price: thisRow.find('td:eq(2)').find('input').val(),
+				requestdate: thisRow.find('td:eq(3)').find('input').val(),
+				remark: thisRow.find('td:eq(4)').find('input').val()
+			}
+			console.log(item);
+			
+			items.push(item);
+		});
+		
+		$.ajax({
+			url : 'requestAgain.do',
+			method : 'post',
+			traditional : true,
+			data : {
+				item : JSON.stringify(items)
+			},
+			success: function (result) {
+				if (result) {
+					alert("재요청");
+					callView('order.do');
+				} else {
+				    alert("실패");
+				}
+			}
+		});
+		
+	}
+</script>
 
 
 </html>

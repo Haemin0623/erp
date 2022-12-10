@@ -198,7 +198,9 @@
 					<th class="fixed" id="sortStatusDate">최종수정일</th>
 				</tr>
 				<c:forEach var="buyerItem" items="${buyerList }">
-					<tr class="itemRow">
+					<tr class="itemRow"
+						<c:if test="${buyerItem.del =='Y'}">style="background-color: #c0c0c052;"</c:if>
+					>
 						<td>
 							<c:if test="${buyerItem.del =='Y' and buyer.del == 'Y'}"> <!-- del값이 Y이면 보여주지않고, N이면 보여준다 -->
 								<input type="checkbox" name="deletedRow" value="${buyerItem.buyerCd}">

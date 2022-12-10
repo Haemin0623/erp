@@ -171,7 +171,11 @@
 				<th class="fixed">사유</th>
 			</tr>
 			<c:forEach var="head" items="${headList }">			
-				<tr class="itemRow">
+				<tr class="itemRow"
+					<c:if test="${head.status == '승인요청'}">style="background-color: #9ff2ff73;"</c:if>
+					<c:if test="${head.status == '반려'}">style="color: red;"</c:if>
+				 	<c:if test="${head.status == '승인'}">style="color: green;"</c:if>
+				>
 					<td><input type="hidden" value="${head.orderNo }">${head.orderNo }</td>
 					<td>${head.buyerCd }</td>
 					<td>${head.orderdate }</td>
