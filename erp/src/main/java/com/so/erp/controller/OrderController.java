@@ -342,7 +342,7 @@ public class OrderController {
 			orderHead.setPageNum("1");
 		}
 		
-		
+		orderHead.setStatus("승인");
 		orderHead.setDel("N");		
 		orderHead.setSortOrderNo(0);
 		orderHead.setSortBuyerCd(0);

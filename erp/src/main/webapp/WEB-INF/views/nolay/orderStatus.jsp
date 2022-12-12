@@ -15,18 +15,15 @@
 
 	.graph1{
 	    position: relative;
-	    
 	    width: 400px;
 /* 	    height: 500px; */
 	    float: left;
 	    padding: 40px;
-	    
-	    
 	}
+	
 	#allGraph{
 	    padding-top: 30px;
 	    display: inline-block;
-	    
 	}
 
 </style>
@@ -56,66 +53,65 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">주문번호</div>
-						<input type="text" name="orderNo" value="${orderItem.orderNo }">
+						<input type="search" name="orderNo" value="${orderItem.orderNo }" class="enter">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">고객코드</div>
-		 				<select name="buyerCd" class="sumoBuy sumo">
-							<option value="All"></option>
+						<input type="search" name="buyerCd" value="${orderItem.buyerCd }" list="buyerList" class="enter">
+						<datalist id="buyerList">
 							<c:forEach var="buyer" items="${buyerEx }">
-								<option value="${buyer.buyerCd }">${buyer.buyerCd }(${buyer.bname })</option>
+								<option value="${buyer.buyerCd }">${buyer.bname }</option>
 							</c:forEach>
-						</select>
+						</datalist>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">신청일</div>
-							<input type="date" name="orderFromDate" value=${orderItem.orderFromDate }>
-							-<input type="date" name="orderToDate" value=${orderItem.orderToDate }>
+						<div class="search-item-text">발주일</div>
+						<input type="date" name="orderFromDate" value="${orderItem.orderFromDate }">
+						~<input type="date" name="orderToDate" value="${orderItem.orderToDate }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">승인상태</div>
 						<div class="boxx">
-							<select name="status">
-								<option value="null">모두</option>		
+							<select name="status" class="search">
+								<option value="승인" <c:if test="${orderItem.status == '승인' }">selected="selected"</c:if>>승인</option>
 								<option value="승인대기" <c:if test="${orderItem.status == '승인대기' }">selected="selected"</c:if>>승인대기</option>
 								<option value="승인요청" <c:if test="${orderItem.status == '승인요청' }">selected="selected"</c:if>>승인요청</option>
-								<option value="승인" <c:if test="${orderItem.status == '승인' }">selected="selected"</c:if>>승인</option>
 								<option value="반려" <c:if test="${orderItem.status == '반려' }">selected="selected"</c:if>>반려</option>
+								<option value="null">모두</option>		
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="search-sub-div">
 					<div class="search-item-div">
-						<div class="search-item-text">상품코드</div>
-						<select name="productCd" class="sumoProd sumo">
-							<option value="All"></option>
-							<c:forEach var="product" items="${productEx }">
-								<option value="${product.productCd }">${product.productCd }(${product.pname })</option>
-							</c:forEach>
-						</select>
-					</div>
-					
-					<div class="search-item-div">
-						<div class="search-item-text">영업담당자</div> 
-						<select name="employeeCd" class="sumoEmp sumo">
-							<option value="All"></option>
+						<div class="search-item-text">신청인</div>
+						<input type="search" name="employeeCd" value="${orderItem.employeeCd }" list="employeeList" class="enter">
+						<datalist id="employeeList">
 							<c:forEach var="employee" items="${employeeEx }">
-								<option value="${employee.employeeCd }">${employee.employeeCd }(${employee.ename })</option>
+								<option value="${employee.employeeCd }">${employee.ename }</option>
 							</c:forEach>
-						</select>
+						</datalist>
+					</div>
+					<div class="search-item-div">			
+						<div class="search-item-text">상품코드</div>
+						<input type="search" name="productCd" value="${orderItem.productCd }" list="productList" class="enter">
+						<datalist id="productList">
+							<c:forEach var="product" items="${productEx }">
+								<option value="${product.productCd }">${product.pname }</option>
+							</c:forEach>
+						</datalist>
 					</div>
 					<div class="search-item-div">
-						<div class="search-item-text">납품요청일</div>
+						<div class="search-item-text">요청일</div>
 						<input type="date" name="requestFromDate" value="${orderItem.requestFromDate }">
-						-<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
+						~<input type="date" name="requestToDate" value="${orderItem.requestToDate }">
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">국가코드</div>
-							<select name="countryCd">
+							<select name="countryCd" class="search">
 								<option value="All">모두</option>
 								<c:forEach var="country" items="${countryEx }">
-									<option value="${country.countryCd }" <c:if test="${orderItem.countryCd == country.countryCd }">selected="selected"</c:if>>${country.countryCd }(${country.cname })</option>
+									<option value="${country.countryCd }" <c:if test="${orderItem.countryCd == country.countryCd }">selected="selected"</c:if>>${country.cname }</option>
 								</c:forEach>
 						</select>
 					</div>
@@ -482,6 +478,12 @@ $(document).ready(function(){
 	
 	}
 	
+	$('.enter').keydown(function(e) {
+		if(event.keyCode == 13) {
+			search();
+		}
+	})
+	
 	document.querySelector("#searchBtn").addEventListener("click", search);
 	
 	function checkAll(){
@@ -622,6 +624,37 @@ $(document).ready(function() {
 			
 			search();
 		}
+	});
+</script>
+
+<!-- 날짜 최소 / 최대 제한 주기 -->
+<script type="text/javascript">
+	$('input[name="orderFromDate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="orderToDate"]').attr('min',minDate);
+	});
+	$('input[name="orderToDate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="orderFromDate"]').attr('max',maxDate);
+	});
+	
+	$('input[name="requestFromDate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="requestToDate"]').attr('min',minDate);
+	});
+	$('input[name="requestToDate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="requestFromDate"]').attr('max',maxDate);
+	});
+	
+	// 등록창 발주일 - 납품 요청일
+	$('input[name="orderdate"]').on('change', function(){
+		const minDate= $(this).val();
+		$('input[name="requestdate"]').attr('min',minDate);
+	});
+	$('input[name="requestdate"]').on('change', function(){
+		const maxDate= $(this).val();
+		$('input[name="orderdate"]').attr('max',maxDate);
 	});
 </script>
 

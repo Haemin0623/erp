@@ -59,8 +59,9 @@
 									<if test="orderNo != null and orderNo != ''">
 										and i.order_no like '%' || #{orderNo} || '%'
 									</if>
-									<if test="buyerCd != null and buyerCd != 'All'">
-										and b.buyer_cd like '%' || #{buyerCd} || '%'
+									<if test="buyerCd != null and buyerCd != ''">
+										and (h.buyer_cd like '%' || #{buyerCd} || '%'
+											or	bname like '%' || #{buyerCd} || '%')
 									</if>
 									<if test="orderFromDate != null or orderToDate != null">
 										<if test="orderFromDate == null">
@@ -74,13 +75,15 @@
 										</if>
 									</if>
 									<if test="employeeCd != null and employeeCd != 'All'">
-										and e.employee_cd like '%' || #{employeeCd} || '%'
+										and (h.employee_cd like '%' || #{employeeCd} || '%'
+											or ename like '%' || #{employeeCd} || '%')
 									</if>
 									<if test="status != null and status != 'null'">
 										and h.status = #{status}
 									</if>
 									<if test="productCd != null and productCd != 'All'">
-										and i.product_cd like '%' || #{productCd} || '%'
+										and (i.product_cd like '%' || #{productCd} || '%'
+											or pname like '%' || #{productCd} || '%')
 									</if>
 									<if test="requestFromDate != null or requestToDate != null">				
 										<if test="requestFromDate == null">
@@ -131,16 +134,17 @@
 	                   m_country c,
 	                   m_product pd
 	          <where>
-					i.order_no = h.order_no
-                                  and h.employee_cd = e.employee_cd
-                                  and b.buyer_cd = h.buyer_cd
-                                  and b.country_cd = c.country_cd
-                                  and pd.product_cd = i.product_cd
+				i.order_no = h.order_no
+                     and h.employee_cd = e.employee_cd
+                     and b.buyer_cd = h.buyer_cd
+                     and b.country_cd = c.country_cd
+                     and pd.product_cd = i.product_cd
 					<if test="orderNo != null and orderNo != ''">
 						and i.order_no like '%' || #{orderNo} || '%'
 					</if>
-					<if test="buyerCd != null and buyerCd != 'All'">
-						and b.buyer_cd like '%' || #{buyerCd} || '%'
+					<if test="buyerCd != null and buyerCd != ''">
+						and (h.buyer_cd like '%' || #{buyerCd} || '%'
+							or	bname like '%' || #{buyerCd} || '%')
 					</if>
 					<if test="orderFromDate != null or orderToDate != null">
 						<if test="orderFromDate == null">
@@ -154,13 +158,15 @@
 						</if>
 					</if>
 					<if test="employeeCd != null and employeeCd != 'All'">
-						and e.employee_cd like '%' || #{employeeCd} || '%'
+						and (h.employee_cd like '%' || #{employeeCd} || '%'
+							or ename like '%' || #{employeeCd} || '%')
 					</if>
 					<if test="status != null and status != 'null'">
 						and h.status = #{status}
 					</if>
 					<if test="productCd != null and productCd != 'All'">
-						and i.product_cd like '%' || #{productCd} || '%'
+						and (i.product_cd like '%' || #{productCd} || '%'
+							or pname like '%' || #{productCd} || '%')
 					</if>
 					<if test="requestFromDate != null or requestToDate != null">				
 						<if test="requestFromDate == null">
