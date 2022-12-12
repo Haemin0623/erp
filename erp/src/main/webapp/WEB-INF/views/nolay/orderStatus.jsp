@@ -571,6 +571,7 @@ $(document).ready(function(){
 	
 	
 </script>
+<!-- 
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.sumo').SumoSelect({
@@ -586,7 +587,7 @@ $(document).ready(function() {
 });
 
 </script>
-
+ -->
 
 <!-- 페이지 버튼 / 페이지 당 요소 갯수 -->
 <script type="text/javascript">

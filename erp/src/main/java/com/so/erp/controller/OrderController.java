@@ -79,7 +79,7 @@ public class OrderController {
 	@RequestMapping("order")
 	public String order(Model model, OrderHead orderHead, OrderItem orderItem, HttpSession session) {
 		
-		int rowPerPage = 10 ;
+		int rowPerPage = 20 ;
 		
 		if (orderHead.getRowPerPage() != 0) {
 			rowPerPage = orderHead.getRowPerPage();
@@ -448,7 +448,7 @@ public class OrderController {
 	@RequestMapping("orderApprovalWindow")
 	public String orderApprovalWindow(Model model, OrderHead orderHead, OrderItem orderItem) {
 
-		int rowPerPage = 10 ;
+		int rowPerPage = 20 ;
 		
 		if (orderHead.getRowPerPage() != 0) {
 			rowPerPage = orderHead.getRowPerPage();

@@ -116,8 +116,8 @@
 		<div id="page">
 			<form name="itemLimit">
 				<select name="rowPerPage" id="limit">
-					<option value="10" <c:if test="${orderHead.rowPerPage == 10 }">selected="selected"</c:if> >
-						10개씩보기
+					<option value="20" <c:if test="${orderHead.rowPerPage == 20 }">selected="selected"</c:if> >
+						20개씩보기
 					</option>
 					<option value="50" <c:if test="${orderHead.rowPerPage == 50 }">selected="selected"</c:if> >
 						50개씩보기
@@ -136,7 +136,7 @@
 		</div>
 	</div>
 	
-	<div class="table">
+	<div class="table" style="height: 320px;">
 		<table class="list">
 			<tr>
 				<th class="fixed">
@@ -159,7 +159,7 @@
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow"
 					<c:if test="${head.del =='Y'}">style="background-color: #c0c0c052;"</c:if>
-				 	<c:if test="${head.status == '승인요청'}">style="background-color: #9ff2ff73;"</c:if>
+				 	<c:if test="${head.status == '승인요청'}">style="color: blue;"</c:if>
 				 	<c:if test="${head.status == '반려'}">style="color: red;"</c:if>
 				 	<c:if test="${head.status == '승인'}">style="color: green;"</c:if>
 				>
@@ -210,7 +210,7 @@
 		</form>
 	</div>
 	
-	<div class="table">
+	<div class="table" style="height: 320px;">
 		<table class="list">
 			<tr>
 				<th>No.</th>

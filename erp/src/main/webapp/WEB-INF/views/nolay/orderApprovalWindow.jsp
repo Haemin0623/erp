@@ -139,8 +139,8 @@
 		<div id="page">
 			<form name="itemLimit">
 				<select name="rowPerPage" id="limit">
-					<option value="10" <c:if test="${orderHead.rowPerPage == 10 }">selected="selected"</c:if> >
-						10개씩보기
+					<option value="20" <c:if test="${orderHead.rowPerPage == 20 }">selected="selected"</c:if> >
+						20개씩보기
 					</option>
 					<option value="50" <c:if test="${orderHead.rowPerPage == 50 }">selected="selected"</c:if> >
 						50개씩보기
@@ -159,7 +159,7 @@
 		</div>
 	</div>
 	
-	<div class="table">
+	<div class="table" style="height: 320px;">
 		<table class="list">
 			<tr>
 				<th class="fixed" id="sortOrderNo">주문번호</th>
@@ -172,7 +172,7 @@
 			</tr>
 			<c:forEach var="head" items="${headList }">			
 				<tr class="itemRow"
-					<c:if test="${head.status == '승인요청'}">style="background-color: #9ff2ff73;"</c:if>
+					<c:if test="${head.status == '승인요청'}">style="color: blue;"</c:if>
 					<c:if test="${head.status == '반려'}">style="color: red;"</c:if>
 				 	<c:if test="${head.status == '승인'}">style="color: green;"</c:if>
 				>
@@ -208,7 +208,7 @@
 	</div>
 
 
-	<div class="itemTable">
+	<div class="itemTable" >
 		<table class="itemList">
 			<tr>
 				<th class="fixed">No.</th>
@@ -432,7 +432,7 @@ $(document).ready(function(){
 		console.log(btn);
 		console.log("4");
 		
-		var cf = confirm("정말 "+btn+"하시겠습니까?");
+		var cf = confirm(btn+"하시겠습니까?");
 		
 		if (cf == true) {
 			$.ajax({
@@ -495,7 +495,7 @@ $(document).ready(function(){
 	});
 </script>
 <!-- 스모셀렉트 -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
 	$('.sumo').SumoSelect({
 		search: true,
@@ -510,7 +510,7 @@ $(document).ready(function() {
 });
 
 </script>
-
+ -->
 <!-- 정렬 -->
 <script type="text/javascript">
 	function initSort() {
@@ -640,7 +640,7 @@ $(document).ready(function() {
 	});
 	$('input[name="requestToDate"]').on('change', function(){
 		const maxDate= $(this).val();
-		$('input[name="requestFromDate"]').attr('max',maxDate);
+		$('input[name="requestFromDate"]').attr('max',maxDate);	
 	});
 	
 	// 등록창 발주일 - 납품 요청일
