@@ -211,7 +211,7 @@
 	<div class="itemTable" >
 		<table class="itemList">
 			<tr>
-				<th class="fixed">No.</th>
+				<th class="fixed">순번</th>
 				<th class="fixed">상품코드</th>
 				<th class="fixed">상품명</th>
 				<th class="fixed">주문수량</th>

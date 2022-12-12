@@ -213,7 +213,7 @@
 	<div class="table" style="height: 320px;">
 		<table class="list">
 			<tr>
-				<th>No.</th>
+				<th>순번</th>
 				<th>상품코드</th>
 				<th>상품명</th>
 				<th>주문수량</th>
