@@ -102,11 +102,6 @@ public class ProductController {
 		String pname = (String) productObj.get("pname");
 		String volume = (String) productObj.get("volume");
 		String unit = (String) productObj.get("unit");
-		System.out.println(category);
-		System.out.println(productCd);
-		System.out.println(pname);
-		System.out.println(volume);
-		System.out.println(unit);
 		if(category.equals("") ) {
 			result = -2;
 			return result;
@@ -162,6 +157,10 @@ public class ProductController {
 	@ResponseBody
 	public int productUpdate(Product product) {
 		int result = 0;
+		System.out.println(product.getCategory());
+		System.out.println(product.getVolume());
+		System.out.println(product.getUnit());
+		System.out.println(product.getProductCd());
 		Product product2 = pds.updateselect(product);
 		if (product2 != null) {
 			result = -1;

@@ -295,6 +295,7 @@ public class PricingController {
 	@ResponseBody
 	public int pricingUpdate(Pricing pricing) {
 		int result = 0;
+		System.out.println("pricing"+pricing.getPrice());
 		
 		result = prs.pricingUpdate(pricing);
 		return result;

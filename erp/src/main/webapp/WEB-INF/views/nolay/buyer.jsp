@@ -459,7 +459,6 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 					countryCd: frm.countryCd.value
 			     },
 			     success: function (result) { //성공했을떄 호출할 콜백을 지정
-			    	console.log(result);
 			        if (result) {
 			        	callView('buyer.do')
 						alert("신규고객 등록완료");
@@ -603,13 +602,13 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
     		             console.log("배열에 담긴 값 : "+tdArr);
     		             
     		             // td.eq(index)를 통해 값을 가져올 수도 있다.
-    		             buyerCd = tdd.eq(1).text();
-    		             bname = tdd.eq(2).text();
-    		             manager = tdd.eq(3).text();
-    		             tel = tdd.eq(4).text();
-    		             email = tdd.eq(5).text();
-    		             address = tdd.eq(6).text();
-    		             countryCd = tdd.eq(7).text();
+    		             buyerCd = tdd.eq(2).text();
+    		             bname = tdd.eq(3).text();
+    		             manager = tdd.eq(4).text();
+    		             tel = tdd.eq(5).text();
+    		             email = tdd.eq(6).text();
+    		             address = tdd.eq(7).text();
+    		             countryCd = tdd.eq(8).text();
     		             
     		             console.log(buyerCd);
     	             

@@ -869,7 +869,7 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 			if (paging.currentPage.value > ${pricing.totalPage }) {
 				paging.currentPage.value = ${pricing.totalPage };
 			}
-			search();
+			search(); 
 		});
 		
 		$('#limit').on('change', function() {

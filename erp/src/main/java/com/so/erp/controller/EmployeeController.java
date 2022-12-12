@@ -180,7 +180,7 @@ public class EmployeeController {
 	@RequestMapping("empUpdate.do")
 	@ResponseBody
 	public boolean empUpdate(Employee employee) {
-		
+		System.out.println(employee.getEmployeeCd());
 		boolean result = true;
 		
 		try {

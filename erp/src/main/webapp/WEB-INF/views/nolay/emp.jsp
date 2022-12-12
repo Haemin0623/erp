@@ -423,11 +423,11 @@ $(document).ready(function() {
  		             console.log("배열에 담긴 값 : "+tdArr);
  		             
  		             // td.eq(index)를 통해 값을 가져올 수도 있다.
- 		             employeeCd = tdd.eq(1).text();
- 		             ename = tdd.eq(2).text();
- 		             job = tdd.eq(3).text();
- 		             department = tdd.eq(4).text();
- 		             authority = tdd.eq(6).text();
+ 		             employeeCd = tdd.eq(2).text();
+ 		             ename = tdd.eq(3).text();
+ 		             job = tdd.eq(4).text();
+ 		             department = tdd.eq(5).text();
+ 		             authority = tdd.eq(7).text();
  	             
                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
    			     method: 'post', 
