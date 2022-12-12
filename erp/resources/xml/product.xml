@@ -19,9 +19,18 @@
 							<if test="product.category!=null and product.category!='' ">
 									and category like '%' || #{product.category} || '%'
 							</if>
-							<if test="product.adddate!=null and product.adddate2!=null" >
-									and adddate between #{product.adddate} and #{product.adddate2} 
+							<if test="product.adddate != null or product.adddate2 != null">				
+								<if test="product.adddate == null">
+									and adddate between '0001-01-01' and #{product.adddate2}
+								</if>
+								<if test="product.adddate2 == null">
+									and adddate between #{product.adddate} and '9999-12-31'
+								</if>
+								<if test="product.adddate != null and product.adddate2 != null">
+									and adddate between #{product.adddate} and #{product.adddate2}
+								</if>				
 							</if>
+							
 							<if test='product.del=="N"'>
 									and del='N'	
 							</if>

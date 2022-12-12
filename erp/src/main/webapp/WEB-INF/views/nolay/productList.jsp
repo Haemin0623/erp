@@ -26,7 +26,7 @@
 				<div class="search-sub-div">
 					<div class="search-item-div">
 						<div class="search-item-text">상품코드</div>
-						<input type="text" name="productCd" value="${product.productCd }" list="productCdList">
+						<input type="search" name="productCd" value="${product.productCd }" list="productCdList" class="enter">
 						<datalist id="productCdList">
 							<c:forEach var="item" items="${allList }">
 								<option value="${item.productCd }">${item.productCd }</option>
@@ -35,7 +35,7 @@
 					</div>
 					<div class="search-item-div">
 						<div class="search-item-text">상품명</div>
-						<input type="text" name="pname" value="${product.pname }" list="pnameList">
+						<input type="search" name="pname" value="${product.pname }" list="pnameList" class="enter">
 						<datalist id="pnameList">
 							<c:forEach var="item" items="${allList }">
 								<option value="${item.pname }">${item.pname }</option>
@@ -48,36 +48,46 @@
 					</div>
 				</div>
 				<div class="search-sub-div">
+					<div class="search-item-div">
+						<div class="search-item-text">용량</div>
+						<input type="search" name="volume" value="${product.volume }" list="volumeList" class="enter">
+						<datalist id="volumeList">
+							<c:forEach var="item" items="${allList }">
+								<option value="${item.volume }">${item.volume }</option>
+							</c:forEach>
+						</datalist>
+					</div>
 					<div class="search-item-text">카테고리</div>
-						<input type="text" name="category" value="${product.category }" list="categoryList">
-						<datalist id="categoryList">
-							<option value="라면">라면</option>
-							<option value="스낵">스낵</option>
-							<option value="음료">음료</option>
-						</datalist>	
-						<div class="search-item-div">
-							<div class="search-item-text">용량</div>
-							<input type="text" name="volume" value="${product.volume }" list="volumeList">
-							<datalist id="volumeList">
-								<c:forEach var="item" items="${allList }">
-									<option value="${item.volume }">${item.volume }</option>
-								</c:forEach>
-							</datalist>
-						</div>
+					<select name="category" class="search" >
+							<option value=""<c:if test="${product.category == ''}">selected="selected"</c:if> >모두보기</option> 
+                        	<option value="스낵"<c:if test="${product.category == '스낵'}">selected="selected"</c:if> >스낵</option>
+                            <option value="라면" <c:if test="${product.category == '라면'}">selected="selected"</c:if> >라면 </option>
+                            <option value="음료"<c:if test="${product.category == '음료'}">selected="selected"</c:if> >음료</option>
+                            <option value="TEST"<c:if test="${product.category == 'TEST'}">selected="selected"</c:if> >TEST</option>
+                    </select>
+					
 					<div class="search-item-div">
 						<div class="search-item-text" >활성상태 </div>
-							<input type="text" name="del" list="delList" >
-							<datalist id="delList">
+							<select name="del" class="search" >
 								<c:if test="${product.del == null }">
+									<option value="null" selected="selected">모두
+								</c:if>
+								<c:if test="${product.del != null }">
 									<option value="null">모두
 								</c:if>
 								<c:if test="${product.del == 'N' }">
-									<option value="N"> 활성
+									<option value="N" selected="selected">활성
+								</c:if>
+								<c:if test="${product.del != 'N' }">
+									<option value="N">활성
 								</c:if>
 								<c:if test="${product.del == 'Y' }">
-									<option value="Y" >비활성
+									<option value="Y" selected="selected">비활성
 								</c:if>
-							</datalist>
+								<c:if test="${product.del != 'Y' }">
+									<option value="Y">비활성
+								</c:if>
+							</select>
 						</div>
 					
 					</form></div>
@@ -139,6 +149,7 @@
 		<table class="list">
 			<tr >
 				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll" ></th>
+				<th class="fixed">순번</th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
 				<th class="fixed" id="sortPname">상품명</th>
 				<th class="fixed" id="sortVolume">용량</th>
@@ -146,10 +157,9 @@
 				<th class="fixed" id="sortCategory">상품 카테고리</th>
 				<th class="fixed" id="sortAddDate">등록일</th>
 				<th class="fixed" id="sortStatusDate">최종수정일</th>
-				<th class="fixed" id="sortDel">활성상태</th>
 			</tr>
 			<c:forEach var="productList" items="${productList }">
-			<tr class="itemRow">
+			<tr class="itemRow" <c:if test="${productList.del=='Y'}"> style="background-color: #c0c0c052;" }</c:if>>
 				<td>
 				<c:if test="${productList.del=='Y'}">
 					<input type="checkbox" name="checkRow" value="${productList.productCd }" disabled="disabled" >
@@ -158,6 +168,7 @@
 					<input type="checkbox" name="checkRow" value="${productList.productCd }" >
 				</c:if>
 				</td>
+				<td>${productList.rn }</td>
 				<td >${productList.productCd }</td>
 				<td class="editable">${productList.pname}</td>
 				<td class="editable">${productList.volume}</td>
@@ -165,14 +176,7 @@
 				<td>${productList.category}</td>
 				<td>${productList.adddate}</td>
 				<td>${productList.statusdate}</td>
-				<td>
-					<c:if test="${productList.del=='Y'}">
-					비활성
-					</c:if>
-					<c:if test="${productList.del!='Y'}">
-						활성
-					</c:if>
-				</td>
+				
 			</tr>
 			</c:forEach> 
 		</table>
@@ -334,18 +338,16 @@
 		    		alert("등록완료");
 		    		
 		    	}else if(result== -1){
-		    		alert("이미 등록된 상품입니다.");
+		    		alert("이미 등록된 상품입니다.")
 		    	}else if(result == -2){
+		    		$("input[name='category']").addClass('red');
 		    		alert("카테고리를 선택해주세요")
 		    	}else if(result == -3){
-		    		alert("상품명을 입력해주세요")
-		    		 $('#pname').focus();
+		    		$("input[name='pname']").addClass('red');
 		    	}else if(result == -4){
-		    		alert("용량을 입력해주세요")
-		    		 $('#volume').focus();
+		    		$("input[name='volume']").addClass('red');
 		    	}else if(result == -5){
-		    		alert("단위를 입력해주세요")
-		    		 $('#unit').focus();
+		    		$("input[name='unit']").addClass('red');
 		    	
 		    	}else
 		    	alert("등록실패");
@@ -424,7 +426,7 @@
 	    $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
 	    	initvalue = $(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
 	    	console.log(initvalue);
-	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus'>";
+	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus' style=''>";
 	        $(this).removeClass("editable")
 	        $(this).html(input);
 	        $('#focus').focus();
@@ -543,24 +545,29 @@
 	   });
 
 	};
+	$('.enter').keydown(function(e) {
+		if(event.keyCode == 13) {
+			search();
+		}
+	})
 	document.querySelector("#searchBtn").addEventListener("click", search);
 
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$('.sumo').SumoSelect({
-		search: true,
-		searchText: '검색어 입력',
-	});
-	$('select.productCd')[0].sumo.selectItem("${product.productCd }");
+// $(document).ready(function() {
+// 	$('.sumo').SumoSelect({
+// 		search: true,
+// 		searchText: '검색어 입력',
+// 	});
+// 	$('select.productCd')[0].sumo.selectItem("${product.productCd }");
 	
-	$('select.pname')[0].sumo.selectItem("${product.pname }");
+// 	$('select.pname')[0].sumo.selectItem("${product.pname }");
 	
-	$('select.volume')[0].sumo.selectItem("${product.volume }");
+// 	$('select.volume')[0].sumo.selectItem("${product.volume }");
 	
-	$('select.category')[0].sumo.selectItem("${product.category }");
+// 	$('select.category')[0].sumo.selectItem("${product.category }");
 	
-});
+// });
 
 </script>
 <script type="text/javascript">
@@ -668,13 +675,14 @@ $(document).ready(function() {
 	$('#next').on('click', function() {
 		paging.currentPage.value++;
 		
-		if (paging.currentPage.value > '${pb.totalPage }') {
+		if (paging.currentPage.value > ${pb.totalPage }) {
 			paging.currentPage.value = ${pb.totalPage };
 		}
-		search();
+		search(); 
 	});
 	
 	$('#limit').on('change', function() {
+		paging.currentPage.value = 1;
 		search();
 	});
 	

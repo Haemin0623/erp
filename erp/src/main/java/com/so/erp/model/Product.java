@@ -28,4 +28,6 @@ public class Product {
     private int sortAddDate;
     private int sortStatusDate;
     private int sortDel;
+    
+    private int rn;
 }
