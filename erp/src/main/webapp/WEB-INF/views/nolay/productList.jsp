@@ -149,7 +149,7 @@
 		<table class="list">
 			<tr >
 				<th class="fixed"><input type="checkbox" name="checkAll" id="th_checkAll" ></th>
-				<th class="fixed">순번</th>
+				<th class="fixed" id="rn">순번</th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
 				<th class="fixed" id="sortPname">상품명</th>
 				<th class="fixed" id="sortVolume">용량</th>
@@ -239,137 +239,139 @@
 </div>
 
 	<script type="text/javascript">
-	function changeTable() {
-		const productCd = pricing.productCd.value;
-		const pname = pricing.pname.value;
-		const volume = pricing.volume.value;
-		const unit = pricing.unit.value;
-		const category = pricing.category.value;
-		const adddate = pricing.adddate.value;
-		const statusdate = pricing.statusdate.value;
+// 	function changeTable() {
+// 		const productCd = product.productCd.value;
+// 		const pname = product.pname.value;
+// 		const volume = product.volume.value;
+// 		const unit = product.unit.value;
+// 		const category = product.category.value;
+// 		const adddate = product.adddate.value;
+// 		const statusdate = product.statusdate.value;
+// 		const rn = product.rn.value;
 		
 		
-		if (productCd == '' || pname == '' || volume == '' || 
-				unit == '' || category == '' || adddate == '' 
-				|| statusdate == ''){
-			alert('값을 채워넣어주세요');
+// 		if (productCd == '' || pname == '' || volume == '' || 
+// 				unit == '' || category == '' || adddate == '' 
+// 				|| statusdate == ''){
+// 			alert('값을 채워넣어주세요');
 			
-			if (productCd == '') {
-				$("input[name='productCd']").addClass('red');
-			} else {
-				$("input[name='productCd']").removeClass('red');
-			}
-			if (productCd == '') {
-				$("input[name='pname']").addClass('red');
-			} else {
-				$("input[name='pname']").removeClass('red');
-			}
-			if (price == '') {
-				$("input[name='volume']").addClass('red');
-			} else {
-				$("input[name='volume']").removeClass('red');
-			}
-			if (discountrate == '') {
-				$("input[name='unit']").addClass('red');
-			} else {
-				$("input[name='unit']").removeClass('red');
-			}
-			if (startdate == '') {
-				$("input[name='category']").addClass('red');
-			} else {
-				$("input[name='category']").removeClass('red');
-			}
-			if (enddate == '') {
-				$("input[name='adddate']").addClass('red');
-			} else {
-				$("input[name='adddate']").removeClass('red');
-			}
-			if (currency == '') {
-				$("input[name='statusdate']").addClass('red');
-			} else {
-				$("input[name='statusdate']").removeClass('red');
-			}
+// 			if (productCd == '') {
+// 				$("input[name='productCd']").addClass('red');
+// 			} else {
+// 				$("input[name='productCd']").removeClass('red');
+// 			}
+// 			if (productCd == '') {
+// 				$("input[name='pname']").addClass('red');
+// 			} else {
+// 				$("input[name='pname']").removeClass('red');
+// 			}
+// 			if (price == '') {
+// 				$("input[name='volume']").addClass('red');
+// 			} else {
+// 				$("input[name='volume']").removeClass('red');
+// 			}
+// 			if (discountrate == '') {
+// 				$("input[name='unit']").addClass('red');
+// 			} else {
+// 				$("input[name='unit']").removeClass('red');
+// 			}
+// 			if (startdate == '') {
+// 				$("input[name='category']").addClass('red');
+// 			} else {
+// 				$("input[name='category']").removeClass('red');
+// 			}
+// 			if (enddate == '') {
+// 				$("input[name='adddate']").addClass('red');
+// 			} else {
+// 				$("input[name='adddate']").removeClass('red');
+// 			}
+// 			if (currency == '') {
+// 				$("input[name='statusdate']").addClass('red');
+// 			} else {
+// 				$("input[name='statusdate']").removeClass('red');
+// 			}
 			
 			
-		}
-		else {
-			$.ajax({
-			     method: 'post',
-			     url: 'overlapCheck.do',
-			     traditional: true,
-			     data: {
-			    	 buyerCd: buyerCd,
-			    	 productCd: productCd,
-			    	 startdate: startdate,
-			    	 enddate: enddate
-			     },
-			     dataType: 'json',
-			     success: function (result) {
-			        if (result == 0) {
-						$('#addItemTable').append(
-								"<tr>" +
-									"<td>" + buyerCd + "</td>" +
-									"<td>" + productCd + "</td>" +
-									"<td>" + price + "</td>" +
-									"<td>" + startdate + "</td>" +
-									"<td>" + enddate + "</td>" +
-									"<td>" + discountrate + "</td>" +
-									"<td>" + currency + "</td>" +
-									"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
-								"</tr>"
-						);
-						pricing.price.value = '';
-						pricing.startdate.value = '';
-						pricing.enddate.value = '';
-						pricing.discountrate.value = '';
-			        } else {
-			        	alert("계약일이 중복되었습니다");
-			        }
-				}
-		   });
-		}
-	} 
-	function pricingInsert() {
-		const table = document.querySelector('#addItemTable');
-		const rows = table.getElementsByTagName("tr");
-		const tableLength = table.rows.length-1;
-		console.log(rows);
+// 		}
+// 		else {
+// 			$.ajax({
+// 			     method: 'post',
+// 			     url: 'overlapCheck.do',
+// 			     traditional: true,
+// 			     data: {
+// 			    	 productCd: productCd,
+// 			    	 pname: pname,
+// 			    	 volume: volume,
+// 			    	 unit: unit
+// 			     },
+// 			     dataType: 'json',
+// 			     success: function (result) {
+// 			        if (result == 0) {
+// 						$('#addItemTable').append(
+// 								"<tr>" +
+// 									"<td>" + rn + "</td>" +
+// 									"<td>" + productCd + "</td>" +
+// 									"<td>" + pname + "</td>" +
+// 									"<td>" + volume + "</td>" +
+// 									"<td>" + unit + "</td>" +
+// 									"<td>" + category + "</td>" +
+// 									"<td>" + adddate + "</td>" +
+// 									"<td>" + statusdate + "</td>" +
+// 									"<td><button onclick='deleteItem(this)'>삭제</button></td>" +
+// 								"</tr>"
+// 						);
+// 						pricing.price.value = '';
+// 						pricing.startdate.value = '';
+// 						pricing.enddate.value = '';
+// 						pricing.discountrate.value = '';
+// 			        } else {
+// 			        	alert("계약일이 중복되었습니다");
+// 			        }
+// 				}
+// 		   });
+// 		}
+// 	} 
+// 	function pricingInsert() {
+// 		const table = document.querySelector('#addItemTable');
+// 		const rows = table.getElementsByTagName("tr");
+// 		const tableLength = table.rows.length-1;
+// 		console.log(rows);
 		
-		const items = new Array(tableLength);
+// 		const items = new Array(tableLength);
 		
-		for (let i = 0; i < tableLength; i++) {
-			let cells = rows[i+1].getElementsByTagName("td");
+// 		for (let i = 0; i < tableLength; i++) {
+// 			let cells = rows[i+1].getElementsByTagName("td");
 			
-			items[i] = { 
-				productcd: cells[2].firstChild.data,
-				pname: cells[3].firstChild.data,
-				volume: cells[4].firstChild.data,
-				unit: cells[5].firstChild.data,
-			};
-			console.log('성공');
-			console.log(items[i]);
-		};
+// 			items[i] = { 
+// 				productcd: cells[2].firstChild.data,
+// 				pname: cells[3].firstChild.data,
+// 				volume: cells[4].firstChild.data,
+// 				unit: cells[5].firstChild.data,
+// 			};
+// 			console.log('성공');
+// 			console.log(items[i]);
+// 		};
 		
-		console.log(items);
+// 		console.log(items);
 		
-		$.ajax({
-		     method: 'post',
-		     url: 'pricingInsert.do',
-		     traditional: true,
-		     data: {
-		    	 items: JSON.stringify(items)
-		     },
-		     dataType: 'json',
-		     success: function (result) {
-		        if (result) {
-					callView('productList.do');
-					alert("등록 성공");
-		        } else {
-		        	alert("데이터를 추가해 주세요");
-		        }
-			}
-	   });
-	}
+// 		$.ajax({
+// 		     method: 'post',
+// 		     url: 'pricingInsert.do',
+// 		     traditional: true,
+// 		     data: {
+// 		    	 items: JSON.stringify(items)
+// 		     },
+// 		     dataType: 'json',
+// 		     success: function (result) {
+// 		        if (result) {
+// 					callView('productList.do');
+// 					alert("등록 성공");
+// 		        } else {
+// 		        	alert("데이터를 추가해 주세요");
+// 		        }
+// 			}
+// 	   });
+// 	}
 </script>
 <script type="text/javascript">
 	// 등록 팝업 열기 닫기
@@ -562,7 +564,7 @@
 	    $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
 	    	initvalue = $(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
 	    	console.log(initvalue);
-	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus'>";
+	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus' style='width:100%;'>";
 	        $(this).removeClass("editable")
 	        $(this).html(input);
 	        $('#focus').focus();

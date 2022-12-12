@@ -297,9 +297,18 @@ public class PricingController {
 	@ResponseBody
 	public int pricingUpdate(Pricing pricing) {
 		int result = 0;
+		System.out.println("buyerCd"+pricing.getBuyerCd());
+		System.out.println("productCd"+pricing.getProductCd());
 		System.out.println("pricing"+pricing.getPrice());
+<<<<<<< HEAD
 		
 		System.out.println(pricing);
+=======
+		System.out.println("startdate"+pricing.getStartdate());
+		System.out.println("enddate"+pricing.getEnddate());
+		System.out.println("discountrate"+pricing.getDiscountrate());
+		System.out.println("currency"+pricing.getCurrency());
+>>>>>>> 2071a59 (이것저것)
 		result = prs.pricingUpdate(pricing);
 		return result;
 	}
