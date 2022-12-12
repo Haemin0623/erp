@@ -195,7 +195,7 @@
 					<th class="fixed" id="sortAddress">주소</th>
 					<th class="fixed" id="sortCountryCd">국가코드</th>
 					<th class="fixed" id="sortAdddate">등록일</th>
-					<th class="fixed" id="sortStatusDate">최종수정일</th>
+					<th class="fixed" id="sortStatusDate">상태변경일</th>
 				</tr>
 				<c:forEach var="buyerItem" items="${buyerList }">
 					<tr class="itemRow"
@@ -218,7 +218,17 @@
 						<td class="editable">${buyerItem.address}</td>
 						<td>${buyerItem.countryCd}</td>
 						<td>${buyerItem.adddate}</td>
-						<td>${buyerItem.statusdate}</td>
+						<c:if test="${buyerItem.del == 'N'}">
+							<c:if test="${buyerItem.statusdate == null}">
+								<td>${buyerItem.statusdate }</td>
+							</c:if>	
+							<c:if test="${buyerItem.statusdate != null}">
+								<td>${buyerItem.statusdate } (수정)</td>
+							</c:if>	
+						</c:if>
+						<c:if test="${buyerItem.del == 'Y'}">
+							<td>${buyerItem.statusdate } (삭제)</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</table>

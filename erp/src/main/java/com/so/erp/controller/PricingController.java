@@ -59,7 +59,9 @@ public class PricingController {
 		}
 		pricing.setDel("N");		
 		pricing.setSortBuyerCd(0);
+		pricing.setSortBname(0);
 		pricing.setSortProductCd(0);
+		pricing.setSortPname(0);
 		pricing.setSortPrice(0);
 		pricing.setSortStartdate(0);
 		pricing.setSortEnddate(0);
@@ -297,6 +299,7 @@ public class PricingController {
 		int result = 0;
 		System.out.println("pricing"+pricing.getPrice());
 		
+		System.out.println(pricing);
 		result = prs.pricingUpdate(pricing);
 		return result;
 	}
@@ -427,37 +430,45 @@ public class PricingController {
 	    
 	    cell = row.createCell(1);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("상품코드");
+	    cell.setCellValue("고객명");
 	    
 	    cell = row.createCell(2);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("판매가");
+	    cell.setCellValue("상품코드");
 	    
 	    cell = row.createCell(3);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("계약시작일");
+	    cell.setCellValue("상품명");
 	    
 	    cell = row.createCell(4);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("계약종료일");
-	
+	    cell.setCellValue("판매가");
+	    
 	    cell = row.createCell(5);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("할인율");
+	    cell.setCellValue("계약시작일");
 	    
 	    cell = row.createCell(6);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("최종판매가");
-	    
+	    cell.setCellValue("계약종료일");
+	
 	    cell = row.createCell(7);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("통화단위");
+	    cell.setCellValue("할인율");
 	    
 	    cell = row.createCell(8);
 	    cell.setCellStyle(headStyle);
-	    cell.setCellValue("등록일");
+	    cell.setCellValue("최종판매가");
 	    
 	    cell = row.createCell(9);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("통화단위");
+	    
+	    cell = row.createCell(10);
+	    cell.setCellStyle(headStyle);
+	    cell.setCellValue("등록일");
+	    
+	    cell = row.createCell(11);
 	    cell.setCellStyle(headStyle);
 	    cell.setCellValue("상태변경일");
 	    
@@ -471,40 +482,48 @@ public class PricingController {
 	        cell = row.createCell(0);
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getBuyerCd());
-	
+	        
 	        cell = row.createCell(1);
 	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getBname());
+	
+	        cell = row.createCell(2);
+	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getProductCd());
-		    
-		    cell = row.createCell(2);
-		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getPrice());
-		    
-		    cell = row.createCell(3);
-		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getStartdate().toString());
+	        
+	        cell = row.createCell(3);
+	        cell.setCellStyle(bodyStyle);
+	        cell.setCellValue(li.getPname());
 		    
 		    cell = row.createCell(4);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getEnddate().toString());
+		    cell.setCellValue(li.getPrice());
 		    
 		    cell = row.createCell(5);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getDiscountrate());
+		    cell.setCellValue(li.getStartdate().toString());
 		    
 		    cell = row.createCell(6);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getPrice() * (1 - (li.getDiscountrate()/100)));
+		    cell.setCellValue(li.getEnddate().toString());
 		    
 		    cell = row.createCell(7);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getCurrency());
+		    cell.setCellValue(li.getDiscountrate());
 		    
 		    cell = row.createCell(8);
 		    cell.setCellStyle(bodyStyle);
-		    cell.setCellValue(li.getAdddate().toString());
+		    cell.setCellValue(li.getPrice() * (1 - (li.getDiscountrate()/100)));
 		    
 		    cell = row.createCell(9);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getCurrency());
+		    
+		    cell = row.createCell(10);
+		    cell.setCellStyle(bodyStyle);
+		    cell.setCellValue(li.getAdddate().toString());
+		    
+		    cell = row.createCell(11);
 		    cell.setCellStyle(bodyStyle);
 		    if (li.getStatusdate() != null) {
 		    	cell.setCellValue(li.getStatusdate().toString());

@@ -124,7 +124,7 @@
 				<th class="fixed" id="sortDepartment">부서</th>
 				<th class="fixed" id="sortAdddate">등록일</th>
 				<th class="fixed" id="sortAuthority">승인권한</th>
-				<th class="fixed">최종수정일</th>
+				<th class="fixed">상태변경일</th>
 			</tr>
 			<c:forEach var="emp" items="${empList }">			
 				<tr class="itemRow"
@@ -145,7 +145,17 @@
 					<td class="editable">${emp.department }</td>
 					<td>${emp.adddate }</td>
 					<td class="editable">${emp.authority }</td>
-					<td>${emp.statusdate }</td>
+					<c:if test="${emp.del == 'N'}">
+							<c:if test="${emp.statusdate == null}">
+								<td>${emp.statusdate }</td>
+							</c:if>	
+							<c:if test="${emp.statusdate != null}">
+								<td>${emp.statusdate } (수정)</td>
+							</c:if>	
+						</c:if>
+						<c:if test="${emp.del == 'Y'}">
+							<td>${emp.statusdate } (삭제)</td>
+						</c:if>
 				</tr>
 			</c:forEach>
 		</table>

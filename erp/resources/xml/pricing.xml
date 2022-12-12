@@ -109,7 +109,8 @@
 		select	*
 		from	(select a.*,
 						rowNum rn
-				 from  (select	distinct p.*, b.bname, d.pname
+				 from  (select	distinct p.*, b.bname, d.pname,
+				 				(p.price * (1 - (p.discountrate/100))) final
 						from	m_pricing p, m_buyer b, m_product d
 		<where>
 				p.buyer_cd = b.buyer_cd
@@ -149,11 +150,25 @@
 				p.buyer_cd asc
 			</if>
 			
+			<if test="sortBname == 1">
+				b.bname desc
+			</if>
+			<if test="sortBname == 2">
+				p.bname asc
+			</if>
+			
 			<if test="sortProductCd == 1">
 				p.product_cd desc
 			</if>
 			<if test="sortProductCd == 2">
 				p.product_cd asc
+			</if>
+			
+			<if test="sortPname == 1">
+				d.pname desc
+			</if>
+			<if test="sortPname == 2">
+				d.pname asc
 			</if>
 			
 			<if test="sortPrice == 1">
@@ -185,10 +200,10 @@
 			</if>
 			
 			<if test="sortFinalPrice == 1">
-				finalPrice desc
+				final desc
 			</if>
 			<if test="sortFinalPrice == 2">
-				finalPrice asc
+				final asc
 			</if>
 			
 			<if test="sortCurrency == 1">
@@ -226,12 +241,14 @@
 	</select>
 	
 	<select id="listForExcel" parameterType="pricing" resultType="pricing">
-		select	*
-		from	m_pricing
-		where	buyer_cd = #{buyerCd}
-			and product_cd = #{productCd}
-			and	startdate = #{startdate}
-			and enddate = #{enddate}
+		select		p.*, b.bname, d.pname
+		from		m_pricing p, m_buyer b, m_product d
+		where		p.buyer_cd = b.buyer_cd
+				and	p.product_cd = d.product_cd
+				and p.buyer_cd = #{buyerCd}
+				and p.product_cd = #{productCd}
+				and	p.startdate = #{startdate}
+				and p.enddate = #{enddate}
 	</select>
 	
 	<select id="buyerList" resultType="pricing">

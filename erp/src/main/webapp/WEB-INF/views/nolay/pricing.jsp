@@ -174,7 +174,9 @@ function changeContent(data) {
 				</th>
 				<th class="fixed">번호</th>
 				<th class="fixed" id="sortBuyerCd">고객코드</th>
+				<th class="fixed" id="sortBname">고객명</th>
 				<th class="fixed" id="sortProductCd">상품코드</th>
+				<th class="fixed" id="sortPname">상품명</th>
 				<th class="fixed" id="sortPrice">판매가</th>
 				<th class="fixed" id="sortStartdate">계약시작일</th>
 				<th class="fixed" id="sortEnddate">계약종료일</th>
@@ -182,7 +184,7 @@ function changeContent(data) {
 				<th class="fixed" id="sortFinalPrice">최종판매가</th>
 				<th class="fixed" id="sortCurrency">통화단위</th>
 				<th class="fixed" id="sortAdddate">등록일</th>
-				<th class="fixed" id="sortStatusdate">최종수정일</th>
+				<th class="fixed" id="sortStatusdate">상태변경일</th>
 			</tr>
 			<c:if test="${empty pricingList}">
 				검색 결과가 없습니다
@@ -201,8 +203,10 @@ function changeContent(data) {
 							</c:if>
 						</td>
 						<td>${pricing.rn }</td>
-						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }(${pricing.bname})</td>
-						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }(${pricing.pname })</td>
+						<td><input type="hidden" value="${pricing.buyerCd }">${pricing.buyerCd }</td>
+						<td>${pricing.bname}</td>
+						<td><input type="hidden" value="${pricing.productCd }">${pricing.productCd }</td>
+						<td>${pricing.pname}</td>
 						<td class="editable"><fmt:formatNumber value="${pricing.price }" pattern="#,###.##"/></td>
 						<td><input type="hidden" value="${pricing.startdate }">${pricing.startdate }</td>
 						<td><input type="hidden" value="${pricing.enddate }">${pricing.enddate }</td>
@@ -210,7 +214,18 @@ function changeContent(data) {
 						<td><fmt:formatNumber value="${pricing.finalPrice }" pattern="#,###.##"/></td>
 						<td class="editable">${pricing.currency }</td>
 						<td>${pricing.adddate }</td>
-						<td>${pricing.statusdate }</td>
+						<c:if test="${pricing.del == 'N'}">
+							<c:if test="${pricing.statusdate == null}">
+								<td>${pricing.statusdate }</td>
+							</c:if>	
+							<c:if test="${pricing.statusdate != null}">
+								<td>${pricing.statusdate } (수정)</td>
+							</c:if>	
+						</c:if>
+						<c:if test="${pricing.del == 'Y'}">
+							<td>${pricing.statusdate } (삭제)</td>
+						</c:if>
+						
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -640,13 +655,14 @@ function changeContent(data) {
     		             
     		             // td.eq(index)를 통해 값을 가져올 수도 있다.
     		             buyerCd = tdd.eq(2).text();
-    		             productCd = tdd.eq(3).text();
-    		             price = tdd.eq(4).text();
-    		             startdate = tdd.eq(5).text();
-    		             enddate = tdd.eq(6).text();
-    		             discountrate = tdd.eq(7).text();
-    		             currency = tdd.eq(9).text();
+    		             productCd = tdd.eq(4).text();
+    		             price = tdd.eq(6).text();
+    		             startdate = tdd.eq(7).text();
+    		             enddate = tdd.eq(8).text();
+    		             discountrate = tdd.eq(9).text();
+    		             currency = tdd.eq(11).text();
     		             
+		    			     	console.log(currency);
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
 		    			     url: 'pricingUpdate.do', 
@@ -743,7 +759,9 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 // 	정렬
 	function initSort() {
 		searchBoxx.sortBuyerCd.value = 0;
+		searchBoxx.sortBname.value = 0;
 		searchBoxx.sortProductCd.value = 0;
+		searchBoxx.sortPname.value = 0;
 		searchBoxx.sortPrice.value = 0;
 		searchBoxx.sortStartdate.value = 0;
 		searchBoxx.sortEnddate.value = 0;
@@ -764,6 +782,16 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 		}		
 		search();
 	});
+	$('#sortBname').on('click', function() {
+		if (searchBoxx.sortBname.value == 0 || searchBoxx.sortBname.value == 2) {
+			initSort();
+			searchBoxx.sortBname.value = 1;			
+		} else if (searchBoxx.sortBname.value == 1) {
+			initSort();
+			searchBoxx.sortBname.value = 2;
+		}		
+		search();
+	});
 	$('#sortProductCd').on('click', function() {
 		if (searchBoxx.sortProductCd.value == 0 || searchBoxx.sortProductCd.value == 2) {
 			initSort();
@@ -771,6 +799,16 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 		} else if (searchBoxx.sortProductCd.value == 1) {
 			initSort();
 			searchBoxx.sortProductCd.value = 2;
+		}		
+		search();
+	});
+	$('#sortPname').on('click', function() {
+		if (searchBoxx.sortPname.value == 0 || searchBoxx.sortPname.value == 2) {
+			initSort();
+			searchBoxx.sortPname.value = 1;			
+		} else if (searchBoxx.sortPname.value == 1) {
+			initSort();
+			searchBoxx.sortPname.value = 2;
 		}		
 		search();
 	});
@@ -904,9 +942,9 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 			  
 			 const pricing = {
 				buyerCd : thisRow.find('td:eq(2)').find('input').val(),
-				productCd : thisRow.find('td:eq(3)').find('input').val(),
-				startdate : thisRow.find('td:eq(5)').find('input').val(),
-				enddate : thisRow.find('td:eq(6)').find('input').val()
+				productCd : thisRow.find('td:eq(4)').find('input').val(),
+				startdate : thisRow.find('td:eq(7)').find('input').val(),
+				enddate : thisRow.find('td:eq(8)').find('input').val()
 			 }
 
 			 checkRow.push(pricing);

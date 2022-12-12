@@ -31,7 +31,9 @@ public class Pricing {
     private String pname;
 //  정렬용
     private int sortBuyerCd;
+    private int sortBname;
     private int sortProductCd;
+    private int sortPname;
     private int sortPrice;
     private int sortStartdate;
     private int sortEnddate;
