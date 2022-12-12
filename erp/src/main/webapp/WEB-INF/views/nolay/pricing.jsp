@@ -42,7 +42,9 @@ function changeContent(data) {
 			
 			<!-- 정렬용 -->
 				<input type="hidden" name="sortBuyerCd" value="${pricing.sortBuyerCd }">
+				<input type="hidden" name="sortBname" value="${pricing.sortBname }">
 				<input type="hidden" name="sortProductCd" value="${pricing.sortProductCd }">
+				<input type="hidden" name="sortPname" value="${pricing.sortPname }">
 				<input type="hidden" name="sortPrice" value="${pricing.sortPrice }">
 				<input type="hidden" name="sortStartdate" value="${pricing.sortStartdate }">
 				<input type="hidden" name="sortEnddate" value="${pricing.sortEnddate }">
@@ -662,6 +664,7 @@ function changeContent(data) {
     		             discountrate = tdd.eq(9).text();
     		             currency = tdd.eq(11).text();
     		             
+		    			     	console.log(discountrate);
 		    			     	console.log(currency);
 		                $.ajax({ //포스트 방식으로 아래의 주소에 데이터 전송
 		    			     method: 'post', 
@@ -676,7 +679,7 @@ function changeContent(data) {
 		    			    	 discountrate: discountrate,
 		    			    	 currency: currency
 		    			     },
-		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정
+		    			     success: function (result) { //성공했을떄 호출할 콜백을 지정 
 		    			    	 console.log(result);
 		    			        if (result) {
 		    			        	callView('pricing.do');
@@ -715,7 +718,9 @@ function changeContent(data) {
 			del : searchBoxx.del.value,
 			
 			sortBuyerCd : searchBoxx.sortBuyerCd.value,
+			sortBname : searchBoxx.sortBname.value,
 			sortProductCd : searchBoxx.sortProductCd.value,
+			sortPname : searchBoxx.sortPname.value,
 			sortPrice : searchBoxx.sortPrice.value,
 			sortStartdate : searchBoxx.sortStartdate.value,
 			sortEnddate : searchBoxx.sortEnddate.value,

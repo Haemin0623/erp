@@ -154,7 +154,7 @@
 				b.bname desc
 			</if>
 			<if test="sortBname == 2">
-				p.bname asc
+				b.bname asc
 			</if>
 			
 			<if test="sortProductCd == 1">

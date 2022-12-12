@@ -136,8 +136,12 @@ public class PricingController {
 			
 			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
 			pricing.setSortBuyerCd(sortBuyerCd);
+			int sortBname = Integer.valueOf((String) keywordObj.get("sortBname"));
+			pricing.setSortBname(sortBname);
 			int sortProductCd = Integer.valueOf((String) keywordObj.get("sortProductCd"));
 			pricing.setSortProductCd(sortProductCd);
+			int sortPname = Integer.valueOf((String) keywordObj.get("sortPname"));
+			pricing.setSortPname(sortPname);
 			int sortPrice = Integer.valueOf((String) keywordObj.get("sortPrice"));
 			pricing.setSortPrice(sortPrice);
 			int sortStartdate = Integer.valueOf((String) keywordObj.get("sortStartdate"));
