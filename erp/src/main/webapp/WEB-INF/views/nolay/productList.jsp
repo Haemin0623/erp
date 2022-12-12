@@ -564,7 +564,7 @@
 	    $(document).on("dblclick", ".editable", function() { //editable 클래스를 더블클릭했을때 함수실행
 	    	initvalue = $(this).text(); //원래 있던 값을 value로 해서 input에 텍스트로 보여줘
 	    	console.log(initvalue);
-	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus' style='width:100%;'>";
+	        var input="<input type='text' class='input-data' value='"+initvalue+"' class='form-control' id='focus' style='width:50px;'>";
 	        $(this).removeClass("editable")
 	        $(this).html(input);
 	        $('#focus').focus();
