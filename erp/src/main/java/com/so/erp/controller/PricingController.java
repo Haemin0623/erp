@@ -49,7 +49,7 @@ public class PricingController {
 	@RequestMapping("pricing")
 	public String pricing(Model model, Pricing pricing) {
 		
-		int rowPerPage = 10 ;
+		int rowPerPage = 20 ;
 		
 		if (pricing.getRowPerPage() != 0) {
 			rowPerPage = pricing.getRowPerPage();
@@ -87,8 +87,8 @@ public class PricingController {
 			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
 		}
 		
-		List<Buyer> buyerList = bs.ndlist();
-		List<Product> productList = pds.allList();
+		List<Pricing> buyerList = prs.buyerList();
+		List<Pricing> productList = prs.productList();
 		
 		model.addAttribute("pricingList", pricingList);
 		model.addAttribute("buyerList", buyerList);

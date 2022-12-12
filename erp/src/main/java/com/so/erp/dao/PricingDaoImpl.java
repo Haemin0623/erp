@@ -70,4 +70,14 @@ public class PricingDaoImpl implements PricingDao {
 		return sst.selectList("pricingns.getProductList", pricing);
 	}
 
+	@Override
+	public List<Pricing> buyerList() {
+		return sst.selectList("pricingns.buyerList");
+	}
+	
+	@Override
+	public List<Pricing> productList() {
+		return sst.selectList("pricingns.productList");
+	}
+
 }

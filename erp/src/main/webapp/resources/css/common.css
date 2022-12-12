@@ -1,26 +1,27 @@
 @charset "UTF-8";
 
 	.red {
-		border-color: red;
+		border-color: #ff000099;
+		border-radius: 5px;
 	}
 
 	@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	    font-family: 'GmarketSansMedium';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
 }
 	@font-face {
-    font-family: 'BCcardB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.1/BCcardB.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	    font-family: 'BCcardB';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.1/BCcardB.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
 }
 	@font-face {
-    font-family: 'KyoboHandwriting2020A';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	    font-family: 'KyoboHandwriting2020A';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
 }
 
 	input[type="date"] {
@@ -126,7 +127,7 @@
 		background: #f6ffeb;
 		color: #879971;
 	}
-	
+	  ffff
 	#initBtn {
 		width: 30px;
 		background: #879971;
@@ -165,23 +166,13 @@
 	    resize: both;
 	    box-shadow: 2px -1px 4px #b1b1b1;
 	    overflow-y: scroll;
-	    
-/* 		position:inherit; */
-/* 		overflow: auto; */
-/* 		width: 90%; */
-		
-/* 		height: 40vh; */
-/* 		width: 120vh; */
-
-		height: 320px;
+		height: 610px;
 	}
 	.list {	
 		margin: 4px 10px 0 10px;
 		border-collapse: collapse;
 		font-size: 12px;
-/* 		width:1350px; */
  		width: 100%;
-/* 		border: 1px solid; */
 		
 	}
 	

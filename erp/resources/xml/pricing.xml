@@ -234,6 +234,17 @@
 			and enddate = #{enddate}
 	</select>
 	
+	<select id="buyerList" resultType="pricing">
+		select		distinct p.buyer_cd, b.bname
+		from		m_pricing p, m_buyer b
+		where		p.buyer_cd = b.buyer_cd
+	</select>
+	
+	<select id="productList" resultType="pricing">
+		select		distinct p.product_cd, d.pname
+		from		m_pricing p, m_product d
+		where		p.product_cd = d.product_cd
+	</select>
 	
 	
 </mapper>

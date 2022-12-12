@@ -30,5 +30,9 @@ public interface PricingService {
 
 	List<Product> getProductList(Pricing pricing);
 
+	List<Pricing> buyerList();
+	
+	List<Pricing> productList();
+
 
 }

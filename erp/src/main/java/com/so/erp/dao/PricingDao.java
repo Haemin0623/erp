@@ -30,5 +30,9 @@ public interface PricingDao {
 
 	Pricing listForExcel(Pricing pricing);
 
+	List<Pricing> buyerList();
+	
+	List<Pricing> productList();
+
 
 }

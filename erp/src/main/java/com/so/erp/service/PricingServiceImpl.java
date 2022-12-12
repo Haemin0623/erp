@@ -69,6 +69,16 @@ public class PricingServiceImpl implements PricingService {
 	public Pricing listForExcel(Pricing pricing) {
 		return prd.listForExcel(pricing);
 	}
+
+	@Override
+	public List<Pricing> buyerList() {
+		return prd.buyerList();
+	}
+	
+	@Override
+	public List<Pricing> productList() {
+		return prd.productList();
+	}
 	
 
 }

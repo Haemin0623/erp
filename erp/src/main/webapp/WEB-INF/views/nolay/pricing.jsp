@@ -140,8 +140,8 @@ function changeContent(data) {
 		<div id="page">
 			<form name="itemLimit">
 				<select name="rowPerPage" id="limit">
-					<option value="10" <c:if test="${pricing.rowPerPage == 10 }">selected="selected"</c:if> >
-						10개씩보기
+					<option value="20" <c:if test="${pricing.rowPerPage == 20 }">selected="selected"</c:if> >
+						20개씩보기
 					</option>
 					<option value="50" <c:if test="${pricing.rowPerPage == 50 }">selected="selected"</c:if> >
 						50개씩보기
@@ -368,7 +368,45 @@ function changeContent(data) {
 		if (buyerCd == '' || productCd == '' || price == '' || 
 				startdate == '' || enddate == '' || discountrate == '' 
 				|| currency == ''){
-			alert('값을 채워넣어주세요'); 
+			alert('값을 채워넣어주세요');
+			
+			if (buyerCd == '') {
+				$("input[name='buyerCd']").addClass('red');
+			} else {
+				$("input[name='buyerCd']").removeClass('red');
+			}
+			if (productCd == '') {
+				$("input[name='productCd']").addClass('red');
+			} else {
+				$("input[name='productCd']").removeClass('red');
+			}
+			if (price == '') {
+				$("input[name='price']").addClass('red');
+			} else {
+				$("input[name='price']").removeClass('red');
+			}
+			if (discountrate == '') {
+				$("input[name='discountrate']").addClass('red');
+			} else {
+				$("input[name='discountrate']").removeClass('red');
+			}
+			if (startdate == '') {
+				$("input[name='startdate']").addClass('red');
+			} else {
+				$("input[name='startdate']").removeClass('red');
+			}
+			if (enddate == '') {
+				$("input[name='enddate']").addClass('red');
+			} else {
+				$("input[name='enddate']").removeClass('red');
+			}
+			if (currency == '') {
+				$("input[name='currency']").addClass('red');
+			} else {
+				$("input[name='currency']").removeClass('red');
+			}
+			
+			
 		}
 		else {
 			$.ajax({
@@ -933,6 +971,18 @@ document.querySelector("#initBtn").addEventListener("click",  function(){callVie
 			search();
 		}
 	})
+	
+// 	날짜 범위 지정
+	$('input[name="startdate"]').on('change', function() {
+		const minDate = $(this).val();
+		$('input[name="enddate"]').attr('min', minDate);
+	})
+	$('input[name="enddate"]').on('change', function() {
+		const maxDate = $(this).val();
+		$('input[name="startdate"]').attr('max', maxDate);
+	})
+	
+	
 </script>
 
 </html>
