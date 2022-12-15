@@ -314,11 +314,15 @@ public class PricingController {
 	
 	@RequestMapping("getPrice")
 	@ResponseBody
-	public int getPrice(String buyerCd, String productCd) {
+	public int getPrice(String buyerCd, String productCd, String orderdate) {
 		
 		Pricing pricing = new Pricing();
 		pricing.setBuyerCd(buyerCd);
 		pricing.setProductCd(productCd);
+		
+		Date date = Date.valueOf(orderdate);
+		pricing.setValidDate(date);
+		
 		
 		int price = 0;
 		try {

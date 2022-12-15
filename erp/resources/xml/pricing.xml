@@ -215,7 +215,7 @@ select	*
 		from	m_pricing
 		where	buyer_cd = #{buyerCd}
 			and product_cd = #{productCd}
-			and sysdate between startdate and enddate
+			and #{validDate} between startdate and enddate
 	</select>
 	
 	<select id="getProductList" parameterType="pricing" resultType="product">

@@ -719,7 +719,7 @@
 	
 	$('#orderdate').on("change", function() {
 		insertorderdate = frm.orderdate.value;
-		insertorderdate = insertorderdate.charAt(2) + insertorderdate.charAt(2) + 
+		insertorderdate = insertorderdate.charAt(2) + insertorderdate.charAt(3) + 
 						insertorderdate.charAt(5) + insertorderdate.charAt(6) + 
 						insertorderdate.charAt(8) + insertorderdate.charAt(9);
 		insertorderNo = insertorderdate + insertbuyerCd;
@@ -785,7 +785,8 @@
 		     async: false,
 		     data: {
 		    	 buyerCd: buyerCd,
-		    	 productCd: productCd
+		    	 productCd: productCd,
+		    	 orderdate: frm.orderdate.value
 		     },
 		     success: function (result) {
 		    	 if (result == -123){
