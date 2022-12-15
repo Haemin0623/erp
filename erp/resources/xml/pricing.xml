@@ -5,17 +5,140 @@
 
 
 	<select id="pricingList" parameterType="pricing" resultType="pricing">
-		select	*
-		from	(select	a.*,
+<!-- 		select	* -->
+<!-- 		from	(select	a.*, -->
+<!-- 						rowNum rn -->
+<!-- 				from	(select		p.*, b.bname, d.pname -->
+<!-- 						 from		m_pricing p, m_buyer b, m_product d -->
+<!-- 						 where		p.buyer_cd = b.buyer_cd -->
+<!-- 								and	p.product_cd = d.product_cd -->
+<!-- 								and	p.del='N' -->
+<!-- 						order by 	p.adddate desc)a -->
+<!-- 				)	 -->
+<!-- 		where	rn between #{startRow} and #{endRow} -->
+select	*
+		from	(select a.*,
 						rowNum rn
-				from	(select		p.*, b.bname, d.pname
-						 from		m_pricing p, m_buyer b, m_product d
-						 where		p.buyer_cd = b.buyer_cd
-								and	p.product_cd = d.product_cd
-								and	p.del='N'
-						order by 	p.adddate desc)a
-				)	
-		where	rn between #{startRow} and #{endRow}
+				 from  (select	distinct p.*, b.bname, d.pname,
+				 				(p.price * (1 - (p.discountrate/100))) final
+						from	m_pricing p, m_buyer b, m_product d
+		<where>
+				p.buyer_cd = b.buyer_cd
+			and	p.product_cd = d.product_cd
+			<if test="buyerCd != null and buyerCd != 'All'">
+				and (p.buyer_cd like '%' || #{buyerCd} || '%'
+				or	b.bname like '%' || #{buyerCd} || '%')
+			</if>
+			<if test="productCd != null and productCd != 'All'">
+				and (p.product_cd like '%' || #{productCd} || '%'
+				or d.pname like '%' || #{productCd} || '%')
+			</if>
+			<if test="startPrice != 0 and endPrice != 0">
+				and price between #{startPrice} and #{endPrice}
+			</if>
+			
+			<if test="validDate != null">
+					and startdate <![CDATA[<=]]> #{validDate} 
+					and enddate <![CDATA[>=]]> #{validDate}
+			</if>
+			
+			<if test="discountrate != null and discountrate != ''">
+				and discountrate = #{discountrate}
+			</if>
+			<if test="currency != null and currency != 'All'">
+				and currency = #{currency}
+			</if>
+			<if test="del != 'All'">
+				and p.del = #{del}
+			</if>
+		</where>
+		order by 
+			<if test="sortBuyerCd == 1">
+				p.buyer_cd desc
+			</if>
+			<if test="sortBuyerCd == 2">
+				p.buyer_cd asc
+			</if>
+			
+			<if test="sortBname == 1">
+				b.bname desc
+			</if>
+			<if test="sortBname == 2">
+				b.bname asc
+			</if>
+			
+			<if test="sortProductCd == 1">
+				p.product_cd desc
+			</if>
+			<if test="sortProductCd == 2">
+				p.product_cd asc
+			</if>
+			
+			<if test="sortPname == 1">
+				d.pname desc
+			</if>
+			<if test="sortPname == 2">
+				d.pname asc
+			</if>
+			
+			<if test="sortPrice == 1">
+				price desc
+			</if>
+			<if test="sortPrice == 2">
+				price asc
+			</if>
+			
+			<if test="sortStartdate == 1">
+				startdate desc
+			</if>
+			<if test="sortStartdate == 2">
+				startdate asc
+			</if>
+			
+			<if test="sortEnddate == 1">
+				enddate desc
+			</if>
+			<if test="sortEnddate == 2">
+				enddate asc
+			</if>
+			
+			<if test="sortDiscountrate == 1">
+				discountrate desc
+			</if>
+			<if test="sortDiscountrate == 2">
+				discountrate asc
+			</if>
+			
+			<if test="sortFinalPrice == 1">
+				final desc
+			</if>
+			<if test="sortFinalPrice == 2">
+				final asc
+			</if>
+			
+			<if test="sortCurrency == 1">
+				currency desc
+			</if>
+			<if test="sortCurrency == 2">
+				currency asc
+			</if>
+			
+			<if test="sortAdddate == 1">
+				p.adddate desc
+			</if>
+			<if test="sortAdddate == 2">
+				p.adddate asc
+			</if>
+			
+			<if test="sortStatusdate == 1">
+				p.statusdate desc
+			</if>
+			<if test="sortStatusdate == 2">
+				p.statusdate asc
+			</if>
+		)a
+				)
+		where rn between #{startRow} and #{endRow} 
 	</select>
 	
 	

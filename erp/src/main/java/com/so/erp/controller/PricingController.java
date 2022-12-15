@@ -89,8 +89,8 @@ public class PricingController {
 			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
 		}
 		
-		List<Pricing> buyerList = prs.buyerList();
-		List<Pricing> productList = prs.productList();
+		List<Buyer> buyerList = bs.list();
+		List<Product> productList = pds.allList();
 		
 		model.addAttribute("pricingList", pricingList);
 		model.addAttribute("buyerList", buyerList);
