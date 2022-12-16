@@ -601,7 +601,7 @@ $(document).ready(function() {
 	$('#next').on('click', function() {
 		paging.currentPage.value++;
 		
-		if (paging.currentPage.value > '${orderItem.totalPage }') {
+		if (paging.currentPage.value > ${orderItem.totalPage }) {
 			paging.currentPage.value = ${orderItem.totalPage };
 		}
 		search();

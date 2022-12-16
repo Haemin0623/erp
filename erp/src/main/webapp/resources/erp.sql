@@ -5,6 +5,7 @@ drop table m_pricing cascade constraints;
 drop table m_employee cascade constraints;
 drop table order_head cascade constraints;
 drop table order_item cascade constraints;
+SELECT * FROM all_tables;
 
 create table m_country(
     country_cd  varchar2(3) not null PRIMARY KEY,

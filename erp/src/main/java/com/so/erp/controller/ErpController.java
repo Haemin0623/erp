@@ -97,7 +97,7 @@ public class ErpController {
 //			pds.insert(product);
 //			pds.checkRowDelete(product.getProductCd());
 //		}
-//		
+		
 //		Buyer buyer = new Buyer();		
 //		for (int i = 1; i < 1000; i++) {
 //			String number = String.format("%03d", i);
@@ -118,8 +118,8 @@ public class ErpController {
 //			bs.insert(buyer);
 //			
 //		}
-//		
-//		
+		
+		
 //		Employee emp = new Employee();		
 //		for (int i = 1; i < 1000; i++) {
 //			String number = String.format("%03d", i);
@@ -137,8 +137,8 @@ public class ErpController {
 //			es.insert(emp);
 //			
 //		}
-//		
-//
+		
+
 //		OrderHead head = new OrderHead();
 //		String[] emp2 = {"SAL001", "SAL002", "SAL003", "SAL004", "SAL005"};
 //		for (int i = 1; i < 1000; i++) {
@@ -159,8 +159,8 @@ public class ErpController {
 //			hs.insert(head);
 //			hs.orderApproval(head);
 //		}
-//		
-//		
+		
+		
 //		OrderItem item = new OrderItem();
 //		String[] prod = {"SN0001","SN0002","SN0003","SN0004","SN0005",
 //				"SN0006","RA0001" ,"RA0002" ,"DR0001","DR0002"};

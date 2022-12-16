@@ -301,7 +301,7 @@
 						<th>국가코드</th>
 						<td>
 							<select name="countryCd" class="countryCd search" id="countryCd"> <!-- countryCd.countryCd을 값으로, countryCd를 키로 보냄 -->
-								<option value=""></option>
+<!-- 								<option value=""></option> -->
 								<c:forEach var="countryCd" items="${countryCdList}">
 									<option value="${countryCd.countryCd}">${countryCd.cname}(${countryCd.countryCd})</option>
 								</c:forEach>
