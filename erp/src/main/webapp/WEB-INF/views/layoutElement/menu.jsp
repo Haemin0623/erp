@@ -91,7 +91,7 @@
 </head>
 <body>
 
-	<h1 class="text-primary">2조</h1>
+	<h1 class="text-primary">쉐어드투</h1>
 	<h6 class="text-member">
 		<c:if test="${sessionScope.employeeCd != null }">
 			${sessionScope.employeeCd }(${sessionScope.ename })

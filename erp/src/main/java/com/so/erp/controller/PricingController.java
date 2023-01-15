@@ -46,17 +46,20 @@ public class PricingController {
 	@Autowired
 	private ProductService pds;
 	
+//	by현서. 판매가 리스트, 정렬순서
 	@RequestMapping("pricing")
 	public String pricing(Model model, Pricing pricing) {
-		
+		// 기본 패이지당 20행 출력
 		int rowPerPage = 20 ;
-		
+		// n개 보기 체크박스 선택 시 해당 값이 넘어옴
 		if (pricing.getRowPerPage() != 0) {
 			rowPerPage = pricing.getRowPerPage();
 		} 
+		// 페이지 번호 미선택 시 1페이지 고정
 		if (pricing.getPageNum() == null || pricing.getPageNum().equals("")) {
 			pricing.setPageNum("1");
 		}
+		// 리스트 정렬 초기화(기본 등록순)
 		pricing.setDel("N");		
 		pricing.setSortBuyerCd(0);
 		pricing.setSortBname(0);
@@ -69,28 +72,34 @@ public class PricingController {
 		pricing.setSortFinalPrice(0);
 		pricing.setSortAdddate(1);
 		pricing.setSortStatusdate(0);
-		
+
 		int currentPage = Integer.parseInt(pricing.getPageNum());
+		// 판매가의 모든 데이터 갯수 저장
 		int total = prs.getTotal(pricing);
-		
 		pricing.pagingBean(currentPage, rowPerPage, total);
 		
+		// 해당 페이지의 첫 글 번호
 		int startRow = (currentPage - 1) * rowPerPage + 1;
+		// 해당 페이지의 마지막 글 번호
 		int endRow = startRow + rowPerPage - 1;
+		
 		pricing.setStartRow(startRow);
 		pricing.setEndRow(endRow);
 		
+		// pricingList 객체생성 및 데이터 가져옴
 		List<Pricing> pricingList = new ArrayList<Pricing>();
 		pricingList = prs.pricingList(pricing);
 		
 		
-		
+		// 판매가에 할인율을 계산하여 finalPrice에 저장
 		for (Pricing pricing1 : pricingList) {
-			pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
+			pricing1.setFinalPrice(pricing1.getPrice() * 
+					(1 - ((double)pricing1.getDiscountrate()/100)));
 		}
 		
+		// 고객명과 상품명 데이터 조인해 가져옴
 		List<Buyer> buyerList = bs.list();
-		List<Product> productList = pds.allList();
+		List<Product> productList = pds.allList(); 
 		
 		model.addAttribute("pricingList", pricingList);
 		model.addAttribute("buyerList", buyerList);
@@ -99,27 +108,32 @@ public class PricingController {
 	}
 	
 	
+	//by현서. 검색
 	@RequestMapping("pricingSearch")
 	public String pricingSearch(Model model, String keyword, Pricing pricing) {
 		
 		try {
-			
+			// JSONParser 객체 선언
 			JSONParser p = new JSONParser();
+			// keyword로 넘어온 jason 문자열 구문 분석
 			Object obj = p.parse(keyword);
+			// 구문 분석된 개체를 jasonObject로 변환
 			JSONObject keywordObj = JSONObject.fromObject(obj);
 			
+			
+			// 변환된 값을 String 타입으로 변환 후 일치하는 변수명에 저장
 			String buyerCd = (String) keywordObj.get("buyerCd");
 			pricing.setBuyerCd(buyerCd);
 			
 			String productCd = (String) keywordObj.get("productCd");
 			pricing.setProductCd(productCd);
-			
+			// int 타입은 String으로 먼저 변환 후 Integer.valueOf 으로 형변환
 			int startPrice = Integer.valueOf((String)keywordObj.get("startPrice"));
 			pricing.setStartPrice(startPrice);
 		
 			int endPrice = Integer.valueOf((String)keywordObj.get("endPrice"));
 			pricing.setEndPrice(endPrice);
-	
+			// Date 타입은 값이 null이면 String으로 아니면 Date타입으로 저장
 			String validDate = (String) keywordObj.get("validDate");
 			if (validDate != null && !validDate.equals("") ) {
 				Date date = Date.valueOf(validDate);
@@ -134,6 +148,8 @@ public class PricingController {
 			String del = (String) keywordObj.get("del");
 			pricing.setDel(del);
 			
+			
+			// 검색 후 리스트 정렬 변경 시 검색조건 유지를 위해 정렬값도 같이 보냄 
 			int sortBuyerCd = Integer.valueOf((String) keywordObj.get("sortBuyerCd"));
 			pricing.setSortBuyerCd(sortBuyerCd);
 			int sortBname = Integer.valueOf((String) keywordObj.get("sortBname"));
@@ -159,6 +175,7 @@ public class PricingController {
 			int sortStatusdate = Integer.valueOf((String) keywordObj.get("sortStatusdate"));
 			pricing.setSortStatusdate(sortStatusdate);
 			
+			// 페이징 값 저장
 			int rowPerPage = Integer.valueOf((String) keywordObj.get("rowPerPage"));
 			int currentPage = Integer.valueOf((String) keywordObj.get("currentPage"));
 			int total = prs.getTotal(pricing);
@@ -171,11 +188,12 @@ public class PricingController {
 			pricing.setEndRow(endRow);
 			
 			
+			// DB에서 데이터를 불러옴
 			List<Pricing> searchList = prs.search(pricing);
 			List<Buyer> buyerList = bs.ndlist();
 			List<Product> productList = pds.allList();
 			
-			
+			// 할인율을 적용한 최종가격 계산
 			for (Pricing pricing1 : searchList) {
 				pricing1.setFinalPrice(pricing1.getPrice() * (1 - ((double)pricing1.getDiscountrate()/100)));
 			}
@@ -193,16 +211,21 @@ public class PricingController {
 	}
 	
 	
+//	by현서. 삭제
 	@RequestMapping("pricingDelete")
 	@ResponseBody
 	public int pricingDelete(@RequestParam(name="checkRows")String[] arr, Pricing pricing) throws java.text.ParseException{
 		
+		// result 초기화
 		int result = 0;
+			// 체크된 체크박스의 array를 분리하여 보냄
 			for (String i : arr) {
+				// 한 행의 데이터를 '&'를 기준으로 분리하여 String 배열에 저장
 				String[] a = i.split("&");
+				
+				// 삭제 시 필요한 pk가 되는 각 컬럼의 인덱스번호로 추출하여 pricing 객체에 저장 
 				String buyerCd = a[0];
 				String productCd = a[1];
-				
 				Date startdate = Date.valueOf(a[2]);
 				Date enddate = Date.valueOf(a[3]);
 				
@@ -210,24 +233,26 @@ public class PricingController {
 				pricing.setProductCd(productCd);
 				pricing.setStartdate(startdate);
 				pricing.setEnddate(enddate);
-				
+
+				// 삭제 메서드 실행
 				prs.pricingDelete(pricing);
 			}
 		result = 1;
 		return result;
 	}
 	
-	
+//	by.현서 삭제항목 복구
 	@RequestMapping("pricingRestore")
 	@ResponseBody
 	public int pricingRestore(@RequestParam(name="checkRows")String[] arr, Pricing pricing) throws java.text.ParseException{
 		
+		// 삭제와 동일
 		int result = 0;
 			for (String i : arr) {
 				String[] a = i.split("&");
+				
 				String buyerCd = a[0];
 				String productCd = a[1];
-				
 				Date startdate = Date.valueOf(a[2]);
 				Date enddate = Date.valueOf(a[3]);
 				
@@ -243,21 +268,27 @@ public class PricingController {
 	}
 	
 	
+//	by.현서 판매가 등록
 	@RequestMapping("pricingInsert")
 	@ResponseBody
 	public boolean pricingInsert(Model model, @RequestParam(name="items")String items) throws ParseException {		
 		
+		// result 초기화
 		boolean result = false;
 		
 		try {
+			// jsp에서 보내온 json데이터를 jasonArray로 변환
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(items);
 			JSONArray arr = JSONArray.fromObject(obj);
 			
 			Pricing pricing = new Pricing(); 
+			
+			// 등록할 각 행의 데이터를 추출하여 형변환
 			for (int i = 0; i < arr.size(); i++) {
+				// i번째 행 추출
 				JSONObject itemObj = (JSONObject) arr.get(i);
-
+				// 각 타입에 맞는 변수명으로 저장
 				String buyerCd = (String) itemObj.get("buyerCd");
 				String productCd = (String) itemObj.get("productCd");
 				String rdate = (String) itemObj.get("startdate");
@@ -276,7 +307,7 @@ public class PricingController {
 				pricing.setCurrency(currency);
 				pricing.setDiscountrate(discountrate);
 				
-				
+				// insert메서드 실행
 				prs.pricingInsert(pricing);
 				result = true;
 			}
@@ -288,30 +319,28 @@ public class PricingController {
 		return result;
 	}
 	
+	//by현서. 등록 시 중복 체크
 	@RequestMapping("overlapCheck")
 	@ResponseBody
 	public int overlapCheck(Pricing pricing) {
+		// result 초기화
 		int result = 0;
+		// pk에 해당하는 값을 count하여 1 이상이면 중복
 		result = prs.overlapCheck(pricing);
 
 		return result;
 	}
 	
+	//by현서. 수정
 	@RequestMapping("pricingUpdate")
 	@ResponseBody
 	public int pricingUpdate(Pricing pricing) {
 		int result = 0;
-		System.out.println("buyerCd"+pricing.getBuyerCd());
-		System.out.println("productCd"+pricing.getProductCd());
-		System.out.println("pricing"+pricing.getPrice());
-		System.out.println("startdate"+pricing.getStartdate());
-		System.out.println("enddate"+pricing.getEnddate());
-		System.out.println("discountrate"+pricing.getDiscountrate());
-		System.out.println("currency"+pricing.getCurrency());
 		result = prs.pricingUpdate(pricing);
 		return result;
 	}
 	
+	// by해민. 
 	@RequestMapping("getPrice")
 	@ResponseBody
 	public int getPrice(String buyerCd, String productCd, String orderdate) {
@@ -336,6 +365,7 @@ public class PricingController {
 		return price;
 	}
 	
+	// by창률.
 	@RequestMapping("getPricingProductList")
 	@ResponseBody
 	public String[] getPricingProductList(String buyerCd, @RequestParam(name="orderdate") String orderdate) {
@@ -360,16 +390,16 @@ public class PricingController {
 	}
 	
 	
-	
-		@RequestMapping("pricingExcelDown")
-		@ResponseBody
-		public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="pricings")String pricings) throws IOException {
-		//List<OrderHead> list = is.search(checkRow); List<OrderHead> checkRow,
-		// 출력할 주문리스트
-		List<Pricing> list = new ArrayList<>();
+	// by현서. 엑셀 다운로드
+	@RequestMapping("pricingExcelDown")
+	@ResponseBody
+	public void pricingExcelDown(HttpServletResponse response, @RequestParam(name="pricings")String pricings) throws IOException {
 		
+		// 출력할 판매가 리스트
+		List<Pricing> list = new ArrayList<>();
 		Pricing pricingRow = new Pricing();
 	
+		// jason으로 넘어온 데이터를 변환
 		try {
 			JSONParser p = new JSONParser();
 			Object obj = p.parse(pricings);
@@ -377,7 +407,7 @@ public class PricingController {
 			
 			Pricing pricing = new Pricing();
 			
-			for (int i = 0; i < arr.size(); i++) {
+			for (int i = 0; i < arr.size(); i++) { 
 				
 				JSONObject itemObj = (JSONObject) arr.get(i);
 				String buyerCd = (String) itemObj.get("buyerCd");
@@ -393,6 +423,7 @@ public class PricingController {
 				pricing.setStartdate(sdate);
 				pricing.setEnddate(edate);
 				
+				// excel출력할 데이터를 불러옴
 				pricingRow = prs.listForExcel(pricing);
 				list.add(pricingRow);
 			}
@@ -503,7 +534,7 @@ public class PricingController {
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getProductCd());
 	        
-	        cell = row.createCell(3);
+	        cell = row.createCell(3); 
 	        cell.setCellStyle(bodyStyle);
 	        cell.setCellValue(li.getPname());
 		    
@@ -555,7 +586,6 @@ public class PricingController {
 	    } finally {
 	        wb.close();
 	    }
-	    
 	    
 	}
 	
