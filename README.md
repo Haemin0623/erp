@@ -1,4 +1,4 @@
-![image](https://github.com/Haemin0623/erp/assets/112607474/d0325102-c55e-4f75-9c11-83c1f0da44b9)# ERP
+# ERP
 쉐어드원 erp 개발 프로젝트
 2022/11/14 ~ 2022/12/15
 
