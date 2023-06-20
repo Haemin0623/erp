@@ -8,8 +8,8 @@
 ERP란 프로그램의 기본적인 형태와 간단한 데이터 관리를 할 수 있도록 구현 하는것이 목표인 프로젝트입니다.
   
 ## 개발환경
-- IDE : Eclipse (STS4)
-* 언어 : JAVA, javaScript
+- IDE : Eclipse (STS3)
+* 언어 : JAVA(Spring), javaScript
 + 서버 : Apache Tomcat v9.0
 - DB : Oracle RDBMS (MyBatis)
   
